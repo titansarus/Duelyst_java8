@@ -1,0 +1,15 @@
+[
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "decks": [],
+      "mainDeck": {},
+      "username": "reza",
+      "password": "12345",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
+  }
+]

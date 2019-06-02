@@ -3,6 +3,8 @@ package Duelyst.Model;
 import Duelyst.Model.CardCollection;
 import Duelyst.Model.Deck;
 import Duelyst.Model.Item;
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 
 
 import javax.swing.text.TableView;
@@ -22,39 +24,33 @@ public class Account implements Cloneable {
     private CardCollection cardCollection;
     private Deck mainDeck;
     private String username;
-    private String password;
+    private String password = null;
     private int countOfWins;
     private int darick;
     private ArrayList<Item> collectableItems;
 
-    public Account(String username , String password)
-    {
+    public Account(String username, String password) {
         this.username = username;
         this.password = password;
-        decks= new ArrayList<>();
-        battleHistory= new ArrayList<>();
+        decks = new ArrayList<>();
+        battleHistory = new ArrayList<>();
         mainDeck = new Deck();
         darick = INITIAL_DARICK;
-        collectableItems= new ArrayList<>();
+        collectableItems = new ArrayList<>();
         accounts.add(this);
     }
 
 
-    public static boolean accountExistInArrayList(String  username , ArrayList<Account> accounts)
-    {
+    public static boolean accountExistInArrayList(String username, ArrayList<Account> accounts) {
         return findAccountInArrayList(username, accounts) != null;
     }
 
 
-    public static Account findAccountInArrayList(String username , ArrayList<Account> accounts)
-    {
-        if (username.length()>0 && accounts!=null)
-        {
-            for (int i =0;i<accounts.size();i++)
-            {
+    public static Account findAccountInArrayList(String username, ArrayList<Account> accounts) {
+        if (username.length() > 0 && accounts != null) {
+            for (int i = 0; i < accounts.size(); i++) {
                 Account account = accounts.get(i);
-                if (account!=null && account.getUsername().equals(username))
-                {
+                if (account != null && account.getUsername().equals(username)) {
                     return account;
                 }
             }
@@ -62,7 +58,17 @@ public class Account implements Cloneable {
         return null;
     }
 
-
+    public static void saveAccount() {
+        YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+        try {
+            Writer writer = new FileWriter("accounts.json");
+            String s = yaGson.toJson(accounts);
+            writer.write(s);
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public static Account getLoginedAccount() {

@@ -1,10 +1,10 @@
 package Duelyst.Controllers;
 
-import Duelyst.Exceptions.MyException;
-import Duelyst.Exceptions.UserExistException;
-import Duelyst.Exceptions.UserNotExistException;
+import Duelyst.Exceptions.*;
 import Duelyst.Model.Account;
 import Duelyst.View.Constants;
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.Animation;
@@ -18,7 +18,9 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 
 import static Duelyst.View.Constants.*;
 
@@ -74,7 +76,10 @@ public class LoginController {
 
 
     public void handleGoToMainMenu() {
-
+        if (Account.getLoginedAccount()==null){
+            Container.exceptionGenerator(new NotExistLoginUserException());
+            return;
+        }
         Pane root = null;
         FXMLLoader fxmlLoader = null;
         try {
@@ -97,14 +102,17 @@ public class LoginController {
     public void handleLoginBtn() {
         String username = getUsername_tf().getText();
         String password = getPassword_tf().getText();
+        Account account = Account.findAccountInArrayList(username, Account.getAccounts());
         if (!Account.accountExistInArrayList(username, Account.getAccounts())) {
             Container.exceptionGenerator(new UserNotExistException());
             return;
         }
-        Account.setLoginedAccount(Account.findAccountInArrayList(username, Account.getAccounts()));
+        if (!account.getPassword().equals(password)){
+            Container.exceptionGenerator(new InvalidPasswordException());
+            return;
+        }
+        Account.setLoginedAccount(account);
         Container.notificationShower(USER_LOGINED_CONTENT, USER_LOGINED);
-
-
     }
 
     public void handleSignUpBtn() {
@@ -116,9 +124,12 @@ public class LoginController {
             return;
         }
         new Account(username, password);
+        Account.saveAccount();
         Container.notificationShower(USER_CREATED_CONTENT, USER_CREATED_TITLE);
 
     }
+
+
 
 
     public JFXTextField getUsername_tf() {

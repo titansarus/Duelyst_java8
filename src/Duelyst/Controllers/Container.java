@@ -16,7 +16,6 @@ public class Container {
     public static void exceptionGenerator(MyException e)
     {
         alertShower(e,e.getTitle());
-
     }
 
     static void alertShower(Exception e, String title) {

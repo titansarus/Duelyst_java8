@@ -3,17 +3,33 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="566.0" prefWidth="600.0" style="-fx-background-color: BLACk;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.MainMenu">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: BLACk; -fx-background-image: url('counterplay-games-ff.jpg'); -fx-background-size: 1024 768;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.MainMenu">
    <children>
-      <JFXButton buttonType="RAISED" layoutX="243.0" layoutY="129.0" onAction="#handlePlayBtn" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: White;" text="Play" />
-      <JFXButton buttonType="RAISED" layoutX="243.0" layoutY="168.0" onAction="#handleShopBtn" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: White;" text="Shop" />
-      <JFXButton buttonType="RAISED" layoutX="243.0" layoutY="211.0" onAction="#handleCollectionBtn" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: White;" text="Collection" />
-      <JFXButton buttonType="RAISED" layoutX="243.0" layoutY="258.0" onAction="#handleQuitBtn" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: White;" text="Quit" />
-      <Label fx:id="loginedAccount_lbl" layoutX="143.0" layoutY="21.0" prefHeight="17.0" prefWidth="168.0" style="-fx-background-color: WHITE; -fx-background-radius: 7px;" textFill="WHITE" />
-      <Label fx:id="accountDarick_lbl" layoutX="486.0" layoutY="21.0" prefHeight="21.0" prefWidth="114.0" style="-fx-background-color: WHITE; -fx-background-radius: 7px;" textFill="WHITE" />
+      <JFXButton buttonType="RAISED" layoutX="115.0" layoutY="275.0" onAction="#handlePlayBtn" prefHeight="71.0" prefWidth="176.0" text="PLAY" textFill="#ebebeb">
+         <font>
+            <Font name="System Italic" size="33.0" />
+         </font></JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="112.0" layoutY="369.0" onAction="#handleShopBtn" prefHeight="71.0" prefWidth="183.0" text="Shop" textFill="#fcf5f5">
+         <font>
+            <Font name="System Italic" size="33.0" />
+         </font></JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="91.0" layoutY="460.0" onAction="#handleCollectionBtn" prefHeight="80.0" prefWidth="226.0" text="Collection" textFill="#f2eded">
+         <font>
+            <Font name="System Italic" size="33.0" />
+         </font></JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="115.0" layoutY="558.0" onAction="#handleQuitBtn" prefHeight="71.0" prefWidth="176.0" text="Quit" textFill="#fcf7f7">
+         <font>
+            <Font size="33.0" />
+         </font></JFXButton>
+      <Label fx:id="loginedAccount_lbl" layoutX="143.0" layoutY="21.0" prefHeight="17.0" prefWidth="168.0" style="-fx-background-color: WHITE; -fx-background-radius: 7px;" textFill="#0a0a0a" />
+      <Label fx:id="accountDarick_lbl" layoutX="394.0" layoutY="21.0" prefHeight="21.0" prefWidth="114.0" style="-fx-background-color: WHITE; -fx-background-radius: 7px;" textFill="#1b1a1a" />
       <Label layoutX="14.0" layoutY="21.0" prefHeight="21.0" prefWidth="114.0" style="-fx-background-color: WHITE; -fx-background-radius: 7px;" text="Logined Account" textFill="#171717" />
-      <Label layoutX="434.0" layoutY="21.0" style="-fx-background-color: WHITE; -fx-background-radius: 7px;" text="Darick" textFill="#111111" />
-      <JFXButton buttonType="RAISED" layoutX="254.0" layoutY="527.0" onAction="#handleBackBtn" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: White;" text="Back" />
+      <Label layoutX="341.0" layoutY="21.0" style="-fx-background-color: WHITE; -fx-background-radius: 7px;" text="Darick" textFill="#111111" />
+      <JFXButton buttonType="RAISED" layoutX="29.0" layoutY="683.0" onAction="#handleBackBtn" prefHeight="25.0" prefWidth="114.0" text="Back" textFill="#eeeaea">
+         <font>
+            <Font size="25.0" />
+         </font></JFXButton>
    </children>
 </AnchorPane>
