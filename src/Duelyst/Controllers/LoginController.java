@@ -75,6 +75,7 @@ public class LoginController {
 
 
     public void handleGoToMainMenu() {
+
         Pane root = null;
         FXMLLoader fxmlLoader = null;
         try {
