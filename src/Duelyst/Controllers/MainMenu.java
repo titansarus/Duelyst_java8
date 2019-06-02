@@ -67,6 +67,18 @@ public class MainMenu {
         timeline.stop();;
     }
 
+
+    public void handleBackBtn()
+    {
+        if (Container.scenes.size() > 0) {
+            stopTimeline(); //TODO In ba'ad az hazf timeline hazf shavad
+            Container.scenes.removeLast();
+            Container.stage.setScene(Container.scenes.getLast());
+            Container.stage.show();
+
+        }
+
+    }
     public void handlePlayBtn()
     {
 
