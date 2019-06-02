@@ -41,10 +41,10 @@
       <JFXPasswordField fx:id="password_tf" layoutX="190.0" layoutY="236.0" promptText="Password" style="-fx-background-color: White;" />
       <Label layoutX="102.0" layoutY="194.0" text="Username" textFill="WHITE" />
       <Label layoutX="102.0" layoutY="241.0" text="Password" textFill="WHITE" />
-      <Label fx:id="loginedAccount_lbl" layoutX="418.0" layoutY="14.0" prefHeight="17.0" prefWidth="168.0" textFill="WHITE" />
-      <Label fx:id="accountDarick_lbl" layoutX="418.0" layoutY="31.0" prefHeight="17.0" prefWidth="168.0" textFill="WHITE" />
-      <Label layoutX="321.0" layoutY="14.0" text="Logined Account" textFill="WHITE" />
-      <Label layoutX="377.0" layoutY="31.0" text="Darick" textFill="WHITE" />
+      <Label fx:id="loginedAccount_lbl" layoutX="165.0" layoutY="14.0" prefHeight="17.0" prefWidth="168.0" style="-fx-background-color: WHITE; -fx-background-radius: 7px;" textFill="WHITE" />
+      <Label fx:id="accountDarick_lbl" layoutX="839.0" layoutY="11.0" prefHeight="17.0" prefWidth="168.0" style="-fx-background-color: WHITE; -fx-background-radius: 7px;" textFill="WHITE" />
+      <Label layoutX="24.0" layoutY="14.0" prefHeight="21.0" prefWidth="116.0" style="-fx-background-color: WHITE; -fx-background-radius: 7px;" text="Logined Account" textFill="#222121" />
+      <Label layoutX="786.0" layoutY="11.0" style="-fx-background-color: WHITE; -fx-background-radius: 7px;" text="Darick" textFill="#111010" />
       <JFXButton buttonType="RAISED" layoutX="190.0" layoutY="358.0" onAction="#handleGoToMainMenu" prefHeight="25.0" prefWidth="168.0" style="-fx-background-color: PINK;" text="Go To Main Menu">
          <ripplerFill>
             <LinearGradient endX="1.0" endY="1.0">

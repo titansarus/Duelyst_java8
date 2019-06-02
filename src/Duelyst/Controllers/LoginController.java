@@ -54,7 +54,6 @@ public class LoginController {
 
     public void stopTimeline() {
         timeline.stop();
-        ;
     }
 
     private void updateDarick() {
