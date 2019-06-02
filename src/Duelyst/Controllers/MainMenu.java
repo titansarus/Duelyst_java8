@@ -27,13 +27,11 @@ public class MainMenu {
     Timeline timeline = new Timeline();
 
     @FXML
-    public void initialize()
-    {
+    public void initialize() {
         runTimeline();
     }
 
-    public void runTimeline()
-    {
+    public void runTimeline() {
         timeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
             updateLoginedUser();
             updateDarick();
@@ -41,9 +39,6 @@ public class MainMenu {
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
-
-
-
 
 
     private void updateDarick() {
@@ -62,14 +57,33 @@ public class MainMenu {
         getLoginedAccount_lbl().setText(Account.getLoginedAccount().getUsername());
     }
 
-    public void stopTimeline()
-    {
-        timeline.stop();;
+    public void stopTimeline() {
+        timeline.stop();
+        ;
+    }
+
+    public void handleLeaderboardBtn() {
+        Pane root = null;
+        FXMLLoader fxmlLoader = null;
+        try {
+            fxmlLoader = new FXMLLoader(getClass().getResource("../View/FXMLFiles/Leaderboard.fxml"));
+            root = fxmlLoader.load();
+            int i = 0;
+            System.out.println(i);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stopTimeline();
+        Scene scene = new Scene(root);
+        Container.scenes.addLast(scene);
+        Container.stage.setScene(Container.scenes.getLast());
+
+        Container.stage.show();
+
     }
 
 
-    public void handleBackBtn()
-    {
+    public void handleBackBtn() {
         if (Container.scenes.size() > 0) {
             stopTimeline(); //TODO In ba'ad az hazf timeline hazf shavad
             //TODO TEST
@@ -80,20 +94,21 @@ public class MainMenu {
         }
 
     }
-    public void handlePlayBtn()
-    {
+
+    public void handlePlayBtn() {
 
     }
-    public void handleQuitBtn()
-    {
+
+    public void handleQuitBtn() {
         System.exit(0);
     }
-    public void handleShopBtn()
-    {
+
+    public void handleShopBtn() {
 
     }
-    public void handleCollectionBtn()
-    {
+
+    public void handleCollectionBtn() {
+
 
     }
 

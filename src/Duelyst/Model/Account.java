@@ -40,6 +40,14 @@ public class Account implements Cloneable {
         accounts.add(this);
     }
 
+    public static ArrayList<Account> accountsSorter(ArrayList<Account> accounts) {
+
+
+        ArrayList<Account> accountsCopy = new ArrayList<>(accounts);
+        accountsCopy.sort(((Comparator<Account>) (o1, o2) -> o2.getCountOfWins() - o1.getCountOfWins()).thenComparing((o1, o2) -> o1.getUsername().compareTo(o2.getUsername())));
+        return accountsCopy;
+    }
+
 
     public static boolean accountExistInArrayList(String username, ArrayList<Account> accounts) {
         return findAccountInArrayList(username, accounts) != null;
