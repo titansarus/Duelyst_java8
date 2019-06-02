@@ -11,7 +11,10 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 
@@ -36,13 +39,11 @@ public class LoginController {
     Timeline timeline = new Timeline();
 
     @FXML
-    public void initialize()
-    {
+    public void initialize() {
         runTimeline();
     }
 
-    public void runTimeline()
-    {
+    public void runTimeline() {
         timeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
             updateLoginedUser();
             updateDarick();
@@ -51,9 +52,9 @@ public class LoginController {
         timeline.play();
     }
 
-    public void stopTimeline()
-    {
-        timeline.stop();;
+    public void stopTimeline() {
+        timeline.stop();
+        ;
     }
 
     private void updateDarick() {
@@ -70,6 +71,26 @@ public class LoginController {
             return;
         }
         getLoginedAccount_lbl().setText(Account.getLoginedAccount().getUsername());
+    }
+
+
+    public void handleGoToMainMenu() {
+        Pane root = null;
+        FXMLLoader fxmlLoader = null;
+        try {
+            fxmlLoader = new FXMLLoader(getClass().getResource("../View/FXMLFiles/MainMenu.fxml"));
+            root = fxmlLoader.load();
+            int i = 0;
+            System.out.println(i);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stopTimeline();
+        Scene scene = new Scene(root);
+        Container.scenes.addLast(scene);
+        Container.stage.setScene(Container.scenes.getLast());
+
+        Container.stage.show();
     }
 
 

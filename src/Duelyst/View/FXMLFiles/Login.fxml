@@ -9,7 +9,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="602.0" prefWidth="1024.0" style="-fx-background-color: LIGHTGREEN; -fx-background-image: url('backlogin.png'); -fx-background-size: 1024 602;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.LoginController">
+<AnchorPane prefHeight="602.0" prefWidth="1024.0" style="-fx-background-image: url('backlogin.png'); -fx-background-color: LIGHTGREEN; -fx-background-size: 1024 602;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.LoginController">
    <children>
       <JFXButton buttonType="RAISED" layoutX="298.0" layoutY="301.0" onAction="#handleSignUpBtn" style="-fx-background-color: PINK;" text="Sign Up">
          <ripplerFill>
@@ -41,9 +41,22 @@
       <JFXPasswordField fx:id="password_tf" layoutX="190.0" layoutY="236.0" promptText="Password" style="-fx-background-color: White;" />
       <Label layoutX="102.0" layoutY="194.0" text="Username" textFill="WHITE" />
       <Label layoutX="102.0" layoutY="241.0" text="Password" textFill="WHITE" />
-      <Label fx:id="loginedAccount_lbl" layoutX="418.0" layoutY="14.0" prefHeight="17.0" prefWidth="168.0" />
-      <Label fx:id="accountDarick_lbl" layoutX="418.0" layoutY="31.0" prefHeight="17.0" prefWidth="168.0" />
-      <Label layoutX="321.0" layoutY="14.0" text="Logined Account" />
-      <Label layoutX="377.0" layoutY="31.0" text="Darick" />
+      <Label fx:id="loginedAccount_lbl" layoutX="418.0" layoutY="14.0" prefHeight="17.0" prefWidth="168.0" textFill="WHITE" />
+      <Label fx:id="accountDarick_lbl" layoutX="418.0" layoutY="31.0" prefHeight="17.0" prefWidth="168.0" textFill="WHITE" />
+      <Label layoutX="321.0" layoutY="14.0" text="Logined Account" textFill="WHITE" />
+      <Label layoutX="377.0" layoutY="31.0" text="Darick" textFill="WHITE" />
+      <JFXButton buttonType="RAISED" layoutX="190.0" layoutY="358.0" onAction="#handleGoToMainMenu" prefHeight="25.0" prefWidth="168.0" style="-fx-background-color: PINK;" text="Go To Main Menu">
+         <ripplerFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#da2f2f" />
+                  <Stop color="WHITE" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </ripplerFill>
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>
