@@ -1,6 +1,7 @@
 package Duelyst;
 
 import Duelyst.Controllers.Container;
+import Duelyst.Controllers.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import static Duelyst.View.Constants.*;
+
 public class Account implements Cloneable {
     private static Account loginedAccount = null;
     private static ArrayList<Account> accounts = new ArrayList<>();
@@ -32,7 +34,7 @@ public class Account implements Cloneable {
         decks= new ArrayList<>();
         battleHistory= new ArrayList<>();
         mainDeck = new Deck();
-        darick = 0;
+        darick = INITIAL_DARICK;
         collectableItems= new ArrayList<>();
         accounts.add(this);
     }
