@@ -4,6 +4,7 @@ import Duelyst.Controllers.CardController;
 import Duelyst.Controllers.Container;
 import Duelyst.Model.Card;
 import Duelyst.Model.Shop;
+import Duelyst.Model.ShopMode;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -44,8 +45,15 @@ public class CardView extends Pane {
             @Override
             public void handle(MouseEvent event) {
                 if (Container.nameOfMenus.getLast().equals(SHOP)) {
-                    Shop.getInstance().selectCardForBuy(card.getCardName());
-                    System.out.println(card.getCardName());
+                    if (Shop.getInstance().getShopMode().equals(ShopMode.BUY)) {
+                        Shop.getInstance().selectCardForBuy(card.getCardName());
+                        System.out.println("BUY MODE" + card.getCardName());
+                    }
+                    else
+                    {
+                        Shop.getInstance().selectCardForSell(card.getCardId());
+                        System.out.println("SELL MODE" + card.getCardName() + " " + card.getCardId());
+                    }
                 }
             }
         });

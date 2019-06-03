@@ -120,7 +120,7 @@ public class MainMenu {
 
     public void handleBackBtn() {
         if (Container.scenes.size() > 0) {
-            stopTimeline(); //TODO In ba'ad az hazf timeline hazf shavad
+            stopTimeline(); //TODO In ba'ad az hazf slowTimeline hazf shavad
             //TODO TEST
             Container.scenes.removeLast();
             Container.nameOfMenus.removeLast();

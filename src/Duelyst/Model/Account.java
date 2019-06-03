@@ -38,11 +38,15 @@ public class Account implements Cloneable {
         darick = INITIAL_DARICK;
         collectableItems = new ArrayList<>();
         accounts.add(this);
+        cardCollection = new CardCollection(this);
     }
 
-    public void decreaseDaric(int amount)
-    {
-        setDarick(getDarick()-amount);
+    public void decreaseDarick(int amount) {
+        setDarick(getDarick() - amount);
+    }
+
+    public void increaseDarick(int amount) {
+        setDarick(getDarick() + amount);
     }
 
     public static ArrayList<Account> accountsSorter(ArrayList<Account> accounts) {

@@ -1,8 +1,10 @@
 package Duelyst.Controllers;
 
 import Duelyst.Exceptions.MyException;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.util.Deque;
@@ -31,6 +33,7 @@ public class Container {
         alert.setHeaderText(title);
         alert.show();
     }
+
 
 
 }

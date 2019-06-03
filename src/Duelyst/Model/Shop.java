@@ -1,12 +1,16 @@
 package Duelyst.Model;
 
 
+import Duelyst.Exceptions.NoCardSelectedInShopException;
+import Duelyst.Exceptions.NotEnoughDarickException;
+
 import java.util.ArrayList;
 
 public class Shop {
 
     private ArrayList<Card> cards = new ArrayList<>();
     private static Shop instance;
+    private ShopMode shopMode = ShopMode.BUY;
 
     private Card selectedCard = null;
 
@@ -25,10 +29,34 @@ public class Shop {
         selectedCard = card;
     }
 
-    public void buy()
-    {
+    public void selectCardForSell(String id) {
+        Card card = Card.findCardInArrayList(id, Account.getLoginedAccount().getCardCollection().getCards());
+        selectedCard = card;
+    }
+
+    public void sell() {
+        if (selectedCard == null) {
+            throw new NoCardSelectedInShopException();
+        }
+        CardCollection cardCollection = Account.getLoginedAccount().getCardCollection();
+        Account.getLoginedAccount().increaseDarick(selectedCard.getDarikCost());
+        setSelectedCard(null);
+
+        cardCollection.removeCard(selectedCard);
+
+
+    }
+
+    public void buy() {
+        if (selectedCard == null) {
+            throw new NoCardSelectedInShopException();
+        }
         System.out.println("You Buyed Card");
-        Account.getLoginedAccount().decreaseDaric(getSelectedCard().getDarikCost());
+        if (Account.getLoginedAccount().getDarick() < getSelectedCard().getDarikCost()) {
+            throw new NotEnoughDarickException();
+        }
+        Account.getLoginedAccount().decreaseDarick(getSelectedCard().getDarikCost());
+        Account.getLoginedAccount().getCardCollection().addCard(getSelectedCard());
     }
 
     public static Card getSelectedCard() {
@@ -37,6 +65,14 @@ public class Shop {
 
     public static void setSelectedCard(Card selectedCard) {
         Shop.getInstance().selectedCard = selectedCard;
+    }
+
+    public ShopMode getShopMode() {
+        return shopMode;
+    }
+
+    public void setShopMode(ShopMode shopMode) {
+        this.shopMode = shopMode;
     }
 
     //    public Object buy(String name, Account account) throws CloneNotSupportedException {
@@ -123,5 +159,6 @@ public class Shop {
 //        }
 //        throw new Error(ConstantMessages.CARD_NOT_EXIST.getMessage());
 //    }
+
 
 }

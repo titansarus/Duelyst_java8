@@ -4,36 +4,31 @@
     "@val": {
       "battleHistory": [],
       "decks": [],
-      "mainDeck": {},
-      "username": "reza",
-      "password": "12345",
-      "countOfWins": 5,
-      "darick": 10000,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "decks": [],
-      "mainDeck": {},
-      "username": "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "password": "aa",
-      "countOfWins": 10,
-      "darick": 10000,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "decks": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.0"
+      },
       "mainDeck": {},
       "username": "a",
       "password": "a",
-      "countOfWins": 3,
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "decks": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.1"
+      },
+      "mainDeck": {},
+      "username": "b",
+      "password": "b",
+      "countOfWins": 0,
       "darick": 10000,
       "collectableItems": []
     }
