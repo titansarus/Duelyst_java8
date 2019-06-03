@@ -10,7 +10,7 @@ public class Constants {
     public static final String INVALID_PASSWORD_CONTENT = "Wrong Password ! ";
 
     //ERROR TITLE
-    public static final String USER_EXIST_TITLE = "User Exist", USER_NOT_EXIST_TITLE = "User Not Exist" ,  NOT_EXIST_LOGIN_USER_TITLE = "First Login!" ;
+    public static final String USER_EXIST_TITLE = "User Exist", USER_NOT_EXIST_TITLE = "User Not Exist", NOT_EXIST_LOGIN_USER_TITLE = "First Login!";
     public static final String INVALID_PASSWORD_TITLE = "Try again!";
 
     //NOTIFICATION
@@ -31,5 +31,6 @@ public class Constants {
     public static final Image collectionImg = new Image(Constants.class.getResourceAsStream("../../res/ui/collection.png"));
     public static final Image leaderboardsImg = new Image(Constants.class.getResourceAsStream("../../res/ui/leaderboards.png"));
     public static final Image backImg = new Image(Constants.class.getResourceAsStream("../../res/ui/back.png"));
+    public static final Image heroImg = new Image(Constants.class.getResourceAsStream("../../res/Characters/generals/general_f1.png"));
 
 }
