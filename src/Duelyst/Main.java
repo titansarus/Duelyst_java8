@@ -3,6 +3,8 @@ package Duelyst;
 import Duelyst.Controllers.Container;
 import Duelyst.Controllers.LoginController;
 import Duelyst.Model.Account;
+import Duelyst.Model.Card;
+import Duelyst.Model.Shop;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import javafx.application.Application;
@@ -15,6 +17,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
+
+import static Duelyst.View.Constants.LOGIN;
 
 public class Main extends Application {
 
@@ -32,10 +36,17 @@ public class Main extends Application {
 
         Scene scene = new Scene(root);
         Container.scenes.add(scene);
+        Container.nameOfMenus.add(LOGIN);
     }
 
 
     public static void main(String[] args) {
+        for (int i =0;i<10;i++)
+        {
+            Card card = new Card("card"+i , "desc"+ i , 10,10);
+            Shop.getInstance().getCards().add(card);
+        }
+
         initAccounts();
         launch(args);
     }

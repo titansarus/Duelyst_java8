@@ -40,6 +40,11 @@ public class Account implements Cloneable {
         accounts.add(this);
     }
 
+    public void decreaseDaric(int amount)
+    {
+        setDarick(getDarick()-amount);
+    }
+
     public static ArrayList<Account> accountsSorter(ArrayList<Account> accounts) {
 
 

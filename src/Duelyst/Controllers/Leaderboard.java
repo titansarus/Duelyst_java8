@@ -74,8 +74,10 @@ public class Leaderboard {
     {
         if (Container.scenes.size() > 0) {
             Container.scenes.removeLast();
+            Container.nameOfMenus.removeLast();
             Container.stage.setScene(Container.scenes.getLast());
             Container.stage.show();
+
         }
     }
 }

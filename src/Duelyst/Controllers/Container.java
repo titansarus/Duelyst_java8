@@ -11,11 +11,11 @@ import java.util.LinkedList;
 public class Container {
     public static Stage stage = new Stage();
     public static Deque<Scene> scenes = new LinkedList<>();
+    public static Deque<String> nameOfMenus = new LinkedList<>();
 
 
-    public static void exceptionGenerator(MyException e)
-    {
-        alertShower(e,e.getTitle());
+    public static void exceptionGenerator(MyException e) {
+        alertShower(e, e.getTitle());
     }
 
     static void alertShower(Exception e, String title) {
@@ -25,14 +25,12 @@ public class Container {
         alert.show();
     }
 
-    static void notificationShower(String msg , String title)
-    {
+    static void notificationShower(String msg, String title) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, msg);
         alert.setTitle(title);
         alert.setHeaderText(title);
         alert.show();
     }
-
 
 
 }

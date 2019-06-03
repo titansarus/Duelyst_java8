@@ -1,6 +1,7 @@
 package Duelyst.Controllers;
 
 import Duelyst.Model.Account;
+import Duelyst.View.Constants;
 import com.jfoenix.controls.JFXButton;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -111,7 +112,7 @@ public class MainMenu {
         Scene scene = new Scene(root);
         Container.scenes.addLast(scene);
         Container.stage.setScene(Container.scenes.getLast());
-
+        Container.nameOfMenus.add(LEADERBOARD);
         Container.stage.show();
 
     }
@@ -122,6 +123,7 @@ public class MainMenu {
             stopTimeline(); //TODO In ba'ad az hazf timeline hazf shavad
             //TODO TEST
             Container.scenes.removeLast();
+            Container.nameOfMenus.removeLast();
             Container.stage.setScene(Container.scenes.getLast());
             Container.stage.show();
 
@@ -152,6 +154,7 @@ public class MainMenu {
         stopTimeline();
         Scene scene = new Scene(root);
         Container.scenes.addLast(scene);
+        Container.nameOfMenus.add(SHOP);
         Container.stage.setScene(Container.scenes.getLast());
 
         Container.stage.show();

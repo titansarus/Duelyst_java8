@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 
 public class CardController {
     @FXML
@@ -15,8 +16,15 @@ public class CardController {
     @FXML
     private ImageView card_img;
 
+    @FXML
+    VBox vboxHolder;
 
-    public void setNameAndDsc(String name, String dsc, Image img) {
+
+    public void setNameAndDsc(String name, String dsc) {
+        name_lbl.setText(name);
+        dsc_lbl.setText(dsc);
+    }
+    public void setNameAndDscAndImg(String name, String dsc, Image img) {
         name_lbl.setText(name);
         dsc_lbl.setText(dsc);
         card_img.setImage(img);
@@ -33,4 +41,15 @@ public class CardController {
     public void setCard_img(ImageView card_img) {
         this.card_img = card_img;
     }
+
+    public void changeToSelected()
+    {
+        vboxHolder.setStyle("-fx-background-color: Yellow");
+    }
+
+    public void changeToNotSelected()
+    {
+        vboxHolder.setStyle("-fx-background-color: LightGrey");
+    }
+
 }

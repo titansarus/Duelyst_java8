@@ -25,6 +25,10 @@ public class Constants {
     public static final int INITIAL_DARICK = 10000;
 
 
+    //TITLE
+    public static final String SHOP = "SHOP" , MAIN_MENU = "MAIN_MENU" , LOGIN = "LOGIN" , LEADERBOARD = "LEADERBOARD";
+
+
     public static final Image playImg = new Image(Constants.class.getResourceAsStream("../../res/ui/play.png"));
     public static final Image shopImg = new Image(Constants.class.getResourceAsStream("../../res/ui/shop.png"));
     public static final Image quitImg = new Image(Constants.class.getResourceAsStream("../../res/ui/quit.png"));
