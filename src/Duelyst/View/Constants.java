@@ -1,5 +1,7 @@
 package Duelyst.View;
 
+import javafx.scene.image.Image;
+
 public class Constants {
 
     //ERRORS
@@ -21,5 +23,13 @@ public class Constants {
 
 
     public static final int INITIAL_DARICK = 10000;
+
+
+    public static final Image playImg = new Image(Constants.class.getResourceAsStream("../../res/ui/play.png"));
+    public static final Image shopImg = new Image(Constants.class.getResourceAsStream("../../res/ui/shop.png"));
+    public static final Image quitImg = new Image(Constants.class.getResourceAsStream("../../res/ui/quit.png"));
+    public static final Image collectionImg = new Image(Constants.class.getResourceAsStream("../../res/ui/collection.png"));
+    public static final Image leaderboardsImg = new Image(Constants.class.getResourceAsStream("../../res/ui/leaderboards.png"));
+    public static final Image backImg = new Image(Constants.class.getResourceAsStream("../../res/ui/back.png"));
 
 }

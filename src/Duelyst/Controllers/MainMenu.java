@@ -1,6 +1,7 @@
 package Duelyst.Controllers;
 
 import Duelyst.Model.Account;
+import com.jfoenix.controls.JFXButton;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -8,9 +9,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
+import static Duelyst.View.Constants.*;
 import java.io.IOException;
 
 import static Duelyst.View.Constants.NO_USER_LOGINED;
@@ -24,11 +26,43 @@ public class MainMenu {
     @FXML
     Label accountDarick_lbl;
 
+    @FXML
+    JFXButton play_btn;
+
+    @FXML
+    JFXButton leaderboard_btn;
+
+    @FXML
+    JFXButton quit_btn;
+
+
+    @FXML
+    JFXButton shop_btn;
+
+
+    @FXML
+    JFXButton collection_btn;
+
+
+    @FXML
+    JFXButton back_btn;
+
+
     Timeline timeline = new Timeline();
 
     @FXML
     public void initialize() {
         runTimeline();
+
+
+
+        play_btn.setGraphic(new ImageView(playImg));
+        shop_btn.setGraphic(new ImageView(shopImg));
+        quit_btn.setGraphic(new ImageView(quitImg));
+        collection_btn.setGraphic(new ImageView(collectionImg));
+        leaderboard_btn.setGraphic(new ImageView(leaderboardsImg));
+        back_btn.setGraphic(new ImageView( backImg));
+
     }
 
     public void runTimeline() {
@@ -66,7 +100,7 @@ public class MainMenu {
         Pane root = null;
         FXMLLoader fxmlLoader = null;
         try {
-            fxmlLoader = new FXMLLoader(getClass().getResource("../View/FXMLFiles/Leaderboard.fxml"));
+            fxmlLoader = new FXMLLoader(getClass().getResource("../View/FXMLFiles/Leaderboards.fxml"));
             root = fxmlLoader.load();
             int i = 0;
             System.out.println(i);

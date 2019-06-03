@@ -1,0 +1,20 @@
+.table-row-cell:odd {
+    -fx-background-color: transparent;
+    -fx-text-fill: Yellow;
+}
+
+.table-row-cell:even {
+    -fx-text-fill: Yellow;
+    -fx-background-color: transparent;
+}
+
+.table-column {
+
+    -fx-text-fill: #464646;
+    -fx-font-size: 20;
+}
+
+.table-row-cell {
+    -fx-border-color: transparent;
+    -fx-table-cell-border-color: transparent;
+}

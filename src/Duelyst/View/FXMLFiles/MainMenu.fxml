@@ -5,21 +5,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: BLACk; -fx-background-image: url('counterplay-games-ff.jpg'); -fx-background-size: 1024 768;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.MainMenu">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: BLACk; -fx-background-image: url('res/Backgrounds/main-menu-back.jpg'); -fx-background-size: 1024 768;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.MainMenu">
    <children>
-      <JFXButton buttonType="RAISED" layoutX="115.0" layoutY="242.0" onAction="#handlePlayBtn" prefHeight="71.0" prefWidth="176.0" text="PLAY" textFill="#ebebeb">
+      <JFXButton fx:id="play_btn" buttonType="RAISED" layoutX="112.0" layoutY="195.0" onAction="#handlePlayBtn" prefHeight="71.0" prefWidth="176.0" text=" " textFill="#ebebeb">
          <font>
             <Font name="System Italic" size="33.0" />
          </font></JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="112.0" layoutY="313.0" onAction="#handleShopBtn" prefHeight="71.0" prefWidth="183.0" text="Shop" textFill="#fcf5f5">
+      <JFXButton fx:id="shop_btn" buttonType="RAISED" layoutX="112.0" layoutY="281.0" onAction="#handleShopBtn" prefHeight="71.0" prefWidth="183.0" text=" " textFill="#fcf5f5">
          <font>
             <Font name="System Italic" size="33.0" />
          </font></JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="90.0" layoutY="384.0" onAction="#handleCollectionBtn" prefHeight="80.0" prefWidth="226.0" text="Collection" textFill="#f2eded">
+      <JFXButton fx:id="collection_btn" buttonType="RAISED" layoutX="112.0" layoutY="373.0" onAction="#handleCollectionBtn" prefHeight="80.0" prefWidth="226.0" text=" " textFill="#f2eded">
          <font>
             <Font name="System Italic" size="33.0" />
          </font></JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="115.0" layoutY="533.0" onAction="#handleQuitBtn" prefHeight="71.0" prefWidth="176.0" text="Quit" textFill="#fcf7f7">
+      <JFXButton fx:id="quit_btn" buttonType="RAISED" layoutX="112.0" layoutY="577.0" onAction="#handleQuitBtn" prefHeight="71.0" prefWidth="176.0" text=" " textFill="#fcf7f7">
          <font>
             <Font size="33.0" />
          </font></JFXButton>
@@ -36,11 +36,11 @@
          <font>
             <Font size="17.0" />
          </font></Label>
-      <JFXButton buttonType="RAISED" layoutX="29.0" layoutY="683.0" onAction="#handleBackBtn" prefHeight="25.0" prefWidth="114.0" text="Back" textFill="#eeeaea">
+      <JFXButton fx:id="back_btn" buttonType="RAISED" layoutX="806.0" layoutY="670.0" onAction="#handleBackBtn" prefHeight="25.0" prefWidth="114.0" text=" " textFill="#eeeaea">
          <font>
             <Font size="25.0" />
          </font></JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="90.0" layoutY="453.0" onAction="#handleLeaderboardBtn" prefHeight="80.0" prefWidth="226.0" text="Leaderboard" textFill="#f2eded">
+      <JFXButton fx:id="leaderboard_btn" buttonType="RAISED" layoutX="112.0" layoutY="467.0" onAction="#handleLeaderboardBtn" prefHeight="80.0" prefWidth="226.0" text=" " textFill="#f2eded">
          <font>
             <Font name="System Italic" size="33.0" />
          </font>
