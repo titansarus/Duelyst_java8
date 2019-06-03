@@ -54,6 +54,7 @@ public class Leaderboard {
         column3.setCellValueFactory(new PropertyValueFactory<>("wins"));
 
         column1.setPrefWidth(100);
+        column2.setPrefWidth(250);
         column3.setPrefWidth(100);
 
 
