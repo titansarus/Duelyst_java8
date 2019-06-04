@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 import static Duelyst.View.Constants.*;
@@ -49,6 +50,10 @@ public class MainMenu {
 
     @FXML
     JFXButton back_btn;
+
+
+    @FXML
+    StackPane stackPane;
 
 
     Timeline timeline = new Timeline();

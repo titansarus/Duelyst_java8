@@ -1,5 +1,6 @@
 package Duelyst.Controllers;
 
+import Duelyst.Exceptions.MyException;
 import Duelyst.Exceptions.NoCardSelectedInShopException;
 import Duelyst.Exceptions.NotEnoughDarickException;
 import Duelyst.Model.Account;
@@ -16,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
@@ -47,6 +49,9 @@ public class ShopController {
 
     @FXML
     JFXButton back_btn;
+
+    @FXML
+    StackPane stackPane;
 
     private boolean stanceOfTGB = false;
 
@@ -173,26 +178,23 @@ public class ShopController {
     public void buy() {
         try {
             Shop.getInstance().buy();
-        } catch (NotEnoughDarickException e) {
-            Container.alertShower(e, NOT_ENOUGH_DARICK_TITLE);
-            return;
-        } catch (NoCardSelectedInShopException e) {
-            Container.alertShower(e, NO_CARD_SELECTED_IN_SHOP_TITLE);
+        } catch (MyException e) {
+            Container.exceptionGenerator(e, stackPane);
             return;
         }
         System.out.println("buyed");
-        Container.notificationShower(BUY_CONTENT, BUY_TITLE);
+        Container.notificationShower(BUY_CONTENT, BUY_TITLE, stackPane);
     }
 
     public void sell() {
         try {
             Shop.getInstance().sell();
-        } catch (NoCardSelectedInShopException e) {
-            Container.alertShower(e, NO_CARD_SELECTED_IN_SHOP_TITLE);
+        } catch (MyException e) {
+            Container.exceptionGenerator(e, stackPane);
             return;
         }
         System.out.println("sell");
-        Container.notificationShower(SELL_CONTENT, SELL_TITLE);
+        Container.notificationShower(SELL_CONTENT, SELL_TITLE, stackPane);
     }
 
     private void updateDarick() {

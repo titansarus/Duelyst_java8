@@ -1,16 +1,24 @@
 package Duelyst.Controllers;
 
 import Duelyst.Exceptions.MyException;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Deque;
 import java.util.LinkedList;
 
+import static Duelyst.View.Constants.ALERT_OK;
 import static Duelyst.View.Constants.COLLECTION;
 
 public class Container {
@@ -19,23 +27,42 @@ public class Container {
     public static Deque<String> nameOfMenus = new LinkedList<>();
 
 
-    public static void exceptionGenerator(MyException e) {
-        alertShower(e, e.getTitle());
+
+
+    public static void exceptionGenerator(MyException e, StackPane pane) {
+        dialogBoxShower(e.getMessage(), e.getTitle(), pane);
     }
 
-    static void alertShower(Exception e, String title) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
-        alert.setTitle(title);
-        alert.setHeaderText(title);
-        alert.show();
+    public static void notificationShower(String msg , String title , StackPane stackPane )
+    {
+        dialogBoxShower(msg,title,stackPane);
     }
 
-    static void notificationShower(String msg, String title) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, msg);
-        alert.setTitle(title);
-        alert.setHeaderText(title);
-        alert.show();
+    static void dialogBoxShower(String msg, String title, StackPane pane) {
+        JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
+        jfxDialogLayout.setHeading(new Text(title));
+        jfxDialogLayout.setBody(new Text(msg));
+        JFXButton button = new JFXButton();
+        button.setPrefSize(70,20);
+        button.setText(ALERT_OK);
+        button.setStyle("-fx-background-color: #00bfff;-fx-border-radius: 10pt ; -fx-background-radius: 10pt");
+
+
+        jfxDialogLayout.setActions(button);
+
+        JFXDialog jfxDialog = new JFXDialog(pane, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
+
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                jfxDialog.close();
+            }
+        });
+
+        jfxDialog.show();
+
     }
+
 
     static void runNextScene(Pane root, String titleOfNextScene) {
         Scene scene = new Scene(root);

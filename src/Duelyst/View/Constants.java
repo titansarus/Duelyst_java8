@@ -28,11 +28,12 @@ public class Constants {
     public static final int INITIAL_DARICK = 10000;
 
 
-    //TITLE
+
+
     public static final String SHOP = "SHOP", MAIN_MENU = "MAIN_MENU", LOGIN = "LOGIN", LEADERBOARD = "LEADERBOARD" , COLLECTION = "COLLECTION";
+    //TITLE
 
 
-    public static final Image playImg = new Image(Constants.class.getResourceAsStream("../../res/ui/play.png"));
     public static final Image shopImg = new Image(Constants.class.getResourceAsStream("../../res/ui/shop.png"));
     public static final Image quitImg = new Image(Constants.class.getResourceAsStream("../../res/ui/quit.png"));
     public static final Image collectionImg = new Image(Constants.class.getResourceAsStream("../../res/ui/collection.png"));
@@ -41,5 +42,9 @@ public class Constants {
     public static final Image sellImg = new Image(Constants.class.getResourceAsStream("../../res/ui/Sell.png"));
     public static final Image backImg = new Image(Constants.class.getResourceAsStream("../../res/ui/back.png"));
     public static final Image heroImg = new Image(Constants.class.getResourceAsStream("../../res/Characters/generals/general_f1.png"));
+    public static final Image playImg = new Image(Constants.class.getResourceAsStream("../../res/ui/play.png"));
 
+
+    //OTHER CONSTANTS
+    public static final String ALERT_OK = "OK";
 }

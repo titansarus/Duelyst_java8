@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 
@@ -36,6 +37,9 @@ public class CardCollectionController {
 
     @FXML
     HBox cardCollectionCards_HB;
+
+    @FXML
+    StackPane stackePane;
 
 
     private Timeline slowTimeline;

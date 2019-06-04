@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 
@@ -25,6 +26,9 @@ import java.io.Writer;
 import static Duelyst.View.Constants.*;
 
 public class LoginController {
+
+    @FXML
+    StackPane stackPane;
 
     @FXML
     JFXTextField username_tf;
@@ -77,7 +81,7 @@ public class LoginController {
 
     public void handleGoToMainMenu() {
         if (Account.getLoginedAccount()==null){
-            Container.exceptionGenerator(new NotExistLoginUserException());
+            Container.exceptionGenerator(new NotExistLoginUserException(),stackPane);
             return;
         }
         Pane root = null;
@@ -100,15 +104,17 @@ public class LoginController {
         String password = getPassword_tf().getText();
         Account account = Account.findAccountInArrayList(username, Account.getAccounts());
         if (!Account.accountExistInArrayList(username, Account.getAccounts())) {
-            Container.exceptionGenerator(new UserNotExistException());
+            Container.exceptionGenerator(new UserNotExistException(),stackPane);
+            //Container.exceptionGenerator(new UserNotExistException());
             return;
         }
         if (!account.getPassword().equals(password)){
-            Container.exceptionGenerator(new InvalidPasswordException());
+            Container.exceptionGenerator(new InvalidPasswordException(),stackPane);
+            //Container.exceptionGenerator(new InvalidPasswordException());
             return;
         }
         Account.setLoginedAccount(account);
-        Container.notificationShower(USER_LOGINED_CONTENT, USER_LOGINED);
+        Container.notificationShower(USER_LOGINED_CONTENT, USER_LOGINED,stackPane);
     }
 
     public void handleSignUpBtn() {
@@ -116,12 +122,13 @@ public class LoginController {
         String password = getPassword_tf().getText();
 
         if (Account.accountExistInArrayList(username, Account.getAccounts())) {
-            Container.exceptionGenerator(new UserExistException());
+            Container.exceptionGenerator(new UserExistException(),stackPane);
+            //Container.exceptionGenerator(new UserExistException());
             return;
         }
         new Account(username, password);
         Account.saveAccount();
-        Container.notificationShower(USER_CREATED_CONTENT, USER_CREATED_TITLE);
+        Container.notificationShower(USER_CREATED_CONTENT, USER_CREATED_TITLE,stackPane);
 
     }
 
