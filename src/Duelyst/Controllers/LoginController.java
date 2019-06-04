@@ -36,12 +36,6 @@ public class LoginController {
     @FXML
     JFXPasswordField password_tf;
 
-    @FXML
-    Label loginedAccount_lbl;
-
-    @FXML
-    Label accountDarick_lbl;
-
     Timeline timeline = new Timeline();
 
     @FXML
@@ -51,31 +45,10 @@ public class LoginController {
 
     public void runTimeline() {
         timeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
-            updateLoginedUser();
-            updateDarick();
+
         }), new KeyFrame(Duration.seconds(1)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
-    }
-
-    public void stopTimeline() {
-        timeline.stop();
-    }
-
-    private void updateDarick() {
-        if (Account.getLoginedAccount() == null) {
-            getAccountDarick_lbl().setText("0");
-        } else {
-            getAccountDarick_lbl().setText(String.valueOf(Account.getLoginedAccount().getDarick()));
-        }
-    }
-
-    private void updateLoginedUser() {
-        if (Account.getLoginedAccount() == null) {
-            getLoginedAccount_lbl().setText(NO_USER_LOGINED);
-            return;
-        }
-        getLoginedAccount_lbl().setText(Account.getLoginedAccount().getUsername());
     }
 
 
@@ -94,7 +67,6 @@ public class LoginController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        stopTimeline();
         Container.runNextScene(root,MAIN_MENU);
     }
 
@@ -123,7 +95,7 @@ public class LoginController {
 
         if (Account.accountExistInArrayList(username, Account.getAccounts())) {
             Container.exceptionGenerator(new UserExistException(),stackPane);
-            //Container.exceptionGenerator(new UserExistException());
+//            Container.exceptionGenerator(new UserExistException());
             return;
         }
         new Account(username, password);
@@ -143,19 +115,5 @@ public class LoginController {
         return password_tf;
     }
 
-    public Label getLoginedAccount_lbl() {
-        return loginedAccount_lbl;
-    }
 
-    public void setLoginedAccount_lbl(Label loginedAccount_lbl) {
-        this.loginedAccount_lbl = loginedAccount_lbl;
-    }
-
-    public Label getAccountDarick_lbl() {
-        return accountDarick_lbl;
-    }
-
-    public void setAccountDarick_lbl(Label accountDarick_lbl) {
-        this.accountDarick_lbl = accountDarick_lbl;
-    }
 }
