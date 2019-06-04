@@ -1,9 +1,13 @@
 package Duelyst.Controllers;
 
 import Duelyst.Exceptions.DeckExistException;
+import Duelyst.Exceptions.NoCardSelectedFromCollectionException;
+import Duelyst.Exceptions.NoCardSelectedFromDeckException;
+import Duelyst.Exceptions.NoMainDeckSelectedException;
 import Duelyst.Model.Account;
 import Duelyst.Model.Card;
 import Duelyst.Model.Deck;
+import Duelyst.View.Constants;
 import Duelyst.View.ViewClasses.CardView;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
@@ -26,6 +30,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 
+import java.security.AccessControlContext;
 import java.util.ArrayList;
 
 import static Duelyst.View.Constants.*;
@@ -142,6 +147,12 @@ public class CardCollectionController {
     }
 
     public void handleSendToDeck() {
+        if (Account.getLoginedAccount().getCardCollection().getSelectedCard() == null ||
+                !Account.getLoginedAccount().getCardCollection().cardExist(Account.getLoginedAccount().getCardCollection().getSelectedCard())) {
+            Container.exceptionGenerator(new NoCardSelectedFromCollectionException(), stackePane);
+            return;
+        }
+
         if (Account.getLoginedAccount().getCardCollection().getSelectedCard() != null) {
             if (Account.getLoginedAccount().getCardCollection().getMainDeck() != null) {
 
@@ -149,6 +160,8 @@ public class CardCollectionController {
                 Account.getLoginedAccount().getCardCollection().getMainDeck().addCard(Account.getLoginedAccount().getCardCollection().getSelectedCard());
                 Account.getLoginedAccount().getCardCollection().getCards().remove(Account.getLoginedAccount().getCardCollection().getSelectedCard());
                 Account.getLoginedAccount().getCardCollection().setSelectedCard(null);
+            } else {
+                Container.exceptionGenerator(new NoMainDeckSelectedException(), stackePane);
             }
         }
 
@@ -163,8 +176,14 @@ public class CardCollectionController {
                     Account.getLoginedAccount().getCardCollection().getMainDeck().getCards().remove(Account.getLoginedAccount().getCardCollection().getSelectedCard());
                     Account.getLoginedAccount().getCardCollection().setSelectedCard(null);
 
+                } else {
+                    Container.exceptionGenerator(new NoCardSelectedFromDeckException(), stackePane);
                 }
+            } else {
+                Container.exceptionGenerator(new NoMainDeckSelectedException(), stackePane);
             }
+        } else {
+            Container.exceptionGenerator(new NoCardSelectedFromDeckException(), stackePane);
         }
 
     }

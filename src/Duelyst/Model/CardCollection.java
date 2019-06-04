@@ -16,10 +16,14 @@ public class CardCollection {
 
     private Card selectedCard = null;
 
+    public boolean cardExist(Card card) {
+        return Card.findCardInArrayList(card.getCardId(), cards) != null;
+    }
+
 
     public CardCollection(Account account) {
         cards = new ArrayList<>();
-        decks= new ArrayList<>();
+        decks = new ArrayList<>();
         setAccount(account);
     }
 
@@ -39,7 +43,7 @@ public class CardCollection {
             Cloner cloner = new Cloner();
             Card card1 = cloner.deepClone(card);
             card1.setAccount(account);
-            card1.setCardId( card1.makeNewID(account.getUsername(),card1.getCardName(),getCountOfCard(cards,card)));
+            card1.setCardId(card1.makeNewID(account.getUsername(), card1.getCardName(), getCountOfCard(cards, card)));
             getCards().add(card1);
         }
     }
