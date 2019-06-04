@@ -18,8 +18,7 @@ import javafx.stage.Stage;
 import java.util.Deque;
 import java.util.LinkedList;
 
-import static Duelyst.View.Constants.ALERT_OK;
-import static Duelyst.View.Constants.COLLECTION;
+import static Duelyst.View.Constants.*;
 
 public class Container {
     public static Stage stage = new Stage();
@@ -45,7 +44,7 @@ public class Container {
         JFXButton button = new JFXButton();
         button.setPrefSize(70,20);
         button.setText(ALERT_OK);
-        button.setStyle("-fx-background-color: #00bfff;-fx-border-radius: 10pt ; -fx-background-radius: 10pt");
+        button.setStyle(DEFAULT_BUTTON_CSS);
 
 
         jfxDialogLayout.setActions(button);

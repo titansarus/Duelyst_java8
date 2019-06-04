@@ -20,7 +20,7 @@ public class Constants {
             SELL_CONTENT = "Sell was Successful";
 
     //NOTIFICATION TITLE
-    public static final String USER_CREATED_TITLE = "User Created", USER_LOGINED = "User Logined", BUY_TITLE = "Done!" , SELL_TITLE = "Done!";
+    public static final String USER_CREATED_TITLE = "User Created", USER_LOGINED = "User Logined", BUY_TITLE = "Done!", SELL_TITLE = "Done!";
 
     public static final String NO_USER_LOGINED = "NO USER LOGINED";
 
@@ -28,9 +28,7 @@ public class Constants {
     public static final int INITIAL_DARICK = 10000;
 
 
-
-
-    public static final String SHOP = "SHOP", MAIN_MENU = "MAIN_MENU", LOGIN = "LOGIN", LEADERBOARD = "LEADERBOARD" , COLLECTION = "COLLECTION";
+    public static final String SHOP = "SHOP", MAIN_MENU = "MAIN_MENU", LOGIN = "LOGIN", LEADERBOARD = "LEADERBOARD", COLLECTION = "COLLECTION";
     //TITLE
 
 
@@ -46,5 +44,15 @@ public class Constants {
 
 
     //OTHER CONSTANTS
-    public static final String ALERT_OK = "OK";
+    public static final String ALERT_OK = "OK", GAME_MODE_TITLE = "Game Mode", GAME_GOAL_TITLE = "Game Goal",
+            CHOOSE_GAME_MODE = "Choose your game mode", SINGLEPLAYER_MODE = "Single-Player", MULTIPLAYER_MODE = "Multiplayer",
+            CHOOSE_GAME_GOAL = "Choose your game goal", HOLD_FLAG = "Hold Flag", CAPTURE_FLAG = "Capture Flags", KILL_HERO = "Kil Hero",
+            CHOOSE_GAME_LEVEL = "Choose Level" , STORY_LEVEL_1 = "Story Level 1", STORY_LEVEL_2 = "Story Level 2", STORY_LEVEL_3 = "Story Level 3", CANCEL = "Cancel";
+
+    public static final int MULTIPLAYER_INT = 2 , SINGLEPLAYER_INT = 1 , LEVEL_1 = 1 , LEVEL_2 = 2 , LEVEL_3 = 3 , KILL_HERO_INT = 1 , CAPTURE_FLAG_INT = 2 ,HOLD_FLAG_INT = 3;
+
+    //STYLE CSS
+
+    public static final String DEFAULT_BUTTON_CSS = "-fx-background-color: #00bfff;-fx-border-radius: 10pt ; -fx-background-radius: 10pt"
+            , MODE_SELECTION_BUTTON = "-fx-background-color: #A2EF00 ; -fx-background-radius: 10pt ; -fx-border-radius: 10pt";
 }
