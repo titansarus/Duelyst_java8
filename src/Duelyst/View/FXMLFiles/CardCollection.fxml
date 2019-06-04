@@ -13,14 +13,14 @@
 
 <StackPane fx:id="stackePane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.CardCollectionController">
    <children>
-      <AnchorPane prefHeight="809.0" prefWidth="1010.0">
+      <AnchorPane prefHeight="809.0" prefWidth="1165.0">
          <children>
-            <ScrollPane fx:id="scrollPane" layoutX="82.0" layoutY="131.0" prefHeight="522.0" prefWidth="452.0">
+            <ScrollPane fx:id="scrollPane" layoutX="82.0" layoutY="131.0" prefHeight="522.0" prefWidth="525.0">
                <content>
-                  <HBox fx:id="cardCollectionCards_HB" focusTraversable="true" prefHeight="337.0" prefWidth="444.0" />
+                  <HBox fx:id="cardCollectionCards_HB" focusTraversable="true" prefHeight="337.0" prefWidth="525.0" />
                </content>
             </ScrollPane>
-            <JFXTextField fx:id="search_txtf" labelFloat="true" layoutX="346.0" layoutY="99.0" prefHeight="25.0" prefWidth="188.0" promptText="Search..." style="-fx-background-color: lightgray;" stylesheets="@../../../css/jfx-textfield.css">
+            <JFXTextField fx:id="search_txtf" labelFloat="true" layoutX="419.0" layoutY="99.0" prefHeight="25.0" prefWidth="188.0" promptText="Search..." style="-fx-background-color: lightgray;" stylesheets="@../../../css/jfx-textfield.css">
                <effect>
                   <Reflection />
                </effect>
@@ -29,11 +29,26 @@
             <Label fx:id="accountDarick_lbl" layoutX="128.0" layoutY="39.0" prefHeight="21.0" prefWidth="114.0" textFill="#171717" />
             <Label layoutX="24.0" layoutY="24.0" prefHeight="15.0" prefWidth="152.0" text="Logined Account" />
             <Label layoutX="24.0" layoutY="41.0" text="Darick" />
-            <JFXButton fx:id="back_btn" buttonType="RAISED" layoutX="882.0" layoutY="741.0" onAction="#handleBackBtn" prefHeight="25.0" prefWidth="114.0" ripplerFill="#080000" text=" " textFill="#eeeaea">
+            <JFXButton fx:id="back_btn" buttonType="RAISED" layoutX="1017.0" layoutY="742.0" onAction="#handleBackBtn" prefHeight="25.0" prefWidth="114.0" ripplerFill="#080000" text=" " textFill="#eeeaea">
                <font>
                   <Font size="25.0" />
                </font>
             </JFXButton>
+            <ScrollPane fx:id="scrollPane_2" layoutX="635.0" layoutY="131.0" prefHeight="522.0" prefWidth="496.0">
+               <content>
+                  <HBox fx:id="deck_hbox" focusTraversable="true" prefHeight="337.0" prefWidth="494.0" />
+               </content>
+            </ScrollPane>
+            <JFXTextField fx:id="deckSearch_txtf" labelFloat="true" layoutX="943.0" layoutY="99.0" prefHeight="25.0" prefWidth="188.0" promptText="Search..." style="-fx-background-color: lightgray;" stylesheets="@../../../css/jfx-textfield.css">
+               <effect>
+                  <Reflection />
+               </effect>
+            </JFXTextField>
+            <JFXButton fx:id="createDeck_btn" layoutX="848.0" layoutY="669.0" onAction="#handleCreateDeck" prefHeight="38.0" prefWidth="114.0" style="-fx-background-color: #464646;" stylesheets="@../../../css/jfx-button.css" text=" " />
+            <Label fx:id="mainDeck_lbl" layoutX="873.0" layoutY="31.0" prefHeight="17.0" prefWidth="168.0" textAlignment="CENTER" />
+            <Label layoutX="769.0" layoutY="31.0" prefHeight="15.0" prefWidth="152.0" text="Main Deck" />
+            <JFXButton layoutX="234.0" layoutY="756.0" onAction="#handleSendToDeck" text="Send to Deck" />
+            <JFXButton layoutX="856.0" layoutY="756.0" onAction="#handleSendBackToCollection" text="Send to Collection" />
          </children>
       </AnchorPane>
    </children>

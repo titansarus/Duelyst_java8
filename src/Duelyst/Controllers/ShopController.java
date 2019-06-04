@@ -7,15 +7,24 @@ import Duelyst.Model.Account;
 import Duelyst.Model.Card;
 import Duelyst.Model.Shop;
 import Duelyst.Model.ShopMode;
+import Duelyst.Utility.Delta;
 import Duelyst.View.ViewClasses.CardView;
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 import com.jfoenix.controls.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -109,13 +118,13 @@ public class ShopController {
         }
 //        listOfCards_HBox.getChildren().clear();
 //        listOfCards_HBox.setPrefWidth(629);
-//        cardViews.clear();
+//        cardViewsOfCollection.clear();
 //        for (int i = 0; i < Shop.getInstance().getCards().size(); i++) {
 //            if (search_txtf.getText().length() == 0 || Shop.getInstance().getCards().get(i).getCardName().contains(search_txtf.getText())) {
 //                VBox vBox = new VBox();
 //                vBox.setPrefWidth(275);
 //                CardView cardView = new CardView(Shop.getInstance().getCards().get(i));
-//                getCardViews().add(cardView);
+//                getCardViewsOfCollection().add(cardView);
 //                vBox.getChildren().add(cardView);
 //                listOfCards_HBox.getChildren().add(vBox);
 //                listOfCards_HBox.setPrefWidth(listOfCards_HBox.getPrefWidth() + 275);
@@ -132,6 +141,7 @@ public class ShopController {
     }
 
     private void makeCardList(ArrayList<Card> cards) {
+
         listOfCards_HBox.getChildren().clear();
         listOfCards_HBox.setPrefWidth(629);
         cardViews.clear();

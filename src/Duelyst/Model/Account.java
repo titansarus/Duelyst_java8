@@ -20,9 +20,9 @@ public class Account implements Cloneable {
     private static Account loginedAccount = null;
     private static ArrayList<Account> accounts = new ArrayList<>();
     private ArrayList<String> battleHistory;
-    private ArrayList<Deck> decks;
+   ; //THIS IS NOT USED. WILL USE CARD_COLLECTION
     private CardCollection cardCollection;
-    private Deck mainDeck;
+
     private String username;
     private String password = null;
     private int countOfWins;
@@ -32,9 +32,8 @@ public class Account implements Cloneable {
     public Account(String username, String password) {
         this.username = username;
         this.password = password;
-        decks = new ArrayList<>();
         battleHistory = new ArrayList<>();
-        mainDeck = new Deck();
+
         darick = INITIAL_DARICK;
         collectableItems = new ArrayList<>();
         accounts.add(this);
@@ -56,6 +55,8 @@ public class Account implements Cloneable {
         accountsCopy.sort(((Comparator<Account>) (o1, o2) -> o2.getCountOfWins() - o1.getCountOfWins()).thenComparing((o1, o2) -> o1.getUsername().compareTo(o2.getUsername())));
         return accountsCopy;
     }
+
+
 
 
     public static boolean accountExistInArrayList(String username, ArrayList<Account> accounts) {
@@ -112,13 +113,7 @@ public class Account implements Cloneable {
         this.battleHistory = battleHistory;
     }
 
-    public ArrayList<Deck> getDecks() {
-        return decks;
-    }
 
-    public void setDecks(ArrayList<Deck> decks) {
-        this.decks = decks;
-    }
 
     public CardCollection getCardCollection() {
         return cardCollection;
@@ -128,13 +123,7 @@ public class Account implements Cloneable {
         this.cardCollection = cardCollection;
     }
 
-    public Deck getMainDeck() {
-        return mainDeck;
-    }
 
-    public void setMainDeck(Deck mainDeck) {
-        this.mainDeck = mainDeck;
-    }
 
     public String getUsername() {
         return username;

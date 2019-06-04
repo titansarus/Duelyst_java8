@@ -2,6 +2,7 @@ package Duelyst.Model;
 
 import Duelyst.Model.Account;
 import Duelyst.Model.Card;
+import Duelyst.Utility.Delta;
 import com.rits.cloning.Cloner;
 
 import java.util.ArrayList;
@@ -10,9 +11,15 @@ public class CardCollection {
 
     private ArrayList<Card> cards;
     private Account account;
+    private ArrayList<Deck> decks;
+    private Deck mainDeck = null;
+
+    private Card selectedCard = null;
+
 
     public CardCollection(Account account) {
         cards = new ArrayList<>();
+        decks= new ArrayList<>();
         setAccount(account);
     }
 
@@ -84,4 +91,27 @@ public class CardCollection {
         return null;
     }
 
+    public ArrayList<Deck> getDecks() {
+        return decks;
+    }
+
+    public void setDecks(ArrayList<Deck> decks) {
+        this.decks = decks;
+    }
+
+    public Deck getMainDeck() {
+        return mainDeck;
+    }
+
+    public void setMainDeck(Deck mainDeck) {
+        this.mainDeck = mainDeck;
+    }
+
+    public Card getSelectedCard() {
+        return selectedCard;
+    }
+
+    public void setSelectedCard(Card selectedCard) {
+        this.selectedCard = selectedCard;
+    }
 }

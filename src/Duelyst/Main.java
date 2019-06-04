@@ -41,7 +41,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        for (int i =0;i<10;i++)
+        for (int i =0;i<100;i++)
         {
             Card card = new Card("card"+i , "desc"+ i , 10,10);
             Shop.getInstance().getCards().add(card);

@@ -2,21 +2,23 @@ package Duelyst.View.ViewClasses;
 
 import Duelyst.Controllers.CardController;
 import Duelyst.Controllers.Container;
-import Duelyst.Model.Card;
-import Duelyst.Model.Shop;
-import Duelyst.Model.ShopMode;
+import Duelyst.Model.*;
+import Duelyst.Utility.Delta;
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 
-import static Duelyst.View.Constants.SHOP;
-import static Duelyst.View.Constants.heroImg;
+import static Duelyst.View.Constants.*;
 
 public class CardView extends Pane {
     CardController cardController;
@@ -54,14 +56,20 @@ public class CardView extends Pane {
                         Shop.getInstance().selectCardForSell(card.getCardId());
                         System.out.println("SELL MODE" + card.getCardName() + " " + card.getCardId());
                     }
+                } else if (Container.nameOfMenus.getLast().equals(COLLECTION))
+                {
+                    Account.getLoginedAccount().getCardCollection().setSelectedCard(card);
                 }
             }
         });
 
 
-
         cardController.setNameAndDscAndImg("Card", "This is A card", heroImg);
     }
+
+
+
+
 
     public CardView(String name, String desc) {
         this();

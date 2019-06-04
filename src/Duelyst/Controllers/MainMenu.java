@@ -1,7 +1,6 @@
 package Duelyst.Controllers;
 
 import Duelyst.Model.Account;
-import Duelyst.View.Constants;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
@@ -12,9 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -233,11 +230,11 @@ public class MainMenu {
         killHero.setText(KILL_HERO);
         captureFlag.setText(CAPTURE_FLAG);
         holdFlag.setText(HOLD_FLAG);
-        captureFlag.setStyle(MODE_SELECTION_BUTTON);
+        captureFlag.setStyle(MODE_SELECTION_BUTTON_CSS);
         cancel.setStyle(DEFAULT_BUTTON_CSS);
         jfxDialogLayout.setActions(cancel, killHero, captureFlag, holdFlag);
-        killHero.setStyle(MODE_SELECTION_BUTTON);
-        holdFlag.setStyle(MODE_SELECTION_BUTTON);
+        killHero.setStyle(MODE_SELECTION_BUTTON_CSS);
+        holdFlag.setStyle(MODE_SELECTION_BUTTON_CSS);
 
         JFXDialog jfxDialog = new JFXDialog(stackPane, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
 
@@ -291,12 +288,12 @@ public class MainMenu {
         cancel.setText(CANCEL);
         story_level_1.setText(STORY_LEVEL_1);
         story_level_2.setText(STORY_LEVEL_2);
-        story_level_2.setStyle(MODE_SELECTION_BUTTON);
+        story_level_2.setStyle(MODE_SELECTION_BUTTON_CSS);
         story_level_3.setText(STORY_LEVEL_3);
         jfxDialogLayout.setActions(cancel, story_level_1, story_level_2, story_level_3);
         cancel.setStyle(DEFAULT_BUTTON_CSS);
-        story_level_1.setStyle(MODE_SELECTION_BUTTON);
-        story_level_3.setStyle(MODE_SELECTION_BUTTON);
+        story_level_1.setStyle(MODE_SELECTION_BUTTON_CSS);
+        story_level_3.setStyle(MODE_SELECTION_BUTTON_CSS);
 
         JFXDialog jfxDialog = new JFXDialog(stackPane, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
 
@@ -347,8 +344,8 @@ public class MainMenu {
         singlePlayer.setText(SINGLEPLAYER_MODE);
         multiplayer.setText(MULTIPLAYER_MODE);
         cancel.setStyle(DEFAULT_BUTTON_CSS);
-        singlePlayer.setStyle(MODE_SELECTION_BUTTON);
-        multiplayer.setStyle(MODE_SELECTION_BUTTON);
+        singlePlayer.setStyle(MODE_SELECTION_BUTTON_CSS);
+        multiplayer.setStyle(MODE_SELECTION_BUTTON_CSS);
 
         JFXDialog jfxDialog = new JFXDialog(stackPane, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
 

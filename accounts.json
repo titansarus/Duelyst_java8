@@ -6,7 +6,8 @@
       "decks": [],
       "cardCollection": {
         "cards": [],
-        "account": "@root.0"
+        "account": "@root.0",
+        "decks": []
       },
       "mainDeck": {},
       "username": "a",
@@ -23,7 +24,8 @@
       "decks": [],
       "cardCollection": {
         "cards": [],
-        "account": "@root.1"
+        "account": "@root.1",
+        "decks": []
       },
       "mainDeck": {},
       "username": "b",
