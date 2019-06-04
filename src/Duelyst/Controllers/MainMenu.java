@@ -13,7 +13,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+
 import static Duelyst.View.Constants.*;
+
 import java.io.IOException;
 
 import static Duelyst.View.Constants.NO_USER_LOGINED;
@@ -56,13 +58,12 @@ public class MainMenu {
         runTimeline();
 
 
-
         play_btn.setGraphic(new ImageView(playImg));
         shop_btn.setGraphic(new ImageView(shopImg));
         quit_btn.setGraphic(new ImageView(quitImg));
         collection_btn.setGraphic(new ImageView(collectionImg));
         leaderboard_btn.setGraphic(new ImageView(leaderboardsImg));
-        back_btn.setGraphic(new ImageView( backImg));
+        back_btn.setGraphic(new ImageView(backImg));
 
     }
 
@@ -109,12 +110,7 @@ public class MainMenu {
             e.printStackTrace();
         }
         stopTimeline();
-        Scene scene = new Scene(root);
-        Container.scenes.addLast(scene);
-        Container.stage.setScene(Container.scenes.getLast());
-        Container.nameOfMenus.add(LEADERBOARD);
-        Container.stage.show();
-
+        Container.runNextScene(root,LEADERBOARD);
     }
 
 
@@ -122,10 +118,7 @@ public class MainMenu {
         if (Container.scenes.size() > 0) {
             stopTimeline(); //TODO In ba'ad az hazf slowTimeline hazf shavad
             //TODO TEST
-            Container.scenes.removeLast();
-            Container.nameOfMenus.removeLast();
-            Container.stage.setScene(Container.scenes.getLast());
-            Container.stage.show();
+          Container.handleBack();
 
         }
 
@@ -152,17 +145,23 @@ public class MainMenu {
             e.printStackTrace();
         }
         stopTimeline();
-        Scene scene = new Scene(root);
-        Container.scenes.addLast(scene);
-        Container.nameOfMenus.add(SHOP);
-        Container.stage.setScene(Container.scenes.getLast());
-
-        Container.stage.show();
+        Container.runNextScene(root,SHOP);
 
     }
 
     public void handleCollectionBtn() {
-
+        Pane root = null;
+        FXMLLoader fxmlLoader = null;
+        try {
+            fxmlLoader = new FXMLLoader(getClass().getResource("../View/FXMLFiles/CardCollection.fxml"));
+            root = fxmlLoader.load();
+            int i = 0;
+            System.out.println(i);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stopTimeline();
+        Container.runNextScene(root,COLLECTION);
 
     }
 

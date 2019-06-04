@@ -30,8 +30,7 @@ public class Leaderboard {
         title_iv.setImage(leaderboardsImg);
     }
 
-    public void updateTable()
-    {
+    public void updateTable() {
         ArrayList<Account> accounts = Account.accountsSorter(Account.getAccounts());
 //        scrollPane.setMinHeight(500)
         ArrayList<AccountInfo> accountInfos = new ArrayList<>();
@@ -39,7 +38,7 @@ public class Leaderboard {
         for (int i = 0; i < accounts.size(); i++) {
             if (accounts.get(i) != null) {
                 Account account = accounts.get(i);
-                accountInfos.add(new AccountInfo(++count,account.getUsername(),account.getCountOfWins()));
+                accountInfos.add(new AccountInfo(++count, account.getUsername(), account.getCountOfWins()));
             }
         }
 
@@ -71,13 +70,9 @@ public class Leaderboard {
         }
     }
 
-    public void handleBackBtn()
-    {
+    public void handleBackBtn() {
         if (Container.scenes.size() > 0) {
-            Container.scenes.removeLast();
-            Container.nameOfMenus.removeLast();
-            Container.stage.setScene(Container.scenes.getLast());
-            Container.stage.show();
+            Container.handleBack();
 
         }
     }

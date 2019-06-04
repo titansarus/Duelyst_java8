@@ -5,10 +5,13 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.util.Deque;
 import java.util.LinkedList;
+
+import static Duelyst.View.Constants.COLLECTION;
 
 public class Container {
     public static Stage stage = new Stage();
@@ -34,6 +37,21 @@ public class Container {
         alert.show();
     }
 
+    static void runNextScene(Pane root, String titleOfNextScene) {
+        Scene scene = new Scene(root);
+        Container.scenes.addLast(scene);
+        Container.nameOfMenus.add(titleOfNextScene);
+        Container.stage.setScene(Container.scenes.getLast());
+
+        Container.stage.show();
+    }
+
+    static void handleBack() {
+        Container.scenes.removeLast();
+        Container.nameOfMenus.removeLast();
+        Container.stage.setScene(Container.scenes.getLast());
+        Container.stage.show();
+    }
 
 
 }

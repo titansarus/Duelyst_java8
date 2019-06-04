@@ -12,9 +12,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="738.0" prefWidth="827.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.ShopController">
    <children>
-      <ScrollPane fx:id="msn" layoutX="118.0" layoutY="59.0" prefHeight="557.0" prefWidth="630.0">
+      <ScrollPane fx:id="scrollPane" layoutX="118.0" layoutY="59.0" prefHeight="557.0" prefWidth="630.0">
          <content>
-            <HBox fx:id="msnH" focusTraversable="true" prefHeight="460.0" prefWidth="629.0" />
+            <HBox fx:id="listOfCards_HBox" focusTraversable="true" prefHeight="460.0" prefWidth="629.0" />
          </content>
       </ScrollPane>
       <JFXButton fx:id="action_btn" buttonType="RAISED" layoutX="387.0" layoutY="646.0" onAction="#handleActionBtn" prefHeight="48.0" prefWidth="93.0" style="-fx-background-color: #464646;" stylesheets="@../../../css/jfx-button.css" text=" " />

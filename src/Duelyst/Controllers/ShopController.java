@@ -6,7 +6,6 @@ import Duelyst.Model.Account;
 import Duelyst.Model.Card;
 import Duelyst.Model.Shop;
 import Duelyst.Model.ShopMode;
-import Duelyst.View.Constants;
 import Duelyst.View.ViewClasses.CardView;
 import com.jfoenix.controls.*;
 import javafx.animation.Animation;
@@ -27,9 +26,9 @@ import static Duelyst.View.Constants.*;
 public class ShopController {
 
     @FXML
-    ScrollPane msn;
+    ScrollPane scrollPane;
     @FXML
-    HBox msnH;
+    HBox listOfCards_HBox;
 
     @FXML
     JFXToggleButton buySell_tgb;
@@ -103,8 +102,8 @@ public class ShopController {
         } else {
             makeCardListOfBuy();
         }
-//        msnH.getChildren().clear();
-//        msnH.setPrefWidth(629);
+//        listOfCards_HBox.getChildren().clear();
+//        listOfCards_HBox.setPrefWidth(629);
 //        cardViews.clear();
 //        for (int i = 0; i < Shop.getInstance().getCards().size(); i++) {
 //            if (search_txtf.getText().length() == 0 || Shop.getInstance().getCards().get(i).getCardName().contains(search_txtf.getText())) {
@@ -113,8 +112,8 @@ public class ShopController {
 //                CardView cardView = new CardView(Shop.getInstance().getCards().get(i));
 //                getCardViews().add(cardView);
 //                vBox.getChildren().add(cardView);
-//                msnH.getChildren().add(vBox);
-//                msnH.setPrefWidth(msnH.getPrefWidth() + 275);
+//                listOfCards_HBox.getChildren().add(vBox);
+//                listOfCards_HBox.setPrefWidth(listOfCards_HBox.getPrefWidth() + 275);
 //            }
 //        }
     }
@@ -128,8 +127,8 @@ public class ShopController {
     }
 
     private void makeCardList(ArrayList<Card> cards) {
-        msnH.getChildren().clear();
-        msnH.setPrefWidth(629);
+        listOfCards_HBox.getChildren().clear();
+        listOfCards_HBox.setPrefWidth(629);
         cardViews.clear();
         for (int i = 0; i < cards.size(); i++) {
             if (search_txtf.getText().length() == 0 || cards.get(i).getCardName().contains(search_txtf.getText())) {
@@ -138,8 +137,8 @@ public class ShopController {
                 CardView cardView = new CardView(cards.get(i));
                 getCardViews().add(cardView);
                 vBox.getChildren().add(cardView);
-                msnH.getChildren().add(vBox);
-                msnH.setPrefWidth(msnH.getPrefWidth() + 275);
+                listOfCards_HBox.getChildren().add(vBox);
+                listOfCards_HBox.setPrefWidth(listOfCards_HBox.getPrefWidth() + 275);
             }
         }
     }
@@ -212,22 +211,16 @@ public class ShopController {
         getLoginedAccount_lbl().setText(Account.getLoginedAccount().getUsername());
     }
 
-    public void stopTimeline()
-    {
+    public void stopTimeline() {
         getSlowTimeline().stop();
         getFastTimeline().stop();
     }
 
 
-    public void handleBackBtn()
-    {
+    public void handleBackBtn() {
         if (Container.scenes.size() > 0) {
-            stopTimeline(); //TODO In ba'ad az hazf slowTimeline hazf shavad
-            //TODO TEST
-            Container.scenes.removeLast();
-            Container.nameOfMenus.removeLast();
-            Container.stage.setScene(Container.scenes.getLast());
-            Container.stage.show();
+            stopTimeline(); //Necessary for Optimization. Don't Delete This.
+            Container.handleBack();
 
         }
     }
@@ -236,12 +229,12 @@ public class ShopController {
         return fastTimeline;
     }
 
-    public ScrollPane getMsn() {
-        return msn;
+    public ScrollPane getScrollPane() {
+        return scrollPane;
     }
 
-    public HBox getMsnH() {
-        return msnH;
+    public HBox getListOfCards_HBox() {
+        return listOfCards_HBox;
     }
 
     public JFXToggleButton getBuySell_tgb() {

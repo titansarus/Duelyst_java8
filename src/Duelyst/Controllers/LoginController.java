@@ -91,11 +91,7 @@ public class LoginController {
             e.printStackTrace();
         }
         stopTimeline();
-        Scene scene = new Scene(root);
-        Container.scenes.addLast(scene);
-        Container.stage.setScene(Container.scenes.getLast());
-
-        Container.stage.show();
+        Container.runNextScene(root,MAIN_MENU);
     }
 
 

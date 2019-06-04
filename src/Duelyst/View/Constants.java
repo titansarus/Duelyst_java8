@@ -29,7 +29,7 @@ public class Constants {
 
 
     //TITLE
-    public static final String SHOP = "SHOP", MAIN_MENU = "MAIN_MENU", LOGIN = "LOGIN", LEADERBOARD = "LEADERBOARD";
+    public static final String SHOP = "SHOP", MAIN_MENU = "MAIN_MENU", LOGIN = "LOGIN", LEADERBOARD = "LEADERBOARD" , COLLECTION = "COLLECTION";
 
 
     public static final Image playImg = new Image(Constants.class.getResourceAsStream("../../res/ui/play.png"));
