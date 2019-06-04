@@ -16,7 +16,7 @@ public class Deck implements Cloneable {
     private String deckName;
     private boolean isValid = false;
 
-   public Deck(String deckName, Account account) {
+    public Deck(String deckName, Account account) {
         setDeckName(deckName);
         setAccount(account);
         setCards(new ArrayList<>());
@@ -36,23 +36,28 @@ public class Deck implements Cloneable {
         }
     }
 
-    public static boolean deckExist(String deckName , ArrayList<Deck> decks)
-    {
-        return findDeckInArrayList(deckName,decks)!=null;
+    public static void giveCardOfDeckToCardCollection(Deck deck, CardCollection cardCollection) {
+        if (deck != null && cardCollection != null) {
+            for (int i = 0; i < deck.getCards().size(); i++) {
+                if (deck.getCards().get(i) != null) {
+                    cardCollection.addCard(deck.getCards().get(i));
+                }
+            }
+        }
     }
 
-    public static Deck findDeckInArrayList(String deckName,ArrayList<Deck> decks)
-    {
-        for (int i =0;i<decks.size();i++) {
+    public static boolean deckExist(String deckName, ArrayList<Deck> decks) {
+        return findDeckInArrayList(deckName, decks) != null;
+    }
+
+    public static Deck findDeckInArrayList(String deckName, ArrayList<Deck> decks) {
+        for (int i = 0; i < decks.size(); i++) {
             if (decks.get(i) != null && decks.get(i).getDeckName().equals(deckName)) {
                 return decks.get(i);
             }
         }
         return null;
     }
-
-
-
 
 
     public void deleteItem() {
@@ -128,7 +133,7 @@ public class Deck implements Cloneable {
     }
 
     private static Deck findDeck(String deckName) {
-        return findDeckInArrayList(deckName,decks);
+        return findDeckInArrayList(deckName, decks);
     }
 
 
@@ -220,10 +225,6 @@ public class Deck implements Cloneable {
     public boolean isValid() {
         return isValid;
     }
-
-
-
-
 
 
 }

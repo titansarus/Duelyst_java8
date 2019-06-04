@@ -1,18 +1,12 @@
 package Duelyst.Controllers;
 
-import Duelyst.Exceptions.DeckExistException;
-import Duelyst.Exceptions.NoCardSelectedFromCollectionException;
-import Duelyst.Exceptions.NoCardSelectedFromDeckException;
-import Duelyst.Exceptions.NoMainDeckSelectedException;
+import Duelyst.Exceptions.*;
 import Duelyst.Model.Account;
 import Duelyst.Model.Card;
 import Duelyst.Model.Deck;
 import Duelyst.View.Constants;
 import Duelyst.View.ViewClasses.CardView;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -73,6 +67,16 @@ public class CardCollectionController {
     @FXML
     Label mainDeck_lbl;
 
+    @FXML
+    JFXComboBox<String> listOfDecks_cb;
+
+    @FXML
+    JFXButton selectAsMainDeck_btn;
+
+    @FXML
+    JFXButton deleteDeck_btn;
+
+
     private String createDeckName;
 
 
@@ -99,6 +103,40 @@ public class CardCollectionController {
         }), new KeyFrame(Duration.millis(100)));
         fastTimeline.setCycleCount(Animation.INDEFINITE);
         fastTimeline.play();
+    }
+
+    public void handleSelectAsMainDeck() {
+        String nameOfDeck = listOfDecks_cb.getValue();
+
+        if (nameOfDeck != null) {
+            Deck deck = Deck.findDeckInArrayList(nameOfDeck, Account.getLoginedAccount().getCardCollection().getDecks());
+
+            if (deck != null) {
+                Account.getLoginedAccount().getCardCollection().setMainDeck(deck);
+            }
+        } else {
+            Container.exceptionGenerator(new NoDeckSelectedException(), stackePane);
+        }
+    }
+
+    public void handleDeleteDeck() {
+        String nameOfDeck = listOfDecks_cb.getValue();
+
+        if (nameOfDeck != null) {
+            Deck deck = Deck.findDeckInArrayList(nameOfDeck, Account.getLoginedAccount().getCardCollection().getDecks());
+            if (deck != null) {
+                Deck.giveCardOfDeckToCardCollection(deck, Account.getLoginedAccount().getCardCollection());
+                if (deck.equals(Account.getLoginedAccount().getCardCollection().getMainDeck())) {
+                    Account.getLoginedAccount().getCardCollection().setMainDeck(null);
+                }
+                Account.getLoginedAccount().getCardCollection().getDecks().remove(deck);
+                Deck.getDecks().remove(deck);
+            }
+        } else {
+            Container.exceptionGenerator(new NoDeckSelectedException(), stackePane);
+        }
+
+
     }
 
 
@@ -188,6 +226,29 @@ public class CardCollectionController {
 
     }
 
+    public void populateComboBox() {
+        ArrayList<String> deckNames = new ArrayList<>();
+        ArrayList<Deck> decks = Account.getLoginedAccount().getCardCollection().getDecks();
+
+        for (int i = 0; i < decks.size(); i++) {
+            if (decks.get(i) != null) {
+                deckNames.add(decks.get(i).getDeckName());
+            }
+        }
+
+        listOfDecks_cb.getItems().clear();
+        listOfDecks_cb.getItems().addAll(deckNames);
+
+        listOfDecks_cb.hide();
+        listOfDecks_cb.setVisibleRowCount(5);
+        listOfDecks_cb.show();
+
+    }
+
+    public void IClicked() {//for Debug Only
+        System.out.println(listOfDecks_cb.getValue());
+    }
+
 
     public void runSlowTimeline() {
         slowTimeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
@@ -198,6 +259,8 @@ public class CardCollectionController {
             makeCardListOfCollection(Account.getLoginedAccount().getCardCollection().getCards());
             if (Account.getLoginedAccount().getCardCollection().getMainDeck() != null) {
                 makeCardListOfDeck(Account.getLoginedAccount().getCardCollection().getMainDeck().getCards());
+            } else {
+                makeCardListOfDeck(null);
             }
         }), new KeyFrame(Duration.millis(500)));
         slowTimeline.setCycleCount(Animation.INDEFINITE);
@@ -222,6 +285,9 @@ public class CardCollectionController {
         hBox.getChildren().clear();
         hBox.setPrefWidth(629);
         cardViews.clear();
+        if (cards == null) {
+            return;
+        }
         for (int i = 0; i < cards.size(); i++) {
             if (search.getText().length() == 0 || cards.get(i).getCardName().contains(search.getText())) {
                 VBox vBox = new VBox();

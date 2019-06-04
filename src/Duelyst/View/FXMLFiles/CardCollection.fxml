@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -13,14 +14,14 @@
 
 <StackPane fx:id="stackePane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.CardCollectionController">
    <children>
-      <AnchorPane prefHeight="809.0" prefWidth="1165.0">
+      <AnchorPane prefHeight="809.0" prefWidth="1251.0">
          <children>
-            <ScrollPane fx:id="scrollPane" layoutX="82.0" layoutY="131.0" prefHeight="522.0" prefWidth="525.0">
+            <ScrollPane fx:id="scrollPane" layoutX="24.0" layoutY="131.0" prefHeight="522.0" prefWidth="525.0">
                <content>
                   <HBox fx:id="cardCollectionCards_HB" focusTraversable="true" prefHeight="337.0" prefWidth="525.0" />
                </content>
             </ScrollPane>
-            <JFXTextField fx:id="search_txtf" labelFloat="true" layoutX="419.0" layoutY="99.0" prefHeight="25.0" prefWidth="188.0" promptText="Search..." style="-fx-background-color: lightgray;" stylesheets="@../../../css/jfx-textfield.css">
+            <JFXTextField fx:id="search_txtf" labelFloat="true" layoutX="361.0" layoutY="99.0" prefHeight="25.0" prefWidth="188.0" promptText="Search..." style="-fx-background-color: lightgray;" stylesheets="@../../../css/jfx-textfield.css">
                <effect>
                   <Reflection />
                </effect>
@@ -34,12 +35,12 @@
                   <Font size="25.0" />
                </font>
             </JFXButton>
-            <ScrollPane fx:id="scrollPane_2" layoutX="635.0" layoutY="131.0" prefHeight="522.0" prefWidth="496.0">
+            <ScrollPane fx:id="scrollPane_2" layoutX="577.0" layoutY="131.0" prefHeight="522.0" prefWidth="496.0">
                <content>
                   <HBox fx:id="deck_hbox" focusTraversable="true" prefHeight="337.0" prefWidth="494.0" />
                </content>
             </ScrollPane>
-            <JFXTextField fx:id="deckSearch_txtf" labelFloat="true" layoutX="943.0" layoutY="99.0" prefHeight="25.0" prefWidth="188.0" promptText="Search..." style="-fx-background-color: lightgray;" stylesheets="@../../../css/jfx-textfield.css">
+            <JFXTextField fx:id="deckSearch_txtf" labelFloat="true" layoutX="885.0" layoutY="99.0" prefHeight="25.0" prefWidth="188.0" promptText="Search..." style="-fx-background-color: lightgray;" stylesheets="@../../../css/jfx-textfield.css">
                <effect>
                   <Reflection />
                </effect>
@@ -49,6 +50,17 @@
             <Label layoutX="769.0" layoutY="31.0" prefHeight="15.0" prefWidth="152.0" text="Main Deck" />
             <JFXButton layoutX="234.0" layoutY="756.0" onAction="#handleSendToDeck" text="Send to Deck" />
             <JFXButton layoutX="856.0" layoutY="756.0" onAction="#handleSendBackToCollection" text="Send to Collection" />
+            <JFXComboBox fx:id="listOfDecks_cb" layoutX="1089.0" layoutY="131.0" onAction="#IClicked" onMouseClicked="#populateComboBox" prefHeight="25.0" prefWidth="152.0" />
+            <JFXButton fx:id="selectAsMainDeck_btn" buttonType="RAISED" layoutX="1081.0" layoutY="197.0" onAction="#handleSelectAsMainDeck" prefHeight="25.0" prefWidth="168.0" ripplerFill="#ab9b9b" style="-fx-background-color: LightGreen;" stylesheets="@../../../css/jfx-button.css" text="Select As Main Deck">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="deleteDeck_btn" buttonType="RAISED" layoutX="1081.0" layoutY="259.0" onAction="#handleDeleteDeck" prefHeight="25.0" prefWidth="168.0" ripplerFill="#ab9b9b" style="-fx-background-color: Orange;" stylesheets="@../../../css/jfx-button.css" text="Delete Deck">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
          </children>
       </AnchorPane>
    </children>
