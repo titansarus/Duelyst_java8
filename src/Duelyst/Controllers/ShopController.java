@@ -157,7 +157,7 @@ public class ShopController {
             getAction_btn().setGraphic(i);
         } else {
             ImageView i = new ImageView(buyImg);
-
+            Shop.getInstance().setShopMode(ShopMode.BUY);
             getAction_btn().setGraphic(i);
         }
 

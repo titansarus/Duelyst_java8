@@ -40,9 +40,9 @@ public class Shop {
         }
         CardCollection cardCollection = Account.getLoginedAccount().getCardCollection();
         Account.getLoginedAccount().increaseDarick(selectedCard.getDarikCost());
+        cardCollection.removeCard(selectedCard);
         setSelectedCard(null);
 
-        cardCollection.removeCard(selectedCard);
 
 
     }
