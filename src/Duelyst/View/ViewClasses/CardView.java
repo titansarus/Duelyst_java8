@@ -3,18 +3,12 @@ package Duelyst.View.ViewClasses;
 import Duelyst.Controllers.CardController;
 import Duelyst.Controllers.Container;
 import Duelyst.Model.*;
-import Duelyst.Utility.Delta;
-import com.gilecode.yagson.YaGson;
-import com.gilecode.yagson.YaGsonBuilder;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 
@@ -58,7 +52,7 @@ public class CardView extends Pane {
                     }
                 } else if (Container.nameOfMenus.getLast().equals(COLLECTION))
                 {
-                    Account.getLoginedAccount().getCardCollection().setSelectedCard(card);
+                    Account.getLoggedAccount().getCardCollection().setSelectedCard(card);
                 }
             }
         });

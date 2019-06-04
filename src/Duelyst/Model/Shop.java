@@ -30,7 +30,7 @@ public class Shop {
     }
 
     public void selectCardForSell(String id) {
-        Card card = Card.findCardInArrayList(id, Account.getLoginedAccount().getCardCollection().getCards());
+        Card card = Card.findCardInArrayList(id, Account.getLoggedAccount().getCardCollection().getCards());
         selectedCard = card;
     }
 
@@ -38,8 +38,8 @@ public class Shop {
         if (selectedCard == null) {
             throw new NoCardSelectedInShopException();
         }
-        CardCollection cardCollection = Account.getLoginedAccount().getCardCollection();
-        Account.getLoginedAccount().increaseDarick(selectedCard.getDarikCost());
+        CardCollection cardCollection = Account.getLoggedAccount().getCardCollection();
+        Account.getLoggedAccount().increaseDarick(selectedCard.getDarikCost());
         cardCollection.removeCard(selectedCard);
         setSelectedCard(null);
 
@@ -52,11 +52,11 @@ public class Shop {
             throw new NoCardSelectedInShopException();
         }
         System.out.println("You Buyed Card");
-        if (Account.getLoginedAccount().getDarick() < getSelectedCard().getDarikCost()) {
+        if (Account.getLoggedAccount().getDarick() < getSelectedCard().getDarikCost()) {
             throw new NotEnoughDarickException();
         }
-        Account.getLoginedAccount().decreaseDarick(getSelectedCard().getDarikCost());
-        Account.getLoginedAccount().getCardCollection().addCard(getSelectedCard());
+        Account.getLoggedAccount().decreaseDarick(getSelectedCard().getDarikCost());
+        Account.getLoggedAccount().getCardCollection().addCard(getSelectedCard());
     }
 
     public static Card getSelectedCard() {
@@ -92,7 +92,7 @@ public class Shop {
 //            } else
 //                throw new Error(ConstantMessages.NOT_ENOUGH_MONEY.getMessage());
 //        } else {
-//            if (validBuyLimitOfItem(Account.getLoginedAccount()) || account.getUsername().equals("AI")) {
+//            if (validBuyLimitOfItem(Account.getLoggedAccount()) || account.getUsername().equals("AI")) {
 //                if (item.getDarickCost() <= account.getDarick()) {
 //                    Item cloneItem = Item.deepClone(item);
 //                    account.getCardCollection().addItem(cloneItem);

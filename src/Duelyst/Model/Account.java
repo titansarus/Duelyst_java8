@@ -1,26 +1,21 @@
 package Duelyst.Model;
 
-import Duelyst.Model.CardCollection;
-import Duelyst.Model.Deck;
-import Duelyst.Model.Item;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 
 
-import javax.swing.text.TableView;
 import java.io.FileWriter;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 import static Duelyst.View.Constants.*;
 
 public class Account implements Cloneable {
-    private static Account loginedAccount = null;
+    private static Account loggedAccount = null;
     private static ArrayList<Account> accounts = new ArrayList<>();
     private ArrayList<String> battleHistory;
-   ; //THIS IS NOT USED. WILL USE CARD_COLLECTION
+   //THIS IS NOT USED. WILL USE CARD_COLLECTION
     private CardCollection cardCollection;
 
     private String username;
@@ -89,12 +84,12 @@ public class Account implements Cloneable {
     }
 
 
-    public static Account getLoginedAccount() {
-        return loginedAccount;
+    public static Account getLoggedAccount() {
+        return loggedAccount;
     }
 
-    public static void setLoginedAccount(Account loginedAccount) {
-        Account.loginedAccount = loginedAccount;
+    public static void setLoggedAccount(Account loggedAccount) {
+        Account.loggedAccount = loggedAccount;
     }
 
     public static ArrayList<Account> getAccounts() {

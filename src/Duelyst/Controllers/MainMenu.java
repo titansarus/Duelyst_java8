@@ -88,19 +88,19 @@ public class MainMenu {
 
 
     private void updateDarick() {
-        if (Account.getLoginedAccount() == null) {
+        if (Account.getLoggedAccount() == null) {
             getAccountDarick_lbl().setText("0");
         } else {
-            getAccountDarick_lbl().setText(String.valueOf(Account.getLoginedAccount().getDarick()));
+            getAccountDarick_lbl().setText(String.valueOf(Account.getLoggedAccount().getDarick()));
         }
     }
 
     private void updateLoginedUser() {
-        if (Account.getLoginedAccount() == null) {
+        if (Account.getLoggedAccount() == null) {
             getLoginedAccount_lbl().setText(NO_USER_LOGINED);
             return;
         }
-        getLoginedAccount_lbl().setText(Account.getLoginedAccount().getUsername());
+        getLoginedAccount_lbl().setText(Account.getLoggedAccount().getUsername());
     }
 
     public void stopTimeline() {

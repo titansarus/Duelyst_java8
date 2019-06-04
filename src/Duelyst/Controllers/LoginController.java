@@ -2,9 +2,6 @@ package Duelyst.Controllers;
 
 import Duelyst.Exceptions.*;
 import Duelyst.Model.Account;
-import Duelyst.View.Constants;
-import com.gilecode.yagson.YaGson;
-import com.gilecode.yagson.YaGsonBuilder;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.Animation;
@@ -12,16 +9,12 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 
 import static Duelyst.View.Constants.*;
 
@@ -53,7 +46,7 @@ public class LoginController {
 
 
     public void handleGoToMainMenu() {
-        if (Account.getLoginedAccount()==null){
+        if (Account.getLoggedAccount()==null){
             Container.exceptionGenerator(new NotExistLoginUserException(),stackPane);
             return;
         }
@@ -85,7 +78,7 @@ public class LoginController {
             //Container.exceptionGenerator(new InvalidPasswordException());
             return;
         }
-        Account.setLoginedAccount(account);
+        Account.setLoggedAccount(account);
         Container.notificationShower(USER_LOGINED_CONTENT, USER_LOGINED,stackPane);
     }
 
