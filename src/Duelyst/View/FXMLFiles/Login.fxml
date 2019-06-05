@@ -6,21 +6,34 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.RadialGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
 <StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.LoginController">
    <children>
-      <AnchorPane prefHeight="602.0" prefWidth="1024.0" style="-fx-background-image: url('res/Backgrounds/backlogin.png'); -fx-background-color: LIGHTGREEN; -fx-background-size: cover;">
+      <AnchorPane prefHeight="602.0" prefWidth="1024.0" style="-fx-background-image: url('/res/Backgrounds/backlogin.jpg'); -fx-background-color: LIGHTGREEN; -fx-background-size: 1024 602;">
          <children>
-            <JFXButton buttonType="RAISED" layoutX="298.0" layoutY="301.0" onAction="#handleSignUpBtn" style="-fx-background-color: PINK;" text="Sign Up">
+            <JFXButton buttonType="RAISED" layoutX="188.0" layoutY="301.0" onAction="#handleSignUpBtn" style="-fx-background-color: #02263e; -fx-opacity: 0.7;" text="Sign Up" textFill="#b6e4fc">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
                <ripplerFill>
                   <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                      <stops>
-                        <Stop color="#da2f2f" />
-                        <Stop color="WHITE" offset="1.0" />
+                        <Stop color="#4eb4e5" />
+                        <Stop color="#4eb4e5" offset="1.0" />
+                     </stops>
+                  </RadialGradient>
+               </ripplerFill>
+            </JFXButton>
+             
+            <JFXButton buttonType="RAISED" layoutX="80.0" layoutY="301.0" onAction="#handleLoginBtn" style="-fx-background-color: #02263e; -fx-opacity: 0.7;" text="Login" textFill="#b6e4fc">
+               <ripplerFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop color="#4eb4e5" />
+                        <Stop color="#4eb4e5" offset="1.0" />
                      </stops>
                   </RadialGradient>
                </ripplerFill>
@@ -28,47 +41,34 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXButton>
-            <JFXButton buttonType="RAISED" layoutX="190.0" layoutY="301.0" onAction="#handleLoginBtn" style="-fx-background-color: PINK;" text="Login">
+            <JFXTextField fx:id="username_tf" focusColor="#fbd951" layoutX="80.0" layoutY="189.0" promptText="Username" style="-fx-text-fill: WHITE; -fx-opacity: 0.5; -fx-background-color: rgba(0,0,0,1);" unFocusColor="#06416b" />
+            <JFXPasswordField fx:id="password_tf" focusColor="#fbd951" layoutX="80.0" layoutY="236.0" promptText="Password" style="-fx-text-fill: WHITE; -fx-background-color: BLACK; -fx-opacity: 0.5;" unFocusColor="#06416b" />
+            <Label layoutX="4.0" layoutY="194.0" style="-fx-opacity: 1; -fx-background-radius: 5 5 5 5; -fx-border-radius: 5 5 5 5; -fx-font-family: Averta Demo PE Cutted Demo;" text="Username" textFill="#06436f" />
+            <Label layoutX="4.0" layoutY="241.0" style="-fx-opacity: 1; -fx-background-radius: 5 5 5 5; -fx-border-radius: 5 5 5 5; -fx-font-family: Averta Demo PE Cutted Demo;" text="Password" textFill="#06436f" />
+            <JFXButton buttonType="RAISED" layoutX="684.0" layoutY="548.0" onAction="#handleGoToMainMenu" prefHeight="25.0" prefWidth="168.0" style="-fx-background-color: #02263e; -fx-opacity: 0.7;" text="Go To Main Menu" textFill="#b6e4fc">
                <ripplerFill>
-                  <LinearGradient endX="1.0" endY="1.0">
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                      <stops>
-                        <Stop color="#da2f2f" />
-                        <Stop color="WHITE" offset="1.0" />
+                        <Stop color="#4eb4e5" />
+                        <Stop color="#4eb4e5" offset="1.0" />
                      </stops>
-                  </LinearGradient>
+                  </RadialGradient>
                </ripplerFill>
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXButton>
-            <JFXTextField fx:id="username_tf" layoutX="190.0" layoutY="189.0" promptText="Username" style="-fx-text-fill: WHITE;" unFocusColor="#f9fbfc" />
-            <JFXPasswordField fx:id="password_tf" layoutX="190.0" layoutY="236.0" promptText="Password" style="-fx-color: WHITE;" unFocusColor="#f5f3f3" />
-            <Label layoutX="102.0" layoutY="194.0" text="Username" textFill="WHITE" />
-            <Label layoutX="102.0" layoutY="241.0" text="Password" textFill="WHITE" />
-            <JFXButton buttonType="RAISED" layoutX="190.0" layoutY="358.0" onAction="#handleGoToMainMenu" prefHeight="25.0" prefWidth="168.0" style="-fx-background-color: PINK;" text="Go To Main Menu">
-               <ripplerFill>
-                  <LinearGradient endX="1.0" endY="1.0">
-                     <stops>
-                        <Stop color="#da2f2f" />
-                        <Stop color="WHITE" offset="1.0" />
-                     </stops>
-                  </LinearGradient>
-               </ripplerFill>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </JFXButton>
-            <JFXButton buttonType="RAISED" layoutX="899.0" layoutY="545.0" onAction="#handleExit" style="-fx-background-color: PINK;" text="exit">
+            <JFXButton buttonType="RAISED" layoutX="900.0" layoutY="545.0" onAction="#handleExit" prefHeight="21.0" prefWidth="44.0" style="-fx-background-color: #02263e; -fx-opacity: 0.7;" text="exit" textFill="#b6e4fc">
                <ripplerFill>
                   <RadialGradient centerX="1.0" cycleMethod="REFLECT" radius="0.5">
                      <stops>
-                        <Stop color="#da2f2f" />
-                        <Stop color="#f72011" offset="1.0" />
+                        <Stop color="#4eb4e5" />
+                        <Stop color="#4eb4e5" offset="1.0" />
                      </stops>
                   </RadialGradient>
                </ripplerFill>
             </JFXButton>
          </children>
-      </AnchorPane>
+      </AnchorPane> 
    </children>
 </StackPane>

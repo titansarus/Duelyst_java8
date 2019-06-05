@@ -1,7 +1,6 @@
 package Duelyst;
 
 import Duelyst.Controllers.Container;
-import Duelyst.Controllers.LoginController;
 import Duelyst.Model.Account;
 import Duelyst.Model.Card;
 import Duelyst.Model.Shop;
@@ -23,10 +22,9 @@ import static Duelyst.View.Constants.LOGIN;
 
 public class Main extends Application {
 
-
     {
         Pane root = null;
-        FXMLLoader fxmlLoader = null;
+        FXMLLoader fxmlLoader;
         try {
             fxmlLoader = new FXMLLoader(getClass().getResource("./View/FXMLFiles/Login.fxml"));
             root = fxmlLoader.load();
