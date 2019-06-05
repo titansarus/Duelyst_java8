@@ -1,7 +1,7 @@
 
 package Duelyst.Model;
 
-import Duelyst.Model.*;
+import Duelyst.Exceptions.NotEnoughCardsToImportException;
 import com.rits.cloning.Cloner;
 
 import java.util.ArrayList;
@@ -44,6 +44,61 @@ public class Deck implements Cloneable {
                 }
             }
         }
+    }
+
+    public static void sendExportedDeckToCardCollection(Deck deck, CardCollection cardCollection) {
+        boolean exportAvailable = true;
+        if (Deck.findDeckInArrayList(deck.getDeckName(), cardCollection.getDecks()) != null) {
+            Cloner cloner = new Cloner();
+            CardCollection cardCollection1 = cloner.deepClone(cardCollection);
+            Deck.giveCardOfDeckToCardCollection(Deck.findDeckInArrayList(deck.getDeckName(), cardCollection1.getDecks()), cardCollection1);
+            exportAvailable = checkImportAvailabitiy(deck, cardCollection1);
+        } else {
+            exportAvailable = checkImportAvailabitiy(deck, cardCollection);
+        }
+
+
+        if (!exportAvailable) {
+            throw new NotEnoughCardsToImportException();//TODO
+        }
+
+
+        if (Deck.findDeckInArrayList(deck.getDeckName(), cardCollection.getDecks()) != null) {
+            Deck.giveCardOfDeckToCardCollection(Deck.findDeckInArrayList(deck.getDeckName(), cardCollection. getDecks()),cardCollection );
+            cardCollection.getDecks().remove(Deck.findDeckInArrayList(deck.getDeckName(),cardCollection.getDecks()));
+            cardCollection.setMainDeck(null);
+        }
+
+        Deck exportedDeck = new Deck(deck.getDeckName(),cardCollection.getAccount());
+        for (int i =0;i<deck.getCards().size();i++)
+        {
+            Card card = deck.getCards().get(i);
+            if (card!=null)
+            {
+                card.setAccount(cardCollection.getAccount());
+                card.setCardId(Card.makeNewID(cardCollection.getAccount().getUsername(),card.getCardName(),CardCollection.getCountOfCard(cardCollection.getCards(),card)));
+                //TODO CHECK FOR HERO
+                exportedDeck.addCard(card);
+                cardCollection.removeCard(Card.findCardInArrayListByName(card.getCardName(),cardCollection.getCards()));
+            }
+        }
+        cardCollection.getDecks().add(exportedDeck);
+
+    }
+
+    public static boolean checkImportAvailabitiy(Deck deck, CardCollection cardCollection) {
+        boolean result = true;
+
+        for (int i = 0; i < deck.getCards().size(); i++) {
+            Card card = deck.getCards().get(i);
+            if (card != null) {
+                if (Card.countNumberOfCardsWithNameInArrayList(card.getCardName(), cardCollection.getCards()) < Card.countNumberOfCardsWithNameInArrayList(card.getCardName(), deck.getCards())) {
+                    result = false;
+                    return result;
+                }
+            }
+        }
+        return result;
     }
 
     public static boolean deckExist(String deckName, ArrayList<Deck> decks) {

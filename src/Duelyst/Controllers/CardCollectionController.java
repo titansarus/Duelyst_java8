@@ -6,8 +6,9 @@ import Duelyst.Model.Card;
 import Duelyst.Model.Deck;
 import Duelyst.View.Constants;
 import Duelyst.View.ViewClasses.CardView;
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 import com.jfoenix.controls.*;
-import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -17,6 +18,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -24,8 +27,9 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 
-import java.security.AccessControlContext;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import static Duelyst.View.Constants.*;
 
@@ -76,9 +80,12 @@ public class CardCollectionController {
     @FXML
     JFXButton deleteDeck_btn;
 
+    @FXML
+    JFXButton exportDeck_btn;
 
-    private String createDeckName;
 
+    private String createDeckName; //These Are used just for the time we are getting input from user.
+    private String imporetDeckName;
 
     ArrayList<CardView> cardViewsOfCollection = new ArrayList<>();
     ArrayList<CardView> cardViewsOfDeck = new ArrayList<>();
@@ -139,29 +146,139 @@ public class CardCollectionController {
 
     }
 
+    public void importDeckFromReaderOrString(Reader reader, String jsonString) {
+        YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+        Deck deck = null;
+        try {
+            if (reader != null) {
+                deck = yaGson.fromJson(reader, Deck.class);
+                reader.close();
+            } else {
+                deck = yaGson.fromJson(jsonString, Deck.class);
+            }
 
-    public void handleCreateDeck() {
-        JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
-        jfxDialogLayout.setHeading(new Text(CHOOSE_GAME_MODE));
-        jfxDialogLayout.setBody(new Text(CHOOSE_GAME_MODE));
+        } catch (Exception e) {
+            Container.exceptionGenerator(new InvalidImportFileException(), stackePane);
+        }
+
+        try {
+
+            Deck.sendExportedDeckToCardCollection(deck, Account.getLoginedAccount().getCardCollection());
+        } catch (NotEnoughCardsToImportException e) {
+            Container.exceptionGenerator(e, stackePane);
+        }
+        setImporetDeckName("");
+    }
+
+
+    public void importDeckfromAddress(String address) {
+
+        Reader reader = null;
+        try {
+            reader = new FileReader(address);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        importDeckFromReaderOrString(reader, null);
+
+
+    }
+
+    public void handleDragOver(DragEvent event) {
+        if (event.getDragboard().hasFiles()) {
+            event.acceptTransferModes(TransferMode.ANY);
+        }
+    }
+
+    public void handleDragDropped(DragEvent event) throws IOException {
+        List<File> files = event.getDragboard().getFiles();
+        File file = files.get(0);
+        String jsonString;
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        try {
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.append(line);
+                sb.append(System.lineSeparator());
+                line = br.readLine();
+            }
+            jsonString = sb.toString();
+        } finally {
+            br.close();
+        }
+
+        //System.out.println(jsonString);
+        importDeckFromReaderOrString(null, jsonString);
+
+
+    }
+
+
+    public void handleImportDeck() {
         JFXButton cancel = new JFXButton();
         JFXButton accept = new JFXButton();
-        cancel.setStyle(DEFAULT_BUTTON_CSS);
-        accept.setStyle(MODE_SELECTION_BUTTON_CSS);
-        cancel.setText(CANCEL);
-        accept.setText(ACCEPT);
         JFXTextField textField = new JFXTextField();
-        textField.setPrefWidth(250);
-        jfxDialogLayout.setActions(textField, cancel, accept);
+        JFXDialogLayout jfxDialogLayout = Container.jfxInputDialogLayoutMaker(accept, cancel, textField, CHOOSE_IMPORT_DECK_NAME, CHOOSE_IMPORT_DECK_NAME);
 
 
         JFXDialog jfxDialog = new JFXDialog(stackePane, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
+        accept.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                setImporetDeckName(textField.getText());
+                if (getImporetDeckName().length() > 0) {
+                    String adderss = "./saved/Accounts/" + Account.getLoginedAccount().getUsername() + "/Decks/" + getImporetDeckName() + ".json";
+                    importDeckfromAddress(adderss);
+                }
+                jfxDialog.close();
+
+            }
+        });
         cancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 jfxDialog.close();
             }
         });
+
+        jfxDialog.show();
+
+
+    }
+
+    public void handleExportDeckBtn() {
+
+        if (Account.getLoginedAccount().getCardCollection().getMainDeck() != null) {
+            String nameOfDeck = Account.getLoginedAccount().getCardCollection().getMainDeck().getDeckName();
+            String address = "./saved/Accounts/" + Account.getLoginedAccount().getUsername() + "/Decks";
+            new File(address).mkdirs();
+            YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+            String exportedDeck = yaGson.toJson(Account.getLoginedAccount().getCardCollection().getMainDeck());
+            try (FileWriter fileWriter = new FileWriter(address + "/" + nameOfDeck + ".json")) {
+                fileWriter.write(exportedDeck);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Container.exceptionGenerator(new NoDeckSelectedException(), stackePane);
+        }
+    }
+
+    public void exportDeck(String nameOfExportedDeck) {
+    }
+
+
+    public void handleCreateDeck() {
+        JFXButton cancel = new JFXButton();
+        JFXButton accept = new JFXButton();
+        JFXTextField textField = new JFXTextField();
+        JFXDialogLayout jfxDialogLayout = Container.jfxInputDialogLayoutMaker(accept, cancel, textField, CHOOSE_DECK_NAME, CHOOSE_DECK_NAME);
+
+
+        JFXDialog jfxDialog = new JFXDialog(stackePane, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
 
         accept.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -171,6 +288,13 @@ public class CardCollectionController {
 
             }
         });
+        cancel.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                jfxDialog.close();
+            }
+        });
+
         jfxDialog.show();
     }
 
@@ -396,5 +520,13 @@ public class CardCollectionController {
 
     public void setCreateDeckName(String createDeckName) {
         this.createDeckName = createDeckName;
+    }
+
+    public String getImporetDeckName() {
+        return imporetDeckName;
+    }
+
+    public void setImporetDeckName(String imporetDeckName) {
+        this.imporetDeckName = imporetDeckName;
     }
 }

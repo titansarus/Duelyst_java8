@@ -10,13 +10,15 @@ public class Constants {
             INVALID_PASSWORD_CONTENT = "Wrong Password ! ", NOT_ENOUGH_DARICK_CONTENT = "Your Darick Is not Enough to buy!",
             NO_CARD_SELECTED_IN_SHOP_CONTENT = "No Card is selected. Please select a card!", DECK_EXIST_WITH_THIS_NAME_CONTENT = "A Deck Exists with this Name",
             NO_CARD_SELECTED_FROM_DECK_CONTENT = "No Card is Selected from Deck", NO_CARD_SELECTED_FROM_COLLECTION_CONTENT = "No Card is Selected from Collection",
-            NO_MAIN_DECK_CONTENT = "Select or Create a Deck as Main Deck first" , NO_DECK_SELECTED_CONTENT = "No Deck is Selected";
+            NO_MAIN_DECK_CONTENT = "Select or Create a Deck as Main Deck first", NO_DECK_SELECTED_CONTENT = "No Deck is Selected",
+            NOT_ENOUGH_CARD_TO_IMPORT_CONTENT = "Not Enough Cards to Import!", INVALID_IMPORT_FILE_CONTENT = "Invalid File to Import";
 
     //ERROR TITLE
     public static final String USER_EXIST_TITLE = "User Exist", USER_NOT_EXIST_TITLE = "User Not Exist", NOT_EXIST_LOGIN_USER_TITLE = "First Login!",
             INVALID_PASSWORD_TITLE = "Try again!", NOT_ENOUGH_DARICK_TITLE = "Not Enough Money",
             NO_CARD_SELECTED_IN_SHOP_TITLE = "Select a Card", DECK_EXIST_WITH_THIS_NAME_TITLE = "Deck Exists", NO_CARD_SELECTED_FROM_DECK_TITLE = "No Card Selected",
-            NO_CARD_SELECTED_FROM_COLLECTION_TITLE = "No Card Selected", NO_MAIN_DECK_TITLE = "Main Deck is Not Selected" , NO_DECK_SELECTED_TITLE = "No Deck is Selected";
+            NO_CARD_SELECTED_FROM_COLLECTION_TITLE = "No Card Selected", NO_MAIN_DECK_TITLE = "Main Deck is Not Selected", NO_DECK_SELECTED_TITLE = "No Deck is Selected",
+            NOT_ENOUGH_CARD_TO_IMPORT_TITLE = "Not Enough Cards to Import!", INVALID_IMPORT_FILE_TITLE = "Invalid File";
 
     //NOTIFICATION
     public static final String USER_CREATED_CONTENT = "User Created Successfully", USER_LOGINED_CONTENT = "User Logined Successfully", BUY_CONTENT = "Buy was Successful!",
@@ -52,7 +54,7 @@ public class Constants {
             CHOOSE_GAME_MODE = "Choose your game mode", SINGLEPLAYER_MODE = "Single-Player", MULTIPLAYER_MODE = "Multiplayer",
             CHOOSE_GAME_GOAL = "Choose your game goal", HOLD_FLAG = "Hold Flag", CAPTURE_FLAG = "Capture Flags", KILL_HERO = "Kil Hero",
             CHOOSE_GAME_LEVEL = "Choose Level", STORY_LEVEL_1 = "Story Level 1", STORY_LEVEL_2 = "Story Level 2", STORY_LEVEL_3 = "Story Level 3", CANCEL = "Cancel",
-            ACCEPT = "Accept";
+            ACCEPT = "Accept", CHOOSE_DECK_NAME = "Give your Deck a name!", CHOOSE_IMPORT_DECK_NAME = "Give name for Import Deck";
 
     public static final int MULTIPLAYER_INT = 2, SINGLEPLAYER_INT = 1, LEVEL_1 = 1, LEVEL_2 = 2, LEVEL_3 = 3, KILL_HERO_INT = 1, CAPTURE_FLAG_INT = 2, HOLD_FLAG_INT = 3;
 

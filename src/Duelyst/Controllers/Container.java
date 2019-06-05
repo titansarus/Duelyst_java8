@@ -20,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -66,6 +67,21 @@ public class Container {
 
         jfxDialog.show();
 
+    }
+
+
+    public static JFXDialogLayout jfxInputDialogLayoutMaker (JFXButton accept , JFXButton cancel , JFXTextField textField, String headerText , String bodyText)
+    {
+        JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
+        jfxDialogLayout.setHeading(new Text(headerText));
+        jfxDialogLayout.setBody(new Text(bodyText));
+        cancel.setStyle(DEFAULT_BUTTON_CSS);
+        accept.setStyle(MODE_SELECTION_BUTTON_CSS);
+        cancel.setText(CANCEL);
+        accept.setText(ACCEPT);
+        textField.setPrefWidth(250);
+        jfxDialogLayout.setActions(textField, cancel, accept);
+        return jfxDialogLayout;
     }
 
 
