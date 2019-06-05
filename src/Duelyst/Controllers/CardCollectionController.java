@@ -116,10 +116,10 @@ public class CardCollectionController {
         String nameOfDeck = listOfDecks_cb.getValue();
 
         if (nameOfDeck != null) {
-            Deck deck = Deck.findDeckInArrayList(nameOfDeck, Account.getLoginedAccount().getCardCollection().getDecks());
+            Deck deck = Deck.findDeckInArrayList(nameOfDeck, Account.getLoggedAccount().getCardCollection().getDecks());
 
             if (deck != null) {
-                Account.getLoginedAccount().getCardCollection().setMainDeck(deck);
+                Account.getLoggedAccount().getCardCollection().setMainDeck(deck);
             }
         } else {
             Container.exceptionGenerator(new NoDeckSelectedException(), stackePane);
@@ -130,13 +130,13 @@ public class CardCollectionController {
         String nameOfDeck = listOfDecks_cb.getValue();
 
         if (nameOfDeck != null) {
-            Deck deck = Deck.findDeckInArrayList(nameOfDeck, Account.getLoginedAccount().getCardCollection().getDecks());
+            Deck deck = Deck.findDeckInArrayList(nameOfDeck, Account.getLoggedAccount().getCardCollection().getDecks());
             if (deck != null) {
-                Deck.giveCardOfDeckToCardCollection(deck, Account.getLoginedAccount().getCardCollection());
-                if (deck.equals(Account.getLoginedAccount().getCardCollection().getMainDeck())) {
-                    Account.getLoginedAccount().getCardCollection().setMainDeck(null);
+                Deck.giveCardOfDeckToCardCollection(deck, Account.getLoggedAccount().getCardCollection());
+                if (deck.equals(Account.getLoggedAccount().getCardCollection().getMainDeck())) {
+                    Account.getLoggedAccount().getCardCollection().setMainDeck(null);
                 }
-                Account.getLoginedAccount().getCardCollection().getDecks().remove(deck);
+                Account.getLoggedAccount().getCardCollection().getDecks().remove(deck);
                 Deck.getDecks().remove(deck);
             }
         } else {
@@ -163,7 +163,7 @@ public class CardCollectionController {
 
         try {
 
-            Deck.sendExportedDeckToCardCollection(deck, Account.getLoginedAccount().getCardCollection());
+            Deck.sendExportedDeckToCardCollection(deck, Account.getLoggedAccount().getCardCollection());
         } catch (NotEnoughCardsToImportException e) {
             Container.exceptionGenerator(e, stackePane);
         }
@@ -230,7 +230,7 @@ public class CardCollectionController {
             public void handle(ActionEvent event) {
                 setImporetDeckName(textField.getText());
                 if (getImporetDeckName().length() > 0) {
-                    String adderss = "./saved/Accounts/" + Account.getLoginedAccount().getUsername() + "/Decks/" + getImporetDeckName() + ".json";
+                    String adderss = "./saved/Accounts/" + Account.getLoggedAccount().getUsername() + "/Decks/" + getImporetDeckName() + ".json";
                     importDeckfromAddress(adderss);
                 }
                 jfxDialog.close();
@@ -251,12 +251,12 @@ public class CardCollectionController {
 
     public void handleExportDeckBtn() {
 
-        if (Account.getLoginedAccount().getCardCollection().getMainDeck() != null) {
-            String nameOfDeck = Account.getLoginedAccount().getCardCollection().getMainDeck().getDeckName();
-            String address = "./saved/Accounts/" + Account.getLoginedAccount().getUsername() + "/Decks";
+        if (Account.getLoggedAccount().getCardCollection().getMainDeck() != null) {
+            String nameOfDeck = Account.getLoggedAccount().getCardCollection().getMainDeck().getDeckName();
+            String address = "./saved/Accounts/" + Account.getLoggedAccount().getUsername() + "/Decks";
             new File(address).mkdirs();
             YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
-            String exportedDeck = yaGson.toJson(Account.getLoginedAccount().getCardCollection().getMainDeck());
+            String exportedDeck = yaGson.toJson(Account.getLoggedAccount().getCardCollection().getMainDeck());
             try (FileWriter fileWriter = new FileWriter(address + "/" + nameOfDeck + ".json")) {
                 fileWriter.write(exportedDeck);
             } catch (IOException e) {
@@ -299,29 +299,29 @@ public class CardCollectionController {
     }
 
     public void createDeck(String deckName) {
-        if (Deck.deckExist(deckName, Account.getLoginedAccount().getCardCollection().getDecks())) {
+        if (Deck.deckExist(deckName, Account.getLoggedAccount().getCardCollection().getDecks())) {
             Container.exceptionGenerator(new DeckExistException(), stackePane);
         } else {
-            Deck deck = new Deck(deckName, Account.getLoginedAccount());
-            Account.getLoginedAccount().getCardCollection().getDecks().add(deck);
-            Account.getLoginedAccount().getCardCollection().setMainDeck(deck);
+            Deck deck = new Deck(deckName, Account.getLoggedAccount());
+            Account.getLoggedAccount().getCardCollection().getDecks().add(deck);
+            Account.getLoggedAccount().getCardCollection().setMainDeck(deck);
         }
     }
 
     public void handleSendToDeck() {
-        if (Account.getLoginedAccount().getCardCollection().getSelectedCard() == null ||
-                !Account.getLoginedAccount().getCardCollection().cardExist(Account.getLoginedAccount().getCardCollection().getSelectedCard())) {
+        if (Account.getLoggedAccount().getCardCollection().getSelectedCard() == null ||
+                !Account.getLoggedAccount().getCardCollection().cardExist(Account.getLoggedAccount().getCardCollection().getSelectedCard())) {
             Container.exceptionGenerator(new NoCardSelectedFromCollectionException(), stackePane);
             return;
         }
 
-        if (Account.getLoginedAccount().getCardCollection().getSelectedCard() != null) {
-            if (Account.getLoginedAccount().getCardCollection().getMainDeck() != null) {
+        if (Account.getLoggedAccount().getCardCollection().getSelectedCard() != null) {
+            if (Account.getLoggedAccount().getCardCollection().getMainDeck() != null) {
 
 
-                Account.getLoginedAccount().getCardCollection().getMainDeck().addCard(Account.getLoginedAccount().getCardCollection().getSelectedCard());
-                Account.getLoginedAccount().getCardCollection().getCards().remove(Account.getLoginedAccount().getCardCollection().getSelectedCard());
-                Account.getLoginedAccount().getCardCollection().setSelectedCard(null);
+                Account.getLoggedAccount().getCardCollection().getMainDeck().addCard(Account.getLoggedAccount().getCardCollection().getSelectedCard());
+                Account.getLoggedAccount().getCardCollection().getCards().remove(Account.getLoggedAccount().getCardCollection().getSelectedCard());
+                Account.getLoggedAccount().getCardCollection().setSelectedCard(null);
             } else {
                 Container.exceptionGenerator(new NoMainDeckSelectedException(), stackePane);
             }
@@ -330,13 +330,13 @@ public class CardCollectionController {
     }
 
     public void handleSendBackToCollection() {
-        if (Account.getLoginedAccount().getCardCollection().getSelectedCard() != null) {
-            if (Account.getLoginedAccount().getCardCollection().getMainDeck() != null) {
-                if (Deck.deckHasCard(Account.getLoginedAccount().getCardCollection().getSelectedCard().getCardId(), Account.getLoginedAccount().getCardCollection().getMainDeck())) {
+        if (Account.getLoggedAccount().getCardCollection().getSelectedCard() != null) {
+            if (Account.getLoggedAccount().getCardCollection().getMainDeck() != null) {
+                if (Deck.deckHasCard(Account.getLoggedAccount().getCardCollection().getSelectedCard().getCardId(), Account.getLoggedAccount().getCardCollection().getMainDeck())) {
 
-                    Account.getLoginedAccount().getCardCollection().getCards().add(Account.getLoginedAccount().getCardCollection().getSelectedCard());
-                    Account.getLoginedAccount().getCardCollection().getMainDeck().getCards().remove(Account.getLoginedAccount().getCardCollection().getSelectedCard());
-                    Account.getLoginedAccount().getCardCollection().setSelectedCard(null);
+                    Account.getLoggedAccount().getCardCollection().getCards().add(Account.getLoggedAccount().getCardCollection().getSelectedCard());
+                    Account.getLoggedAccount().getCardCollection().getMainDeck().getCards().remove(Account.getLoggedAccount().getCardCollection().getSelectedCard());
+                    Account.getLoggedAccount().getCardCollection().setSelectedCard(null);
 
                 } else {
                     Container.exceptionGenerator(new NoCardSelectedFromDeckException(), stackePane);
@@ -352,7 +352,7 @@ public class CardCollectionController {
 
     public void populateComboBox() {
         ArrayList<String> deckNames = new ArrayList<>();
-        ArrayList<Deck> decks = Account.getLoginedAccount().getCardCollection().getDecks();
+        ArrayList<Deck> decks = Account.getLoggedAccount().getCardCollection().getDecks();
 
         for (int i = 0; i < decks.size(); i++) {
             if (decks.get(i) != null) {
@@ -380,9 +380,9 @@ public class CardCollectionController {
             updateDarick();
             updateMainDeck();
             updateColor();
-            makeCardListOfCollection(Account.getLoginedAccount().getCardCollection().getCards());
-            if (Account.getLoginedAccount().getCardCollection().getMainDeck() != null) {
-                makeCardListOfDeck(Account.getLoginedAccount().getCardCollection().getMainDeck().getCards());
+            makeCardListOfCollection(Account.getLoggedAccount().getCardCollection().getCards());
+            if (Account.getLoggedAccount().getCardCollection().getMainDeck() != null) {
+                makeCardListOfDeck(Account.getLoggedAccount().getCardCollection().getMainDeck().getCards());
             } else {
                 makeCardListOfDeck(null);
             }
@@ -392,9 +392,9 @@ public class CardCollectionController {
     }
 
     public void updateMainDeck() {
-        if (Account.getLoginedAccount().getCardCollection().getMainDeck() != null) {
+        if (Account.getLoggedAccount().getCardCollection().getMainDeck() != null) {
 
-            mainDeck_lbl.setText(Account.getLoginedAccount().getCardCollection().getMainDeck().getDeckName());
+            mainDeck_lbl.setText(Account.getLoggedAccount().getCardCollection().getMainDeck().getDeckName());
         } else {
             mainDeck_lbl.setText(NO_MAIN_DECK);
         }
@@ -439,7 +439,7 @@ public class CardCollectionController {
 
     public void updateColorOfCardViewArray(ArrayList<CardView> cardViews) {
         for (int i = 0; i < cardViews.size(); i++) {
-            if (cardViews.get(i).getCard().equals(Account.getLoginedAccount().getCardCollection().getSelectedCard())) {
+            if (cardViews.get(i).getCard().equals(Account.getLoggedAccount().getCardCollection().getSelectedCard())) {
                 cardViews.get(i).getCardController().changeToSelected();
             } else {
                 cardViews.get(i).getCardController().changeToNotSelected();
@@ -448,19 +448,19 @@ public class CardCollectionController {
     }
 
     private void updateDarick() {
-        if (Account.getLoginedAccount() == null) {
+        if (Account.getLoggedAccount() == null) {
             getAccountDarick_lbl().setText("0");
         } else {
-            getAccountDarick_lbl().setText(String.valueOf(Account.getLoginedAccount().getDarick()));
+            getAccountDarick_lbl().setText(String.valueOf(Account.getLoggedAccount().getDarick()));
         }
     }
 
     private void updateLoginedUser() {
-        if (Account.getLoginedAccount() == null) {
-            getLoginedAccount_lbl().setText(NO_USER_LOGINED);
+        if (Account.getLoggedAccount() == null) {
+            getLoggedAccount_lbl().setText(NO_USER_LOGINED);
             return;
         }
-        getLoginedAccount_lbl().setText(Account.getLoginedAccount().getUsername());
+        getLoggedAccount_lbl().setText(Account.getLoggedAccount().getUsername());
     }
 
 
@@ -482,7 +482,7 @@ public class CardCollectionController {
         return back_btn;
     }
 
-    public Label getLoginedAccount_lbl() {
+    public Label getLoggedAccount_lbl() {
         return loginedAccount_lbl;
     }
 
