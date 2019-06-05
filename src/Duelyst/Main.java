@@ -1,7 +1,6 @@
 package Duelyst;
 
 import Duelyst.Controllers.Container;
-import Duelyst.Controllers.LoginController;
 import Duelyst.Model.Account;
 import Duelyst.Model.Card;
 import Duelyst.Model.Shop;
@@ -12,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -22,10 +22,9 @@ import static Duelyst.View.Constants.LOGIN;
 
 public class Main extends Application {
 
-
     {
         Pane root = null;
-        FXMLLoader fxmlLoader = null;
+        FXMLLoader fxmlLoader;
         try {
             fxmlLoader = new FXMLLoader(getClass().getResource("./View/FXMLFiles/Login.fxml"));
             root = fxmlLoader.load();
@@ -54,8 +53,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage = Container.stage;
-
-
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setScene(Container.scenes.getLast());
         primaryStage.show();
     }

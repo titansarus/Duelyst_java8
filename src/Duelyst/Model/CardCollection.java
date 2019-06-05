@@ -1,8 +1,5 @@
 package Duelyst.Model;
 
-import Duelyst.Model.Account;
-import Duelyst.Model.Card;
-import Duelyst.Utility.Delta;
 import com.rits.cloning.Cloner;
 
 import java.util.ArrayList;
@@ -90,7 +87,7 @@ public class CardCollection {
 
     public String searchCardInCollection(String cardName) {
         for (Card card :
-                Account.getLoginedAccount().getCardCollection().getCards()) {
+                Account.getLoggedAccount().getCardCollection().getCards()) {
             if (card.getCardName().equals(cardName)) {
                 return card.getCardId();
             }
@@ -99,6 +96,9 @@ public class CardCollection {
     }
 
     public ArrayList<Deck> getDecks() {
+        if (decks==null){
+            decks=new ArrayList<>();
+        }
         return decks;
     }
 

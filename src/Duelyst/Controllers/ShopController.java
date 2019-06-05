@@ -1,30 +1,19 @@
 package Duelyst.Controllers;
 
 import Duelyst.Exceptions.MyException;
-import Duelyst.Exceptions.NoCardSelectedInShopException;
-import Duelyst.Exceptions.NotEnoughDarickException;
 import Duelyst.Model.Account;
 import Duelyst.Model.Card;
 import Duelyst.Model.Shop;
 import Duelyst.Model.ShopMode;
-import Duelyst.Utility.Delta;
 import Duelyst.View.ViewClasses.CardView;
-import com.gilecode.yagson.YaGson;
-import com.gilecode.yagson.YaGsonBuilder;
 import com.jfoenix.controls.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -137,7 +126,7 @@ public class ShopController {
     }
 
     private void makeCardListOfSell() {
-        makeCardList(Account.getLoginedAccount().getCardCollection().getCards());
+        makeCardList(Account.getLoggedAccount().getCardCollection().getCards());
     }
 
     private void makeCardList(ArrayList<Card> cards) {
@@ -183,6 +172,7 @@ public class ShopController {
         } else {
             sell();
         }
+        Account.saveAccount();
     }
 
     public void buy() {
@@ -208,19 +198,19 @@ public class ShopController {
     }
 
     private void updateDarick() {
-        if (Account.getLoginedAccount() == null) {
+        if (Account.getLoggedAccount() == null) {
             getAccountDarick_lbl().setText("0");
         } else {
-            getAccountDarick_lbl().setText(String.valueOf(Account.getLoginedAccount().getDarick()));
+            getAccountDarick_lbl().setText(String.valueOf(Account.getLoggedAccount().getDarick()));
         }
     }
 
     private void updateLoginedUser() {
-        if (Account.getLoginedAccount() == null) {
+        if (Account.getLoggedAccount() == null) {
             getLoginedAccount_lbl().setText(NO_USER_LOGINED);
             return;
         }
-        getLoginedAccount_lbl().setText(Account.getLoginedAccount().getUsername());
+        getLoginedAccount_lbl().setText(Account.getLoggedAccount().getUsername());
     }
 
     public void stopTimeline() {

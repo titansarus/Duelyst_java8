@@ -106,6 +106,8 @@ public class Deck implements Cloneable {
     }
 
     public static Deck findDeckInArrayList(String deckName, ArrayList<Deck> decks) {
+        if (decks == null)
+            return null;
         for (int i = 0; i < decks.size(); i++) {
             if (decks.get(i) != null && decks.get(i).getDeckName().equals(deckName)) {
                 return decks.get(i);

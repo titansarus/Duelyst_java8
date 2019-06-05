@@ -3,13 +3,11 @@
     "@type": "Duelyst.Model.Account",
     "@val": {
       "battleHistory": [],
-      "decks": [],
       "cardCollection": {
         "cards": [],
         "account": "@root.0",
         "decks": []
       },
-      "mainDeck": {},
       "username": "a",
       "password": "a",
       "countOfWins": 0,
@@ -21,13 +19,11 @@
     "@type": "Duelyst.Model.Account",
     "@val": {
       "battleHistory": [],
-      "decks": [],
       "cardCollection": {
         "cards": [],
         "account": "@root.1",
         "decks": []
       },
-      "mainDeck": {},
       "username": "b",
       "password": "b",
       "countOfWins": 0,
@@ -39,16 +35,176 @@
     "@type": "Duelyst.Model.Account",
     "@val": {
       "battleHistory": [],
-      "decks": [],
       "cardCollection": {
-        "cards": [],
-        "account": "@root.2"
+        "cards": [
+          {
+            "cardId": "reza_card1_1",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.2",
+            "cardDescription": "desc1",
+            "cardName": "card1",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "reza_card1_2",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.2",
+            "cardDescription": "desc1",
+            "cardName": "card1",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "reza_card1_3",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.2",
+            "cardDescription": "desc1",
+            "cardName": "card1",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "reza_card1_4",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.2",
+            "cardDescription": "desc1",
+            "cardName": "card1",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "reza_card1_5",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.2",
+            "cardDescription": "desc1",
+            "cardName": "card1",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "reza_card1_6",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.2",
+            "cardDescription": "desc1",
+            "cardName": "card1",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "reza_card1_7",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.2",
+            "cardDescription": "desc1",
+            "cardName": "card1",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "reza_card1_8",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.2",
+            "cardDescription": "desc1",
+            "cardName": "card1",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "reza_card1_9",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.2",
+            "cardDescription": "desc1",
+            "cardName": "card1",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "reza_card1_10",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.2",
+            "cardDescription": "desc1",
+            "cardName": "card1",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "reza_card1_11",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.2",
+            "cardDescription": "desc1",
+            "cardName": "card1",
+            "isAbleToMove": true,
+            "isInGame": false
+          }
+        ],
+        "account": "@root.2",
+        "decks": [
+          {
+            "cards": [
+              {
+                "cardId": "reza_card1_1",
+                "manaCost": 10,
+                "darikCost": 10,
+                "account": "@root.2",
+                "cardDescription": "desc1",
+                "cardName": "card1",
+                "isAbleToMove": true,
+                "isInGame": false
+              },
+              {
+                "cardId": "reza_card0_2",
+                "manaCost": 10,
+                "darikCost": 10,
+                "account": "@root.2",
+                "cardDescription": "desc0",
+                "cardName": "card0",
+                "isAbleToMove": true,
+                "isInGame": false
+              },
+              {
+                "cardId": "reza_card2_1",
+                "manaCost": 10,
+                "darikCost": 10,
+                "account": "@root.2",
+                "cardDescription": "desc2",
+                "cardName": "card2",
+                "isAbleToMove": true,
+                "isInGame": false
+              },
+              {
+                "cardId": "reza_card0_1",
+                "manaCost": 10,
+                "darikCost": 10,
+                "account": "@root.2",
+                "cardDescription": "desc0",
+                "cardName": "card0",
+                "isAbleToMove": true,
+                "isInGame": false
+              }
+            ],
+            "minions": [],
+            "account": "@root.2",
+            "deckName": "xcxzc",
+            "isValid": false
+          }
+        ],
+        "mainDeck": "@root.2.cardCollection.decks.0"
       },
-      "mainDeck": {},
       "username": "reza",
       "password": "12345",
       "countOfWins": 0,
-      "darick": 10000,
+      "darick": 9850,
       "collectableItems": []
     }
   }

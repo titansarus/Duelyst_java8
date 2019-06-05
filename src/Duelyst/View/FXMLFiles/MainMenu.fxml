@@ -8,7 +8,7 @@
 
 <StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.MainMenu">
    <children>
-      <AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: BLACk; -fx-background-image: url('res/Backgrounds/main-menu-back.jpg'); -fx-background-size: 1024 768;">
+      <AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: BLACk; -fx-background-image: url('res/Backgrounds/main-menu-back.jpg'); -fx-background-size: cover;">
          <children>
             <JFXButton fx:id="play_btn" buttonType="RAISED" layoutX="112.0" layoutY="195.0" onAction="#handlePlayBtn" prefHeight="71.0" prefWidth="176.0" text="Play" textFill="#ebebeb">
                <font>
