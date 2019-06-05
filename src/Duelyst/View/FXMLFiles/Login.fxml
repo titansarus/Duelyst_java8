@@ -2,8 +2,13 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXProgressBar?>
+<?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.ColorInput?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.paint.RadialGradient?>
@@ -41,23 +46,10 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXButton>
-            <JFXTextField fx:id="username_tf" focusColor="#fbd951" layoutX="80.0" layoutY="189.0" promptText="Username" style="-fx-text-fill: WHITE; -fx-opacity: 0.5; -fx-background-color: rgba(0,0,0,1);" unFocusColor="#06416b" />
-            <JFXPasswordField fx:id="password_tf" focusColor="#fbd951" layoutX="80.0" layoutY="236.0" promptText="Password" style="-fx-text-fill: WHITE; -fx-background-color: BLACK; -fx-opacity: 0.5;" unFocusColor="#06416b" />
+            <JFXTextField fx:id="username_tf" focusColor="#fbd951" layoutX="80.0" layoutY="189.0" onAction="#handleLoginBtn" promptText="Username" style="-fx-text-fill: WHITE; -fx-opacity: 0.5; -fx-background-color: rgba(0,0,0,1);" unFocusColor="#06416b" />
+            <JFXPasswordField fx:id="password_tf" focusColor="#fbd951" layoutX="80.0" layoutY="236.0" onAction="#handleLoginBtn" promptText="Password" style="-fx-text-fill: WHITE; -fx-background-color: BLACK; -fx-opacity: 0.5;" unFocusColor="#06416b" />
             <Label layoutX="4.0" layoutY="194.0" style="-fx-opacity: 1; -fx-background-radius: 5 5 5 5; -fx-border-radius: 5 5 5 5; -fx-font-family: Averta Demo PE Cutted Demo;" text="Username" textFill="#06436f" />
             <Label layoutX="4.0" layoutY="241.0" style="-fx-opacity: 1; -fx-background-radius: 5 5 5 5; -fx-border-radius: 5 5 5 5; -fx-font-family: Averta Demo PE Cutted Demo;" text="Password" textFill="#06436f" />
-            <JFXButton buttonType="RAISED" layoutX="684.0" layoutY="548.0" onAction="#handleGoToMainMenu" prefHeight="25.0" prefWidth="168.0" style="-fx-background-color: #02263e; -fx-opacity: 0.7;" text="Go To Main Menu" textFill="#b6e4fc">
-               <ripplerFill>
-                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-                     <stops>
-                        <Stop color="#4eb4e5" />
-                        <Stop color="#4eb4e5" offset="1.0" />
-                     </stops>
-                  </RadialGradient>
-               </ripplerFill>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </JFXButton>
             <JFXButton buttonType="RAISED" layoutX="900.0" layoutY="545.0" onAction="#handleExit" prefHeight="21.0" prefWidth="44.0" style="-fx-background-color: #02263e; -fx-opacity: 0.7;" text="exit" textFill="#b6e4fc">
                <ripplerFill>
                   <RadialGradient centerX="1.0" cycleMethod="REFLECT" radius="0.5">
@@ -68,6 +60,20 @@
                   </RadialGradient>
                </ripplerFill>
             </JFXButton>
+            <JFXProgressBar fx:id="login_pb" cache="true" layoutX="381.0" layoutY="558.0" opacity="0.0" style="-fx-border-color: #fbd951;">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </JFXProgressBar>
+            <Label fx:id="loading_label" alignment="CENTER" contentDisplay="CENTER" layoutX="432.0" layoutY="566.0" opacity="0.0" prefHeight="21.0" prefWidth="97.0" style="-fx-font-family: Averta Demo PE Cutted Demo; -fx-background-radius: 5 5 5 5; -fx-border-radius: 5 5 5 5; -fx-background-color: rgba(137,203,237,0.5);" text="Loading..." textFill="#06436f" />
+            <JFXTabPane layoutX="576.0" layoutY="152.0" prefHeight="194.0" prefWidth="208.0" style="-fx-background-color: BLACK; -fx-border-color: WHITE;">
+               <effect>
+                  <ColorInput paint="#1b0909" />
+               </effect>
+            </JFXTabPane>
          </children>
       </AnchorPane> 
    </children>

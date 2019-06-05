@@ -207,5 +207,293 @@
       "darick": 9850,
       "collectableItems": []
     }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.3",
+        "decks": []
+      },
+      "username": "",
+      "password": "",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.4",
+        "decks": []
+      },
+      "username": "",
+      "password": "",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.5",
+        "decks": []
+      },
+      "username": "",
+      "password": "",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.6",
+        "decks": []
+      },
+      "username": "",
+      "password": "",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.7",
+        "decks": []
+      },
+      "username": "",
+      "password": "",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.8",
+        "decks": []
+      },
+      "username": "",
+      "password": "",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.9",
+        "decks": []
+      },
+      "username": "",
+      "password": "",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.10",
+        "decks": []
+      },
+      "username": "",
+      "password": "",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.11",
+        "decks": []
+      },
+      "username": "",
+      "password": "",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.12",
+        "decks": []
+      },
+      "username": "",
+      "password": "",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.13",
+        "decks": []
+      },
+      "username": "",
+      "password": "",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.14",
+        "decks": []
+      },
+      "username": "",
+      "password": "",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.15",
+        "decks": []
+      },
+      "username": "",
+      "password": "",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.16",
+        "decks": []
+      },
+      "username": "",
+      "password": "",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.17",
+        "decks": []
+      },
+      "username": "",
+      "password": "",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.18",
+        "decks": []
+      },
+      "username": "",
+      "password": "",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.19",
+        "decks": []
+      },
+      "username": "",
+      "password": "",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.20",
+        "decks": []
+      },
+      "username": "alireza",
+      "password": "alireza",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
   }
 ]

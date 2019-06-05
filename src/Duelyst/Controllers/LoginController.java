@@ -4,15 +4,19 @@ import Duelyst.Exceptions.*;
 import Duelyst.Main;
 import Duelyst.Model.Account;
 import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Popup;
 import javafx.util.Duration;
 
 
@@ -21,6 +25,13 @@ import java.io.IOException;
 import static Duelyst.View.Constants.*;
 
 public class LoginController {
+
+
+    @FXML
+    Label loading_label;
+
+    @FXML
+    JFXProgressBar login_pb;
 
     @FXML
     StackPane stackPane;
@@ -82,7 +93,25 @@ public class LoginController {
             return;
         }
         Account.setLoggedAccount(account);
-        Container.notificationShower(USER_LOGINED_CONTENT, USER_LOGINED, stackPane);
+        handleProgressBar();
+    }
+
+
+    private void handleProgressBar() {
+        login_pb.setOpacity(1);
+        loading_label.setOpacity(1);
+
+        long startTime = System.nanoTime();
+
+        //Time Delay...
+        Thread thread = new Thread(() -> {
+            while ((System.nanoTime() - startTime) / 1000000 < 2000) {
+            }
+            login_pb.setOpacity(0);
+            loading_label.setOpacity(0);
+            Platform.runLater(this::handleGoToMainMenu);
+        });
+        thread.start();
     }
 
     public void handleSignUpBtn() {
@@ -96,8 +125,7 @@ public class LoginController {
         }
         new Account(username, password);
         Account.saveAccount();
-        Container.notificationShower(USER_CREATED_CONTENT, USER_CREATED_TITLE, stackPane);
-
+        handleLoginBtn();
     }
 
     public void handleExit() {

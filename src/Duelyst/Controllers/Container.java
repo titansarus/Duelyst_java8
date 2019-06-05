@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -52,10 +53,10 @@ public class Container {
         button.setText(ALERT_OK);
         button.setStyle(DEFAULT_BUTTON_CSS);
 
-
         jfxDialogLayout.setActions(button);
 
         JFXDialog jfxDialog = new JFXDialog(pane, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
+
 
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
