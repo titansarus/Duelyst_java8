@@ -128,6 +128,7 @@ public class MainMenu {
         if (Container.scenes.size() > 0) {
             stopTimeline(); //TODO In ba'ad az hazf slowTimeline hazf shavad
             //TODO TEST
+            Account.setLoggedAccount(null);
             Container.handleBack();
 
         }

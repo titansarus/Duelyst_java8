@@ -46,7 +46,7 @@
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <JFXButton fx:id="back_btn" buttonType="RAISED" layoutX="806.0" layoutY="670.0" onAction="#handleBackBtn" prefHeight="25.0" prefWidth="114.0" text="back" textFill="#eeeaea">
+            <JFXButton fx:id="back_btn" buttonType="RAISED" layoutX="806.0" layoutY="670.0" onAction="#handleBackBtn" prefHeight="25.0" prefWidth="114.0" text="Logout" textFill="#eeeaea">
                <font>
                   <Font size="25.0" />
                </font>

@@ -103,12 +103,14 @@ public class LoginController {
 
         long startTime = System.nanoTime();
 
-        //Time Delay...
+        //2Seconds Time Delay For Loading :))...
         Thread thread = new Thread(() -> {
             while ((System.nanoTime() - startTime) / 1000000 < 2000) {
             }
             login_pb.setOpacity(0);
             loading_label.setOpacity(0);
+            getUsername_tf().setText("");
+            getPassword_tf().setText("");
             Platform.runLater(this::handleGoToMainMenu);
         });
         thread.start();
