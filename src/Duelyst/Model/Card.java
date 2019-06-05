@@ -33,6 +33,20 @@ public class Card implements Cloneable {
     }
 
 
+    public static int countNumberOfCardsWithNameInArrayList(String cardName, ArrayList<Card> cards) {
+        int counter = 0;
+        if (cards != null) {
+            for (int i = 0; i < cards.size(); i++) {
+                Card card = cards.get(i);
+                if (card != null && card.getCardName().equals(cardName)) {
+                    counter++;
+                }
+            }
+        }
+        return counter;
+    }
+
+
     public void setCardId(String cardId) {
         this.cardId = cardId;
     }

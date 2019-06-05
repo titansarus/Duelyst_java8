@@ -24,6 +24,9 @@ public class CardCollection {
         setAccount(account);
     }
 
+
+
+
     public ArrayList<Card> getCards() {
         return cards;
     }
