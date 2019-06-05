@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -54,8 +55,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage = Container.stage;
-
-
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setScene(Container.scenes.getLast());
         primaryStage.show();
     }
