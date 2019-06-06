@@ -126,7 +126,7 @@ public class ShopController {
 
     public void handleNextButton() {
         if (buy_tab.isSelected()) {
-            buyScrollPane.setHvalue(buyScrollPane.getHvalue() + 0.02);
+            buyScrollPane.setHvalue(buyScrollPane.getHvalue() + 0.02);//TODO andazeye GhadamHa bayad daghighTar Tanzim Shan
         } else {
             sellScrollPane.setHvalue(sellScrollPane.getHvalue() + 0.02);
         }
