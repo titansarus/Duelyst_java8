@@ -79,26 +79,6 @@
       "cardCollection": {
         "cards": [
           {
-            "cardId": "reza_card1_1",
-            "manaCost": 10,
-            "darikCost": 10,
-            "account": "@root.2",
-            "cardDescription": "desc1",
-            "cardName": "card1",
-            "isAbleToMove": true,
-            "isInGame": false
-          },
-          {
-            "cardId": "reza_card1_2",
-            "manaCost": 10,
-            "darikCost": 10,
-            "account": "@root.2",
-            "cardDescription": "desc1",
-            "cardName": "card1",
-            "isAbleToMove": true,
-            "isInGame": false
-          },
-          {
             "cardId": "reza_card1_3",
             "manaCost": 10,
             "darikCost": 10,
@@ -187,6 +167,26 @@
             "cardName": "card1",
             "isAbleToMove": true,
             "isInGame": false
+          },
+          {
+            "cardId": "reza_card1_12",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.2",
+            "cardDescription": "desc1",
+            "cardName": "card1",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "reza_card0_1",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.2",
+            "cardDescription": "desc0",
+            "cardName": "card0",
+            "isAbleToMove": true,
+            "isInGame": false
           }
         ],
         "account": "@root.2",
@@ -232,6 +232,16 @@
                 "cardName": "card0",
                 "isAbleToMove": true,
                 "isInGame": false
+              },
+              {
+                "cardId": "reza_card1_2",
+                "manaCost": 10,
+                "darikCost": 10,
+                "account": "@root.2",
+                "cardDescription": "desc1",
+                "cardName": "card1",
+                "isAbleToMove": true,
+                "isInGame": false
               }
             ],
             "minions": [],
@@ -245,279 +255,7 @@
       "username": "reza",
       "password": "12345",
       "countOfWins": 0,
-      "darick": 9850,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "cardCollection": {
-        "cards": [],
-        "account": "@root.3",
-        "decks": []
-      },
-      "username": "",
-      "password": "",
-      "countOfWins": 0,
-      "darick": 10000,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "cardCollection": {
-        "cards": [],
-        "account": "@root.4",
-        "decks": []
-      },
-      "username": "",
-      "password": "",
-      "countOfWins": 0,
-      "darick": 10000,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "cardCollection": {
-        "cards": [],
-        "account": "@root.5",
-        "decks": []
-      },
-      "username": "",
-      "password": "",
-      "countOfWins": 0,
-      "darick": 10000,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "cardCollection": {
-        "cards": [],
-        "account": "@root.6",
-        "decks": []
-      },
-      "username": "",
-      "password": "",
-      "countOfWins": 0,
-      "darick": 10000,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "cardCollection": {
-        "cards": [],
-        "account": "@root.7",
-        "decks": []
-      },
-      "username": "",
-      "password": "",
-      "countOfWins": 0,
-      "darick": 10000,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "cardCollection": {
-        "cards": [],
-        "account": "@root.8",
-        "decks": []
-      },
-      "username": "",
-      "password": "",
-      "countOfWins": 0,
-      "darick": 10000,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "cardCollection": {
-        "cards": [],
-        "account": "@root.9",
-        "decks": []
-      },
-      "username": "",
-      "password": "",
-      "countOfWins": 0,
-      "darick": 10000,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "cardCollection": {
-        "cards": [],
-        "account": "@root.10",
-        "decks": []
-      },
-      "username": "",
-      "password": "",
-      "countOfWins": 0,
-      "darick": 10000,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "cardCollection": {
-        "cards": [],
-        "account": "@root.11",
-        "decks": []
-      },
-      "username": "",
-      "password": "",
-      "countOfWins": 0,
-      "darick": 10000,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "cardCollection": {
-        "cards": [],
-        "account": "@root.12",
-        "decks": []
-      },
-      "username": "",
-      "password": "",
-      "countOfWins": 0,
-      "darick": 10000,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "cardCollection": {
-        "cards": [],
-        "account": "@root.13",
-        "decks": []
-      },
-      "username": "",
-      "password": "",
-      "countOfWins": 0,
-      "darick": 10000,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "cardCollection": {
-        "cards": [],
-        "account": "@root.14",
-        "decks": []
-      },
-      "username": "",
-      "password": "",
-      "countOfWins": 0,
-      "darick": 10000,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "cardCollection": {
-        "cards": [],
-        "account": "@root.15",
-        "decks": []
-      },
-      "username": "",
-      "password": "",
-      "countOfWins": 0,
-      "darick": 10000,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "cardCollection": {
-        "cards": [],
-        "account": "@root.16",
-        "decks": []
-      },
-      "username": "",
-      "password": "",
-      "countOfWins": 0,
-      "darick": 10000,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "cardCollection": {
-        "cards": [],
-        "account": "@root.17",
-        "decks": []
-      },
-      "username": "",
-      "password": "",
-      "countOfWins": 0,
-      "darick": 10000,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "cardCollection": {
-        "cards": [],
-        "account": "@root.18",
-        "decks": []
-      },
-      "username": "",
-      "password": "",
-      "countOfWins": 0,
-      "darick": 10000,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "cardCollection": {
-        "cards": [],
-        "account": "@root.19",
-        "decks": []
-      },
-      "username": "",
-      "password": "",
-      "countOfWins": 0,
-      "darick": 10000,
+      "darick": 9840,
       "collectableItems": []
     }
   },
