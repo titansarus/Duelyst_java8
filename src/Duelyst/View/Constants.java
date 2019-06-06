@@ -11,14 +11,15 @@ public class Constants {
             NO_CARD_SELECTED_IN_SHOP_CONTENT = "No Card is selected. Please select a card!", DECK_EXIST_WITH_THIS_NAME_CONTENT = "A Deck Exists with this Name",
             NO_CARD_SELECTED_FROM_DECK_CONTENT = "No Card is Selected from Deck", NO_CARD_SELECTED_FROM_COLLECTION_CONTENT = "No Card is Selected from Collection",
             NO_MAIN_DECK_CONTENT = "Select or Create a Deck as Main Deck first", NO_DECK_SELECTED_CONTENT = "No Deck is Selected",
-            NOT_ENOUGH_CARD_TO_IMPORT_CONTENT = "Not Enough Cards to Import!", INVALID_IMPORT_FILE_CONTENT = "Invalid File to Import";
+            NOT_ENOUGH_CARD_TO_IMPORT_CONTENT = "Not Enough Cards to Import!", INVALID_IMPORT_FILE_CONTENT = "Invalid File to Import" ,
+            EMPTY_FIELD_EXCEPTION_CONTENT = "Please fill in all required fields!";
 
     //ERROR TITLE
     public static final String USER_EXIST_TITLE = "User Exist", USER_NOT_EXIST_TITLE = "User Not Exist", NOT_EXIST_LOGIN_USER_TITLE = "First Login!",
             INVALID_PASSWORD_TITLE = "Try again!", NOT_ENOUGH_DARICK_TITLE = "Not Enough Money",
             NO_CARD_SELECTED_IN_SHOP_TITLE = "Select a Card", DECK_EXIST_WITH_THIS_NAME_TITLE = "Deck Exists", NO_CARD_SELECTED_FROM_DECK_TITLE = "No Card Selected",
             NO_CARD_SELECTED_FROM_COLLECTION_TITLE = "No Card Selected", NO_MAIN_DECK_TITLE = "Main Deck is Not Selected", NO_DECK_SELECTED_TITLE = "No Deck is Selected",
-            NOT_ENOUGH_CARD_TO_IMPORT_TITLE = "Not Enough Cards to Import!", INVALID_IMPORT_FILE_TITLE = "Invalid File";
+            NOT_ENOUGH_CARD_TO_IMPORT_TITLE = "Not Enough Cards to Import!", INVALID_IMPORT_FILE_TITLE = "Invalid File" , EMPTY_FIELD_EXCEPTION_TITLE = "Empty Fields!";
 
     //NOTIFICATION
     public static final String USER_CREATED_CONTENT = "User Created Successfully", USER_LOGINED_CONTENT = "User Logined Successfully", BUY_CONTENT = "Buy was Successful!",

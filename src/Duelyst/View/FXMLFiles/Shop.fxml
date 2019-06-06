@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.effect.Reflection?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
@@ -21,7 +22,7 @@
                      <content>
                         <ScrollPane opacity="0.85" prefHeight="512.0" prefWidth="621.0" style="-fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" stylesheets="@../../../css/scroll-bar.css" vbarPolicy="NEVER">
                            <content>
-                          <AnchorPane fx:id="buy_aPane" minHeight="0.0" minWidth="0.0" prefHeight="509.0" prefWidth="621.0" style="-fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" />
+                              <AnchorPane fx:id="buy_aPane" prefHeight="520.0" prefWidth="622.0" />
                            </content>
                         </ScrollPane>
                      </content>

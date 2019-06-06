@@ -79,9 +79,17 @@ public class LoginController {
 
 
 
+
     public void handleLoginBtn() {
+
         String username = getUsername_tf().getText();
         String password = getPassword_tf().getText();
+
+        if (username.length() == 0 || password.length() == 0) {
+            Container.exceptionGenerator(new EmptyFieldsException(), stackPane);
+            return;
+        }
+
         Account account = Account.findAccountInArrayList(username, Account.getAccounts());
         if (!Account.accountExistInArrayList(username, Account.getAccounts())) {
             Container.exceptionGenerator(new UserNotExistException(), stackPane);
@@ -120,6 +128,10 @@ public class LoginController {
     public void handleSignUpBtn() {
         String username = getUsername_tf().getText();
         String password = getPassword_tf().getText();
+        if (username.length() == 0 || password.length() == 0) {
+            Container.exceptionGenerator(new EmptyFieldsException(), stackPane);
+            return;
+        }
 
         if (Account.accountExistInArrayList(username, Account.getAccounts())) {
             Container.exceptionGenerator(new UserExistException(), stackPane);

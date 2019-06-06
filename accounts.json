@@ -14,5 +14,21 @@
       "darick": 10000,
       "collectableItems": []
     }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.1",
+        "decks": []
+      },
+      "username": "a",
+      "password": "a",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
   }
 ]
