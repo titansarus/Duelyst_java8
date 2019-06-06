@@ -17,7 +17,7 @@
             <children>
             <TabPane fx:id="shopList_tabPane" layoutX="118.0" layoutY="59.0" prefHeight="548.0" prefWidth="621.0" style="-fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab fx:id="buy_tab" text="Buy">
+                <Tab fx:id="buy_tab" style="-fx-background-color: rgba(23,56,73,0.8);" text="Buy">
                      <content>
                         <ScrollPane opacity="0.85" prefHeight="512.0" prefWidth="621.0" style="-fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" stylesheets="@../../../css/scroll-bar.css" vbarPolicy="NEVER">
                            <content>
@@ -26,7 +26,7 @@
                         </ScrollPane>
                      </content>
                 </Tab>
-                <Tab fx:id="sell_tab" text="Sell">
+                <Tab fx:id="sell_tab" style="-fx-background-color: rgba(23,56,73,0.8);" text="Sell">
                      <content>
                         <ScrollPane opacity="0.85" prefHeight="200.0" prefWidth="200.0" stylesheets="@../../../css/scroll-bar.css" vbarPolicy="NEVER">
                            <content>
@@ -38,7 +38,7 @@
               </tabs>
             </TabPane>
                 <JFXButton fx:id="action_btn" buttonType="RAISED" layoutX="387.0" layoutY="646.0" onAction="#handleActionBtn" prefHeight="48.0" prefWidth="93.0" style="-fx-background-color: #464646;" stylesheets="@../../../css/jfx-button.css" text=" " />
-                <JFXTextField fx:id="search_txtf" focusColor="#fbd951" layoutX="524.0" layoutY="14.0" prefHeight="25.0" prefWidth="188.0" promptText="Search..." style="-fx-text-fill: white; -fx-opacity: 0.7; -fx-background-color: rgba(0,0,0,1); -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" stylesheets="@../../../css/jfx-textfield.css" unFocusColor="#06416b">
+                <JFXTextField fx:id="search_txtf" focusColor="#fbd951" layoutX="524.0" layoutY="14.0" prefHeight="25.0" prefWidth="188.0" promptText="Search..." style="-fx-text-fill: white; -fx-opacity: 0.7; -fx-background-color: rgba(0,0,0,1);" stylesheets="@../../../css/jfx-textfield.css" unFocusColor="#06416b">
                     <effect>
                         <Reflection />
                     </effect>
