@@ -78,8 +78,6 @@ public class LoginController {
     }
 
 
-
-
     public void handleLoginBtn() {
 
         String username = getUsername_tf().getText();
