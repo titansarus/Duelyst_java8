@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -19,6 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import javax.swing.*;
@@ -34,15 +36,12 @@ public class Container {
     public static Deque<String> nameOfMenus = new LinkedList<>();
 
 
-
-
     public static void exceptionGenerator(MyException e, StackPane pane) {
         dialogBoxShower(e.getMessage(), e.getTitle(), pane);
     }
 
-    public static void notificationShower(String msg , String title , StackPane stackPane )
-    {
-        dialogBoxShower(msg,title,stackPane);
+    public static void notificationShower(String msg, String title, StackPane stackPane) {
+        dialogBoxShower(msg, title, stackPane);
     }
 
     static void dialogBoxShower(String msg, String title, StackPane pane) {
@@ -50,7 +49,7 @@ public class Container {
         jfxDialogLayout.setHeading(new Text(title));
         jfxDialogLayout.setBody(new Text(msg));
         JFXButton button = new JFXButton();
-        button.setPrefSize(70,20);
+        button.setPrefSize(70, 20);
         button.setText(ALERT_OK);
         button.setStyle(DEFAULT_BUTTON_CSS);
 
@@ -71,8 +70,7 @@ public class Container {
     }
 
 
-    public static JFXDialogLayout jfxInputDialogLayoutMaker (JFXButton accept , JFXButton cancel , JFXTextField textField, String headerText , String bodyText)
-    {
+    public static JFXDialogLayout jfxInputDialogLayoutMaker(JFXButton accept, JFXButton cancel, JFXTextField textField, String headerText, String bodyText) {
         JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
         jfxDialogLayout.setHeading(new Text(headerText));
         jfxDialogLayout.setBody(new Text(bodyText));
@@ -91,7 +89,6 @@ public class Container {
         Container.scenes.addLast(scene);
         Container.nameOfMenus.add(titleOfNextScene);
         Container.stage.setScene(Container.scenes.getLast());
-
         Container.stage.show();
     }
 

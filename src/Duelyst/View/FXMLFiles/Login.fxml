@@ -60,7 +60,7 @@
                   </RadialGradient>
                </ripplerFill>
             </JFXButton>
-            <JFXProgressBar fx:id="login_pb" cache="true" layoutX="381.0" layoutY="558.0" opacity="0.0" style="-fx-border-color: #fbd951;">
+            <JFXProgressBar fx:id="login_pb" cache="true" layoutX="413.0" layoutY="535.0" opacity="0.0" prefHeight="0.0" style="-fx-border-color: #fbd951;">
                <effect>
                   <DropShadow />
                </effect>
@@ -68,7 +68,7 @@
                   <Insets />
                </opaqueInsets>
             </JFXProgressBar>
-            <Label fx:id="loading_label" alignment="CENTER" contentDisplay="CENTER" layoutX="432.0" layoutY="566.0" opacity="0.0" prefHeight="21.0" prefWidth="97.0" style="-fx-font-family: Averta Demo PE Cutted Demo; -fx-background-radius: 5 5 5 5; -fx-border-radius: 5 5 5 5; -fx-background-color: rgba(137,203,237,0.5);" text="Loading..." textFill="#06436f" />
+            <Label fx:id="loading_label" alignment="CENTER" contentDisplay="CENTER" layoutX="464.0" layoutY="553.0" opacity="0.0" prefHeight="21.0" prefWidth="97.0" style="-fx-font-family: Averta Demo PE Cutted Demo; -fx-background-radius: 5 5 5 5; -fx-border-radius: 5 5 5 5; -fx-background-color: rgba(137,203,237,0.5);" text="Loading..." textFill="#06436f" />
             <JFXTabPane layoutX="576.0" layoutY="152.0" prefHeight="194.0" prefWidth="208.0" style="-fx-background-color: BLACK; -fx-border-color: WHITE;">
                <effect>
                   <ColorInput paint="#1b0909" />
