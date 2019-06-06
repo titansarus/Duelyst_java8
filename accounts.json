@@ -135,5 +135,88 @@
       "darick": 9890,
       "collectableItems": []
     }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [],
+        "account": "@root.1",
+        "decks": []
+      },
+      "username": "a",
+      "password": "a",
+      "countOfWins": 0,
+      "darick": 10000,
+      "collectableItems": []
+    }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [
+          {
+            "cardId": "alireza_card0_1",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.2",
+            "cardDescription": "desc0",
+            "cardName": "card0",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "alireza_card0_2",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.2",
+            "cardDescription": "desc0",
+            "cardName": "card0",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "alireza_card1_1",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.2",
+            "cardDescription": "desc1",
+            "cardName": "card1",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "alireza_card1_2",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.2",
+            "cardDescription": "desc1",
+            "cardName": "card1",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "alireza_card1_3",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.2",
+            "cardDescription": "desc1",
+            "cardName": "card1",
+            "isAbleToMove": true,
+            "isInGame": false
+          }
+        ],
+        "account": "@root.2",
+        "decks": []
+      },
+      "username": "alireza",
+      "password": "alireza",
+      "countOfWins": 0,
+      "darick": 9950,
+      "collectableItems": []
+    }
   }
 ]

@@ -18,10 +18,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -31,10 +28,22 @@ import static Duelyst.View.Constants.*;
 public class ShopController {
 
     @FXML
-    AnchorPane buy_aPane;
+    JFXButton next_btn;
 
     @FXML
-    AnchorPane sell_aPane;
+    JFXButton previous_btn;
+
+    @FXML
+    ScrollPane buyScrollPane;
+
+    @FXML
+    ScrollPane sellScrollPane;
+
+    @FXML
+    HBox buy_aPane;
+
+    @FXML
+    HBox sell_aPane;
 
     @FXML
     TabPane shopList_tabPane;
@@ -44,9 +53,6 @@ public class ShopController {
 
     @FXML
     Tab sell_tab;
-
-    @FXML
-    ScrollPane scrollPane;
 
     @FXML
     HBox listOfCards_HBox;
@@ -118,6 +124,22 @@ public class ShopController {
         }
     }
 
+    public void handleNextButton() {
+        if (buy_tab.isSelected()) {
+            buyScrollPane.setHvalue(buyScrollPane.getHvalue() + 0.02);//TODO andazeye GhadamHa bayad daghighTar Tanzim Shan
+        } else {
+            sellScrollPane.setHvalue(sellScrollPane.getHvalue() + 0.02);
+        }
+    }
+
+    public void handlePreviousButton() {
+        if (buy_tab.isSelected()) {
+            buyScrollPane.setHvalue(buyScrollPane.getHvalue() - 0.02);
+        } else {
+            sellScrollPane.setHvalue(sellScrollPane.getHvalue() - 0.02);
+        }
+    }
+
     private void makeCardList() {
         if (buy_tab.isSelected()) {
             makeCardListOfBuy();
@@ -154,21 +176,21 @@ public class ShopController {
         makeCardList(Account.getLoggedAccount().getCardCollection().getCards(), sell_aPane);
     }
 
-    private void makeCardList(ArrayList<Card> cards, AnchorPane anchorPane) {
+    private void makeCardList(ArrayList<Card> cards, HBox Hbox) {
 
-        anchorPane.getChildren().clear();
-        anchorPane.setPrefWidth(629);
+        Hbox.getChildren().clear();
+        Hbox.setPrefWidth(629);
         cardViews.clear();
         for (int i = 0; i < cards.size(); i++) {
             if (search_txtf.getText().length() == 0 || cards.get(i).getCardName().contains(search_txtf.getText())) {
-                AnchorPane pane = new AnchorPane();
-                pane.setPrefWidth(268);
+                AnchorPane anchorPane = new AnchorPane();
+                anchorPane.setPrefWidth(275);
                 CardView cardView = new CardView(cards.get(i));
                 getCardViews().add(cardView);
-                pane.getChildren().add(cardView);
-                anchorPane.getChildren().add(pane);
-                pane.setLayoutX(280 * i);
-                anchorPane.setPrefWidth(anchorPane.getPrefWidth() + 268);
+                anchorPane.getChildren().add(cardView);
+                Hbox.getChildren().add(anchorPane);
+                anchorPane.setLayoutX(280 * i);
+                Hbox.setPrefWidth(Hbox.getPrefWidth() + 275);
             }
         }
     }
@@ -255,10 +277,6 @@ public class ShopController {
 
     public Timeline getFastTimeline() {
         return fastTimeline;
-    }
-
-    public ScrollPane getScrollPane() {
-        return scrollPane;
     }
 
     public HBox getListOfCards_HBox() {
