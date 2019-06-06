@@ -162,13 +162,13 @@ public class ShopController {
         for (int i = 0; i < cards.size(); i++) {
             if (search_txtf.getText().length() == 0 || cards.get(i).getCardName().contains(search_txtf.getText())) {
                 AnchorPane pane = new AnchorPane();
-                pane.setPrefWidth(275);
+                pane.setPrefWidth(268);
                 CardView cardView = new CardView(cards.get(i));
                 getCardViews().add(cardView);
                 pane.getChildren().add(cardView);
                 anchorPane.getChildren().add(pane);
                 pane.setLayoutX(280 * i);
-                anchorPane.setPrefWidth(anchorPane.getPrefWidth() + 275);
+                anchorPane.setPrefWidth(anchorPane.getPrefWidth() + 268);
             }
         }
     }

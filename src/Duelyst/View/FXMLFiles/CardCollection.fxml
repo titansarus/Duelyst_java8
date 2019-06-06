@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.effect.Reflection?>
@@ -14,19 +15,19 @@
 
 <StackPane fx:id="stackePane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.CardCollectionController">
    <children>
-      <AnchorPane prefHeight="809.0" prefWidth="1251.0">
+      <AnchorPane prefHeight="809.0" prefWidth="1251.0" style="-fx-background-image: url('res/Backgrounds/CollectionBackGround.jpg'); -fx-background-size: cover;" stylesheets="@../../../css/hiddenBackGround.css">
          <children>
             <Label layoutX="1113.0" layoutY="562.0" prefHeight="121.0" prefWidth="105.0" text="Drag and Drop deck json to import it here!" wrapText="true">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <ScrollPane fx:id="scrollPane" layoutX="24.0" layoutY="131.0" prefHeight="522.0" prefWidth="525.0">
+            <ScrollPane fx:id="scrollPane" layoutX="25.0" layoutY="131.0" prefHeight="522.0" prefWidth="1039.0" stylesheets="@../../../css/scroll-bar.css">
                <content>
-                  <HBox fx:id="cardCollectionCards_HB" focusTraversable="true" prefHeight="337.0" prefWidth="525.0" />
+                  <HBox fx:id="cardCollectionCards_HB" focusTraversable="true" prefHeight="490.0" prefWidth="1030.0" />
                </content>
             </ScrollPane>
-            <JFXTextField fx:id="search_txtf" labelFloat="true" layoutX="361.0" layoutY="99.0" prefHeight="25.0" prefWidth="188.0" promptText="Search..." style="-fx-background-color: lightgray;" stylesheets="@../../../css/jfx-textfield.css">
+            <JFXTextField fx:id="search_txtf" labelFloat="true" layoutX="863.0" layoutY="94.0" prefHeight="25.0" prefWidth="188.0" promptText="Search..." style="-fx-background-color: lightgray;" stylesheets="@../../../css/jfx-textfield.css">
                <effect>
                   <Reflection />
                </effect>
@@ -40,17 +41,12 @@
                   <Font size="25.0" />
                </font>
             </JFXButton>
-            <ScrollPane fx:id="scrollPane_2" layoutX="577.0" layoutY="131.0" prefHeight="522.0" prefWidth="496.0">
+            <ScrollPane fx:id="scrollPane_2" layoutX="24.0" layoutY="131.0" opacity="0.85" prefHeight="522.0" prefWidth="1039.0" stylesheets="@../../../css/scroll-bar.css">
                <content>
-                  <HBox fx:id="deck_hbox" focusTraversable="true" prefHeight="337.0" prefWidth="494.0" />
+                  <HBox fx:id="deck_hbox" focusTraversable="true" prefHeight="490.0" prefWidth="1030.0" />
                </content>
             </ScrollPane>
-            <JFXTextField fx:id="deckSearch_txtf" labelFloat="true" layoutX="885.0" layoutY="99.0" prefHeight="25.0" prefWidth="188.0" promptText="Search..." style="-fx-background-color: lightgray;" stylesheets="@../../../css/jfx-textfield.css">
-               <effect>
-                  <Reflection />
-               </effect>
-            </JFXTextField>
-            <JFXButton fx:id="createDeck_btn" layoutX="848.0" layoutY="669.0" onAction="#handleCreateDeck" prefHeight="38.0" prefWidth="114.0" style="-fx-background-color: #464646;" stylesheets="@../../../css/jfx-button.css" text=" " />
+            <JFXButton fx:id="createDeck_btn" layoutX="534.0" layoutY="750.0" onAction="#handleCreateDeck" prefHeight="38.0" prefWidth="114.0" style="-fx-background-color: #464646;" stylesheets="@../../../css/jfx-button.css" text=" " />
             <Label fx:id="mainDeck_lbl" layoutX="873.0" layoutY="31.0" prefHeight="17.0" prefWidth="168.0" textAlignment="CENTER" />
             <Label layoutX="769.0" layoutY="31.0" prefHeight="15.0" prefWidth="152.0" text="Main Deck" />
             <JFXButton layoutX="234.0" layoutY="756.0" onAction="#handleSendToDeck" text="Send to Deck" />
@@ -77,6 +73,9 @@
                </font>
             </JFXButton>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="155.0" layoutX="1098.0" layoutY="545.0" onDragDropped="#handleDragDropped" onDragOver="#handleDragOver" opacity="0.4" stroke="BLACK" strokeType="INSIDE" width="135.0" />
+            <JFXToggleButton fx:id="Toggle" layoutX="523.0" layoutY="9.0" text="Deck" />
+            <JFXButton fx:id="Previous" layoutX="320.0" layoutY="699.0" onAction="#handelPreviousBtn" text="Previous" />
+            <JFXButton fx:id="next" layoutX="756.0" layoutY="699.0" onAction="#handelNextBtn" text="next" />
          </children>
       </AnchorPane>
    </children>
