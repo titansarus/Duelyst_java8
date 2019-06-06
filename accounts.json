@@ -526,14 +526,75 @@
     "@val": {
       "battleHistory": [],
       "cardCollection": {
-        "cards": [],
+        "cards": [
+          {
+            "cardId": "alireza_card3_1",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.20",
+            "cardDescription": "desc3",
+            "cardName": "card3",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "alireza_card99_1",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.20",
+            "cardDescription": "desc99",
+            "cardName": "card99",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "alireza_card0_1",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.20",
+            "cardDescription": "desc0",
+            "cardName": "card0",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "alireza_card1_1",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.20",
+            "cardDescription": "desc1",
+            "cardName": "card1",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "alireza_card0_2",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.20",
+            "cardDescription": "desc0",
+            "cardName": "card0",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "alireza_card1_2",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.20",
+            "cardDescription": "desc1",
+            "cardName": "card1",
+            "isAbleToMove": true,
+            "isInGame": false
+          }
+        ],
         "account": "@root.20",
         "decks": []
       },
       "username": "alireza",
       "password": "alireza",
       "countOfWins": 0,
-      "darick": 10000,
+      "darick": 9950,
       "collectableItems": []
     }
   }

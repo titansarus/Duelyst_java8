@@ -13,7 +13,10 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -26,12 +29,26 @@ import static Duelyst.View.Constants.*;
 public class ShopController {
 
     @FXML
+    AnchorPane buy_aPane;
+
+    @FXML
+    AnchorPane sell_aPane;
+
+    @FXML
+    TabPane shopList_tabPane;
+
+    @FXML
+    Tab buy_tab;
+
+    @FXML
+    Tab sell_tab;
+
+    @FXML
     ScrollPane scrollPane;
+
     @FXML
     HBox listOfCards_HBox;
 
-    @FXML
-    JFXToggleButton buySell_tgb;
 
     @FXML
     JFXButton action_btn;
@@ -100,11 +117,17 @@ public class ShopController {
     }
 
     private void makeCardList() {
-        if (buySell_tgb.isSelected()) {
-            makeCardListOfSell();
-        } else {
+        if (buy_tab.isSelected()) {
             makeCardListOfBuy();
-        }
+        } else if (sell_tab.isSelected())
+            makeCardListOfSell();
+
+//        if (buySell_tgb.isSelected()) {
+//            makeCardListOfSell();
+//        } else {
+//            makeCardListOfBuy();
+//        }
+
 //        listOfCards_HBox.getChildren().clear();
 //        listOfCards_HBox.setPrefWidth(629);
 //        cardViewsOfCollection.clear();
@@ -122,33 +145,34 @@ public class ShopController {
     }
 
     private void makeCardListOfBuy() {
-        makeCardList(Shop.getInstance().getCards());
+        makeCardList(Shop.getInstance().getCards(), buy_aPane);
     }
 
     private void makeCardListOfSell() {
-        makeCardList(Account.getLoggedAccount().getCardCollection().getCards());
+        makeCardList(Account.getLoggedAccount().getCardCollection().getCards(), sell_aPane);
     }
 
-    private void makeCardList(ArrayList<Card> cards) {
+    private void makeCardList(ArrayList<Card> cards, AnchorPane anchorPane) {
 
-        listOfCards_HBox.getChildren().clear();
-        listOfCards_HBox.setPrefWidth(629);
+        anchorPane.getChildren().clear();
+        anchorPane.setPrefWidth(629);
         cardViews.clear();
         for (int i = 0; i < cards.size(); i++) {
             if (search_txtf.getText().length() == 0 || cards.get(i).getCardName().contains(search_txtf.getText())) {
-                VBox vBox = new VBox();
-                vBox.setPrefWidth(275);
+                AnchorPane pane = new AnchorPane();
+                pane.setPrefWidth(275);
                 CardView cardView = new CardView(cards.get(i));
                 getCardViews().add(cardView);
-                vBox.getChildren().add(cardView);
-                listOfCards_HBox.getChildren().add(vBox);
-                listOfCards_HBox.setPrefWidth(listOfCards_HBox.getPrefWidth() + 275);
+                pane.getChildren().add(cardView);
+                anchorPane.getChildren().add(pane);
+                pane.setLayoutX(280 * i);
+                anchorPane.setPrefWidth(anchorPane.getPrefWidth() + 275);
             }
         }
     }
 
     private void updateButton() {
-        if (getBuySell_tgb().isSelected()) {
+        if (sell_tab.isSelected()) {
             ImageView i = new ImageView(sellImg);
             Shop.getInstance().setShopMode(ShopMode.SELL);
 
@@ -160,14 +184,14 @@ public class ShopController {
             getAction_btn().setGraphic(i);
         }
 
-        if (isStanceOfTGB() != getBuySell_tgb().isSelected()) {
-            setStanceOfTGB(getBuySell_tgb().isSelected());
+        if (isStanceOfTGB() != sell_tab.isSelected()) {
+            setStanceOfTGB(sell_tab.isSelected());
             Shop.setSelectedCard(null);
         }
     }
 
     public void handleActionBtn() {
-        if (!getBuySell_tgb().isSelected()) {
+        if (!sell_tab.isSelected()) {
             buy();
         } else {
             sell();
@@ -237,10 +261,6 @@ public class ShopController {
 
     public HBox getListOfCards_HBox() {
         return listOfCards_HBox;
-    }
-
-    public JFXToggleButton getBuySell_tgb() {
-        return buySell_tgb;
     }
 
     public JFXButton getAction_btn() {
