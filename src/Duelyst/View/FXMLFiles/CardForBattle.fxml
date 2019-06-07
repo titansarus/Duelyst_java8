@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane fx:id="anchorPane" prefHeight="203.0" prefWidth="190.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.CardForBattleController">
+   <children>
+      <ImageView fitHeight="162.0" fitWidth="153.0" layoutX="19.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../res/CardUI/card_background@2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="65.0" fitWidth="62.0" layoutX="64.0" layoutY="116.0">
+         <image>
+            <Image url="@../../../res/CardUI/icon_mana@2x.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="manaCost_lbl" layoutX="82.0" layoutY="140.0" text="Label" />
+      <ImageView fx:id="cardImage_iv" fitHeight="65.0" fitWidth="62.0" layoutX="65.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>

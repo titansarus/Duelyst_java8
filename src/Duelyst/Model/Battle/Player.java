@@ -31,8 +31,10 @@ public class Player {
     public void initializeHand() {
         Random random = new Random();
         for (int i = 0; i < SIZE_OF_HAND; i++) {
-            int index = random.nextInt(deck.getCards().size());
-            giveCardFromDeckToHand(index);
+            if (deck.getCards().size()>0) {
+                int index = random.nextInt(deck.getCards().size());
+                giveCardFromDeckToHand(index);
+            }
         }
     }
 

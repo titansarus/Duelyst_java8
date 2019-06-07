@@ -1,6 +1,7 @@
 package Duelyst.Controllers;
 
 import Duelyst.Model.Account;
+import Duelyst.Model.Battle.Battle;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
@@ -103,6 +104,7 @@ public class MainMenu {
         getLoginedAccount_lbl().setText(Account.getLoggedAccount().getUsername());
     }
 
+
     public void stopTimeline() {
         timeline.stop();
         ;
@@ -140,6 +142,24 @@ public class MainMenu {
         setMultiplayerModeGoal(0);
         singleOrMutliPrompt();
 
+    }
+
+    public void gotoBattle(Battle battle)
+    {
+        Pane root = null;
+        FXMLLoader fxmlLoader = null;
+        try {
+            fxmlLoader = new FXMLLoader(getClass().getResource("../View/FXMLFiles/Battle.fxml"));
+            root = fxmlLoader.load();
+            int i = 0;
+            System.out.println(i);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ((BattleController) fxmlLoader.getController()).setHandHbox();
+        ((BattleController) fxmlLoader.getController()).setBattle(battle);
+        stopTimeline();
+        Container.runNextScene(root, BATTLE);
     }
 
 
@@ -301,6 +321,8 @@ public class MainMenu {
             @Override
             public void handle(ActionEvent event) {
                 setStoryModeLevel(LEVEL_1);
+                Battle battle = new Battle(Account.getLoggedAccount(),Account.getLoggedAccount());
+                gotoBattle(battle);
                 jfxDialog.close();
 
             }

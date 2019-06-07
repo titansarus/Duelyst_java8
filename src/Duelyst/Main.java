@@ -53,7 +53,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage = Container.stage;
-        primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.initStyle(StageStyle.UTILITY);
         primaryStage.setScene(Container.scenes.getLast());
         primaryStage.show();
     }

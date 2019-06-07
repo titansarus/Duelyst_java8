@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+
+<AnchorPane prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.BattleController">
+   <children>
+      <ImageView fitHeight="930.0" fitWidth="1600.0">
+         <image>
+            <Image url="@../../../res/Backgrounds/battle_back.jpg" />
+         </image>
+      </ImageView>
+      <HBox fx:id="hand_hBox" layoutX="325.0" layoutY="712.0" prefHeight="144.0" prefWidth="893.0" />
+   </children>
+</AnchorPane>
