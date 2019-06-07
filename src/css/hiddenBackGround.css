@@ -1,0 +1,18 @@
+#scrollPane .viewport{
+	-fx-background-color:transparent;
+}
+#scrollPane_2 .viewport{
+	-fx-background-color:transparent;
+}
+#scrollPane {
+	-fx-background-color:transparent;
+}
+#scrollPane_2 {
+	-fx-background-color:transparent;
+}
+#cardCollectionCards_HB .viewport{
+	-fx-background-color:transparent;
+}
+deck_hbox .viewport{
+	-fx-background-color:transparent;
+}
