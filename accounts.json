@@ -141,14 +141,64 @@
     "@val": {
       "battleHistory": [],
       "cardCollection": {
-        "cards": [],
+        "cards": [
+          {
+            "cardId": "a_card0_1",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.1",
+            "cardDescription": "desc0",
+            "cardName": "card0",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "a_card0_2",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.1",
+            "cardDescription": "desc0",
+            "cardName": "card0",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "a_card0_3",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.1",
+            "cardDescription": "desc0",
+            "cardName": "card0",
+            "isAbleToMove": true,
+            "isInGame": false
+          },
+          {
+            "cardId": "a_card82_1",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.1",
+            "cardDescription": "desc82",
+            "cardName": "card82",
+            "isAbleToMove": true,
+            "isInGame": false
+          }
+        ],
         "account": "@root.1",
-        "decks": []
+        "decks": [
+          {
+            "cards": [],
+            "minions": [],
+            "account": "@root.1",
+            "deckName": "a",
+            "isValid": false
+          }
+        ],
+        "mainDeck": "@root.1.cardCollection.decks.0"
       },
       "username": "a",
       "password": "a",
       "countOfWins": 0,
-      "darick": 10000,
+      "darick": 9960,
       "collectableItems": []
     }
   },

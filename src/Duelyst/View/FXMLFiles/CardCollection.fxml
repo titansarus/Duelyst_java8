@@ -49,8 +49,14 @@
             <JFXButton fx:id="createDeck_btn" layoutX="534.0" layoutY="750.0" onAction="#handleCreateDeck" prefHeight="38.0" prefWidth="114.0" style="-fx-background-color: #464646;" stylesheets="@../../../css/jfx-button.css" text=" " />
             <Label fx:id="mainDeck_lbl" layoutX="873.0" layoutY="31.0" prefHeight="17.0" prefWidth="168.0" textAlignment="CENTER" />
             <Label layoutX="769.0" layoutY="31.0" prefHeight="15.0" prefWidth="152.0" text="Main Deck" />
-            <JFXButton layoutX="234.0" layoutY="756.0" onAction="#handleSendToDeck" text="Send to Deck" />
-            <JFXButton layoutX="856.0" layoutY="756.0" onAction="#handleSendBackToCollection" text="Send to Collection" />
+            <JFXButton layoutX="234.0" layoutY="756.0" onAction="#handleSendToDeck" text="Send to Deck" textFill="#e5ff00">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></JFXButton>
+            <JFXButton layoutX="856.0" layoutY="756.0" onAction="#handleSendBackToCollection" text="Send to Collection" textFill="#e5ff00">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></JFXButton>
             <JFXComboBox fx:id="listOfDecks_cb" layoutX="1089.0" layoutY="131.0" onAction="#IClicked" onMouseClicked="#populateComboBox" prefHeight="25.0" prefWidth="152.0" />
             <JFXButton fx:id="selectAsMainDeck_btn" buttonType="RAISED" layoutX="1081.0" layoutY="197.0" onAction="#handleSelectAsMainDeck" prefHeight="25.0" prefWidth="168.0" ripplerFill="#ab9b9b" style="-fx-background-color: LightGreen;" stylesheets="@../../../css/jfx-button.css" text="Select As Main Deck">
                <font>
@@ -74,8 +80,14 @@
             </JFXButton>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="155.0" layoutX="1098.0" layoutY="545.0" onDragDropped="#handleDragDropped" onDragOver="#handleDragOver" opacity="0.4" stroke="BLACK" strokeType="INSIDE" width="135.0" />
             <JFXToggleButton fx:id="Toggle" layoutX="523.0" layoutY="9.0" text="Deck" />
-            <JFXButton fx:id="Previous" layoutX="320.0" layoutY="699.0" onAction="#handelPreviousBtn" text="Previous" />
-            <JFXButton fx:id="next" layoutX="756.0" layoutY="699.0" onAction="#handelNextBtn" text="next" />
+            <JFXButton fx:id="Previous" layoutX="320.0" layoutY="699.0" onAction="#handelPreviousBtn" text="Previous" textFill="#e5ff00">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></JFXButton>
+            <JFXButton fx:id="next" layoutX="756.0" layoutY="699.0" onAction="#handelNextBtn" text="Next" textFill="#e5ff00">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></JFXButton>
          </children>
       </AnchorPane>
    </children>
