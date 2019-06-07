@@ -39,6 +39,12 @@ public class CardCollectionController {
     JFXButton back_btn;
 
     @FXML
+    JFXButton Previous;
+
+    @FXML
+    JFXButton next;
+
+    @FXML
     Label loginedAccount_lbl;
 
     @FXML
@@ -51,13 +57,14 @@ public class CardCollectionController {
     ScrollPane scrollPane;
 
     @FXML
+    JFXToggleButton Toggle;
+
+
+    @FXML
     HBox cardCollectionCards_HB;
 
     @FXML
     StackPane stackePane;
-
-    @FXML
-    JFXTextField deckSearch_txtf;
 
     @FXML
     HBox deck_hbox;
@@ -86,7 +93,8 @@ public class CardCollectionController {
 
     private String createDeckName; //These Are used just for the time we are getting input from user.
     private String imporetDeckName;
-
+    private double deckScroll = 0;
+    private double collectionScroll = 0;
     ArrayList<CardView> cardViewsOfCollection = new ArrayList<>();
     ArrayList<CardView> cardViewsOfDeck = new ArrayList<>();
 
@@ -96,6 +104,10 @@ public class CardCollectionController {
 
     @FXML
     public void initialize() {
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane_2.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane_2.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         back_btn.setGraphic(new ImageView(backImg));
         createDeck_btn.setGraphic(new ImageView(createDeckImg));
 
@@ -247,6 +259,37 @@ public class CardCollectionController {
         jfxDialog.show();
 
 
+    }
+
+    public void handelPreviousBtn() {
+
+        if (Toggle.isSelected()) {
+            if (deckScroll!=0){
+                deckScroll--;
+            }
+            scrollPane_2.setHvalue(deckScroll*(4.0/cardCollectionCards_HB.getChildren().size()));
+        } else {
+            if (collectionScroll!=0){
+                collectionScroll--;
+            }
+            scrollPane.setHvalue(collectionScroll*(4.0/cardCollectionCards_HB.getChildren().size()));
+        }
+        System.out.println(deckScroll*(4.0/cardCollectionCards_HB.getChildren().size()));
+    }
+
+    public void handelNextBtn() {
+        if (Toggle.isSelected()) {
+            if (1.0>deckScroll*(4.0/cardCollectionCards_HB.getChildren().size())){
+                deckScroll++;
+            }
+            scrollPane_2.setHvalue(deckScroll*(4.0/cardCollectionCards_HB.getChildren().size()));
+        } else {
+            if (1.0>deckScroll*(4.0/cardCollectionCards_HB.getChildren().size())){
+                collectionScroll++;
+            }
+            scrollPane.setHvalue(collectionScroll*(4.0/cardCollectionCards_HB.getChildren().size()));
+        }
+        System.out.println(deckScroll*(4.0/cardCollectionCards_HB.getChildren().size()));
     }
 
     public void handleExportDeckBtn() {
@@ -402,32 +445,55 @@ public class CardCollectionController {
 
 
     private void makeCardListOfCollection(ArrayList<Card> cards) { //TODO DUPLICATE REFACTOR
-        makeCardListGeneralized(cards, cardCollectionCards_HB, cardViewsOfCollection, search_txtf);
+        makeCardListGeneralized(cards, cardCollectionCards_HB, cardViewsOfCollection, search_txtf, true);
     }
 
-    private void makeCardListGeneralized(ArrayList<Card> cards, HBox hBox, ArrayList<CardView> cardViews, JFXTextField search) {
+    private void makeCardListGeneralized(ArrayList<Card> cards, HBox hBox, ArrayList<CardView> cardViews, JFXTextField search, boolean isCollection) {
         hBox.getChildren().clear();
         hBox.setPrefWidth(629);
         cardViews.clear();
-        if (cards == null) {
-            return;
+        if ((isCollection && !Toggle.isSelected())) {
+            deckScroll = 0;
+            scrollPane_2.setDisable(true);
+            deck_hbox.setDisable(true);
+
+            scrollPane_2.setVisible(false);
+            scrollPane.setVisible(true);
+
+            scrollPane.setDisable(false);
+            cardCollectionCards_HB.setDisable(false);
+        } else if ((!isCollection && Toggle.isSelected())) {
+            collectionScroll = 0;
+            scrollPane.setDisable(true);
+            cardCollectionCards_HB.setDisable(true);
+
+            scrollPane.setVisible(false);
+            scrollPane_2.setVisible(true);
+
+            scrollPane_2.setDisable(false);
+            deck_hbox.setDisable(false);
         }
-        for (int i = 0; i < cards.size(); i++) {
-            if (search.getText().length() == 0 || cards.get(i).getCardName().contains(search.getText())) {
-                VBox vBox = new VBox();
-                vBox.setPrefWidth(275);
-                CardView cardView = new CardView(cards.get(i));
-                cardViews.add(cardView);
-                vBox.getChildren().add(cardView);
-                hBox.getChildren().add(vBox);
-                hBox.setPrefWidth(hBox.getPrefWidth() + 275);
+        if ((!isCollection && Toggle.isSelected()) || (isCollection && !Toggle.isSelected())) {
+            if (cards == null) {
+                return;
+            }
+            for (int i = 0; i < cards.size(); i++) {
+                if (search.getText().length() == 0 || cards.get(i).getCardName().contains(search.getText())) {
+                    VBox vBox = new VBox();
+                    vBox.setPrefWidth(268);
+                    CardView cardView = new CardView(cards.get(i));
+                    cardViews.add(cardView);
+                    vBox.getChildren().add(cardView);
+                    hBox.getChildren().add(vBox);
+                    hBox.setPrefWidth(hBox.getPrefWidth() + 268);
+                }
             }
         }
     }
 
 
     private void makeCardListOfDeck(ArrayList<Card> cards) {
-        makeCardListGeneralized(cards, deck_hbox, cardViewsOfDeck, deckSearch_txtf);
+        makeCardListGeneralized(cards, deck_hbox, cardViewsOfDeck, search_txtf, false);
     }
 
 
@@ -470,6 +536,7 @@ public class CardCollectionController {
 
 
     public void handleBackBtn() {
+        Account.saveAccount();
         if (Container.scenes.size() > 0) {
             stopTimeline();
             Container.handleBack();

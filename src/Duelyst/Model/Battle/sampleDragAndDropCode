@@ -1,0 +1,108 @@
+package sample;
+
+import javafx.fxml.FXML;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
+
+
+public class Controller {
+
+
+    double orgSceneX, orgSceneY;
+    @FXML
+    VBox testVbox;
+    public void handleOnMousePressed(MouseEvent t)
+    {
+        orgSceneX = t.getSceneX();
+        orgSceneY = t.getSceneY();
+
+        VBox c = (VBox) (t.getSource());
+        c.toFront();
+    }
+
+    public void hamdleOnMouserDragged(MouseEvent t){
+        double offsetX = t.getSceneX() - orgSceneX;
+        double offsetY = t.getSceneY() - orgSceneY;
+
+        VBox c = (VBox) (t.getSource());
+
+        c.setLayoutX(c.getLayoutX() + offsetX);
+        c.setLayoutY(c.getLayoutY() + offsetY);
+
+        orgSceneX = t.getSceneX();
+        orgSceneY = t.getSceneY();
+    }
+
+}
+
+
+
+////////////////////////////////////////////
+
+package sample;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.StrokeLineCap;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+//from  w w  w. j av a2 s. c o  m
+public class Main extends Application {
+
+    double orgSceneX, orgSceneY;
+
+    @Override
+    public void start(Stage primaryStage) {
+        Pane root = null;
+        FXMLLoader fxmlLoader = null;
+        try {
+            fxmlLoader = new FXMLLoader(getClass().getResource("./sample.fxml"));
+            root = fxmlLoader.load();
+            int i = 0;
+            System.out.println(i);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene scene = new Scene(root);
+
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+
+////////////////////////////
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <VBox fx:id="testVbox" layoutX="104.0" layoutY="33.0" onMouseDragged="#hamdleOnMouserDragged" onMousePressed="#handleOnMousePressed" prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <JFXTextField text="asdsad" />
+            <JFXTextField text="sadsda" />
+            <JFXTextField text="dsafasd" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
+
+///////////////////////////////
+

@@ -59,6 +59,7 @@ public class CardView extends Pane {
 
 
         cardController.setNameAndDscAndImg("Card", "This is A card", heroImg);
+    //    cardController.setNameAndDsc("Card", "This is A card");
     }
 
 
