@@ -8,17 +8,17 @@
 
 <AnchorPane fx:id="anchorPane" prefHeight="203.0" prefWidth="190.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.CardForBattleController">
    <children>
+      <ImageView fx:id="cardImage_iv" fitHeight="109.0" fitWidth="112.0" layoutX="45.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="162.0" fitWidth="153.0" layoutX="19.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../res/CardUI/card_background@2x.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="65.0" fitWidth="62.0" layoutX="64.0" layoutY="116.0">
+      <ImageView fitHeight="65.0" fitWidth="62.0" layoutX="65.0" layoutY="116.0">
          <image>
             <Image url="@../../../res/CardUI/icon_mana@2x.png" />
          </image>
       </ImageView>
-      <Label fx:id="manaCost_lbl" layoutX="82.0" layoutY="140.0" text="Label" />
-      <ImageView fx:id="cardImage_iv" fitHeight="65.0" fitWidth="62.0" layoutX="65.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="manaCost_lbl" layoutX="82.0" layoutY="140.0" />
    </children>
 </AnchorPane>

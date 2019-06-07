@@ -25,6 +25,7 @@ public class Player {
         Cloner cloner = new Cloner();
         this.account = account;
         this.deck = cloner.deepClone(deck);
+        this.hand = new ArrayList<>();
         initializeHand();
     }
 
@@ -40,6 +41,10 @@ public class Player {
 
     public void setManaFromTurn(int turn) {
         setMana(Math.floorDiv(turn, 2) + manaYIntercpet); //FOR TEST, set +2 to +1000
+        if (getMana()>9)
+        {
+            setMana(9);
+        }
     }
 
     public void nextCardToHand() {

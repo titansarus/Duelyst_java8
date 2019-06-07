@@ -48,6 +48,8 @@ public class Constants {
     public static final Image heroImg = new Image(Constants.class.getResourceAsStream("../../res/Characters/generals/general_f1.png"));
     public static final Image playImg = new Image(Constants.class.getResourceAsStream("../../res/ui/play.png"));
     public static final Image createDeckImg = new Image(Constants.class.getResourceAsStream("../../res/ui/create_deck_sml.png"));
+    public static final Image manaIconSml = new Image(Constants.class.getResourceAsStream("../../res/CardUI/icon_mana.png"));
+    public static final Image manaInActiveSml = new Image(Constants.class.getResourceAsStream("../../res/CardUI/icon_mana_inactive.png"));
 
 
     //OTHER CONSTANTS

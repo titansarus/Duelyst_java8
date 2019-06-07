@@ -1,18 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.BattleController">
    <children>
-      <ImageView fitHeight="930.0" fitWidth="1600.0">
+      <ImageView fitHeight="930.0" fitWidth="1600.0" layoutY="3.0">
          <image>
             <Image url="@../../../res/Backgrounds/battle_back.jpg" />
          </image>
       </ImageView>
       <HBox fx:id="hand_hBox" layoutX="325.0" layoutY="712.0" prefHeight="144.0" prefWidth="893.0" />
+      <Label fx:id="p1Acc_lbl" layoutX="30.0" layoutY="2.0" prefHeight="53.0" prefWidth="188.0" text="Player1" textFill="RED">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <Label fx:id="p2Acc_lbl" layoutX="1452.0" layoutY="3.0" text="Player1" textFill="RED">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <HBox fx:id="p1Mana_hb" layoutX="30.0" layoutY="46.0" prefHeight="35.0" prefWidth="357.0" style="-fx-background-color: RGB(50,50,50,0.25);" />
+      <HBox fx:id="p2Mana_hb" layoutX="1218.0" layoutY="56.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="35.0" prefWidth="357.0" style="-fx-background-color: RGB(50,50,50,0.25);" />
+      <JFXButton fx:id="end_turn_btn" buttonType="RAISED" layoutX="1382.0" layoutY="784.0" onAction="#handleEndTurnBtn" prefHeight="53.0" prefWidth="180.0" text="END TURN" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>
