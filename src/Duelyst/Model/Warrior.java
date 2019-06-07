@@ -24,6 +24,26 @@ public class Warrior extends Card implements Cloneable {
         super(cardName, cardDescription, manaCost, darikCost);
     }
 
+    public Warrior(String cardName, String cardDescription, int manaCost, int darikCost, int healthPoint, int actionPower, int attackRange, AttackKind attackKind, int shield) {
+        super(cardName, cardDescription, manaCost, darikCost);
+        this.healthPoint = healthPoint;
+        this.actionPower = actionPower;
+        this.attackRange = attackRange;
+        this.attackKind = attackKind;
+        this.shield = shield;
+    }
+
+    public Warrior(String cardName, String cardDescription, int manaCost, int darikCost, int healthPoint, int actionPower, int attackRange, AttackKind attackKind, int shield, String addressOfImage) {
+        super(cardName, cardDescription, manaCost, darikCost, addressOfImage);
+        this.healthPoint = healthPoint;
+        this.actionPower = actionPower;
+        this.attackRange = attackRange;
+        this.attackKind = attackKind;
+        this.validCounterAttack = validCounterAttack;
+        this.isDeath = isDeath;
+        this.shield = shield;
+    }
+
     public void changeShield(int i) {
         setShield(getShield() + i);
     }

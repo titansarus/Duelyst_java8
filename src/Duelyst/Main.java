@@ -1,9 +1,12 @@
 package Duelyst;
 
 import Duelyst.Controllers.Container;
+import Duelyst.Database.DatabaseCard;
+import Duelyst.Database.DatabaseCollectioner;
 import Duelyst.Model.Account;
 import Duelyst.Model.Card;
 import Duelyst.Model.Shop;
+import Duelyst.Utility.CreateCardFromDatabaseCard;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import javafx.application.Application;
@@ -40,6 +43,9 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        DatabaseCollectioner.DatabaseGenerator();
+        Shop.getInstance().getCards().addAll( CreateCardFromDatabaseCard.createCards(DatabaseCard.getDatabaseCards()));
+
         for (int i =0;i<100;i++)
         {
             Card card = new Card("card"+i , "desc"+ i , 10,10);
@@ -53,7 +59,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage = Container.stage;
-        primaryStage.initStyle(StageStyle.UTILITY);
+        primaryStage.initStyle(StageStyle.DECORATED);
         primaryStage.setScene(Container.scenes.getLast());
         primaryStage.show();
     }

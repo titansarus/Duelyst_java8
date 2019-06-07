@@ -2,6 +2,8 @@ package Duelyst.Model.Battle;
 
 import Duelyst.Model.Account;
 
+import java.util.regex.Matcher;
+
 import static Duelyst.View.Constants.*;
 
 public class Battle {
@@ -9,7 +11,7 @@ public class Battle {
     private Player player2;
     private Player playingPlayer = null;
     private Cell[][] grid = new Cell[BATTLE_ROWS][BATTLE_COLUMNS];
-    private int turn = 1;
+    private int turn = 0;//At First next turn is invocked and first turn will be 1
 
     public void initializeCells() {
         for (int i = 0; i < BATTLE_ROWS; i++) {
@@ -24,15 +26,20 @@ public class Battle {
         setPlayer2(new Player(account2, account2.getCardCollection().getMainDeck()));
         setPlayingPlayer();
         initializeCells();
+        nextTurn();
     }
 
-    public void nextTurn()
-    {
+    public void nextTurn() {
         turn++;
         setPlayingPlayer();
         getPlayer1().setManaFromTurn(getTurn());
         getPlayer2().setManaFromTurn(getTurn());
 
+    }
+
+    public Integer calculateMaxAmountOfMana() {
+        int res = Math.floorDiv(getTurn(), 2) + 2;
+        return res > 9 ? 9 : res;
     }
 
 
@@ -69,7 +76,7 @@ public class Battle {
     }
 
     public Player getPlayingPlayer() {
-       return playingPlayer;
+        return playingPlayer;
     }
 
     public void setPlayingPlayer() {
@@ -77,6 +84,6 @@ public class Battle {
             this.playingPlayer = player1;
             return;
         }
-        this.playingPlayer= player2;
+        this.playingPlayer = player2;
     }
 }

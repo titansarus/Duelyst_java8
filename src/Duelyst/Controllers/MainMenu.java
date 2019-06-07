@@ -156,8 +156,12 @@ public class MainMenu {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ((BattleController) fxmlLoader.getController()).setHandHbox();
-        ((BattleController) fxmlLoader.getController()).setBattle(battle);
+
+        BattleController bc = fxmlLoader.getController();
+        bc.setBattle(battle);
+        bc.setHandHbox();
+        bc.runTimeline();
+        bc.makeAccountNames();
         stopTimeline();
         Container.runNextScene(root, BATTLE);
     }

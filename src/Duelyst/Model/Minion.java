@@ -13,6 +13,13 @@ public class Minion extends Warrior {
         addMinion(this);
     }
 
+    public Minion(String cardName, String cardDescription, int manaCost, int darikCost, int healthPoint, int actionPower, int attackRange, AttackKind attackKind, int shield) {
+        super(cardName, cardDescription, manaCost, darikCost, healthPoint, actionPower, attackRange, attackKind, shield);
+    }
+
+    public Minion(String cardName, String cardDescription, int manaCost, int darikCost, int healthPoint, int actionPower, int attackRange, AttackKind attackKind, int shield, String addressOfImage) {
+        super(cardName, cardDescription, manaCost, darikCost, healthPoint, actionPower, attackRange, attackKind, shield, addressOfImage);
+    }
 
     private void addMinion(Minion minion) {
         getAllMinions().add(minion);

@@ -6,64 +6,27 @@
       "cardCollection": {
         "cards": [
           {
-            "cardId": "reza_card0_2",
-            "manaCost": 10,
-            "darikCost": 10,
-            "account": "@root.0",
-            "cardDescription": "desc0",
-            "cardName": "card0",
-            "isAbleToMove": true,
-            "isInGame": false
-          },
-          {
-            "cardId": "reza_card0_4",
-            "manaCost": 10,
-            "darikCost": 10,
-            "account": "@root.0",
-            "cardDescription": "desc0",
-            "cardName": "card0",
-            "isAbleToMove": true,
-            "isInGame": false
-          },
-          {
-            "cardId": "reza_card0_6",
-            "manaCost": 10,
-            "darikCost": 10,
-            "account": "@root.0",
-            "cardDescription": "desc0",
-            "cardName": "card0",
-            "isAbleToMove": true,
-            "isInGame": false
-          },
-          {
-            "cardId": "reza_card0_7",
-            "manaCost": 10,
-            "darikCost": 10,
-            "account": "@root.0",
-            "cardDescription": "desc0",
-            "cardName": "card0",
-            "isAbleToMove": true,
-            "isInGame": false
-          },
-          {
-            "cardId": "reza_card0_10",
-            "manaCost": 10,
-            "darikCost": 10,
-            "account": "@root.0",
-            "cardDescription": "desc0",
-            "cardName": "card0",
-            "isAbleToMove": true,
-            "isInGame": false
-          },
-          {
-            "cardId": "reza_card0_11",
-            "manaCost": 10,
-            "darikCost": 10,
-            "account": "@root.0",
-            "cardDescription": "desc0",
-            "cardName": "card0",
-            "isAbleToMove": true,
-            "isInGame": false
+            "@type": "Duelyst.Model.Hero",
+            "@val": {
+              "healthPoint": 10,
+              "actionPower": 20,
+              "attackRange": 2,
+              "attackKind": "MELEE",
+              "validCounterAttack": false,
+              "isDeath": false,
+              "shield": 0,
+              "isValidToAttack": true,
+              "IsValidToMove": true,
+              "cardId": "a_Siavash_2",
+              "manaCost": 2,
+              "darikCost": 50,
+              "account": "@root.0",
+              "cardDescription": "SiavashDesc",
+              "cardName": "Siavash",
+              "isAbleToMove": true,
+              "isInGame": false,
+              "addressOfImage": "./res/Characters/generals/general_f1.png"
+            }
           }
         ],
         "account": "@root.0",
@@ -71,201 +34,86 @@
           {
             "cards": [
               {
-                "cardId": "reza_card0_1",
-                "manaCost": 10,
-                "darikCost": 10,
-                "account": "@root.0",
-                "cardDescription": "desc0",
-                "cardName": "card0",
-                "isAbleToMove": true,
-                "isInGame": false
+                "@type": "Duelyst.Model.Hero",
+                "@val": {
+                  "healthPoint": 10,
+                  "actionPower": 20,
+                  "attackRange": 2,
+                  "attackKind": "MELEE",
+                  "validCounterAttack": false,
+                  "isDeath": false,
+                  "shield": 0,
+                  "isValidToAttack": true,
+                  "IsValidToMove": true,
+                  "cardId": "a_Siavash_4",
+                  "manaCost": 2,
+                  "darikCost": 50,
+                  "account": "@root.0",
+                  "cardDescription": "SiavashDesc",
+                  "cardName": "Siavash",
+                  "isAbleToMove": true,
+                  "isInGame": false,
+                  "addressOfImage": "./res/Characters/generals/general_f1.png"
+                }
               },
               {
-                "cardId": "reza_card0_3",
+                "cardId": "a_card0_2",
                 "manaCost": 10,
                 "darikCost": 10,
                 "account": "@root.0",
                 "cardDescription": "desc0",
                 "cardName": "card0",
                 "isAbleToMove": true,
-                "isInGame": false
+                "isInGame": false,
+                "addressOfImage": ""
               },
               {
-                "cardId": "reza_card0_5",
+                "cardId": "a_card0_4",
                 "manaCost": 10,
                 "darikCost": 10,
                 "account": "@root.0",
                 "cardDescription": "desc0",
                 "cardName": "card0",
                 "isAbleToMove": true,
-                "isInGame": false
+                "isInGame": false,
+                "addressOfImage": ""
               },
               {
-                "cardId": "reza_card0_9",
+                "cardId": "a_card0_3",
                 "manaCost": 10,
                 "darikCost": 10,
                 "account": "@root.0",
                 "cardDescription": "desc0",
                 "cardName": "card0",
                 "isAbleToMove": true,
-                "isInGame": false
+                "isInGame": false,
+                "addressOfImage": ""
               },
               {
-                "cardId": "reza_card0_8",
+                "cardId": "a_card0_1",
                 "manaCost": 10,
                 "darikCost": 10,
                 "account": "@root.0",
                 "cardDescription": "desc0",
                 "cardName": "card0",
                 "isAbleToMove": true,
-                "isInGame": false
+                "isInGame": false,
+                "addressOfImage": ""
               }
             ],
             "minions": [],
+            "hero": "@root.0.cardCollection.decks.0.cards.0",
             "account": "@root.0",
-            "deckName": "reza",
+            "deckName": "abc",
             "isValid": false
           }
         ],
         "mainDeck": "@root.0.cardCollection.decks.0"
       },
-      "username": "reza",
-      "password": "12345",
-      "countOfWins": 0,
-      "darick": 9890,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "cardCollection": {
-        "cards": [
-          {
-            "cardId": "a_card0_1",
-            "manaCost": 10,
-            "darikCost": 10,
-            "account": "@root.1",
-            "cardDescription": "desc0",
-            "cardName": "card0",
-            "isAbleToMove": true,
-            "isInGame": false
-          },
-          {
-            "cardId": "a_card0_2",
-            "manaCost": 10,
-            "darikCost": 10,
-            "account": "@root.1",
-            "cardDescription": "desc0",
-            "cardName": "card0",
-            "isAbleToMove": true,
-            "isInGame": false
-          },
-          {
-            "cardId": "a_card0_3",
-            "manaCost": 10,
-            "darikCost": 10,
-            "account": "@root.1",
-            "cardDescription": "desc0",
-            "cardName": "card0",
-            "isAbleToMove": true,
-            "isInGame": false
-          },
-          {
-            "cardId": "a_card82_1",
-            "manaCost": 10,
-            "darikCost": 10,
-            "account": "@root.1",
-            "cardDescription": "desc82",
-            "cardName": "card82",
-            "isAbleToMove": true,
-            "isInGame": false
-          }
-        ],
-        "account": "@root.1",
-        "decks": [
-          {
-            "cards": [],
-            "minions": [],
-            "account": "@root.1",
-            "deckName": "a",
-            "isValid": false
-          }
-        ],
-        "mainDeck": "@root.1.cardCollection.decks.0"
-      },
       "username": "a",
       "password": "a",
       "countOfWins": 0,
-      "darick": 9960,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "cardCollection": {
-        "cards": [
-          {
-            "cardId": "alireza_card0_1",
-            "manaCost": 10,
-            "darikCost": 10,
-            "account": "@root.2",
-            "cardDescription": "desc0",
-            "cardName": "card0",
-            "isAbleToMove": true,
-            "isInGame": false
-          },
-          {
-            "cardId": "alireza_card0_2",
-            "manaCost": 10,
-            "darikCost": 10,
-            "account": "@root.2",
-            "cardDescription": "desc0",
-            "cardName": "card0",
-            "isAbleToMove": true,
-            "isInGame": false
-          },
-          {
-            "cardId": "alireza_card1_1",
-            "manaCost": 10,
-            "darikCost": 10,
-            "account": "@root.2",
-            "cardDescription": "desc1",
-            "cardName": "card1",
-            "isAbleToMove": true,
-            "isInGame": false
-          },
-          {
-            "cardId": "alireza_card1_2",
-            "manaCost": 10,
-            "darikCost": 10,
-            "account": "@root.2",
-            "cardDescription": "desc1",
-            "cardName": "card1",
-            "isAbleToMove": true,
-            "isInGame": false
-          },
-          {
-            "cardId": "alireza_card1_3",
-            "manaCost": 10,
-            "darikCost": 10,
-            "account": "@root.2",
-            "cardDescription": "desc1",
-            "cardName": "card1",
-            "isAbleToMove": true,
-            "isInGame": false
-          }
-        ],
-        "account": "@root.2",
-        "decks": []
-      },
-      "username": "alireza",
-      "password": "alireza",
-      "countOfWins": 0,
-      "darick": 9950,
+      "darick": 9760,
       "collectableItems": []
     }
   }
