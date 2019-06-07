@@ -58,8 +58,8 @@
                         <Font size="25.0" />
                     </font>
                 </JFXButton>
-            <JFXButton fx:id="next_btn" layoutX="712.0" layoutY="318.0" onAction="#handleNextButton" text="Next" />
-            <JFXButton fx:id="previous_btn" layoutX="71.0" layoutY="318.0" onAction="#handlePreviousButton" text="Previous" />
+            <JFXButton fx:id="next_btn" layoutX="712.0" layoutY="318.0" onAction="#handleNextButton" style="-fx-background-color: grey;" text="Next" />
+            <JFXButton fx:id="previous_btn" layoutX="71.0" layoutY="318.0" onAction="#handlePreviousButton" style="-fx-background-color: grey;" text="Previous" />
             </children>
         </AnchorPane>
     </children>
