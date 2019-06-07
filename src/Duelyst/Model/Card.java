@@ -19,6 +19,7 @@ public class Card implements Cloneable {
     //private ArrayList<ABuff> buffs = new ArrayList<>();
     private boolean isAbleToMove = true;
     private boolean isInGame;
+    private String addressOfImage = "";
 
     public static String makeNewID(String accountName, String cardName, int countOfCardsInPlayerCollection) {
         return accountName + "_" + cardName + "_" + (countOfCardsInPlayerCollection + 1);
@@ -29,6 +30,14 @@ public class Card implements Cloneable {
         this.darikCost = darikCost;
         this.cardDescription = cardDescription;
         this.cardName = cardName;
+        addCard(this);
+    }
+    public Card(String cardName, String cardDescription, int manaCost, int darikCost , String addressOfImage) {
+        this.manaCost = manaCost;
+        this.darikCost = darikCost;
+        this.cardDescription = cardDescription;
+        this.cardName = cardName;
+        this.addressOfImage = addressOfImage;
         addCard(this);
     }
 
@@ -197,6 +206,14 @@ public class Card implements Cloneable {
 
     public void setCardDescription(String cardDescription) {
         this.cardDescription = cardDescription;
+    }
+
+    public String getAddressOfImage() {
+        return addressOfImage;
+    }
+
+    public void setAddressOfImage(String addressOfImage) {
+        this.addressOfImage = addressOfImage;
     }
 
     //TODO THIS MAY NEED TO BE CHANGED. THE LOGIC IS THE SAME BUT MAYBE WE NEED TO CLONE ANOTHER ABuff ArrayList.

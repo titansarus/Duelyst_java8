@@ -6,6 +6,7 @@ import Duelyst.Model.Battle.Battle;
 import Duelyst.Model.Card;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
@@ -45,7 +46,12 @@ public class CardForBattle extends Pane {
         this();
         this.card = card;
         cardController.setManaCostLblText(card.getManaCost()+"");
-        cardController.setImageOfCard(heroImg);
+        if (card.getAddressOfImage().length() > 0) {
+            cardController.setImageOfCard( new Image(card.getAddressOfImage()));
+            //System.out.println(card.getAddressOfImage());
+        } else {
+            cardController.setImageOfCard(heroImg);//TODO LATER WILL BE DELETED
+        }
     }
 
     public CardForBattleController getCardController() {

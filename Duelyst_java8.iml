@@ -13,5 +13,6 @@
     <orderEntry type="library" name="uk.com.robust-it:cloning:1.9.12" level="project" />
     <orderEntry type="library" name="org.apache.commons:commons-lang3:3.3.2" level="project" />
     <orderEntry type="library" name="jfoenix-8.0.8" level="project" />
+    <orderEntry type="library" name="poi-4.1.0" level="project" />
   </component>
 </module>

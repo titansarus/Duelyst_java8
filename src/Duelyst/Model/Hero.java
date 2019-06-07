@@ -12,7 +12,9 @@ public class Hero extends Warrior implements Cloneable {
     addHero(this);
     }
 
-
+    public Hero(String cardName, String cardDescription, int manaCost, int darikCost, int healthPoint, int actionPower, int attackRange, AttackKind attackKind, int shield) {
+        super(cardName, cardDescription, manaCost, darikCost, healthPoint, actionPower, attackRange, attackKind, shield);
+    }
 
     public static void addHero(Hero hero)
     {
@@ -21,6 +23,9 @@ public class Hero extends Warrior implements Cloneable {
 
     }
 
+    public Hero(String cardName, String cardDescription, int manaCost, int darikCost, int healthPoint, int actionPower, int attackRange, AttackKind attackKind, int shield, String addressOfImage) {
+        super(cardName, cardDescription, manaCost, darikCost, healthPoint, actionPower, attackRange, attackKind, shield, addressOfImage);
+    }
 
     public static ArrayList<Hero> getAllHeros() {
         return allHeros;

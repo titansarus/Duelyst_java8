@@ -6,6 +6,7 @@ import Duelyst.Model.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
@@ -44,26 +45,23 @@ public class CardView extends Pane {
                     if (Shop.getInstance().getShopMode().equals(ShopMode.BUY)) {
                         Shop.getInstance().selectCardForBuy(card.getCardName());
                         System.out.println("BUY MODE" + card.getCardName());
-                    }
-                    else
-                    {
+                    } else {
                         Shop.getInstance().selectCardForSell(card.getCardId());
                         System.out.println("SELL MODE" + card.getCardName() + " " + card.getCardId());
                     }
-                } else if (Container.nameOfMenus.getLast().equals(COLLECTION))
-                {
+                } else if (Container.nameOfMenus.getLast().equals(COLLECTION)) {
                     Account.getLoggedAccount().getCardCollection().setSelectedCard(card);
                 }
             }
         });
 
+//        if (card.getAddressOfImage()!=null) {
+//            cardController.setNameAndDscAndImg("Card", "This is A card", new Image(card.getAddressOfImage()));
+//        }
+//        else
 
-        cardController.setNameAndDscAndImg("Card", "This is A card", heroImg);
-    //    cardController.setNameAndDsc("Card", "This is A card");
+        //    cardController.setNameAndDsc("Card", "This is A card");
     }
-
-
-
 
 
     public CardView(String name, String desc) {
@@ -75,11 +73,18 @@ public class CardView extends Pane {
 
     public CardView(Card card) {
         this();
-        if (card!=null) {
+        if (card != null) {
             cardController.setNameAndDsc(card.getCardName(), card.getCardDescription());
-            this.card =card;
+            this.card = card;
+
+            if (card.getAddressOfImage().length() > 0) {
+                cardController.setNameAndDscAndImg(card.getCardName(), card.getCardDescription(), new Image(card.getAddressOfImage()));
+                //System.out.println(card.getAddressOfImage());
+            } else {
+                cardController.setNameAndDscAndImg(card.getCardName(), card.getCardDescription(), heroImg);//TODO LATER WILL BE DELETED
+            }
         }
-        }
+    }
 
     public CardController getCardController() {
         return cardController;
