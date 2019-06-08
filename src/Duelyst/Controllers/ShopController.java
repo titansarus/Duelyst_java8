@@ -87,6 +87,8 @@ public class ShopController {
     @FXML
     public void initialize() {
         back_btn.setGraphic(new ImageView(backImg));
+        next_btn.setGraphic(new ImageView(nextImg));
+        previous_btn.setGraphic(new ImageView(previousImg));
         runFastTimeLine();
         runSlowTimeline();
     }

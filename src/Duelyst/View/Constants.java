@@ -45,6 +45,13 @@ public class Constants {
     public static final Image buyImg = new Image(Constants.class.getResourceAsStream("../../res/ui/buy.png"));
     public static final Image sellImg = new Image(Constants.class.getResourceAsStream("../../res/ui/Sell.png"));
     public static final Image backImg = new Image(Constants.class.getResourceAsStream("../../res/ui/back.png"));
+    //...//
+    public static final Image nextImg = new Image(Constants.class.getResourceAsStream("../../res/ui/next.png"),150,50,true,true);
+    public static final Image previousImg = new Image(Constants.class.getResourceAsStream("../../res/ui/previous.png"),150,50,true,true);
+    public static final Image MainDeckImg = new Image(Constants.class.getResourceAsStream("../../res/ui/Main-Deck.png"));
+    public static final Image sendToDeckImg = new Image(Constants.class.getResourceAsStream("../../res/ui/send-to-Deck.png"));
+    public static final Image sendToCollection = new Image(Constants.class.getResourceAsStream("../../res/ui/send-to-Collection.png"));
+    //...//
     public static final Image heroImg = new Image(Constants.class.getResourceAsStream("../../res/Characters/generals/general_f1.png"));
     public static final Image playImg = new Image(Constants.class.getResourceAsStream("../../res/ui/play.png"));
     public static final Image createDeckImg = new Image(Constants.class.getResourceAsStream("../../res/ui/create_deck_sml.png"));

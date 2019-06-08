@@ -39,6 +39,15 @@ public class CardCollectionController {
     JFXButton back_btn;
 
     @FXML
+    Label MainDeck;
+
+    @FXML
+    JFXButton sendToDeck;
+
+    @FXML
+    JFXButton sendToCollection;
+
+    @FXML
     JFXButton Previous;
 
     @FXML
@@ -110,6 +119,11 @@ public class CardCollectionController {
         scrollPane_2.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         back_btn.setGraphic(new ImageView(backImg));
         createDeck_btn.setGraphic(new ImageView(createDeckImg));
+        next.setGraphic(new ImageView(nextImg));
+        Previous.setGraphic(new ImageView(previousImg));
+        sendToCollection.setGraphic(new ImageView(Constants.sendToCollection));
+        sendToDeck.setGraphic(new ImageView(sendToDeckImg));
+        MainDeck.setGraphic(new ImageView(MainDeckImg));
 
 
         runSlowTimeline();
@@ -279,12 +293,12 @@ public class CardCollectionController {
 
     public void handelNextBtn() {
         if (Toggle.isSelected()) {
-            if (1.0>deckScroll*(4.0/cardCollectionCards_HB.getChildren().size())){
+            if (scrollPane_2.getHvalue()<0.9){
                 deckScroll++;
             }
             scrollPane_2.setHvalue(deckScroll*(4.0/cardCollectionCards_HB.getChildren().size()));
         } else {
-            if (1.0>deckScroll*(4.0/cardCollectionCards_HB.getChildren().size())){
+            if (scrollPane.getHvalue()<0.9){
                 collectionScroll++;
             }
             scrollPane.setHvalue(collectionScroll*(4.0/cardCollectionCards_HB.getChildren().size()));

@@ -6,6 +6,50 @@
       "cardCollection": {
         "cards": [
           {
+            "cardId": "a_card0_2",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.0",
+            "cardDescription": "desc0",
+            "cardName": "card0",
+            "isAbleToMove": true,
+            "isInGame": false,
+            "addressOfImage": ""
+          },
+          {
+            "cardId": "a_card0_4",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.0",
+            "cardDescription": "desc0",
+            "cardName": "card0",
+            "isAbleToMove": true,
+            "isInGame": false,
+            "addressOfImage": ""
+          },
+          {
+            "cardId": "a_card0_3",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.0",
+            "cardDescription": "desc0",
+            "cardName": "card0",
+            "isAbleToMove": true,
+            "isInGame": false,
+            "addressOfImage": ""
+          },
+          {
+            "cardId": "a_card0_1",
+            "manaCost": 10,
+            "darikCost": 10,
+            "account": "@root.0",
+            "cardDescription": "desc0",
+            "cardName": "card0",
+            "isAbleToMove": true,
+            "isInGame": false,
+            "addressOfImage": ""
+          },
+          {
             "@type": "Duelyst.Model.Hero",
             "@val": {
               "healthPoint": 10,
@@ -32,77 +76,9 @@
         "account": "@root.0",
         "decks": [
           {
-            "cards": [
-              {
-                "@type": "Duelyst.Model.Hero",
-                "@val": {
-                  "healthPoint": 10,
-                  "actionPower": 20,
-                  "attackRange": 2,
-                  "attackKind": "MELEE",
-                  "validCounterAttack": false,
-                  "isDeath": false,
-                  "shield": 0,
-                  "isValidToAttack": true,
-                  "IsValidToMove": true,
-                  "cardId": "a_Siavash_4",
-                  "manaCost": 2,
-                  "darikCost": 50,
-                  "account": "@root.0",
-                  "cardDescription": "SiavashDesc",
-                  "cardName": "Siavash",
-                  "isAbleToMove": true,
-                  "isInGame": false,
-                  "addressOfImage": "./res/Characters/generals/general_f1.png"
-                }
-              },
-              {
-                "cardId": "a_card0_2",
-                "manaCost": 10,
-                "darikCost": 10,
-                "account": "@root.0",
-                "cardDescription": "desc0",
-                "cardName": "card0",
-                "isAbleToMove": true,
-                "isInGame": false,
-                "addressOfImage": ""
-              },
-              {
-                "cardId": "a_card0_4",
-                "manaCost": 10,
-                "darikCost": 10,
-                "account": "@root.0",
-                "cardDescription": "desc0",
-                "cardName": "card0",
-                "isAbleToMove": true,
-                "isInGame": false,
-                "addressOfImage": ""
-              },
-              {
-                "cardId": "a_card0_3",
-                "manaCost": 10,
-                "darikCost": 10,
-                "account": "@root.0",
-                "cardDescription": "desc0",
-                "cardName": "card0",
-                "isAbleToMove": true,
-                "isInGame": false,
-                "addressOfImage": ""
-              },
-              {
-                "cardId": "a_card0_1",
-                "manaCost": 10,
-                "darikCost": 10,
-                "account": "@root.0",
-                "cardDescription": "desc0",
-                "cardName": "card0",
-                "isAbleToMove": true,
-                "isInGame": false,
-                "addressOfImage": ""
-              }
-            ],
+            "cards": [],
             "minions": [],
-            "hero": "@root.0.cardCollection.decks.0.cards.0",
+            "hero": "@root.0.cardCollection.cards.4",
             "account": "@root.0",
             "deckName": "abc",
             "isValid": false
