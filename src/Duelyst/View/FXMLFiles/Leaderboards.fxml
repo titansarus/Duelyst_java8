@@ -16,4 +16,5 @@
       </JFXButton>
       <ImageView fx:id="title_iv" fitHeight="105.0" fitWidth="538.0" layoutX="62.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" />
    </children>
+
 </AnchorPane>

@@ -21,4 +21,5 @@
       </ImageView>
       <Label fx:id="manaCost_lbl" layoutX="82.0" layoutY="140.0" />
    </children>
+
 </AnchorPane>
