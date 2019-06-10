@@ -1,5 +1,6 @@
 package Duelyst.Model.Battle;
 
+import Duelyst.Exceptions.CellFilledBeforeException;
 import Duelyst.Model.Account;
 import Duelyst.Model.Card;
 
@@ -40,9 +41,35 @@ public class Battle {
 
     }
 
+    public void insertSelectedCard(int i, int j) {
+
+        //TODO SOME CHECKS NEEDED IF IT IS WARRIOR OR SPELL. CURRENTLY IS ONLY FOR WARRIOR.
+        if (getGrid()[i][j].isEmpty()) {
+            getGrid()[i][j].setWarrior(getSelectedCard());
+        }
+        else
+        {
+            throw new CellFilledBeforeException();
+        }
+    }
+
     public Integer calculateMaxAmountOfMana() {
         int res = Math.floorDiv(getTurn(), 2) + 2;
         return res > 9 ? 9 : res;
+    }
+
+    public int[] findCellCoordinate(Cell cell) {
+        int[] result = new int[]{-1, -1};
+        for (int i = 0; i < BATTLE_ROWS; i++) {
+            for (int j = 0; j < BATTLE_COLUMNS; j++) {
+                if (cell.equals(getGrid()[i][j])) {
+                    result[0] = i;
+                    result[1] = j;
+                    return result;
+                }
+            }
+        }
+        return result;
     }
 
 

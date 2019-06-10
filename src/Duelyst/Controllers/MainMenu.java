@@ -160,9 +160,9 @@ public class MainMenu {
         BattleController bc = fxmlLoader.getController();
         bc.setBattle(battle);
         bc.setHandHbox();
-        bc.runTimeline();
         bc.makeAccountNames();
         bc.makeGrids();
+        bc.runTimelines();
         stopTimeline();
         Container.runNextScene(root, BATTLE);
     }

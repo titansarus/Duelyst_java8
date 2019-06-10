@@ -1,10 +1,11 @@
 package Duelyst.Model.Battle;
 
+import Duelyst.Model.Card;
 import Duelyst.Model.Warrior;
 
 public class Cell {
     private Integer row , column;
-    private Warrior warrior;
+    private Card warrior;
 
     public Cell(Integer row, Integer column) {
         this.row = row;
@@ -27,11 +28,16 @@ public class Cell {
         this.column = column;
     }
 
-    public Warrior getWarrior() {
+    public Card getWarrior() {
         return warrior;
     }
 
-    public void setWarrior(Warrior warrior) {
+    public void setWarrior(Card warrior) {
         this.warrior = warrior;
+    }
+
+    public boolean isEmpty()
+    {
+        return warrior==null;
     }
 }
