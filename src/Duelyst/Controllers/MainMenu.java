@@ -162,6 +162,7 @@ public class MainMenu {
         bc.setHandHbox();
         bc.runTimeline();
         bc.makeAccountNames();
+        bc.makeGrids();
         stopTimeline();
         Container.runNextScene(root, BATTLE);
     }

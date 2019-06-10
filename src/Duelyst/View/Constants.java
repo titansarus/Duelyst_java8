@@ -74,5 +74,6 @@ public class Constants {
 
     //NUMERIC CONSTANTS
     public static final int BATTLE_ROWS = 5, BATTLE_COLUMNS = 9 , SIZE_OF_HAND = 5;
+    public static final double HEIGHT_PADDING_Y = 6 , HEIGHT_PADDING_X = 1,  WIDTH_PADDING = 6;
 
 }

@@ -7,13 +7,18 @@ import com.jfoenix.controls.JFXButton;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
+
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -34,12 +39,25 @@ public class BattleController {
     @FXML
     JFXButton end_turn_btn;
 
+    @FXML
+    Label upLeft;
+    @FXML
+    Label upRight;
+
+    @FXML
+    Label downLeft;
+    @FXML
+    Label downRight;
+
+    @FXML
+    AnchorPane anchorPane;
 
     ArrayList<CardForBattle> hand = new ArrayList<>();
 
+    Polygon[][] rectangles = new Polygon[BATTLE_ROWS][BATTLE_COLUMNS];
+
     @FXML
-            public void initialize()
-    {
+    public void initialize() {
 //        BackgroundImage backgroundImage = new BackgroundImage(endTurnBtn , BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT , BackgroundSize.DEFAULT);
 //        end_turn_btn.setBackground(new Background( backgroundImage));
     }
@@ -62,6 +80,56 @@ public class BattleController {
 
     }
 
+    public void makeGrids() {
+        double upLeftX, upLeftY, upRightX, upRightY, downLeftX, downLeftY, downRightX, downRightY;
+        upLeftX = upLeft.getLayoutX();
+        upRightX = upRight.getLayoutX();
+        downLeftX = downLeft.getLayoutX();
+        downRightX = downRight.getLayoutX();
+
+        upLeftY = upLeft.getLayoutY();
+        upRightY = upRight.getLayoutY();
+        downLeftY = downLeft.getLayoutY();
+        downRightY = downRight.getLayoutY();
+
+        double heightOfPoly_Y = (downLeftY - upLeftY - (BATTLE_ROWS - 1) * HEIGHT_PADDING_Y) / BATTLE_ROWS;
+        double heightOfPoly_X = ((downLeftX - upLeftX) - ((BATTLE_ROWS - 1) * HEIGHT_PADDING_X)) / BATTLE_ROWS;
+
+        System.out.println(heightOfPoly_X);
+        System.out.println(heightOfPoly_Y);
+        double width = (upRightX - upLeftX - (BATTLE_COLUMNS - 1) * WIDTH_PADDING) / BATTLE_COLUMNS;
+        System.out.println(width);
+        for (int i = 0; i < BATTLE_ROWS; i++) {
+            for (int j = 0; j < BATTLE_COLUMNS; j++) {
+                rectangles[i][j] = new Polygon();
+                rectangles[i][j].getPoints().addAll(new Double[]{
+                        upLeftX + width* j + HEIGHT_PADDING_X + i * heightOfPoly_X + WIDTH_PADDING*j + heightOfPoly_X + width, upLeftY + i * HEIGHT_PADDING_Y + i * heightOfPoly_Y + heightOfPoly_Y,
+                        upLeftX + width* j  + HEIGHT_PADDING_X + i * heightOfPoly_X + width + WIDTH_PADDING*j, upLeftY + i * HEIGHT_PADDING_Y + i * heightOfPoly_Y,
+                        upLeftX + width* j  + HEIGHT_PADDING_X + i * heightOfPoly_X + WIDTH_PADDING*j, upLeftY + i * HEIGHT_PADDING_Y + i * heightOfPoly_Y,
+                        upLeftX + width* j  + HEIGHT_PADDING_X + i * heightOfPoly_X + heightOfPoly_X + WIDTH_PADDING*j, upLeftY + i * HEIGHT_PADDING_Y + i * heightOfPoly_Y + heightOfPoly_Y,
+
+
+                });
+                rectangles[i][j].setStyle("-fx-fill: BLACK");
+
+                anchorPane.getChildren().addAll(rectangles[i][j]);
+                rectangles[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        Polygon p = (Polygon) event.getSource();
+                        System.out.println(p.getPoints());
+
+                        p.setStyle("-fx-fill: RED");
+                        System.out.println(p.getStyle());
+                    }
+                });
+            }
+        }
+
+
+
+    }
+
     public void updateManaOfPlayer(HBox hbox, Player player) {
         hbox.getChildren().clear();
         if (player.equals(battle.getPlayingPlayer())) {
@@ -69,9 +137,7 @@ public class BattleController {
                 ImageView imageView = new ImageView(manaIconSml);
                 hbox.getChildren().add(imageView);
             }
-        }
-        else
-        {
+        } else {
             ImageView imageView = new ImageView(manaInActiveSml);
             hbox.getChildren().add(imageView);
         }
@@ -98,8 +164,7 @@ public class BattleController {
 
     }
 
-    public void handleEndTurnBtn()
-    {
+    public void handleEndTurnBtn() {
         battle.nextTurn();
     }
 

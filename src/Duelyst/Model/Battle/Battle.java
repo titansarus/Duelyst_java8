@@ -1,6 +1,7 @@
 package Duelyst.Model.Battle;
 
 import Duelyst.Model.Account;
+import Duelyst.Model.Card;
 
 import java.util.regex.Matcher;
 
@@ -12,6 +13,8 @@ public class Battle {
     private Player playingPlayer = null;
     private Cell[][] grid = new Cell[BATTLE_ROWS][BATTLE_COLUMNS];
     private int turn = 0;//At First next turn is invocked and first turn will be 1
+    private Card selectedCard;
+    private Cell selectedCell;
 
     public void initializeCells() {
         for (int i = 0; i < BATTLE_ROWS; i++) {
@@ -85,5 +88,25 @@ public class Battle {
             return;
         }
         this.playingPlayer = player2;
+    }
+
+    public void setPlayingPlayer(Player playingPlayer) {
+        this.playingPlayer = playingPlayer;
+    }
+
+    public Card getSelectedCard() {
+        return selectedCard;
+    }
+
+    public void setSelectedCard(Card selectedCard) {
+        this.selectedCard = selectedCard;
+    }
+
+    public Cell getSelectedCell() {
+        return selectedCell;
+    }
+
+    public void setSelectedCell(Cell selectedCell) {
+        this.selectedCell = selectedCell;
     }
 }
