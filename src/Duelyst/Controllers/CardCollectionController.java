@@ -117,6 +117,7 @@ public class CardCollectionController {
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane_2.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane_2.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
         back_btn.setGraphic(new ImageView(backImg));
         createDeck_btn.setGraphic(new ImageView(createDeckImg));
         next.setGraphic(new ImageView(nextImg));

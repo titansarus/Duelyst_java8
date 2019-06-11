@@ -1,8 +1,12 @@
 package Duelyst.Model.Buffs;
 
-public class StunBuff extends Buff {
+import Duelyst.Model.Card;
 
-    public StunBuff(BuffName buffName, boolean isPositive) {
-        super(buffName, isPositive);
+public class StunBuff extends Buff {
+    private Card card;
+
+    public StunBuff(BuffName buffName, boolean isPositive, int numberOfTurn, Card card) {
+        super(buffName, isPositive, numberOfTurn);
+        this.card = card;
     }
 }
