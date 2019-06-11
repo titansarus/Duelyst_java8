@@ -1,6 +1,9 @@
-package Duelyst.Model;
+package Duelyst.Model.Buffs;
 
-public class Buff {
+public class ApplyBuff {
+
+
+    private static ApplyBuff applyBuff = new ApplyBuff();
 
     private boolean isPositive;
     private boolean isHolyBuff;
@@ -11,25 +14,27 @@ public class Buff {
     private boolean isDisarmBuff;
 
 
-    public Buff(BuffName buffName, boolean isPositive) {
-        switch (buffName) {
+    public void applyBuff(Buff buff) {
+        switch (buff.getBuffName()) {
             case HOLY_BUFF:
-                isHolyBuff = true;
+                holyBuff();
             case POWER_BUFF:
-                isPowerBuff = true;
+                powerBuff();
             case POISON_BUFF:
-                isPoisonBuff = true;
+                poisonBuff();
             case WEAKNESS_BUFF:
-                isWeaknessBuff = true;
+                weaknessBuff();
             case STUN_BUFF:
-                isStunBuff = true;
+                stunBuff();
             case DISARM_BUFF:
-                isDisarmBuff = true;
+                disarmBuff();
         }
-        this.isPositive = isPositive;
+
     }
 
-
+    public static ApplyBuff getInstance() {
+        return applyBuff;
+    }
 
     public void holyBuff() {
 
