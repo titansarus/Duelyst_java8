@@ -9,3 +9,4 @@ public class Spell extends Card {
         super(cardName, cardDescription, manaCost, darikCost, addressOfImage);
     }
 }
+

@@ -98,7 +98,7 @@ public class BattleController {
         for (int i = 0; i < getHand().size(); i++) {
             if (getHand().get(i) != null && getHand().get(i).getCard() == null) {
                 getHand().get(i).getCardController().setImageOfCard(null);
-                getHand().get(i).getCardController().setImageOfCardSelection(battleCardNotSelectedImage);
+//                getHand().get(i).getCardController().setImageOfCardSelection(battleCardNotSelectedImage);
             }
         }
     }
@@ -221,13 +221,13 @@ public class BattleController {
             if (getBattle().getSelectedCard() != null) {
                 CardForBattle cardForBattleWithCard = CardForBattleController.findCardForBattleWithCard(getHand(), getBattle().getSelectedCard());
                 double rotationgAngle = cardForBattleWithCard.getCardController().getCardSelection_iv().getRotate();
-                cardForBattleWithCard.getCardController().setImageOfCardSelection(battleCardNotSelectedImage);
+//                cardForBattleWithCard.getCardController().setImageOfCardSelection(battleCardNotSelectedImage);
                 cardForBattleWithCard.getCardController().getCardSelection_iv().setRotate(rotationgAngle);
             }
 
             getBattle().setSelectedCard(cardForBattle.getCard());
             double rotationgAngle = cardForBattle.getCardController().getCardSelection_iv().getRotate();
-            cardForBattle.getCardController().setImageOfCardSelection(battleCardSelectedImage);
+//            cardForBattle.getCardController().setImageOfCardSelection(battleCardSelectedImage);
             cardForBattle.getCardController().getCardSelection_iv().setRotate(rotationgAngle);
         }
     }
