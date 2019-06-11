@@ -2,13 +2,14 @@ package Duelyst.Model;
 
 public class Buff {
 
-    boolean isPositive;
-    boolean isHolyBuff;
-    boolean isPowerBuff;
-    boolean isPoisonBuff;
-    boolean isWeaknessBuff;
-    boolean isStunBuff;
-    boolean isDisarmBuff;
+    private boolean isPositive;
+    private boolean isHolyBuff;
+    private boolean isPowerBuff;
+    private boolean isPoisonBuff;
+    private boolean isWeaknessBuff;
+    private boolean isStunBuff;
+    private boolean isDisarmBuff;
+
 
     public Buff(BuffName buffName, boolean isPositive) {
         switch (buffName) {
@@ -29,27 +30,28 @@ public class Buff {
     }
 
 
-    public void holyBuff(){
+
+    public void holyBuff() {
 
     }
 
-    public void powerBuff(){
+    public void powerBuff() {
 
     }
 
-    public void poisonBuff(){
+    public void poisonBuff() {
 
     }
 
-    public void weaknessBuff(){
+    public void weaknessBuff() {
 
     }
 
-    public void stunBuff(){
+    public void stunBuff() {
 
     }
 
-    public void disarmBuff(){
+    public void disarmBuff() {
 
 
     }
