@@ -1,9 +1,9 @@
 package Duelyst.Model.Buffs;
 
-public class PoisonBuff extends Buff {
+public class FlameBuff extends Buff {
     private boolean isForCard;
 
-    public PoisonBuff(BuffName buffName, boolean isPositive, int numberOfTurn, boolean isForCard) {
+    public FlameBuff(BuffName buffName, boolean isPositive, int numberOfTurn, boolean isForCard) {
         super(buffName, isPositive, numberOfTurn);
         this.isForCard = isForCard;
     }
