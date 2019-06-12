@@ -1,5 +1,6 @@
 package Duelyst.Model;
 
+import Duelyst.Model.Items.Item;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 

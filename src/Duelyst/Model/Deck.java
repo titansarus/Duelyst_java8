@@ -2,6 +2,7 @@
 package Duelyst.Model;
 
 import Duelyst.Exceptions.NotEnoughCardsToImportException;
+import Duelyst.Model.Items.Item;
 import com.rits.cloning.Cloner;
 
 import java.util.ArrayList;
