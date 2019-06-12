@@ -1,5 +1,6 @@
 package Duelyst.Model.Items;
 
+import Duelyst.Model.Battle.Battle;
 import Duelyst.Model.Battle.Player;
 
 public class TajeDanaei extends Item {
@@ -12,7 +13,8 @@ public class TajeDanaei extends Item {
 
     @Override
     public void applyItem() {
-        getPlayer().setMana(getPlayer().getMana() + 1);
-        //TODO Baede 3 Nobat Bayad Be Halate Standard Bargardad
+        if (Battle.getRunningBattle().getTurn() <= 6)
+            getPlayer().setMana(getPlayer().getMana() + 1);
+        //TODO Bayad Baede Set Mana Seda Zade Shan +++++
     }
 }

@@ -5,12 +5,12 @@ import Duelyst.Model.Battle.Player;
 public class NefrineMarg extends Item {
 
 
-    public NefrineMarg(Player player){
-        super(player);
+    public NefrineMarg(Player player) {
+        super(player, false);
     }
 
     @Override
     public void applyItem() {
-
+        //TODO Yezare Sakhte  :)
     }
 }
