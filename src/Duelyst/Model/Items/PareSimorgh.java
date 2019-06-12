@@ -8,7 +8,7 @@ import Duelyst.Model.Warrior;
 public class PareSimorgh extends Item {
 
     public PareSimorgh(Player player) {
-        super(player, true);
+        super(player, true, true);
         setManaCost(3500);
     }
 

@@ -6,12 +6,12 @@ public class KingWisdom extends Item {
 
 
     public KingWisdom(Player player) {
-        super(player, true);
+        super(player, true, true);
         setManaCost(9000);
     }
 
     @Override
     public void applyItem() {
-        getPlayer().setMana(getPlayer().getMana() + 1);
+        getPlayer().setManaYIntercpet(getPlayer().getManaYIntercpet() + 1);
     }
 }

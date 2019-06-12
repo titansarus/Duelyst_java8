@@ -7,12 +7,11 @@ public class MajooneMana extends Item {
 
 
     public MajooneMana(Player player) {
-        super(player, false);
+        super(player, false, true);
     }
 
     @Override
     public void applyItem() {
         getPlayer().setMana(getPlayer().getMana() + 3);
-        //TODO Bayad dar Daste Baedi ezafe konad
     }
 }

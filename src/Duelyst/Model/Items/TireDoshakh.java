@@ -11,7 +11,7 @@ public class TireDoshakh extends Item {
 
 
     public TireDoshakh(Player player) {
-        super(player, false);
+        super(player, false, true);
     }
 
     @Override

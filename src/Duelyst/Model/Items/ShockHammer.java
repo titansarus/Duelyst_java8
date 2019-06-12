@@ -11,14 +11,17 @@ public class ShockHammer extends Item {
 
 
     public ShockHammer(Player player) {
-        super(player, true);
+        super(player, true, false);
         setManaCost(15000);
     }
 
     @Override
     public void applyItem() {
-        Buff buff = new DisarmBuff(BuffName.DISARM_BUFF, false, 1);
-        buff.setWarrior((Warrior) Battle.getRunningBattle().getAttackedCard());
-        Battle.getRunningBattle().getPassiveBuffs().add(buff);
+        //TODO Hengame Attack Bayad Emal Shavad :)
+        if (Battle.getRunningBattle().getSelectedCard().equals(getPlayer().getHero())) {
+            Buff buff = new DisarmBuff(BuffName.DISARM_BUFF, false, 1);
+            buff.setWarrior((Warrior) Battle.getRunningBattle().getAttackedCard());
+            Battle.getRunningBattle().getPassiveBuffs().add(buff);
+        }
     }
 }

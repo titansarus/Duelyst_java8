@@ -12,7 +12,7 @@ import java.util.Random;
 public class Exir extends Item {
 
     public Exir(Player player) {
-        super(player, false);
+        super(player, false, true);
     }
 
     @Override

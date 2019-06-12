@@ -13,12 +13,13 @@ import java.util.Random;
 public class PoisonousDagger extends Item {
 
     public PoisonousDagger(Player player) {
-        super(player, false);
+        super(player, false, false);
         setManaCost(7000);
     }
 
     @Override
     public void applyItem() {
+        //TODO Hengame Attack Bayad Emal Shavad :D
         Player player;
         if (Battle.getRunningBattle().getTurn() % 2 == 1)
             player = Battle.getRunningBattle().getPlayer2();

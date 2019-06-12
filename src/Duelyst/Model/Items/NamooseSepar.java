@@ -9,7 +9,7 @@ import Duelyst.Model.Buffs.HolyBuff;
 public class NamooseSepar extends Item {
 
     public NamooseSepar(Player player) {
-        super(player, true);
+        super(player, true, true);
     }
 
     @Override

@@ -9,7 +9,7 @@ public class BladesOfAgility extends Item {
 
 
     public BladesOfAgility(Player player) {
-        super(player, false);
+        super(player, false, true);
     }
 
     @Override
