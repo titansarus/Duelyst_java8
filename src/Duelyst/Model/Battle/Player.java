@@ -17,6 +17,7 @@ public class Player {
     private ArrayList<Card> hand;
     private Integer mana;
     private Hero hero;
+    private ArrayList<Card> inGameCards;
 
     private Integer manaYIntercpet = 2; //Arz az mabdae system afzayesh mana. Baraye test ya cheat mode roe addad balatr az 2 set mishavad.
 
@@ -108,5 +109,9 @@ public class Player {
 
     public void setManaYIntercpet(Integer manaYIntercpet) {
         this.manaYIntercpet = manaYIntercpet;
+    }
+
+    public ArrayList<Card> getInGameCards() {
+        return inGameCards;
     }
 }

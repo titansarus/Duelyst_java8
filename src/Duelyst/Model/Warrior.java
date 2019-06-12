@@ -128,6 +128,10 @@ public class Warrior extends Card implements Cloneable {
         this.IsValidToMove = validToMove;
     }
 
+    public AttackKind getAttackKind() {
+        return attackKind;
+    }
+
 
     //TODO MAYBE THIS NEEDS TO BE IMPLEMENTED HERE. THIS CLONE IS CURRENTLY Implemented IN CARD
     /*@Override

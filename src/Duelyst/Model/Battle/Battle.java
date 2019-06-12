@@ -5,10 +5,8 @@ import Duelyst.Model.Account;
 import Duelyst.Model.Buffs.Buff;
 import Duelyst.Model.Card;
 import Duelyst.Model.Warrior;
-import com.sun.scenario.effect.impl.prism.PrImage;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
 
 import static Duelyst.View.Constants.*;
 
@@ -20,12 +18,13 @@ public class Battle {
     private Cell[][] grid = new Cell[BATTLE_ROWS][BATTLE_COLUMNS];
     private int turn = 0;//At First next turn is invocked and first turn will be 1
     private Card selectedCard;
+    private Card attackedCard;//TODO Cardi ke Behesh Attack Khorde
     private Cell selectedCell;
     private ArrayList<Buff> onSpawnBuffs = new ArrayList<>();
     private ArrayList<Buff> onDefendBuffs = new ArrayList<>();
     private ArrayList<Buff> onAttackBuffs = new ArrayList<>();
     private ArrayList<Buff> onDeathBuffs = new ArrayList<>();
-    private ArrayList<Buff> passive = new ArrayList<>();
+    private ArrayList<Buff> passiveBuffs = new ArrayList<>();
 
     public void initializeCells() {
         for (int i = 0; i < BATTLE_ROWS; i++) {
@@ -36,7 +35,7 @@ public class Battle {
     }
 
     public Battle(Account account1, Account account2) {
-        runningBattle=this;
+        runningBattle = this;
         setPlayer1(new Player(account1, account1.getCardCollection().getMainDeck()));
         setPlayer2(new Player(account2, account2.getCardCollection().getMainDeck()));
         setPlayingPlayer();
@@ -57,9 +56,8 @@ public class Battle {
         //TODO SOME CHECKS NEEDED IF IT IS WARRIOR OR SPELL. CURRENTLY IS ONLY FOR WARRIOR.
         if (getGrid()[i][j].isEmpty()) {
             getGrid()[i][j].setWarrior((Warrior) getSelectedCard());
-        }
-        else
-        {
+            playingPlayer.getInGameCards().add(getSelectedCard());
+        } else {
             throw new CellFilledBeforeException();
         }
     }
@@ -164,11 +162,19 @@ public class Battle {
         return onSpawnBuffs;
     }
 
-    public ArrayList<Buff> getPassive() {
-        return passive;
+    public ArrayList<Buff> getPassiveBuffs() {
+        return passiveBuffs;
     }
 
     public static Battle getRunningBattle() {
         return runningBattle;
+    }
+
+    public Card getAttackedCard() {
+        return attackedCard;
+    }
+
+    public void setAttackedCard(Card attackedCard) {
+        this.attackedCard = attackedCard;
     }
 }
