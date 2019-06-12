@@ -12,7 +12,7 @@ import java.util.Random;
 public class TerrorHood extends Item {
 
     public TerrorHood(Player player) {
-        super(player, true);
+        super(player, true, false);
         setManaCost(5000);
     }
 

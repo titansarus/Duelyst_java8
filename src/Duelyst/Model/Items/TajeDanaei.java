@@ -7,7 +7,7 @@ public class TajeDanaei extends Item {
 
 
     public TajeDanaei(Player player) {
-        super(player, true);
+        super(player, true, false);
         setManaCost(300);
     }
 

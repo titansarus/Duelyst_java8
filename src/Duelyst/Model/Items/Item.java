@@ -8,10 +8,12 @@ public abstract class Item {
     private Player player;
     private boolean isUsable;
     private int manaCost;
+    private boolean applyFirst;
 
-    public Item(Player player, boolean isUsable) {
+    public Item(Player player, boolean isUsable, boolean applyFirst) {
         this.player = player;
         this.isUsable = isUsable;
+        this.applyFirst = applyFirst;
     }
 
     public abstract void applyItem();
@@ -30,5 +32,9 @@ public abstract class Item {
 
     public void setManaCost(int manaCost) {
         this.manaCost = manaCost;
+    }
+
+    public boolean isApplyFirst() {
+        return applyFirst;
     }
 }

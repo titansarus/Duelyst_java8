@@ -13,7 +13,7 @@ public class MajooneRooeinTani extends Item {
 
 
     public MajooneRooeinTani(Player player) {
-        super(player, false);
+        super(player, false, true);
     }
 
     @Override

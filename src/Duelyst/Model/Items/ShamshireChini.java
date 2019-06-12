@@ -7,7 +7,7 @@ import Duelyst.Model.Warrior;
 public class ShamshireChini extends Item {
 
     public ShamshireChini(Player player) {
-        super(player, false);
+        super(player, false, true);
     }
 
     @Override
@@ -19,5 +19,6 @@ public class ShamshireChini extends Item {
                 }
             }
         }
+
     }
 }

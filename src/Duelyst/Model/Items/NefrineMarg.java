@@ -6,7 +6,7 @@ public class NefrineMarg extends Item {
 
 
     public NefrineMarg(Player player) {
-        super(player, false);
+        super(player, false, false);
     }
 
     @Override

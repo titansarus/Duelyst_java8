@@ -10,7 +10,7 @@ public class NooshDaroo extends Item {
 
 
     public NooshDaroo(Player player) {
-        super(player, false);
+        super(player, false, true);
     }
 
     @Override

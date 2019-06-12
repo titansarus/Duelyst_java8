@@ -8,7 +8,7 @@ import java.util.Random;
 public class RandomDamage extends Item {
 
     public RandomDamage(Player player) {
-        super(player, false);
+        super(player, false, true);
     }
 
     @Override

@@ -6,7 +6,7 @@ import Duelyst.Model.Battle.Player;
 public class AssassinationDagger extends Item {
 
     public AssassinationDagger(Player player) {
-        super(player, true);
+        super(player, true, false);
         setManaCost(15000);
     }
 
@@ -19,4 +19,5 @@ public class AssassinationDagger extends Item {
             player = Battle.getRunningBattle().getPlayer1();
         player.getHero().decreaseHealthPoint(1);
     }
+    //TODO Dar Insert Kardan Bayad Emal Shavad :)
 }

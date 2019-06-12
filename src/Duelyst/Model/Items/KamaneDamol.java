@@ -11,7 +11,7 @@ import Duelyst.Model.Warrior;
 public class KamaneDamol extends Item {
 
     public KamaneDamol(Player player) {
-        super(player, true);
+        super(player, true , false);
         setManaCost(30000);
     }
 
