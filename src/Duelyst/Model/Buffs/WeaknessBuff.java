@@ -6,7 +6,7 @@ public class WeaknessBuff extends Buff {
     private boolean isForPower;
     private int increaseNumber;
 
-    public WeaknessBuff(BuffName buffName, boolean isPositive, int numberOfTurn, boolean isForPower, int increaseNumber, Card card) {
+    public WeaknessBuff(BuffName buffName, boolean isPositive, int numberOfTurn, boolean isForPower, int increaseNumber) {
         super(buffName, isPositive, numberOfTurn);
         this.isForPower = isForPower;
         this.increaseNumber = increaseNumber;

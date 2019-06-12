@@ -2,14 +2,15 @@ package Duelyst.Model.Buffs;
 
 import Duelyst.Model.Battle.Cell;
 import Duelyst.Model.Card;
+import Duelyst.Model.Warrior;
 
 public abstract class Buff {
 
     private BuffName buffName;
     private boolean isPositive;
     private int numberOfTurn;
-    private Card card;
-    private Cell cell;
+    private Warrior warrior = null;
+    private Cell cell = null;
 
     public Buff(BuffName buffName, boolean isPositive, int numberOfTurn) {
         this.buffName = buffName;
@@ -29,19 +30,23 @@ public abstract class Buff {
         return numberOfTurn;
     }
 
-    public Card getCard() {
-        return card;
+    public Warrior getWarrior() {
+        return warrior;
     }
 
     public Cell getCell() {
         return cell;
     }
 
-    public void setCard(Card card) {
-        this.card = card;
+    public void setWarrior(Warrior warrior) {
+        this.warrior = warrior;
     }
 
     public void setCell(Cell cell) {
         this.cell = cell;
+    }
+
+    public void decreaseNumberOfTurn() {
+        numberOfTurn--;
     }
 }

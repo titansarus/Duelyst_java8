@@ -5,7 +5,7 @@ import Duelyst.Model.Warrior;
 
 public class Cell {
     private Integer row , column;
-    private Card warrior;
+    private Warrior warrior;
 
     public Cell(Integer row, Integer column) {
         this.row = row;
@@ -28,11 +28,11 @@ public class Cell {
         this.column = column;
     }
 
-    public Card getWarrior() {
+    public Warrior getWarrior() {
         return warrior;
     }
 
-    public void setWarrior(Card warrior) {
+    public void setWarrior(Warrior warrior) {
         this.warrior = warrior;
     }
 

@@ -6,7 +6,7 @@ import Duelyst.Model.Card;
 public class PoisonBuff extends Buff {
     private boolean isForCard;
 
-    public PoisonBuff(BuffName buffName, boolean isPositive, int numberOfTurn, boolean isForCard, Card card, Cell cell) {
+    public PoisonBuff(BuffName buffName, boolean isPositive, int numberOfTurn, boolean isForCard) {
         super(buffName, isPositive, numberOfTurn);
         this.isForCard = isForCard;
     }
