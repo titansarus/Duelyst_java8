@@ -27,13 +27,14 @@ public class Player {
         this.account = account;
         this.deck = cloner.deepClone(deck);
         this.hand = new ArrayList<>();
+        this.inGameCards = new ArrayList<>();
         initializeHand();
     }
 
     public void initializeHand() {
         Random random = new Random();
         for (int i = 0; i < SIZE_OF_HAND; i++) {
-            if (deck.getCards().size()>0) {
+            if (deck.getCards().size() > 0) {
                 int index = random.nextInt(deck.getCards().size());
                 giveCardFromDeckToHand(index);
             }
@@ -42,8 +43,7 @@ public class Player {
 
     public void setManaFromTurn(int turn) {
         setMana(Math.floorDiv(turn, 2) + manaYIntercpet); //FOR TEST, set +2 to +1000
-        if (getMana()>9)
-        {
+        if (getMana() > 9) {
             setMana(9);
         }
     }

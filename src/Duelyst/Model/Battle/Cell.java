@@ -2,6 +2,7 @@ package Duelyst.Model.Battle;
 
 import Duelyst.Model.Card;
 import Duelyst.Model.Warrior;
+import static Duelyst.View.Constants.*;
 
 public class Cell {
     private Integer row , column;
@@ -39,5 +40,20 @@ public class Cell {
     public boolean isEmpty()
     {
         return warrior==null;
+    }
+
+    public static boolean isSelectedCardOnField(Cell[][] grids , Card card)
+    {
+        for (int i =0;i<BATTLE_ROWS;i++)
+        {
+            for (int j =0;j<BATTLE_COLUMNS;j++)
+            {
+                if (grids[i][j].getWarrior().equals(card))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

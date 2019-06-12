@@ -3,15 +3,17 @@ package Duelyst.Controllers;
 import Duelyst.Exceptions.CellFilledBeforeException;
 import Duelyst.Model.Battle.Battle;
 import Duelyst.Model.Battle.Player;
-import Duelyst.View.Constants;
+import Duelyst.Model.Card;
+import Duelyst.Model.Warrior;
 import Duelyst.View.ViewClasses.CardForBattle;
 import com.jfoenix.controls.JFXButton;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.animation.*;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -56,8 +58,12 @@ public class BattleController {
     StackPane stackPane;
 
 
+    double heightOfPoly_Y;
+    double heightOfPoly_X;
+    double width;
 
     ArrayList<CardForBattle> hand = new ArrayList<>();
+    ArrayList<CardOnField> cardsOnField = new ArrayList<>();
 
     Polygon[][] rectangles = new Polygon[BATTLE_ROWS][BATTLE_COLUMNS];
 
@@ -98,7 +104,7 @@ public class BattleController {
         for (int i = 0; i < getHand().size(); i++) {
             if (getHand().get(i) != null && getHand().get(i).getCard() == null) {
                 getHand().get(i).getCardController().setImageOfCard(null);
-//                getHand().get(i).getCardController().setImageOfCardSelection(battleCardNotSelectedImage);
+                getHand().get(i).getCardController().setImageOfCardSelection(battleCardNotSelectedImage);
             }
         }
     }
@@ -115,12 +121,12 @@ public class BattleController {
         downLeftY = downLeft.getLayoutY();
         downRightY = downRight.getLayoutY();
 
-        double heightOfPoly_Y = (downLeftY - upLeftY - (BATTLE_ROWS - 1) * HEIGHT_PADDING_Y) / BATTLE_ROWS;
-        double heightOfPoly_X = ((downLeftX - upLeftX) - ((BATTLE_ROWS - 1) * HEIGHT_PADDING_X)) / BATTLE_ROWS;
+        heightOfPoly_Y = (downLeftY - upLeftY - (BATTLE_ROWS - 1) * HEIGHT_PADDING_Y) / BATTLE_ROWS;
+        heightOfPoly_X = ((downLeftX - upLeftX) - ((BATTLE_ROWS - 1) * HEIGHT_PADDING_X)) / BATTLE_ROWS;
+        width = (upRightX - upLeftX - (BATTLE_COLUMNS - 1) * WIDTH_PADDING) / BATTLE_COLUMNS;
 
         System.out.println(heightOfPoly_X);
         System.out.println(heightOfPoly_Y);
-        double width = (upRightX - upLeftX - (BATTLE_COLUMNS - 1) * WIDTH_PADDING) / BATTLE_COLUMNS;
         System.out.println(width);
         for (int i = 0; i < BATTLE_ROWS; i++) {
             for (int j = 0; j < BATTLE_COLUMNS; j++) {
@@ -160,30 +166,104 @@ public class BattleController {
         }
     }
 
+    public double calculateMidXFromPoint(ObservableList<Double> points) {
+        return (points.get(0) + points.get(2) + points.get(4) + points.get(6)) / 4.00 - width - heightOfPoly_X;
+    }
+
+
+    public double calculateMidYFromPoint(ObservableList<Double> points) {
+        return (points.get(1) + points.get(3) + points.get(5) + points.get(7)) / 4.00 - width - heightOfPoly_X;
+    }
+
+
+
     public void rectangleOnMouseClicked(MouseEvent event) {
 
         Polygon p = (Polygon) event.getSource();
         int[] coordinate = findPolygonCoordinate(p);
 
-        System.out.printf("i:%d , j:%d\n", coordinate[0], coordinate[1]);
 
+        if (getBattle().getSelectedCell() != null && getBattle().getSelectedCell().getWarrior() != null) {
+            if (getBattle().getSelectedCell() != getBattle().getGrid()[coordinate[0]][coordinate[1]]) {
+                //TODO CHECK OF MANHATTAN DISTANCE
+                moveAnimationRun(coordinate);
+                return;
+            }
+        }
         getBattle().setSelectedCell(getBattle().getGrid()[coordinate[0]][coordinate[1]]);
 
-        int[] battleCoordinate = getBattle().findCellCoordinate(getBattle().getSelectedCell());
-
-        System.out.printf("i:%d , j:%d\n", battleCoordinate[0], battleCoordinate[1]);
 
         if (getBattle().getSelectedCard() != null) {//TODO SOME MORE CHECKS NEEEDED
-            CardForBattle cardForBattle = CardForBattleController.findCardForBattleWithCard(getHand(), getBattle().getSelectedCard());
-            try {
-                getBattle().insertSelectedCard(battleCoordinate[0],battleCoordinate[1]);
-                cardForBattle.setCard(null);
-                getBattle().setSelectedCard(null);
-            } catch (CellFilledBeforeException e) {
-                Container.exceptionGenerator(e, stackPane);
-            }
-
+            handleInsertCardClick();
+            return;
         }
+    }
+
+    public void handleInsertCardClick()
+    {
+        int[] battleCoordinate = getBattle().findCellCoordinate(getBattle().getSelectedCell());
+        CardForBattle cardForBattle = CardForBattleController.findCardForBattleWithCard(getHand(), getBattle().getSelectedCard());
+        try {
+            getBattle().insertSelectedCard(battleCoordinate[0], battleCoordinate[1]);
+            Polygon polygon = rectangles[battleCoordinate[0]][battleCoordinate[1]];
+            ObservableList<Double> points = polygon.getPoints();
+
+
+            CardOnField cardOnField = new CardOnField();
+            cardOnField.setCard(getBattle().getSelectedCard());
+            cardsOnField.add(cardOnField);
+            sendIdleImageViewToCenterOfCell(cardOnField, polygon);
+
+            //   getHand().remove(cardForBattle);
+            getBattle().setSelectedCard(null);
+            cardForBattle.setCard(null);
+        } catch (CellFilledBeforeException e) {
+            Container.exceptionGenerator(e, stackPane);
+        }
+        getBattle().setSelectedCell(null);
+    }
+    public void moveAnimationRun(int[] coordinate) {
+        CardOnField cardOnField = CardOnField.findCardOnFieldFromArrayList(cardsOnField, getBattle().getSelectedCell().getWarrior());
+
+        Integer srcRow = getBattle().getSelectedCell().getRow();
+        Integer srcCol = getBattle().getSelectedCell().getColumn();
+        Polygon srcPolygon = rectangles[srcRow][srcCol];
+        ObservableList<Double> srcPoints = srcPolygon.getPoints();
+        double srcx = calculateMidXFromPoint(srcPoints);
+        double srcy = calculateMidYFromPoint(srcPoints);
+
+        Polygon destPolygon = rectangles[coordinate[0]][coordinate[1]];
+        ObservableList<Double> destPoints = destPolygon.getPoints();
+        double x = calculateMidXFromPoint(destPoints);
+        double y = calculateMidYFromPoint(destPoints);
+
+
+        anchorPane.getChildren().remove(cardOnField.getImageView());
+
+        cardOnField.setImageView(new ImageView(getBattle().getSelectedCell().getWarrior().getAddressOfRunGif()));
+
+        anchorPane.getChildren().add(cardOnField.getImageView());
+        TranslateTransition tt = new TranslateTransition(Duration.millis(500), cardOnField.getImageView());
+        tt.setFromX(srcx);
+        tt.setFromY(srcy);
+        tt.setToX(x);
+        tt.setToY(y);
+        tt.setOnFinished(event1 -> {
+            cardOnField.getImageView().setImage(new Image(cardOnField.getCard().getAddressOfIdleGif()));
+            getBattle().getGrid()[coordinate[0]][coordinate[1]].setWarrior(((Warrior) cardOnField.getCard()));
+            getBattle().setSelectedCell(null);
+        });
+        tt.play();
+        return;
+    }
+
+    public void sendIdleImageViewToCenterOfCell(CardOnField cardOnField, Polygon polygon) {
+        ObservableList<Double> points = polygon.getPoints();
+        cardOnField.setImageView(new ImageView(getBattle().getSelectedCard().getAddressOfIdleGif()));
+        double x = calculateMidXFromPoint(points);
+        double y = calculateMidYFromPoint(points);
+        cardOnField.getImageView().relocate(x, y);
+        anchorPane.getChildren().add(cardOnField.getImageView());
     }
 
     public void rectangleOnMouseEnter(MouseEvent event) {
@@ -221,14 +301,19 @@ public class BattleController {
             if (getBattle().getSelectedCard() != null) {
                 CardForBattle cardForBattleWithCard = CardForBattleController.findCardForBattleWithCard(getHand(), getBattle().getSelectedCard());
                 double rotationgAngle = cardForBattleWithCard.getCardController().getCardSelection_iv().getRotate();
-//                cardForBattleWithCard.getCardController().setImageOfCardSelection(battleCardNotSelectedImage);
+                cardForBattleWithCard.getCardController().setImageOfCardSelection(battleCardNotSelectedImage);
                 cardForBattleWithCard.getCardController().getCardSelection_iv().setRotate(rotationgAngle);
             }
+            if (cardForBattle.getCard() == getBattle().getSelectedCard()) {
+                getBattle().setSelectedCard(null);
+            } else {
 
-            getBattle().setSelectedCard(cardForBattle.getCard());
-            double rotationgAngle = cardForBattle.getCardController().getCardSelection_iv().getRotate();
-//            cardForBattle.getCardController().setImageOfCardSelection(battleCardSelectedImage);
-            cardForBattle.getCardController().getCardSelection_iv().setRotate(rotationgAngle);
+                getBattle().setSelectedCard(cardForBattle.getCard());
+                double rotationgAngle = cardForBattle.getCardController().getCardSelection_iv().getRotate();
+                cardForBattle.getCardController().setImageOfCardSelection(battleCardSelectedImage);
+                cardForBattle.getCardController().getCardSelection_iv().setRotate(rotationgAngle);
+            }
+            getBattle().setSelectedCell(null);
         }
     }
 
@@ -312,3 +397,38 @@ public class BattleController {
         return hand;
     }
 }
+
+
+class CardOnField {
+    private ImageView imageView;
+    private Card card;
+
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
+    }
+
+    public Card getCard() {
+        return card;
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
+    }
+
+    public static CardOnField findCardOnFieldFromArrayList(ArrayList<CardOnField> arrayList, Card card) {
+        if (card != null && arrayList != null && arrayList.size() > 0) {
+            for (int i = 0; i < arrayList.size(); i++) {
+                if (arrayList.get(i).getCard().equals(card)) {
+                    return arrayList.get(i);
+                }
+            }
+        }
+        return null;
+    }
+}
+

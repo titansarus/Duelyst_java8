@@ -44,6 +44,32 @@ public class Warrior extends Card implements Cloneable {
         this.shield = shield;
     }
 
+    public Warrior(String cardName, String cardDescription, int manaCost, int darikCost, String addressOfImage, String addressOfIdleGif, int healthPoint, int actionPower, int attackRange, AttackKind attackKind, int shield) {
+        super(cardName, cardDescription, manaCost, darikCost, addressOfImage, addressOfIdleGif);
+        this.healthPoint = healthPoint;
+        this.actionPower = actionPower;
+        this.attackRange = attackRange;
+        this.attackKind = attackKind;
+        this.shield = shield;
+    }
+    public Warrior(String cardName, String cardDescription, int manaCost, int darikCost, String addressOfImage, String addressOfIdleGif,String addressOfRunGif , String addressOfAttackGif, int healthPoint, int actionPower, int attackRange, AttackKind attackKind, int shield) {
+        super(cardName, cardDescription, manaCost, darikCost, addressOfImage, addressOfIdleGif , addressOfRunGif,addressOfAttackGif);
+        this.healthPoint = healthPoint;
+        this.actionPower = actionPower;
+        this.attackRange = attackRange;
+        this.attackKind = attackKind;
+        this.shield = shield;
+    }
+    public Warrior(String cardName, String cardDescription, int manaCost, int darikCost, String addressOfImage, String addressOfIdleGif,String addressOfRunGif , String addressOfAttackGif, String addressOfGetDamageGif , String addressOfDeathGif,
+                   int healthPoint, int actionPower, int attackRange, AttackKind attackKind, int shield) {
+        super(cardName, cardDescription, manaCost, darikCost, addressOfImage, addressOfIdleGif , addressOfRunGif,addressOfAttackGif , addressOfGetDamageGif,addressOfDeathGif);
+        this.healthPoint = healthPoint;
+        this.actionPower = actionPower;
+        this.attackRange = attackRange;
+        this.attackKind = attackKind;
+        this.shield = shield;
+    }
+
     public void changeShield(int i) {
         setShield(getShield() + i);
     }
