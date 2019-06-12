@@ -11,6 +11,7 @@ public abstract class Buff {
     private int numberOfTurn;
     private Warrior warrior = null;
     private Cell cell = null;
+    private boolean isFirst = true;
 
     public Buff(BuffName buffName, boolean isPositive, int numberOfTurn) {
         this.buffName = buffName;
@@ -46,7 +47,16 @@ public abstract class Buff {
         this.cell = cell;
     }
 
+
     public void decreaseNumberOfTurn() {
         numberOfTurn--;
+    }
+
+    public void setFirst(boolean first) {
+        isFirst = first;
+    }
+
+    public boolean isFirst() {
+        return isFirst;
     }
 }

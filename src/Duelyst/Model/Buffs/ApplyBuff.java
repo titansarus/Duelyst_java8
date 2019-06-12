@@ -35,9 +35,11 @@ public class ApplyBuff {
     }
 
     public void holyBuff(Buff buff) {
-        HolyBuff holyBuff = ((HolyBuff) buff);
-        Warrior warrior = buff.getWarrior();
-        warrior.setShield(holyBuff.getNumberOfHealthIncrease());
+        if (buff.isFirst()) {
+            HolyBuff holyBuff = ((HolyBuff) buff);
+            Warrior warrior = buff.getWarrior();
+            warrior.setShield(holyBuff.getNumberOfHealthIncrease());
+        }
     }
 
     public void powerBuff(Buff buff) {

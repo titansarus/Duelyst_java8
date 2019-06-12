@@ -21,7 +21,11 @@ public class Battle {
     private int turn = 0;//At First next turn is invocked and first turn will be 1
     private Card selectedCard;
     private Cell selectedCell;
-    private ArrayList<Buff> buffs = new ArrayList<>();
+    private ArrayList<Buff> onSpawnBuffs = new ArrayList<>();
+    private ArrayList<Buff> onDefendBuffs = new ArrayList<>();
+    private ArrayList<Buff> onAttackBuffs = new ArrayList<>();
+    private ArrayList<Buff> onDeathBuffs = new ArrayList<>();
+    private ArrayList<Buff> passive = new ArrayList<>();
 
     public void initializeCells() {
         for (int i = 0; i < BATTLE_ROWS; i++) {
@@ -144,16 +148,24 @@ public class Battle {
         this.selectedCell = selectedCell;
     }
 
-    public void addBuff(Buff buff) {
-        buffs.add(buff);
+    public ArrayList<Buff> getOnAttackBuffs() {
+        return onAttackBuffs;
     }
 
-    public void removeBuff(Buff buff) {
-        buffs.remove(buff);
+    public ArrayList<Buff> getOnDeathBuffs() {
+        return onDeathBuffs;
     }
 
-    public ArrayList<Buff> getBuffs() {
-        return buffs;
+    public ArrayList<Buff> getOnDefendBuffs() {
+        return onDefendBuffs;
+    }
+
+    public ArrayList<Buff> getOnSpawnBuffs() {
+        return onSpawnBuffs;
+    }
+
+    public ArrayList<Buff> getPassive() {
+        return passive;
     }
 
     public static Battle getRunningBattle() {
