@@ -2,10 +2,10 @@ package Duelyst.Utility;
 
 import Duelyst.Database.DatabaseCard;
 import Duelyst.Model.*;
+import Duelyst.Model.Spell.Spell;
 
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class CreateCardFromDatabaseCard {
 
