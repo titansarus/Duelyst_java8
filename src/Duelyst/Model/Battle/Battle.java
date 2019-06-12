@@ -2,13 +2,18 @@ package Duelyst.Model.Battle;
 
 import Duelyst.Exceptions.CellFilledBeforeException;
 import Duelyst.Model.Account;
+import Duelyst.Model.Buffs.Buff;
 import Duelyst.Model.Card;
+import Duelyst.Model.Warrior;
+import com.sun.scenario.effect.impl.prism.PrImage;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 import static Duelyst.View.Constants.*;
 
 public class Battle {
+    private static Battle runningBattle;
     private Player player1;
     private Player player2;
     private Player playingPlayer = null;
@@ -16,6 +21,7 @@ public class Battle {
     private int turn = 0;//At First next turn is invocked and first turn will be 1
     private Card selectedCard;
     private Cell selectedCell;
+    private ArrayList<Buff> buffs = new ArrayList<>();
 
     public void initializeCells() {
         for (int i = 0; i < BATTLE_ROWS; i++) {
@@ -26,6 +32,7 @@ public class Battle {
     }
 
     public Battle(Account account1, Account account2) {
+        runningBattle=this;
         setPlayer1(new Player(account1, account1.getCardCollection().getMainDeck()));
         setPlayer2(new Player(account2, account2.getCardCollection().getMainDeck()));
         setPlayingPlayer();
@@ -45,7 +52,7 @@ public class Battle {
 
         //TODO SOME CHECKS NEEDED IF IT IS WARRIOR OR SPELL. CURRENTLY IS ONLY FOR WARRIOR.
         if (getGrid()[i][j].isEmpty()) {
-            getGrid()[i][j].setWarrior(getSelectedCard());
+            getGrid()[i][j].setWarrior((Warrior) getSelectedCard());
         }
         else
         {
@@ -135,5 +142,21 @@ public class Battle {
 
     public void setSelectedCell(Cell selectedCell) {
         this.selectedCell = selectedCell;
+    }
+
+    public void addBuff(Buff buff) {
+        buffs.add(buff);
+    }
+
+    public void removeBuff(Buff buff) {
+        buffs.remove(buff);
+    }
+
+    public ArrayList<Buff> getBuffs() {
+        return buffs;
+    }
+
+    public static Battle getRunningBattle() {
+        return runningBattle;
     }
 }
