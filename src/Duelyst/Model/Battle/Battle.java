@@ -1,6 +1,7 @@
 package Duelyst.Model.Battle;
 
 import Duelyst.Exceptions.CellFilledBeforeException;
+import Duelyst.Exceptions.NotEnoughManaException;
 import Duelyst.Model.Account;
 import Duelyst.Model.Buffs.Buff;
 import Duelyst.Model.Card;
@@ -71,7 +72,16 @@ public class Battle {
         //TODO SOME CHECKS NEEDED IF IT IS WARRIOR OR SPELL. CURRENTLY IS ONLY FOR WARRIOR.
         if (getGrid()[i][j].isEmpty()) {
             getGrid()[i][j].setWarrior((Warrior) getSelectedCard());
-            playingPlayer.getInGameCards().add(getSelectedCard());
+            Warrior warrior = getGrid()[i][j].getWarrior();
+            if (getPlayingPlayer().getMana()>=warrior.getManaCost()) {
+                getPlayingPlayer().changeMana(-warrior.getManaCost());
+                getPlayingPlayer().getHand().remove(warrior);
+                playingPlayer.getInGameCards().add(getSelectedCard());
+            }
+            else
+            {
+                throw new NotEnoughManaException();
+            }
         } else {
             throw new CellFilledBeforeException();
         }

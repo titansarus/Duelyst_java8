@@ -1,6 +1,7 @@
 package Duelyst.Controllers;
 
 import Duelyst.Exceptions.CellFilledBeforeException;
+import Duelyst.Exceptions.MyException;
 import Duelyst.Model.Battle.Battle;
 import Duelyst.Model.Battle.Player;
 import Duelyst.Model.Card;
@@ -217,7 +218,7 @@ public class BattleController {
             //   getHand().remove(cardForBattle);
             getBattle().setSelectedCard(null);
             cardForBattle.setCard(null);
-        } catch (CellFilledBeforeException e) {
+        } catch (MyException e) {
             Container.exceptionGenerator(e, stackPane);
         }
         getBattle().setSelectedCell(null);
@@ -335,9 +336,18 @@ public class BattleController {
 
     public void updateManaOfPlayer(HBox hbox, Player player) {
         hbox.getChildren().clear();
+        int countOfActiveMana = 0;
         if (player.equals(battle.getPlayingPlayer())) {
-            for (int i = 0; i < player.getMana(); i++) {
-                ImageView imageView = new ImageView(manaIconSml);
+            for (int i = 0; i < getBattle().calculateMaxAmountOfMana(); i++) {
+               ImageView imageView = null;
+                if (countOfActiveMana<player.getMana()) {
+                    imageView = new ImageView(manaIconSml);
+                    countOfActiveMana++;
+                }
+                else
+                {
+                    imageView = new ImageView(manaInActiveSml);
+                }
                 hbox.getChildren().add(imageView);
             }
         } else {

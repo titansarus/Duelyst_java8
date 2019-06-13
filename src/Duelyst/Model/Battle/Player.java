@@ -31,6 +31,11 @@ public class Player {
         initializeHand();
     }
 
+    public void changeMana(int i)
+    {
+        setMana(getMana()+i);
+    }
+
     public void initializeHand() {
         Random random = new Random();
         for (int i = 0; i < SIZE_OF_HAND; i++) {
