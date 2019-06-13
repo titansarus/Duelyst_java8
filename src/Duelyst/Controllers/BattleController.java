@@ -249,8 +249,9 @@ public class BattleController {
         tt.setToX(x);
         tt.setToY(y);
         tt.setOnFinished(event1 -> {
+            getBattle().move(coordinate[0],coordinate[1]);
             cardOnField.getImageView().setImage(new Image(cardOnField.getCard().getAddressOfIdleGif()));
-            getBattle().getGrid()[coordinate[0]][coordinate[1]].setWarrior(((Warrior) cardOnField.getCard()));
+//            getBattle().getGrid()[coordinate[0]][coordinate[1]].setWarrior(((Warrior) cardOnField.getCard()));
             getBattle().setSelectedCell(null);
         });
         tt.play();
