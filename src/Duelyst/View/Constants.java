@@ -60,6 +60,7 @@ public class Constants {
     public static final Image manaInActiveSml = new Image(Constants.class.getResourceAsStream("../../res/CardUI/icon_mana_inactive.png"));
     public static final Image battleCardSelectedImage = new Image(Constants.class.getResourceAsStream("../../res/CardUI/card_background_highlight@2x.png"));
     public static final Image battleCardNotSelectedImage = new Image(Constants.class.getResourceAsStream("../../res/CardUI/card_background@2x.png"));
+    public static final Image buffEffect = new Image(Constants.class.getResourceAsStream("../../res/effects/explosion.gif"));
 
 
     //OTHER CONSTANTS

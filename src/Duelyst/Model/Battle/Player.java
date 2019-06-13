@@ -75,6 +75,15 @@ public class Player {
         getDeck().getCards().remove(index);
     }
 
+    public boolean checkIfCardIsInGame(Card card) {
+        for (int i = 0; i < getInGameCards().size(); i++) {
+            if (getInGameCards().get(i) != null && getInGameCards().get(i).equals(card)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public Account getAccount() {
         return account;

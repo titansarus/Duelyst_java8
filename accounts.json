@@ -17,7 +17,7 @@
               "shield": 0,
               "isValidToAttack": true,
               "IsValidToMove": true,
-              "cardId": "a_Siavash_4",
+              "cardId": "a_Siavash_7",
               "manaCost": 2,
               "darikCost": 50,
               "account": "@root.0",
@@ -29,8 +29,260 @@
               "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
               "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
               "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
-              "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/attack_t.gif",
-              "addressOfDeathGif": "./res/gifs/f1_altgeneral/attack_t.gif"
+              "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/hit_t.gif",
+              "addressOfDeathGif": "./res/gifs/f1_altgeneral/death_t.gif"
+            }
+          },
+          {
+            "@type": "Duelyst.Model.Minion",
+            "@val": {
+              "healthPoint": 40,
+              "actionPower": 20,
+              "attackRange": 2,
+              "attackKind": "MELEE",
+              "validCounterAttack": false,
+              "isDeath": false,
+              "shield": 0,
+              "isValidToAttack": true,
+              "IsValidToMove": true,
+              "cardId": "a_Siavash_9",
+              "manaCost": 2,
+              "darikCost": 50,
+              "account": "@root.0",
+              "cardDescription": "SiavashDesc",
+              "cardName": "Siavash",
+              "isAbleToMove": true,
+              "isInGame": false,
+              "addressOfImage": "./res/Characters/generals/general_f1.png",
+              "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
+              "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
+              "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+              "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/hit_t.gif",
+              "addressOfDeathGif": "./res/gifs/f1_altgeneral/death_t.gif"
+            }
+          },
+          {
+            "@type": "Duelyst.Model.Minion",
+            "@val": {
+              "healthPoint": 40,
+              "actionPower": 20,
+              "attackRange": 2,
+              "attackKind": "MELEE",
+              "validCounterAttack": false,
+              "isDeath": false,
+              "shield": 0,
+              "isValidToAttack": true,
+              "IsValidToMove": true,
+              "cardId": "a_Siavash_11",
+              "manaCost": 2,
+              "darikCost": 50,
+              "account": "@root.0",
+              "cardDescription": "SiavashDesc",
+              "cardName": "Siavash",
+              "isAbleToMove": true,
+              "isInGame": false,
+              "addressOfImage": "./res/Characters/generals/general_f1.png",
+              "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
+              "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
+              "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+              "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/hit_t.gif",
+              "addressOfDeathGif": "./res/gifs/f1_altgeneral/death_t.gif"
+            }
+          },
+          {
+            "@type": "Duelyst.Model.Minion",
+            "@val": {
+              "healthPoint": 40,
+              "actionPower": 20,
+              "attackRange": 2,
+              "attackKind": "MELEE",
+              "validCounterAttack": false,
+              "isDeath": false,
+              "shield": 0,
+              "isValidToAttack": true,
+              "IsValidToMove": true,
+              "cardId": "a_Siavash_12",
+              "manaCost": 2,
+              "darikCost": 50,
+              "account": "@root.0",
+              "cardDescription": "SiavashDesc",
+              "cardName": "Siavash",
+              "isAbleToMove": true,
+              "isInGame": false,
+              "addressOfImage": "./res/Characters/generals/general_f1.png",
+              "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
+              "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
+              "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+              "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/hit_t.gif",
+              "addressOfDeathGif": "./res/gifs/f1_altgeneral/death_t.gif"
+            }
+          },
+          {
+            "@type": "Duelyst.Model.Minion",
+            "@val": {
+              "healthPoint": 40,
+              "actionPower": 20,
+              "attackRange": 2,
+              "attackKind": "MELEE",
+              "validCounterAttack": false,
+              "isDeath": false,
+              "shield": 0,
+              "isValidToAttack": true,
+              "IsValidToMove": true,
+              "cardId": "a_Siavash_5",
+              "manaCost": 2,
+              "darikCost": 50,
+              "account": "@root.0",
+              "cardDescription": "SiavashDesc",
+              "cardName": "Siavash",
+              "isAbleToMove": true,
+              "isInGame": false,
+              "addressOfImage": "./res/Characters/generals/general_f1.png",
+              "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
+              "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
+              "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+              "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/hit_t.gif",
+              "addressOfDeathGif": "./res/gifs/f1_altgeneral/death_t.gif"
+            }
+          },
+          {
+            "@type": "Duelyst.Model.Minion",
+            "@val": {
+              "healthPoint": 40,
+              "actionPower": 20,
+              "attackRange": 2,
+              "attackKind": "MELEE",
+              "validCounterAttack": false,
+              "isDeath": false,
+              "shield": 0,
+              "isValidToAttack": true,
+              "IsValidToMove": true,
+              "cardId": "a_Siavash_6",
+              "manaCost": 2,
+              "darikCost": 50,
+              "account": "@root.0",
+              "cardDescription": "SiavashDesc",
+              "cardName": "Siavash",
+              "isAbleToMove": true,
+              "isInGame": false,
+              "addressOfImage": "./res/Characters/generals/general_f1.png",
+              "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
+              "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
+              "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+              "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/hit_t.gif",
+              "addressOfDeathGif": "./res/gifs/f1_altgeneral/death_t.gif"
+            }
+          },
+          {
+            "@type": "Duelyst.Model.Minion",
+            "@val": {
+              "healthPoint": 40,
+              "actionPower": 20,
+              "attackRange": 2,
+              "attackKind": "MELEE",
+              "validCounterAttack": false,
+              "isDeath": false,
+              "shield": 0,
+              "isValidToAttack": true,
+              "IsValidToMove": true,
+              "cardId": "a_Siavash_7",
+              "manaCost": 2,
+              "darikCost": 50,
+              "account": "@root.0",
+              "cardDescription": "SiavashDesc",
+              "cardName": "Siavash",
+              "isAbleToMove": true,
+              "isInGame": false,
+              "addressOfImage": "./res/Characters/generals/general_f1.png",
+              "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
+              "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
+              "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+              "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/hit_t.gif",
+              "addressOfDeathGif": "./res/gifs/f1_altgeneral/death_t.gif"
+            }
+          },
+          {
+            "@type": "Duelyst.Model.Minion",
+            "@val": {
+              "healthPoint": 40,
+              "actionPower": 20,
+              "attackRange": 2,
+              "attackKind": "MELEE",
+              "validCounterAttack": false,
+              "isDeath": false,
+              "shield": 0,
+              "isValidToAttack": true,
+              "IsValidToMove": true,
+              "cardId": "a_Siavash_8",
+              "manaCost": 2,
+              "darikCost": 50,
+              "account": "@root.0",
+              "cardDescription": "SiavashDesc",
+              "cardName": "Siavash",
+              "isAbleToMove": true,
+              "isInGame": false,
+              "addressOfImage": "./res/Characters/generals/general_f1.png",
+              "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
+              "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
+              "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+              "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/hit_t.gif",
+              "addressOfDeathGif": "./res/gifs/f1_altgeneral/death_t.gif"
+            }
+          },
+          {
+            "@type": "Duelyst.Model.Minion",
+            "@val": {
+              "healthPoint": 40,
+              "actionPower": 20,
+              "attackRange": 2,
+              "attackKind": "MELEE",
+              "validCounterAttack": false,
+              "isDeath": false,
+              "shield": 0,
+              "isValidToAttack": true,
+              "IsValidToMove": true,
+              "cardId": "a_Siavash_9",
+              "manaCost": 2,
+              "darikCost": 50,
+              "account": "@root.0",
+              "cardDescription": "SiavashDesc",
+              "cardName": "Siavash",
+              "isAbleToMove": true,
+              "isInGame": false,
+              "addressOfImage": "./res/Characters/generals/general_f1.png",
+              "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
+              "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
+              "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+              "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/hit_t.gif",
+              "addressOfDeathGif": "./res/gifs/f1_altgeneral/death_t.gif"
+            }
+          },
+          {
+            "@type": "Duelyst.Model.Minion",
+            "@val": {
+              "healthPoint": 40,
+              "actionPower": 20,
+              "attackRange": 2,
+              "attackKind": "MELEE",
+              "validCounterAttack": false,
+              "isDeath": false,
+              "shield": 0,
+              "isValidToAttack": true,
+              "IsValidToMove": true,
+              "cardId": "a_Siavash_10",
+              "manaCost": 2,
+              "darikCost": 50,
+              "account": "@root.0",
+              "cardDescription": "SiavashDesc",
+              "cardName": "Siavash",
+              "isAbleToMove": true,
+              "isInGame": false,
+              "addressOfImage": "./res/Characters/generals/general_f1.png",
+              "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
+              "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
+              "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+              "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/hit_t.gif",
+              "addressOfDeathGif": "./res/gifs/f1_altgeneral/death_t.gif"
             }
           }
         ],
@@ -38,34 +290,6 @@
         "decks": [
           {
             "cards": [
-              {
-                "@type": "Duelyst.Model.Minion",
-                "@val": {
-                  "healthPoint": 40,
-                  "actionPower": 20,
-                  "attackRange": 2,
-                  "attackKind": "MELEE",
-                  "validCounterAttack": false,
-                  "isDeath": false,
-                  "shield": 0,
-                  "isValidToAttack": true,
-                  "IsValidToMove": true,
-                  "cardId": "a_Siavash_1",
-                  "manaCost": 2,
-                  "darikCost": 50,
-                  "account": "@root.0",
-                  "cardDescription": "SiavashDesc",
-                  "cardName": "Siavash",
-                  "isAbleToMove": true,
-                  "isInGame": false,
-                  "addressOfImage": "./res/Characters/generals/general_f1.png",
-                  "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
-                  "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
-                  "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
-                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/attack_t.gif",
-                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/attack_t.gif"
-                }
-              },
               {
                 "@type": "Duelyst.Model.Minion",
                 "@val": {
@@ -90,8 +314,8 @@
                   "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
                   "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
                   "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
-                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/attack_t.gif",
-                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/attack_t.gif"
+                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/hit_t.gif",
+                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/death_t.gif"
                 }
               },
               {
@@ -118,8 +342,8 @@
                   "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
                   "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
                   "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
-                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/attack_t.gif",
-                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/attack_t.gif"
+                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/hit_t.gif",
+                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/death_t.gif"
                 }
               },
               {
@@ -146,36 +370,8 @@
                   "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
                   "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
                   "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
-                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/attack_t.gif",
-                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/attack_t.gif"
-                }
-              },
-              {
-                "@type": "Duelyst.Model.Minion",
-                "@val": {
-                  "healthPoint": 40,
-                  "actionPower": 20,
-                  "attackRange": 2,
-                  "attackKind": "MELEE",
-                  "validCounterAttack": false,
-                  "isDeath": false,
-                  "shield": 0,
-                  "isValidToAttack": true,
-                  "IsValidToMove": true,
-                  "cardId": "a_Siavash_4",
-                  "manaCost": 2,
-                  "darikCost": 50,
-                  "account": "@root.0",
-                  "cardDescription": "SiavashDesc",
-                  "cardName": "Siavash",
-                  "isAbleToMove": true,
-                  "isInGame": false,
-                  "addressOfImage": "./res/Characters/generals/general_f1.png",
-                  "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
-                  "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
-                  "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
-                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/attack_t.gif",
-                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/attack_t.gif"
+                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/hit_t.gif",
+                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/death_t.gif"
                 }
               },
               {
@@ -202,8 +398,8 @@
                   "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
                   "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
                   "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
-                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/attack_t.gif",
-                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/attack_t.gif"
+                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/hit_t.gif",
+                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/death_t.gif"
                 }
               },
               {
@@ -218,7 +414,7 @@
                   "shield": 0,
                   "isValidToAttack": true,
                   "IsValidToMove": true,
-                  "cardId": "a_Siavash_3",
+                  "cardId": "a_Siavash_6",
                   "manaCost": 2,
                   "darikCost": 50,
                   "account": "@root.0",
@@ -230,8 +426,8 @@
                   "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
                   "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
                   "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
-                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/attack_t.gif",
-                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/attack_t.gif"
+                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/hit_t.gif",
+                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/death_t.gif"
                 }
               },
               {
@@ -246,7 +442,7 @@
                   "shield": 0,
                   "isValidToAttack": true,
                   "IsValidToMove": true,
-                  "cardId": "a_Siavash_2",
+                  "cardId": "a_Siavash_4",
                   "manaCost": 2,
                   "darikCost": 50,
                   "account": "@root.0",
@@ -258,8 +454,64 @@
                   "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
                   "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
                   "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
-                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/attack_t.gif",
-                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/attack_t.gif"
+                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/hit_t.gif",
+                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/death_t.gif"
+                }
+              },
+              {
+                "@type": "Duelyst.Model.Minion",
+                "@val": {
+                  "healthPoint": 40,
+                  "actionPower": 20,
+                  "attackRange": 2,
+                  "attackKind": "MELEE",
+                  "validCounterAttack": false,
+                  "isDeath": false,
+                  "shield": 0,
+                  "isValidToAttack": true,
+                  "IsValidToMove": true,
+                  "cardId": "a_Siavash_8",
+                  "manaCost": 2,
+                  "darikCost": 50,
+                  "account": "@root.0",
+                  "cardDescription": "SiavashDesc",
+                  "cardName": "Siavash",
+                  "isAbleToMove": true,
+                  "isInGame": false,
+                  "addressOfImage": "./res/Characters/generals/general_f1.png",
+                  "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
+                  "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
+                  "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/hit_t.gif",
+                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/death_t.gif"
+                }
+              },
+              {
+                "@type": "Duelyst.Model.Minion",
+                "@val": {
+                  "healthPoint": 40,
+                  "actionPower": 20,
+                  "attackRange": 2,
+                  "attackKind": "MELEE",
+                  "validCounterAttack": false,
+                  "isDeath": false,
+                  "shield": 0,
+                  "isValidToAttack": true,
+                  "IsValidToMove": true,
+                  "cardId": "a_Siavash_10",
+                  "manaCost": 2,
+                  "darikCost": 50,
+                  "account": "@root.0",
+                  "cardDescription": "SiavashDesc",
+                  "cardName": "Siavash",
+                  "isAbleToMove": true,
+                  "isInGame": false,
+                  "addressOfImage": "./res/Characters/generals/general_f1.png",
+                  "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
+                  "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
+                  "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/hit_t.gif",
+                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/death_t.gif"
                 }
               }
             ],
@@ -278,12 +530,13 @@
             "isValid": false
           }
         ],
-        "mainDeck": "@root.0.cardCollection.decks.0"
+        "mainDeck": "@root.0.cardCollection.decks.0",
+        "selectedCard": "@root.0.cardCollection.cards.3"
       },
       "username": "a",
       "password": "a",
       "countOfWins": 0,
-      "darick": 9550,
+      "darick": 9100,
       "collectableItems": []
     }
   }

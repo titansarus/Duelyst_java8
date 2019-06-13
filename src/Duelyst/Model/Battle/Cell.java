@@ -2,10 +2,11 @@ package Duelyst.Model.Battle;
 
 import Duelyst.Model.Card;
 import Duelyst.Model.Warrior;
+
 import static Duelyst.View.Constants.*;
 
 public class Cell {
-    private Integer row , column;
+    private Integer row, column;
     private Warrior warrior;
 
     public Cell(Integer row, Integer column) {
@@ -37,23 +38,22 @@ public class Cell {
         this.warrior = warrior;
     }
 
-    public boolean isEmpty()
-    {
-        return warrior==null;
+    public boolean isEmpty() {
+        return warrior == null;
     }
 
-    public static boolean isSelectedCardOnField(Cell[][] grids , Card card)
-    {
-        for (int i =0;i<BATTLE_ROWS;i++)
-        {
-            for (int j =0;j<BATTLE_COLUMNS;j++)
-            {
-                if (grids[i][j].getWarrior().equals(card))
-                {
+    public static boolean isSelectedCardOnField(Cell[][] grids, Card card) {
+        for (int i = 0; i < BATTLE_ROWS; i++) {
+            for (int j = 0; j < BATTLE_COLUMNS; j++) {
+                if (grids[i][j].getWarrior().equals(card)) {
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    public static int calculateManhattanDistance(Cell cell1, Cell cell2) {
+        return Math.abs(cell1.column - cell2.column) + Math.abs(cell1.row - cell2.row);
     }
 }

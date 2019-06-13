@@ -46,6 +46,7 @@ public class CardController {
 
     public void setCard_img(ImageView card_img) {
         this.card_img = card_img;
+        this.card_img.setCache(true);
     }
 
     public void changeToSelected() {
