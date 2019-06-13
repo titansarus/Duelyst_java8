@@ -31,9 +31,8 @@ public class Player {
         initializeHand();
     }
 
-    public void changeMana(int i)
-    {
-        setMana(getMana()+i);
+    public void changeMana(int i) {
+        setMana(getMana() + i);
     }
 
     public void initializeHand() {
@@ -45,6 +44,15 @@ public class Player {
             }
         }
     }
+
+    public void getNextHand() {
+        if (getHand().size() < SIZE_OF_HAND && deck.getCards().size() > 0) {
+            Random random = new Random();
+            int index = random.nextInt(deck.getCards().size());
+            giveCardFromDeckToHand(index);
+        }
+    }
+
 
     public void setManaFromTurn(int turn) {
         setMana(Math.floorDiv(turn, 2) + manaYIntercpet); //FOR TEST, set +2 to +1000

@@ -49,6 +49,7 @@ public class Battle {
         setPlayingPlayer();
         getPlayer1().setManaFromTurn(getTurn());
         getPlayer2().setManaFromTurn(getTurn());
+        getPlayingPlayer().getNextHand();
 
     }
 

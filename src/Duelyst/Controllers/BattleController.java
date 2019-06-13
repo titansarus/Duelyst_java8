@@ -1,18 +1,15 @@
 package Duelyst.Controllers;
 
-import Duelyst.Exceptions.CellFilledBeforeException;
 import Duelyst.Exceptions.MyException;
 import Duelyst.Model.Battle.Battle;
 import Duelyst.Model.Battle.Player;
 import Duelyst.Model.Card;
-import Duelyst.Model.Warrior;
 import Duelyst.View.ViewClasses.CardForBattle;
 import com.jfoenix.controls.JFXButton;
 import javafx.animation.*;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -177,7 +174,6 @@ public class BattleController {
     }
 
 
-
     public void rectangleOnMouseClicked(MouseEvent event) {
 
         Polygon p = (Polygon) event.getSource();
@@ -200,8 +196,7 @@ public class BattleController {
         }
     }
 
-    public void handleInsertCardClick()
-    {
+    public void handleInsertCardClick() {
         int[] battleCoordinate = getBattle().findCellCoordinate(getBattle().getSelectedCell());
         CardForBattle cardForBattle = CardForBattleController.findCardForBattleWithCard(getHand(), getBattle().getSelectedCard());
         try {
@@ -223,6 +218,7 @@ public class BattleController {
         }
         getBattle().setSelectedCell(null);
     }
+
     public void moveAnimationRun(int[] coordinate) {
         CardOnField cardOnField = CardOnField.findCardOnFieldFromArrayList(cardsOnField, getBattle().getSelectedCell().getWarrior());
 
@@ -250,7 +246,7 @@ public class BattleController {
         tt.setToX(x);
         tt.setToY(y);
         tt.setOnFinished(event1 -> {
-            getBattle().move(coordinate[0],coordinate[1]);
+            getBattle().move(coordinate[0], coordinate[1]);
             cardOnField.getImageView().setImage(new Image(cardOnField.getCard().getAddressOfIdleGif()));
 //            getBattle().getGrid()[coordinate[0]][coordinate[1]].setWarrior(((Warrior) cardOnField.getCard()));
             getBattle().setSelectedCell(null);
@@ -283,18 +279,9 @@ public class BattleController {
     }
 
     public void setHandHbox() {
-        for (int i = 0; i < SIZE_OF_HAND; i++) {
-            CardForBattle cardForBattle = new CardForBattle(battle.getPlayingPlayer().getHand().get(i));
-            cardForBattle.cardController.setBattle(battle);
-            hand.add(cardForBattle);
-            hand.get(i).setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    handCardOnMouseClicked(event);
-                }
-            });
-            hand_hBox.getChildren().add(hand.get(i));
-        }
+        getHand().clear();
+        getHand().clear();
+        makeHandView();
     }
 
     public void handCardOnMouseClicked(MouseEvent e) {
@@ -339,13 +326,11 @@ public class BattleController {
         int countOfActiveMana = 0;
         if (player.equals(battle.getPlayingPlayer())) {
             for (int i = 0; i < getBattle().calculateMaxAmountOfMana(); i++) {
-               ImageView imageView = null;
-                if (countOfActiveMana<player.getMana()) {
+                ImageView imageView = null;
+                if (countOfActiveMana < player.getMana()) {
                     imageView = new ImageView(manaIconSml);
                     countOfActiveMana++;
-                }
-                else
-                {
+                } else {
                     imageView = new ImageView(manaInActiveSml);
                 }
                 hbox.getChildren().add(imageView);
@@ -386,6 +371,31 @@ public class BattleController {
 
     public void handleEndTurnBtn() {
         battle.nextTurn();
+        updateHand();
+    }
+
+    public void updateHand() {
+        //TODO IT IS THE SAME AS setHandHbox but maybe some of them need more checks. so currently they are two different method.;
+        getHand_hBox().getChildren().clear();
+        getHand().clear();
+        makeHandView();
+    }
+
+    public void makeHandView() {
+        for (int i = 0; i < SIZE_OF_HAND; i++) {
+            if (getBattle().getPlayingPlayer().getHand().get(i) != null) {
+                CardForBattle cardForBattle = new CardForBattle(getBattle().getPlayingPlayer().getHand().get(i));
+                cardForBattle.getCardController().setBattle(getBattle());
+                getHand().add(cardForBattle);
+                getHand().get(i).setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        handCardOnMouseClicked(event);
+                    }
+                });
+                getHand_hBox().getChildren().add(getHand().get(i));
+            }
+        }
     }
 
     public HBox getHand_hBox() {
