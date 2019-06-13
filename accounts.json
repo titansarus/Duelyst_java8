@@ -10,31 +10,65 @@
           {
             "cards": [
               {
-                "cardId": "a_card0_3",
-                "manaCost": 10,
-                "darikCost": 10,
-                "account": "@root.0",
-                "cardDescription": "desc0",
-                "cardName": "card0",
-                "isAbleToMove": true,
-                "isInGame": false,
-                "addressOfImage": ""
-              },
-              {
-                "cardId": "a_card0_4",
-                "manaCost": 10,
-                "darikCost": 10,
-                "account": "@root.0",
-                "cardDescription": "desc0",
-                "cardName": "card0",
-                "isAbleToMove": true,
-                "isInGame": false,
-                "addressOfImage": ""
-              },
-              {
-                "@type": "Duelyst.Model.Hero",
+                "@type": "Duelyst.Model.Minion",
                 "@val": {
-                  "healthPoint": 10,
+                  "healthPoint": 40,
+                  "actionPower": 20,
+                  "attackRange": 2,
+                  "attackKind": "MELEE",
+                  "validCounterAttack": false,
+                  "isDeath": false,
+                  "shield": 0,
+                  "isValidToAttack": true,
+                  "IsValidToMove": true,
+                  "cardId": "a_Siavash_1",
+                  "manaCost": 2,
+                  "darikCost": 50,
+                  "account": "@root.0",
+                  "cardDescription": "SiavashDesc",
+                  "cardName": "Siavash",
+                  "isAbleToMove": true,
+                  "isInGame": false,
+                  "addressOfImage": "./res/Characters/generals/general_f1.png",
+                  "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
+                  "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
+                  "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/attack_t.gif"
+                }
+              },
+              {
+                "@type": "Duelyst.Model.Minion",
+                "@val": {
+                  "healthPoint": 40,
+                  "actionPower": 20,
+                  "attackRange": 2,
+                  "attackKind": "MELEE",
+                  "validCounterAttack": false,
+                  "isDeath": false,
+                  "shield": 0,
+                  "isValidToAttack": true,
+                  "IsValidToMove": true,
+                  "cardId": "a_Siavash_3",
+                  "manaCost": 2,
+                  "darikCost": 50,
+                  "account": "@root.0",
+                  "cardDescription": "SiavashDesc",
+                  "cardName": "Siavash",
+                  "isAbleToMove": true,
+                  "isInGame": false,
+                  "addressOfImage": "./res/Characters/generals/general_f1.png",
+                  "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
+                  "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
+                  "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/attack_t.gif"
+                }
+              },
+              {
+                "@type": "Duelyst.Model.Minion",
+                "@val": {
+                  "healthPoint": 40,
                   "actionPower": 20,
                   "attackRange": 2,
                   "attackKind": "MELEE",
@@ -51,62 +85,18 @@
                   "cardName": "Siavash",
                   "isAbleToMove": true,
                   "isInGame": false,
-                  "addressOfImage": "./res/Characters/generals/general_f1.png"
+                  "addressOfImage": "./res/Characters/generals/general_f1.png",
+                  "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
+                  "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
+                  "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/attack_t.gif"
                 }
               },
               {
-                "cardId": "a_card0_1",
-                "manaCost": 10,
-                "darikCost": 10,
-                "account": "@root.0",
-                "cardDescription": "desc0",
-                "cardName": "card0",
-                "isAbleToMove": true,
-                "isInGame": false,
-                "addressOfImage": ""
-              },
-              {
-                "cardId": "a_card0_2",
-                "manaCost": 10,
-                "darikCost": 10,
-                "account": "@root.0",
-                "cardDescription": "desc0",
-                "cardName": "card0",
-                "isAbleToMove": true,
-                "isInGame": false,
-                "addressOfImage": ""
-              }
-            ],
-            "minions": [],
-            "hero": "@root.0.cardCollection.decks.0.cards.2",
-            "account": "@root.0",
-            "deckName": "abc",
-            "isValid": false
-          }
-        ],
-        "mainDeck": "@root.0.cardCollection.decks.0"
-      },
-      "username": "a",
-      "password": "a",
-      "countOfWins": 0,
-      "darick": 9760,
-      "collectableItems": []
-    }
-  },
-  {
-    "@type": "Duelyst.Model.Account",
-    "@val": {
-      "battleHistory": [],
-      "cardCollection": {
-        "cards": [],
-        "account": "@root.1",
-        "decks": [
-          {
-            "cards": [
-              {
-                "@type": "Duelyst.Model.Hero",
+                "@type": "Duelyst.Model.Minion",
                 "@val": {
-                  "healthPoint": 10,
+                  "healthPoint": 40,
                   "actionPower": 20,
                   "attackRange": 2,
                   "attackKind": "MELEE",
@@ -115,141 +105,69 @@
                   "shield": 0,
                   "isValidToAttack": true,
                   "IsValidToMove": true,
-                  "cardId": "alireza_Siavash_8",
+                  "cardId": "a_Siavash_5",
                   "manaCost": 2,
                   "darikCost": 50,
-                  "account": "@root.1",
+                  "account": "@root.0",
                   "cardDescription": "SiavashDesc",
                   "cardName": "Siavash",
                   "isAbleToMove": true,
                   "isInGame": false,
-                  "addressOfImage": "./res/Characters/generals/general_f1.png"
+                  "addressOfImage": "./res/Characters/generals/general_f1.png",
+                  "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
+                  "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
+                  "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/attack_t.gif"
                 }
               },
               {
-                "cardId": "alireza_card30_1",
-                "manaCost": 10,
-                "darikCost": 10,
-                "account": "@root.1",
-                "cardDescription": "desc30",
-                "cardName": "card30",
-                "isAbleToMove": true,
-                "isInGame": false,
-                "addressOfImage": ""
-              },
-              {
-                "cardId": "alireza_card30_2",
-                "manaCost": 10,
-                "darikCost": 10,
-                "account": "@root.1",
-                "cardDescription": "desc30",
-                "cardName": "card30",
-                "isAbleToMove": true,
-                "isInGame": false,
-                "addressOfImage": ""
-              },
-              {
-                "cardId": "alireza_card30_3",
-                "manaCost": 10,
-                "darikCost": 10,
-                "account": "@root.1",
-                "cardDescription": "desc30",
-                "cardName": "card30",
-                "isAbleToMove": true,
-                "isInGame": false,
-                "addressOfImage": ""
-              },
-              {
-                "cardId": "alireza_card30_4",
-                "manaCost": 10,
-                "darikCost": 10,
-                "account": "@root.1",
-                "cardDescription": "desc30",
-                "cardName": "card30",
-                "isAbleToMove": true,
-                "isInGame": false,
-                "addressOfImage": ""
-              },
-              {
-                "cardId": "alireza_card30_5",
-                "manaCost": 10,
-                "darikCost": 10,
-                "account": "@root.1",
-                "cardDescription": "desc30",
-                "cardName": "card30",
-                "isAbleToMove": true,
-                "isInGame": false,
-                "addressOfImage": ""
-              },
-              {
-                "cardId": "alireza_card30_6",
-                "manaCost": 10,
-                "darikCost": 10,
-                "account": "@root.1",
-                "cardDescription": "desc30",
-                "cardName": "card30",
-                "isAbleToMove": true,
-                "isInGame": false,
-                "addressOfImage": ""
-              },
-              {
-                "cardId": "alireza_card30_7",
-                "manaCost": 10,
-                "darikCost": 10,
-                "account": "@root.1",
-                "cardDescription": "desc30",
-                "cardName": "card30",
-                "isAbleToMove": true,
-                "isInGame": false,
-                "addressOfImage": ""
-              },
-              {
-                "cardId": "alireza_card30_8",
-                "manaCost": 10,
-                "darikCost": 10,
-                "account": "@root.1",
-                "cardDescription": "desc30",
-                "cardName": "card30",
-                "isAbleToMove": true,
-                "isInGame": false,
-                "addressOfImage": ""
-              },
-              {
-                "cardId": "alireza_card30_9",
-                "manaCost": 10,
-                "darikCost": 10,
-                "account": "@root.1",
-                "cardDescription": "desc30",
-                "cardName": "card30",
-                "isAbleToMove": true,
-                "isInGame": false,
-                "addressOfImage": ""
-              },
-              {
-                "cardId": "alireza_card30_10",
-                "manaCost": 10,
-                "darikCost": 10,
-                "account": "@root.1",
-                "cardDescription": "desc30",
-                "cardName": "card30",
-                "isAbleToMove": true,
-                "isInGame": false,
-                "addressOfImage": ""
+                "@type": "Duelyst.Model.Minion",
+                "@val": {
+                  "healthPoint": 40,
+                  "actionPower": 20,
+                  "attackRange": 2,
+                  "attackKind": "MELEE",
+                  "validCounterAttack": false,
+                  "isDeath": false,
+                  "shield": 0,
+                  "isValidToAttack": true,
+                  "IsValidToMove": true,
+                  "cardId": "a_Siavash_4",
+                  "manaCost": 2,
+                  "darikCost": 50,
+                  "account": "@root.0",
+                  "cardDescription": "SiavashDesc",
+                  "cardName": "Siavash",
+                  "isAbleToMove": true,
+                  "isInGame": false,
+                  "addressOfImage": "./res/Characters/generals/general_f1.png",
+                  "addressOfIdleGif": "./res/gifs/f1_altgeneral/idle_t.gif",
+                  "addressOfRunGif": "./res/gifs/f1_altgeneral/run_t.gif",
+                  "addressOfAttackGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+                  "addressOfGetDamageGif": "./res/gifs/f1_altgeneral/attack_t.gif",
+                  "addressOfDeathGif": "./res/gifs/f1_altgeneral/attack_t.gif"
+                }
               }
             ],
-            "minions": [],
-            "hero": "@root.1.cardCollection.decks.0.cards.0",
-            "account": "@root.1",
-            "deckName": "test",
+            "minions": [
+              "@root.0.cardCollection.decks.0.cards.0",
+              "@root.0.cardCollection.decks.0.cards.1",
+              "@root.0.cardCollection.decks.0.cards.2",
+              "@root.0.cardCollection.decks.0.cards.3",
+              "@root.0.cardCollection.decks.0.cards.4"
+            ],
+            "account": "@root.0",
+            "deckName": "myDeck",
             "isValid": false
           }
         ],
-        "mainDeck": "@root.1.cardCollection.decks.0"
+        "mainDeck": "@root.0.cardCollection.decks.0"
       },
-      "username": "alireza",
-      "password": "alireza",
+      "username": "a",
+      "password": "a",
       "countOfWins": 0,
-      "darick": 9450,
+      "darick": 9750,
       "collectableItems": []
     }
   }

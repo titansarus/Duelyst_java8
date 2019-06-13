@@ -1,6 +1,8 @@
 package Duelyst.Model;
 
 
+import javafx.scene.image.ImageView;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -20,6 +22,11 @@ public class Card implements Cloneable {
     private boolean isAbleToMove = true;
     private boolean isInGame;
     private String addressOfImage = "";
+    private String addressOfIdleGif = "";
+    private String addressOfRunGif ="";
+    private String addressOfAttackGif = "";
+    private String addressOfGetDamageGif="";
+    private String addressOfDeathGif = "";
 
     public static String makeNewID(String accountName, String cardName, int countOfCardsInPlayerCollection) {
         return accountName + "_" + cardName + "_" + (countOfCardsInPlayerCollection + 1);
@@ -41,6 +48,39 @@ public class Card implements Cloneable {
         addCard(this);
     }
 
+    public Card(String cardName, String cardDescription, int manaCost, int darikCost , String addressOfImage , String addressOfIdleGif) {
+        this.manaCost = manaCost;
+        this.darikCost = darikCost;
+        this.cardDescription = cardDescription;
+        this.cardName = cardName;
+        this.addressOfImage = addressOfImage;
+        this.addressOfIdleGif = addressOfIdleGif;
+        addCard(this);
+    }
+    public Card(String cardName, String cardDescription, int manaCost, int darikCost , String addressOfImage , String addressOfIdleGif , String addressOfRunGif , String addressOfAttackGif) {
+        this.manaCost = manaCost;
+        this.darikCost = darikCost;
+        this.cardDescription = cardDescription;
+        this.cardName = cardName;
+        this.addressOfImage = addressOfImage;
+        this.addressOfIdleGif = addressOfIdleGif;
+        this.addressOfRunGif=addressOfRunGif;
+        this.addressOfAttackGif=addressOfAttackGif;
+        addCard(this);
+    }
+    public Card(String cardName, String cardDescription, int manaCost, int darikCost , String addressOfImage , String addressOfIdleGif , String addressOfRunGif , String addressOfAttackGif , String addressOfGetDamageGif , String addressOfDeathGif) {
+        this.manaCost = manaCost;
+        this.darikCost = darikCost;
+        this.cardDescription = cardDescription;
+        this.cardName = cardName;
+        this.addressOfImage = addressOfImage;
+        this.addressOfIdleGif = addressOfIdleGif;
+        this.addressOfRunGif=addressOfRunGif;
+        this.addressOfAttackGif=addressOfAttackGif;
+        this.addressOfGetDamageGif=addressOfGetDamageGif;
+        this.addressOfDeathGif=addressOfDeathGif;
+        addCard(this);
+    }
 
     public static int countNumberOfCardsWithNameInArrayList(String cardName, ArrayList<Card> cards) {
         int counter = 0;
@@ -214,6 +254,22 @@ public class Card implements Cloneable {
 
     public void setAddressOfImage(String addressOfImage) {
         this.addressOfImage = addressOfImage;
+    }
+
+    public Card(String addressOfIdleGif) {
+        this.addressOfIdleGif = addressOfIdleGif;
+    }
+
+    public String getAddressOfIdleGif() {
+        return addressOfIdleGif;
+    }
+
+    public String getAddressOfRunGif() {
+        return addressOfRunGif;
+    }
+
+    public String getAddressOfAttackGif() {
+        return addressOfAttackGif;
     }
 
     //TODO THIS MAY NEED TO BE CHANGED. THE LOGIC IS THE SAME BUT MAYBE WE NEED TO CLONE ANOTHER ABuff ArrayList.

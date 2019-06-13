@@ -51,6 +51,21 @@ public class Battle {
 
     }
 
+    public void move(int destX, int destY) {
+        if (getSelectedCell().getWarrior() != null) {
+            //TODO CHECK DISTANCE HERE OR SOMEWHERE ELSE:::
+
+            Cell cell = getGrid()[destX][destY];
+            if (cell.getWarrior() == null) {
+                cell.setWarrior(getSelectedCell().getWarrior());
+                getSelectedCell().setWarrior(null);
+                setSelectedCell(null);
+            }
+
+        }
+
+    }
+
     public void insertSelectedCard(int i, int j) {
 
         //TODO SOME CHECKS NEEDED IF IT IS WARRIOR OR SPELL. CURRENTLY IS ONLY FOR WARRIOR.
@@ -61,6 +76,7 @@ public class Battle {
             throw new CellFilledBeforeException();
         }
     }
+
 
     public Integer calculateMaxAmountOfMana() {
         int res = Math.floorDiv(getTurn(), 2) + 2;
