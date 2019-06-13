@@ -1,6 +1,7 @@
 package Duelyst.Model.Battle;
 
 import Duelyst.Exceptions.CellFilledBeforeException;
+import Duelyst.Exceptions.NotEnoughManaException;
 import Duelyst.Model.Account;
 import Duelyst.Model.Buffs.Buff;
 import Duelyst.Model.Card;
@@ -26,6 +27,8 @@ public class Battle {
     private ArrayList<Buff> onDeathBuffs = new ArrayList<>();
     private ArrayList<Buff> passiveBuffs = new ArrayList<>();
 
+    public static final int VALID_COUNTER_WITH_BUFF = 1 , VALID_COUNTER_WITHOUT_BUFF = 2,INVALID_COUNTER_WITH_BUFF = 3 , INVALID_COUNTER_WITHOUT_BUFF = 4;
+
     public void initializeCells() {
         for (int i = 0; i < BATTLE_ROWS; i++) {
             for (int j = 0; j < BATTLE_COLUMNS; j++) {
@@ -48,6 +51,9 @@ public class Battle {
         setPlayingPlayer();
         getPlayer1().setManaFromTurn(getTurn());
         getPlayer2().setManaFromTurn(getTurn());
+        setSelectedCell(null);
+        setSelectedCard(null);
+        getPlayingPlayer().getNextHand();
 
     }
 
@@ -70,8 +76,16 @@ public class Battle {
 
         //TODO SOME CHECKS NEEDED IF IT IS WARRIOR OR SPELL. CURRENTLY IS ONLY FOR WARRIOR.
         if (getGrid()[i][j].isEmpty()) {
-            getGrid()[i][j].setWarrior((Warrior) getSelectedCard());
-            playingPlayer.getInGameCards().add(getSelectedCard());
+            if (getPlayingPlayer().getMana() >= getSelectedCard().getManaCost()) {
+                getGrid()[i][j].setWarrior((Warrior) getSelectedCard());
+                Warrior warrior = getGrid()[i][j].getWarrior();
+
+                getPlayingPlayer().changeMana(-warrior.getManaCost());
+                getPlayingPlayer().getHand().remove(warrior);
+                playingPlayer.getInGameCards().add(getSelectedCard());
+            } else {
+                throw new NotEnoughManaException();
+            }
         } else {
             throw new CellFilledBeforeException();
         }
@@ -95,6 +109,18 @@ public class Battle {
             }
         }
         return result;
+    }
+
+    public int attack(Warrior attacker, Warrior attackedCard, boolean isFromCounterAttack) {
+        attackedCard.decreaseHealthPoint(attacker.getActionPower()-attackedCard.getShield());//TODO CHECK FOR BUFF
+        //TODO CHECK FOR COUNTER ATTACK AND BUFF AND A LOT OF THINGS
+        if (!isFromCounterAttack) {
+            return VALID_COUNTER_WITH_BUFF; //RETURN DETERMINES THE CONTROLLER TO SHOW BUFF ANIMATION OR NOT? DO COUNTER ATTACK OR NOT?
+        }
+        else
+        {
+            return INVALID_COUNTER_WITH_BUFF;
+        }
     }
 
 

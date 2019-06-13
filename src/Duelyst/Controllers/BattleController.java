@@ -1,7 +1,8 @@
 package Duelyst.Controllers;
 
-import Duelyst.Exceptions.CellFilledBeforeException;
+import Duelyst.Exceptions.MyException;
 import Duelyst.Model.Battle.Battle;
+import Duelyst.Model.Battle.Cell;
 import Duelyst.Model.Battle.Player;
 import Duelyst.Model.Card;
 import Duelyst.Model.Warrior;
@@ -11,7 +12,6 @@ import javafx.animation.*;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -176,7 +176,6 @@ public class BattleController {
     }
 
 
-
     public void rectangleOnMouseClicked(MouseEvent event) {
 
         Polygon p = (Polygon) event.getSource();
@@ -184,23 +183,104 @@ public class BattleController {
 
 
         if (getBattle().getSelectedCell() != null && getBattle().getSelectedCell().getWarrior() != null) {
-            if (getBattle().getSelectedCell() != getBattle().getGrid()[coordinate[0]][coordinate[1]]) {
-                //TODO CHECK OF MANHATTAN DISTANCE
-                moveAnimationRun(coordinate);
+            if (getBattle().getSelectedCell() != getBattle().getGrid()[coordinate[0]][coordinate[1]] && getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior() == null) {
+                //TODO CHECK OF MANHATTAN DISTANCE AND CAN MOVE?
+                if (Cell.calculateManhattanDistance(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]]) <= 2) {
+                    moveAnimationRun(coordinate);
+                }
+                return;
+            } else if (getBattle().getSelectedCell() != getBattle().getGrid()[coordinate[0]][coordinate[1]] && getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior() != null) {
+                //TODO ADD CHECK OF RANGE AND MELEE OR HYBRID
+
+                if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior())) {
+                    System.out.println("YOUR CARD!!!");
+                } else {
+                    handleAttackAnimation(coordinate);
+
+                }
+
                 return;
             }
         }
         getBattle().setSelectedCell(getBattle().getGrid()[coordinate[0]][coordinate[1]]);
 
 
-        if (getBattle().getSelectedCard() != null) {//TODO SOME MORE CHECKS NEEEDED
+        if (getBattle().getSelectedCard() != null) {//TODO SOME MORE CHECKS NEEDED
             handleInsertCardClick();
             return;
         }
     }
 
-    public void handleInsertCardClick()
+    public void handleAttackAnimation(int[] coordinate)
     {
+        getBattle().setAttackedCard(getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior());
+        CardOnField cardOnFieldAttacker = CardOnField.findCardOnFieldFromArrayList(cardsOnField, getBattle().getSelectedCell().getWarrior());
+        CardOnField cardOnFieldAttacked = CardOnField.findCardOnFieldFromArrayList(cardsOnField, getBattle().getAttackedCard());
+        int resultOfattack =getBattle().attack(((Warrior) cardOnFieldAttacker.getCard()), ((Warrior) cardOnFieldAttacked.getCard()), false);
+        boolean animationEnded = false;
+
+        cardOnFieldAttacker.getImageView().setImage(new Image(cardOnFieldAttacker.getCard().getAddressOfAttackGif()));
+
+        TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
+        tt1.setOnFinished(event1 -> {
+            cardOnFieldAttacker.getImageView().setImage(new Image(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
+        });
+        cardOnFieldAttacked.getImageView().setImage(new Image(cardOnFieldAttacked.getCard().getAddressOfGetDamageGif()));
+        TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
+        tt2.setOnFinished(event1 -> {
+            cardOnFieldAttacked.getImageView().setImage(new Image(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
+
+        });
+
+        ParallelTransition parallelTransition = new ParallelTransition(tt1,tt2);
+        if (resultOfattack ==Battle.VALID_COUNTER_WITH_BUFF || resultOfattack == Battle.INVALID_COUNTER_WITH_BUFF)
+        {
+            ImageView imageView = new ImageView(buffEffect);
+            anchorPane.getChildren().add(imageView);
+            imageView.relocate(cardOnFieldAttacked.getImageView().getLayoutX(),cardOnFieldAttacked.getImageView().getLayoutY());
+            TranslateTransition effectTransition = new TranslateTransition(Duration.millis(500),imageView);
+            effectTransition.setOnFinished(event2 -> {
+                anchorPane.getChildren().remove(imageView);
+            });
+            parallelTransition.getChildren().add(effectTransition);
+        }
+        parallelTransition.setOnFinished(event1 -> {
+            if (resultOfattack==Battle.VALID_COUNTER_WITH_BUFF || resultOfattack== Battle.VALID_COUNTER_WITHOUT_BUFF)
+            {
+                int newResultOfAttack = getBattle().attack(((Warrior) cardOnFieldAttacked.getCard()), ((Warrior) cardOnFieldAttacker.getCard()),true);
+                cardOnFieldAttacked.getImageView().setImage(new Image(cardOnFieldAttacked.getCard().getAddressOfAttackGif()));
+                TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
+                tt3.setOnFinished(event2 -> {
+                    cardOnFieldAttacked.getImageView().setImage(new Image(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
+                });
+                cardOnFieldAttacker.getImageView().setImage(new Image(cardOnFieldAttacker.getCard().getAddressOfGetDamageGif()));
+                TranslateTransition tt4 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
+                tt4.setOnFinished(event2 -> {
+                    cardOnFieldAttacker.getImageView().setImage(new Image(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
+
+                });
+                ParallelTransition parallelTransition2 = new ParallelTransition(tt3,tt4);
+                if (newResultOfAttack ==Battle.VALID_COUNTER_WITH_BUFF || newResultOfAttack == Battle.INVALID_COUNTER_WITH_BUFF)
+                {
+                    ImageView imageView = new ImageView(buffEffect);
+                    anchorPane.getChildren().add(imageView);
+                    imageView.relocate(cardOnFieldAttacker.getImageView().getLayoutX(),cardOnFieldAttacker.getImageView().getLayoutY());
+                    TranslateTransition effectTransition2 = new TranslateTransition(Duration.millis(500),imageView);
+                    effectTransition2.setOnFinished(event2 -> {
+                        anchorPane.getChildren().remove(imageView);
+                    });
+                    parallelTransition2.getChildren().add(effectTransition2);
+                }
+
+                parallelTransition2.play();
+            }
+        });
+        parallelTransition.play();
+
+    }
+
+
+    public void handleInsertCardClick() {
         int[] battleCoordinate = getBattle().findCellCoordinate(getBattle().getSelectedCell());
         CardForBattle cardForBattle = CardForBattleController.findCardForBattleWithCard(getHand(), getBattle().getSelectedCard());
         try {
@@ -217,11 +297,12 @@ public class BattleController {
             //   getHand().remove(cardForBattle);
             getBattle().setSelectedCard(null);
             cardForBattle.setCard(null);
-        } catch (CellFilledBeforeException e) {
+        } catch (MyException e) {
             Container.exceptionGenerator(e, stackPane);
         }
         getBattle().setSelectedCell(null);
     }
+
     public void moveAnimationRun(int[] coordinate) {
         CardOnField cardOnField = CardOnField.findCardOnFieldFromArrayList(cardsOnField, getBattle().getSelectedCell().getWarrior());
 
@@ -249,7 +330,7 @@ public class BattleController {
         tt.setToX(x);
         tt.setToY(y);
         tt.setOnFinished(event1 -> {
-            getBattle().move(coordinate[0],coordinate[1]);
+            getBattle().move(coordinate[0], coordinate[1]);
             cardOnField.getImageView().setImage(new Image(cardOnField.getCard().getAddressOfIdleGif()));
 //            getBattle().getGrid()[coordinate[0]][coordinate[1]].setWarrior(((Warrior) cardOnField.getCard()));
             getBattle().setSelectedCell(null);
@@ -282,18 +363,9 @@ public class BattleController {
     }
 
     public void setHandHbox() {
-        for (int i = 0; i < SIZE_OF_HAND; i++) {
-            CardForBattle cardForBattle = new CardForBattle(battle.getPlayingPlayer().getHand().get(i));
-            cardForBattle.cardController.setBattle(battle);
-            hand.add(cardForBattle);
-            hand.get(i).setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    handCardOnMouseClicked(event);
-                }
-            });
-            hand_hBox.getChildren().add(hand.get(i));
-        }
+        getHand().clear();
+        getHand().clear();
+        makeHandView();
     }
 
     public void handCardOnMouseClicked(MouseEvent e) {
@@ -335,9 +407,16 @@ public class BattleController {
 
     public void updateManaOfPlayer(HBox hbox, Player player) {
         hbox.getChildren().clear();
+        int countOfActiveMana = 0;
         if (player.equals(battle.getPlayingPlayer())) {
-            for (int i = 0; i < player.getMana(); i++) {
-                ImageView imageView = new ImageView(manaIconSml);
+            for (int i = 0; i < getBattle().calculateMaxAmountOfMana(); i++) {
+                ImageView imageView = null;
+                if (countOfActiveMana < player.getMana()) {
+                    imageView = new ImageView(manaIconSml);
+                    countOfActiveMana++;
+                } else {
+                    imageView = new ImageView(manaInActiveSml);
+                }
                 hbox.getChildren().add(imageView);
             }
         } else {
@@ -376,6 +455,31 @@ public class BattleController {
 
     public void handleEndTurnBtn() {
         battle.nextTurn();
+        updateHand();
+    }
+
+    public void updateHand() {
+        //TODO IT IS THE SAME AS setHandHbox but maybe some of them need more checks. so currently they are two different method.;
+        getHand_hBox().getChildren().clear();
+        getHand().clear();
+        makeHandView();
+    }
+
+    public void makeHandView() {
+        for (int i = 0; i < SIZE_OF_HAND; i++) {
+            if (getBattle().getPlayingPlayer().getHand().get(i) != null) {
+                CardForBattle cardForBattle = new CardForBattle(getBattle().getPlayingPlayer().getHand().get(i));
+                cardForBattle.getCardController().setBattle(getBattle());
+                getHand().add(cardForBattle);
+                getHand().get(i).setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        handCardOnMouseClicked(event);
+                    }
+                });
+                getHand_hBox().getChildren().add(getHand().get(i));
+            }
+        }
     }
 
     public HBox getHand_hBox() {

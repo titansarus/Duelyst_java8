@@ -444,7 +444,7 @@ public class CardCollectionController {
             } else {
                 makeCardListOfDeck(null);
             }
-        }), new KeyFrame(Duration.millis(500)));
+        }), new KeyFrame(Duration.millis(1000)));
         slowTimeline.setCycleCount(Animation.INDEFINITE);
         slowTimeline.play();
     }

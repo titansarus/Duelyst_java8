@@ -272,5 +272,13 @@ public class Card implements Cloneable {
         return addressOfAttackGif;
     }
 
+    public String getAddressOfGetDamageGif() {
+        return addressOfGetDamageGif;
+    }
+
+    public String getAddressOfDeathGif() {
+        return addressOfDeathGif;
+    }
+
     //TODO THIS MAY NEED TO BE CHANGED. THE LOGIC IS THE SAME BUT MAYBE WE NEED TO CLONE ANOTHER ABuff ArrayList.
 }
