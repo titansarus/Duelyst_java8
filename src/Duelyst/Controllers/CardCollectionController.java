@@ -23,7 +23,6 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 
@@ -101,7 +100,7 @@ public class CardCollectionController {
 
 
     private String createDeckName; //These Are used just for the time we are getting input from user.
-    private String imporetDeckName;
+    private String importDeckName;
     private double deckScroll = 0;
     private double collectionScroll = 0;
     ArrayList<CardView> cardViewsOfCollection = new ArrayList<>();
@@ -194,7 +193,7 @@ public class CardCollectionController {
         } catch (NotEnoughCardsToImportException e) {
             Container.exceptionGenerator(e, stackePane);
         }
-        setImporetDeckName("");
+        setImportDeckName("");
     }
 
 
@@ -255,9 +254,9 @@ public class CardCollectionController {
         accept.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                setImporetDeckName(textField.getText());
-                if (getImporetDeckName().length() > 0) {
-                    String adderss = "./saved/Accounts/" + Account.getLoggedAccount().getUsername() + "/Decks/" + getImporetDeckName() + ".json";
+                setImportDeckName(textField.getText());
+                if (getImportDeckName().length() > 0) {
+                    String adderss = "./saved/Accounts/" + Account.getLoggedAccount().getUsername() + "/Decks/" + getImportDeckName() + ".json";
                     importDeckfromAddress(adderss);
                 }
                 jfxDialog.close();
@@ -604,11 +603,11 @@ public class CardCollectionController {
         this.createDeckName = createDeckName;
     }
 
-    public String getImporetDeckName() {
-        return imporetDeckName;
+    public String getImportDeckName() {
+        return importDeckName;
     }
 
-    public void setImporetDeckName(String imporetDeckName) {
-        this.imporetDeckName = imporetDeckName;
+    public void setImportDeckName(String importDeckName) {
+        this.importDeckName = importDeckName;
     }
 }

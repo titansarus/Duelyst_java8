@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import static Duelyst.View.Constants.*;
 
 
-public class Leaderboard {
+public class LeaderBoard {
     @FXML
     TableView<AccountInfo> leaderboard_tbv;
 
