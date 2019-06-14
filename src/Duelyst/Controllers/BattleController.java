@@ -6,6 +6,7 @@ import Duelyst.Model.Battle.Cell;
 import Duelyst.Model.Battle.Player;
 import Duelyst.Model.Card;
 import Duelyst.Model.Warrior;
+import Duelyst.Utility.ImageHolder;
 import Duelyst.View.ViewClasses.CardForBattle;
 import com.jfoenix.controls.JFXButton;
 import javafx.animation.*;
@@ -218,16 +219,16 @@ public class BattleController {
         int resultOfattack = getBattle().attack(((Warrior) cardOnFieldAttacker.getCard()), ((Warrior) cardOnFieldAttacked.getCard()), false);
         boolean animationEnded = false;
 
-        cardOnFieldAttacker.getImageView().setImage(new Image(cardOnFieldAttacker.getCard().getAddressOfAttackGif()));
+        cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfAttackGif()));
 
         TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
         tt1.setOnFinished(event1 -> {
-            cardOnFieldAttacker.getImageView().setImage(new Image(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
+            cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
         });
-        cardOnFieldAttacked.getImageView().setImage(new Image(cardOnFieldAttacked.getCard().getAddressOfGetDamageGif()));
+        cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfGetDamageGif()));
         TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
         tt2.setOnFinished(event1 -> {
-            cardOnFieldAttacked.getImageView().setImage(new Image(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
+            cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
 
         });
 
@@ -245,15 +246,15 @@ public class BattleController {
         parallelTransition.setOnFinished(event1 -> {
             if (resultOfattack == Battle.VALID_COUNTER_WITH_BUFF || resultOfattack == Battle.VALID_COUNTER_WITHOUT_BUFF) {
                 int newResultOfAttack = getBattle().attack(((Warrior) cardOnFieldAttacked.getCard()), ((Warrior) cardOnFieldAttacker.getCard()), true);
-                cardOnFieldAttacked.getImageView().setImage(new Image(cardOnFieldAttacked.getCard().getAddressOfAttackGif()));
+                cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfAttackGif()));
                 TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
                 tt3.setOnFinished(event2 -> {
-                    cardOnFieldAttacked.getImageView().setImage(new Image(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
+                    cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
                 });
-                cardOnFieldAttacker.getImageView().setImage(new Image(cardOnFieldAttacker.getCard().getAddressOfGetDamageGif()));
+                cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfGetDamageGif()));
                 TranslateTransition tt4 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
                 tt4.setOnFinished(event2 -> {
-                    cardOnFieldAttacker.getImageView().setImage(new Image(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
+                    cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
 
                 });
                 ParallelTransition parallelTransition2 = new ParallelTransition(tt3, tt4);

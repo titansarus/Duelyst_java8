@@ -23,7 +23,6 @@ public class CardController {
 
     @FXML
     AnchorPane anchorPaneHolder;
-
     public void setNameAndDsc(String name, String dsc) {
         name_lbl.setText(name);
         dsc_lbl.setText(dsc);

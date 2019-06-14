@@ -4,6 +4,7 @@ import Duelyst.Controllers.CardController;
 import Duelyst.Controllers.CardForBattleController;
 import Duelyst.Model.Battle.Battle;
 import Duelyst.Model.Card;
+import Duelyst.Utility.ImageHolder;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -47,7 +48,7 @@ public class CardForBattle extends Pane {
         this.card = card;
         cardController.setManaCostLblText(card.getManaCost()+"");
         if (card.getAddressOfImage().length() > 0) {
-            cardController.setImageOfCard( new Image(card.getAddressOfImage()));
+            cardController.setImageOfCard( ImageHolder.findImageInImageHolders(card.getAddressOfImage()));
             //System.out.println(card.getAddressOfImage());
         } else {
             cardController.setImageOfCard(heroImg);//TODO LATER WILL BE DELETED

@@ -531,7 +531,7 @@
           }
         ],
         "mainDeck": "@root.0.cardCollection.decks.0",
-        "selectedCard": "@root.0.cardCollection.cards.3"
+        "selectedCard": "@root.0.cardCollection.cards.0"
       },
       "username": "a",
       "password": "a",
