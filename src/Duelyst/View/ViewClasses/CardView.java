@@ -3,6 +3,7 @@ package Duelyst.View.ViewClasses;
 import Duelyst.Controllers.CardController;
 import Duelyst.Controllers.Container;
 import Duelyst.Model.*;
+import Duelyst.Utility.ImageHolder;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -78,7 +79,8 @@ public class CardView extends Pane {
             this.card = card;
 
             if (card.getAddressOfImage().length() > 0) {
-                cardController.setNameAndDscAndImg(card.getCardName(), card.getCardDescription(), new Image(card.getAddressOfImage()));
+                Image image = ImageHolder.findImageInImageHolders(card.getAddressOfImage());
+                cardController.setNameAndDscAndImg(card.getCardName(), card.getCardDescription(), image);
                 //System.out.println(card.getAddressOfImage());
             } else {
                 cardController.setNameAndDscAndImg(card.getCardName(), card.getCardDescription(), heroImg);//TODO LATER WILL BE DELETED

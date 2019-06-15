@@ -188,6 +188,7 @@ public class ShopController {
                 AnchorPane anchorPane = new AnchorPane();
                 anchorPane.setPrefWidth(275);
                 CardView cardView = new CardView(cards.get(i));
+                cardView.setCache(true);
                 getCardViews().add(cardView);
                 anchorPane.getChildren().add(cardView);
                 Hbox.getChildren().add(anchorPane);
