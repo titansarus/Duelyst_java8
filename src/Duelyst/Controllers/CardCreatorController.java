@@ -4,10 +4,7 @@ import Duelyst.Model.AttackKind;
 import Duelyst.Model.Hero;
 import Duelyst.Model.Minion;
 import Duelyst.View.Constants;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXRadioButton;
-import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.VBox;
@@ -31,6 +28,9 @@ public class CardCreatorController {
     VBox minion_vb;
     @FXML
     VBox spell_vb;
+
+    @FXML
+    JFXButton back_btn;
 
     @FXML
     JFXComboBox<String> heroAttackType_cb;
@@ -182,6 +182,11 @@ public class CardCreatorController {
         makeVbDisable(minion_vb);
         makeVbDisable(spell_vb);
 
+    }
+
+    public void handleBackBtn()
+    {
+        Container.handleBack();
     }
 
 }

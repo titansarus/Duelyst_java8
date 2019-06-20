@@ -154,5 +154,6 @@
          </children>
       </VBox>
       <JFXButton layoutX="576.0" layoutY="731.0" onAction="#handleCreateCardBtn" prefHeight="54.0" prefWidth="280.0" style="-fx-background-color: #6200EE;" text="CREATE CARD" textFill="WHITE" />
+      <JFXButton fx:id="back_btn" layoutX="37.0" layoutY="731.0" onAction="#handleBackBtn" prefHeight="54.0" prefWidth="148.0" style="-fx-background-color: #f44336;" text="Back" textFill="WHITE" />
    </children>
 </AnchorPane>
