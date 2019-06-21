@@ -13,7 +13,7 @@
             <children>
                 <Label fx:id="name_lbl" alignment="CENTER" layoutX="69.0" layoutY="127.0" prefHeight="21.0" prefWidth="95.0" textFill="#fcfafa" />
                 <Label fx:id="dsc_lbl" alignment="CENTER" layoutX="33.0" layoutY="179.0" prefHeight="100.0" prefWidth="162.0" textFill="#f8f6f6" />
-                <ImageView fx:id="card_img" fitHeight="252.0" fitWidth="225.0" layoutX="1.0" layoutY="-19.0" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fx:id="card_img" fitHeight="186.0" fitWidth="162.0" layoutX="32.0" layoutY="-13.0" pickOnBounds="true" preserveRatio="true" />
                 <Polygon fx:id="manaCost_polygon" fill="#fcfcfc" layoutX="81.0" layoutY="30.0" points="-90.0, -2.0, -90.0, -31.0, -67.0, -43.0, -44.0, -31.0, -44.0, -2.0, -67.0, 11.0" stroke="WHITE" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0">
                <effect>
                   <InnerShadow color="#009dff" height="55.21" radius="26.3275" width="52.1" />
