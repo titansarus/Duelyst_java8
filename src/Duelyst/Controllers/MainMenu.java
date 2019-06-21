@@ -2,6 +2,7 @@ package Duelyst.Controllers;
 
 import Duelyst.Model.Account;
 import Duelyst.Model.Battle.Battle;
+import Duelyst.Model.Shop;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
@@ -134,7 +135,7 @@ public class MainMenu {
             stopTimeline(); //TODO In ba'ad az hazf slowTimeline hazf shavad
             //TODO TEST
             Container.handleBack();
-
+            Shop.getInstance().getCards().removeAll(Account.getLoggedAccount().getCardCollection().getCustomCards());
         }
 
     }

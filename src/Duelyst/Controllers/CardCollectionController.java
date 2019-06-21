@@ -293,12 +293,12 @@ public class CardCollectionController {
 
     public void handelNextBtn() {
         if (Toggle.isSelected()) {
-            if (scrollPane_2.getHvalue()<0.9){
+            if (scrollPane_2.getHvalue()<0.95 || true){ //TODO CHECK THIS 0.95 ? Another Number??
                 deckScroll++;
             }
             scrollPane_2.setHvalue(deckScroll*(4.0/cardCollectionCards_HB.getChildren().size()));
         } else {
-            if (scrollPane.getHvalue()<0.9){
+            if (scrollPane.getHvalue()<0.95 || true){
                 collectionScroll++;
             }
             scrollPane.setHvalue(collectionScroll*(4.0/cardCollectionCards_HB.getChildren().size()));
