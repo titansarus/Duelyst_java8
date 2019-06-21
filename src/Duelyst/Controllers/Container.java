@@ -2,6 +2,7 @@ package Duelyst.Controllers;
 
 import Duelyst.Exceptions.MyException;
 import Duelyst.Model.Card;
+import Duelyst.Utility.ImageHolder;
 import Duelyst.View.ViewClasses.CardView;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
@@ -91,7 +92,7 @@ public class Container {
     static void runNextScene(Pane root, String titleOfNextScene) {
         Scene scene = new Scene(root);
         //Change Cursor
-        Image cursorImage = new Image("res/ui/mouse_select.png");
+        Image cursorImage = ImageHolder.findImageInImageHolders("res/ui/mouse_select.png");
         scene.setCursor(new ImageCursor(cursorImage));
         //========================
         Container.scenes.addLast(scene);
