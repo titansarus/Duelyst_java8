@@ -14,6 +14,7 @@ import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -29,6 +30,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.function.UnaryOperator;
 
 import static Duelyst.View.Constants.*;
 
@@ -105,5 +107,18 @@ public class Container {
         Container.stage.show();
     }
 
+    private static UnaryOperator<TextFormatter.Change> filter =  change -> {
+        String text = change.getText();
 
+        if (text.matches("[0-9]*")) {
+            return change;
+        }
+
+        return null;
+    };;
+
+
+    public static TextFormatter<String> getOnlyNumberFormatter() {
+        return new TextFormatter<>(filter);
+    }
 }

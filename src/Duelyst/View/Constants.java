@@ -35,7 +35,7 @@ public class Constants {
     public static final int INITIAL_DARICK = 10000;
 
 
-    public static final String SHOP = "SHOP", MAIN_MENU = "MAIN_MENU", LOGIN = "LOGIN", LEADERBOARD = "LEADERBOARD", COLLECTION = "COLLECTION" , BATTLE = "BATTLE";
+    public static final String SHOP = "SHOP", MAIN_MENU = "MAIN_MENU", LOGIN = "LOGIN", LEADERBOARD = "LEADERBOARD", COLLECTION = "COLLECTION" , BATTLE = "BATTLE" , CARD_CREATOR = "CARD_CREATOR";
     //TITLE
 
 
