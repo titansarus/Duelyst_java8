@@ -10,9 +10,11 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
@@ -86,6 +88,10 @@ public class Container {
 
     static void runNextScene(Pane root, String titleOfNextScene) {
         Scene scene = new Scene(root);
+        //Change Cursor
+        Image cursorImage = new Image("res/ui/mouse_select.png");
+        scene.setCursor(new ImageCursor(cursorImage));
+        //========================
         Container.scenes.addLast(scene);
         Container.nameOfMenus.add(titleOfNextScene);
         Container.stage.setScene(Container.scenes.getLast());

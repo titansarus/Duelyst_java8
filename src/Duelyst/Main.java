@@ -11,7 +11,9 @@ import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -37,6 +39,7 @@ public class Main extends Application {
 
 
         Scene scene = new Scene(root);
+        scene.setCursor(new ImageCursor(new Image("res/ui/mouse_select.png")));
         Container.scenes.add(scene);
         Container.nameOfMenus.add(LOGIN);
     }
@@ -44,11 +47,10 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         DatabaseCollectioner.DatabaseGenerator();
-        Shop.getInstance().getCards().addAll( CreateCardFromDatabaseCard.createCards(DatabaseCard.getDatabaseCards()));
+        Shop.getInstance().getCards().addAll(CreateCardFromDatabaseCard.createCards(DatabaseCard.getDatabaseCards()));
 
-        for (int i =0;i<100;i++)
-        {
-            Card card = new Card("card"+i , "desc"+ i , 10,10);
+        for (int i = 0; i < 100; i++) {
+            Card card = new Card("card" + i, "desc" + i, 10, 10);
             Shop.getInstance().getCards().add(card);
         }
 
