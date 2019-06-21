@@ -10,17 +10,17 @@
    <children>
       <AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: BLACk; -fx-background-image: url('/res/Backgrounds/main-menu-back.jpg'); -fx-background-size: cover;">
          <children>
-            <JFXButton fx:id="play_btn" buttonType="RAISED" layoutX="112.0" layoutY="195.0" onAction="#handlePlayBtn" prefHeight="71.0" prefWidth="176.0" text="Play" textFill="#ebebeb">
+            <JFXButton fx:id="play_btn" buttonType="RAISED" layoutX="112.0" layoutY="132.0" onAction="#handlePlayBtn" prefHeight="71.0" prefWidth="176.0" text="Play" textFill="#ebebeb">
                <font>
                   <Font name="System Italic" size="33.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="shop_btn" buttonType="RAISED" layoutX="112.0" layoutY="281.0" onAction="#handleShopBtn" prefHeight="71.0" prefWidth="183.0" text="Shop" textFill="#fcf5f5">
+            <JFXButton fx:id="shop_btn" buttonType="RAISED" layoutX="112.0" layoutY="218.0" onAction="#handleShopBtn" prefHeight="71.0" prefWidth="183.0" text="Shop" textFill="#fcf5f5">
                <font>
                   <Font name="System Italic" size="33.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="collection_btn" buttonType="RAISED" layoutX="112.0" layoutY="373.0" onAction="#handleCollectionBtn" prefHeight="80.0" prefWidth="226.0" text="Collections" textFill="#f2eded">
+            <JFXButton fx:id="collection_btn" buttonType="RAISED" layoutX="112.0" layoutY="310.0" onAction="#handleCollectionBtn" prefHeight="80.0" prefWidth="226.0" text="Collections" textFill="#f2eded">
                <font>
                   <Font name="System Italic" size="33.0" />
                </font>
@@ -51,7 +51,12 @@
                   <Font size="25.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="leaderboard_btn" buttonType="RAISED" layoutX="112.0" layoutY="467.0" onAction="#handleLeaderboardBtn" prefHeight="80.0" prefWidth="226.0" text="Leaderbords" textFill="#f2eded">
+            <JFXButton fx:id="leaderboard_btn" buttonType="RAISED" layoutX="112.0" layoutY="404.0" onAction="#handleLeaderboardBtn" prefHeight="80.0" prefWidth="226.0" text="Leaderbords" textFill="#f2eded">
+               <font>
+                  <Font name="System Italic" size="33.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="cardCreator_btn" buttonType="RAISED" layoutX="86.0" layoutY="484.0" onAction="#handleCardCreator" prefHeight="80.0" prefWidth="278.0" text="Card Creator" textFill="#f2eded">
                <font>
                   <Font name="System Italic" size="33.0" />
                </font>

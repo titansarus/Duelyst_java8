@@ -18,13 +18,15 @@ public class CreateCardFromDatabaseCard {
                     if (databaseCard.getCardType().equals(CardKind.HERO)) {
                         Hero hero = new Hero(databaseCard.getCardName(), databaseCard.getCardDescription(), databaseCard.getManaCost(), databaseCard.getDarikCost(),
                                 databaseCard.getHealthPoint(), databaseCard.getActionPower(), databaseCard.getAttackRange(), databaseCard.getAttackKind(),
-                                databaseCard.getShield(),databaseCard.getAddressOfImage(),databaseCard.getAddressOfIdleGif() , databaseCard.getAddressOfRunGif(),databaseCard.getAddressOfAttackGif() , databaseCard.getAddressOfGetDamageGif(),databaseCard.getAddressOfDeathGif());
+                                databaseCard.getShield(),databaseCard.getAddressOfImage(),databaseCard.getAddressOfIdleGif() , databaseCard.getAddressOfRunGif(),
+                                databaseCard.getAddressOfAttackGif() , databaseCard.getAddressOfGetDamageGif(),databaseCard.getAddressOfDeathGif() , databaseCard.getCooldown());
                         cards.add(hero);
                     }
                     if (databaseCard.getCardType().equals(CardKind.MINION))
                     {
                         Minion minion = new Minion(databaseCard.getCardName(),databaseCard.getCardDescription(),databaseCard.getManaCost(),databaseCard.getDarikCost(),databaseCard.getHealthPoint(),databaseCard.getActionPower()
-                        ,databaseCard.getAttackRange(),databaseCard.getAttackKind(),databaseCard.getShield(),databaseCard.getAddressOfImage() , databaseCard.getAddressOfIdleGif() , databaseCard.getAddressOfRunGif(),databaseCard.getAddressOfAttackGif() , databaseCard.getAddressOfGetDamageGif(),databaseCard.getAddressOfDeathGif());
+                        ,databaseCard.getAttackRange(),databaseCard.getAttackKind(),databaseCard.getShield(),databaseCard.getAddressOfImage() , databaseCard.getAddressOfIdleGif() ,
+                                databaseCard.getAddressOfRunGif(),databaseCard.getAddressOfAttackGif() , databaseCard.getAddressOfGetDamageGif(),databaseCard.getAddressOfDeathGif());
                         cards.add(minion);
                     }
                     else if (databaseCard.getCardType().equals(CardKind.SPELL))

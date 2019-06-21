@@ -3,6 +3,7 @@ package Duelyst.Controllers;
 import Duelyst.Exceptions.*;
 import Duelyst.Main;
 import Duelyst.Model.Account;
+import Duelyst.Model.Shop;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.controls.JFXTextField;
@@ -100,6 +101,7 @@ public class LoginController {
             return;
         }
         Account.setLoggedAccount(account);
+        Shop.getInstance().getCards().addAll(account.getCardCollection().getCustomCards());
         handleProgressBar();
     }
 

@@ -2,6 +2,7 @@ package Duelyst.Controllers;
 
 import Duelyst.Model.Account;
 import Duelyst.Model.Battle.Battle;
+import Duelyst.Model.Shop;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
@@ -60,6 +61,9 @@ public class MainMenu {
 
     @FXML
     StackPane stackPane;
+
+    @FXML
+    JFXButton cardCreator_btn;
 
 
     Timeline timeline = new Timeline();
@@ -131,9 +135,24 @@ public class MainMenu {
             stopTimeline(); //TODO In ba'ad az hazf slowTimeline hazf shavad
             //TODO TEST
             Container.handleBack();
-
+            Shop.getInstance().getCards().removeAll(Account.getLoggedAccount().getCardCollection().getCustomCards());
         }
 
+    }
+    public void handleCardCreator()
+    {
+        Pane root = null;
+        FXMLLoader fxmlLoader = null;
+        try {
+            fxmlLoader = new FXMLLoader(getClass().getResource("../View/FXMLFiles/CardCreator.fxml"));
+            root = fxmlLoader.load();
+            int i = 0;
+            System.out.println(i);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stopTimeline();
+        Container.runNextScene(root, CARD_CREATOR);
     }
 
     public void handlePlayBtn() {
@@ -144,8 +163,7 @@ public class MainMenu {
 
     }
 
-    public void gotoBattle(Battle battle)
-    {
+    public void gotoBattle(Battle battle) {
         Pane root = null;
         FXMLLoader fxmlLoader = null;
         try {
@@ -326,7 +344,7 @@ public class MainMenu {
             @Override
             public void handle(ActionEvent event) {
                 setStoryModeLevel(LEVEL_1);
-                Battle battle = new Battle(Account.getLoggedAccount(),Account.getLoggedAccount());
+                Battle battle = new Battle(Account.getLoggedAccount(), Account.getLoggedAccount());
                 gotoBattle(battle);
                 jfxDialog.close();
 

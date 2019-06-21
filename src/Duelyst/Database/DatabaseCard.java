@@ -26,9 +26,10 @@ public class DatabaseCard {
     private String addressOfGetDamageGif;
     private String addressOfDeathGif;
     private TargetCommunity targetCommunity;
+    private int cooldown;
 
     public DatabaseCard(String cardName, String cardDescription, String cardKind, int manaCost, int darikCost, int healthPoint, int actionPower, int attackRange, String attackKind, int shield , String addressOfImage , String addressOfIdleGif ,
-                        String addressOfRunGif , String addressOfAttackGif , String addressOfGetDamageGif , String addressOfDeathGif , String targetCommunity) {
+                        String addressOfRunGif , String addressOfAttackGif , String addressOfGetDamageGif , String addressOfDeathGif , String targetCommunity , int cooldown) {
         this.cardName = cardName;
         this.cardDescription = cardDescription;
         this.manaCost = manaCost;
@@ -47,6 +48,7 @@ public class DatabaseCard {
         this.addressOfDeathGif = addressOfDeathGif;
         setTargetCommunity(targetCommunity);//TODO
         databaseCards.add(this);
+        this.cooldown=cooldown;
 
     }
 
@@ -58,7 +60,7 @@ public class DatabaseCard {
     {
         this(strings.get(0),strings.get(1),strings.get(2), Integer.parseInt( strings.get(3)) , Integer.parseInt(strings.get(4)),
                 Integer.parseInt(strings.get(5)) , Integer.parseInt(strings.get(6)) , Integer.parseInt(strings.get(7)) , strings.get(8) , Integer.parseInt(strings.get(9)) , strings.get(10),strings.get(11) , strings.get(12), strings.get(13)
-        ,strings.get(14),strings.get(15),strings.get(16));
+        ,strings.get(14),strings.get(15),strings.get(16),Integer.parseInt(strings.get(17)));
 
     }
     public void setCardType(String cardType) {
@@ -160,5 +162,10 @@ public class DatabaseCard {
     public void setTargetCommunity(String targetCommunity) {
         this.targetCommunity = TargetCommunity.FRIENDLY_WARRIOR;
         //TODO targetCommunity Do something.
+    }
+
+
+    public int getCooldown() {
+        return cooldown;
     }
 }

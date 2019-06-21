@@ -2,6 +2,7 @@ package Duelyst.Controllers;
 
 import Duelyst.Exceptions.MyException;
 import Duelyst.Model.Card;
+import Duelyst.Utility.ImageHolder;
 import Duelyst.View.ViewClasses.CardView;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
@@ -10,9 +11,12 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
@@ -27,6 +31,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.function.UnaryOperator;
 
 import static Duelyst.View.Constants.*;
 
@@ -86,6 +91,10 @@ public class Container {
 
     static void runNextScene(Pane root, String titleOfNextScene) {
         Scene scene = new Scene(root);
+        //Change Cursor
+        Image cursorImage = ImageHolder.findImageInImageHolders("res/ui/mouse_select.png");
+        scene.setCursor(new ImageCursor(cursorImage));
+        //========================
         Container.scenes.addLast(scene);
         Container.nameOfMenus.add(titleOfNextScene);
         Container.stage.setScene(Container.scenes.getLast());
@@ -99,5 +108,18 @@ public class Container {
         Container.stage.show();
     }
 
+    private static UnaryOperator<TextFormatter.Change> filter =  change -> {
+        String text = change.getText();
 
+        if (text.matches("[0-9]*")) {
+            return change;
+        }
+
+        return null;
+    };;
+
+
+    public static TextFormatter<String> getOnlyNumberFormatter() {
+        return new TextFormatter<>(filter);
+    }
 }

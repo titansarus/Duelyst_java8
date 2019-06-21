@@ -318,7 +318,7 @@ public class BattleController {
 
         anchorPane.getChildren().remove(cardOnField.getImageView());
 
-        cardOnField.setImageView(new ImageView(getBattle().getSelectedCell().getWarrior().getAddressOfRunGif()));
+        cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders( getBattle().getSelectedCell().getWarrior().getAddressOfRunGif())));
 
         anchorPane.getChildren().add(cardOnField.getImageView());
         TranslateTransition tt = new TranslateTransition(Duration.millis(500), cardOnField.getImageView());
@@ -338,7 +338,7 @@ public class BattleController {
 
     public void sendIdleImageViewToCenterOfCell(CardOnField cardOnField, Polygon polygon) {
         ObservableList<Double> points = polygon.getPoints();
-        cardOnField.setImageView(new ImageView(getBattle().getSelectedCard().getAddressOfIdleGif()));
+        cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders( getBattle().getSelectedCard().getAddressOfIdleGif())));
         double x = calculateMidXFromPoint(points);
         double y = calculateMidYFromPoint(points);
         cardOnField.getImageView().relocate(x, y);

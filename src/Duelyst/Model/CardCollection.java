@@ -10,6 +10,7 @@ public class CardCollection {
     private Account account;
     private ArrayList<Deck> decks;
     private Deck mainDeck = null;
+    private ArrayList<Card> customCards;
 
     private Card selectedCard = null;
 
@@ -21,6 +22,7 @@ public class CardCollection {
     public CardCollection(Account account) {
         cards = new ArrayList<>();
         decks = new ArrayList<>();
+        customCards = new ArrayList<>();
         setAccount(account);
     }
 
@@ -37,14 +39,21 @@ public class CardCollection {
         }
     }
 
-
-    public void addCard(Card card) {
+    public void addCardToArrayList(Card card,ArrayList<Card> cards)
+    {
         if (card != null) {
             Cloner cloner = new Cloner();
             Card card1 = cloner.deepClone(card);
             card1.setAccount(account);
             card1.setCardId(card1.makeNewID(account.getUsername(), card1.getCardName(), getCountOfCard(cards, card)));
-            getCards().add(card1);
+            cards.add(card1);
+        }
+    }
+
+
+    public void addCard(Card card) {
+        if (card != null) {
+            addCardToArrayList(card,getCards());
         }
     }
 
@@ -121,4 +130,9 @@ public class CardCollection {
     public void setSelectedCard(Card selectedCard) {
         this.selectedCard = selectedCard;
     }
+
+    public ArrayList<Card> getCustomCards() {
+        return customCards;
+    }
+
 }
