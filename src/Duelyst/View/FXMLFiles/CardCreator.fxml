@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane prefHeight="806.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.CardCreatorController">
+   <children>
+      <JFXRadioButton fx:id="hero_rb" layoutX="93.0" layoutY="27.0" onAction="#handleHeroRb" text="Hero">
+         <toggleGroup>
+            <ToggleGroup fx:id="CardType" />
+         </toggleGroup>
+      </JFXRadioButton>
+      <JFXRadioButton fx:id="minion_rb" layoutX="391.0" layoutY="27.0" onAction="#handleMinionRb" text="Minion" toggleGroup="$CardType" />
+      <JFXRadioButton fx:id="spell_rb" layoutX="735.0" layoutY="27.0" onAction="#handleSpellRb" text="Spell" toggleGroup="$CardType" />
+      <VBox fx:id="hero_vb" layoutX="26.0" layoutY="56.0" opacity="0.3" prefHeight="450.0" prefWidth="217.0" style="-fx-background-color: Grey;">
+         <children>
+            <HBox prefHeight="27.0" prefWidth="188.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="80.0" text="Card Name" />
+                  <JFXTextField fx:id="heroCardName_tf" />
+               </children>
+            </HBox>
+            <HBox prefHeight="27.0" prefWidth="188.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="80.0" text="Attack Type" />
+                  <JFXComboBox fx:id="heroAttackType_cb" prefHeight="25.0" prefWidth="129.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="27.0" prefWidth="188.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="80.0" text="AP" />
+                  <JFXTextField fx:id="heroAP_tf" />
+               </children>
+            </HBox>
+            <HBox prefHeight="27.0" prefWidth="188.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="80.0" text="HP" />
+                  <JFXTextField fx:id="heroHP_tf" />
+               </children>
+            </HBox>
+            <HBox prefHeight="27.0" prefWidth="188.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="80.0" text="Range" />
+                  <JFXTextField fx:id="heroRange_tf" />
+               </children>
+            </HBox>
+            <HBox prefHeight="27.0" prefWidth="188.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="80.0" text="Cost" />
+                  <JFXTextField fx:id="heroCost_tf" />
+               </children>
+            </HBox>
+            <HBox prefHeight="27.0" prefWidth="188.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="80.0" text="ManaCost" />
+                  <JFXTextField fx:id="heroManaCost_tf" />
+               </children>
+            </HBox>
+            <HBox prefHeight="27.0" prefWidth="188.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="80.0" text="Cooldown" />
+                  <JFXTextField fx:id="heroCooldown_tf" />
+               </children>
+            </HBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="246.0" text="Description" />
+                  <JFXTextArea fx:id="heroDesc_ta" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <VBox fx:id="minion_vb" layoutX="317.0" layoutY="56.0" opacity="0.3" prefHeight="450.0" prefWidth="217.0" style="-fx-background-color: Grey;">
+         <children>
+            <HBox prefHeight="27.0" prefWidth="188.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="80.0" text="Card Name" />
+                  <JFXTextField fx:id="minionCardName_tf" />
+               </children>
+            </HBox>
+            <HBox prefHeight="27.0" prefWidth="188.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="80.0" text="Attack Type" />
+                  <JFXComboBox fx:id="minionAttackType_cb" prefHeight="25.0" prefWidth="129.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="27.0" prefWidth="188.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="80.0" text="AP" />
+                  <JFXTextField fx:id="minionAP_tf" />
+               </children>
+            </HBox>
+            <HBox prefHeight="27.0" prefWidth="188.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="80.0" text="HP" />
+                  <JFXTextField fx:id="minionHP_tf" />
+               </children>
+            </HBox>
+            <HBox prefHeight="27.0" prefWidth="188.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="80.0" text="Range" />
+                  <JFXTextField fx:id="minionRange_tf" />
+               </children>
+            </HBox>
+            <HBox prefHeight="27.0" prefWidth="188.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="80.0" text="Cost" />
+                  <JFXTextField fx:id="minionCost_tf" />
+               </children>
+            </HBox>
+            <HBox prefHeight="27.0" prefWidth="188.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="80.0" text="ManaCost" />
+                  <JFXTextField fx:id="minionManaCost_tf" />
+               </children>
+            </HBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="246.0" text="Description" />
+                  <JFXTextArea fx:id="minionDesc_ta" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <VBox fx:id="spell_vb" layoutX="639.0" layoutY="56.0" opacity="0.3" prefHeight="450.0" prefWidth="217.0" style="-fx-background-color: Grey;">
+         <children>
+            <HBox prefHeight="27.0" prefWidth="188.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="80.0" text="Card Name" />
+                  <JFXTextField />
+               </children>
+            </HBox>
+            <HBox prefHeight="27.0" prefWidth="188.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="80.0" text="Cost" />
+                  <JFXTextField />
+               </children>
+            </HBox>
+            <HBox prefHeight="27.0" prefWidth="188.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="80.0" text="ManaCost" />
+                  <JFXTextField fx:id="spellManaCost_tf2" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <JFXButton layoutX="576.0" layoutY="731.0" onAction="#handleCreateCardBtn" prefHeight="54.0" prefWidth="280.0" style="-fx-background-color: #6200EE;" text="CREATE CARD" textFill="WHITE" />
+      <JFXButton fx:id="back_btn" layoutX="37.0" layoutY="731.0" onAction="#handleBackBtn" prefHeight="54.0" prefWidth="148.0" style="-fx-background-color: #f44336;" text="Back" textFill="WHITE" />
+   </children>
+</AnchorPane>
