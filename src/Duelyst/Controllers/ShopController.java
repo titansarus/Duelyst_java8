@@ -91,6 +91,7 @@ public class ShopController {
         previous_btn.setGraphic(new ImageView(previousImg));
         runFastTimeLine();
         runSlowTimeline();
+        makeCardList();
     }
 
 
@@ -106,7 +107,6 @@ public class ShopController {
 
     public void runSlowTimeline() {
         slowTimeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
-            makeCardList();
             updateColor();
             updateButton();
             updateLoginedUser();
@@ -184,7 +184,7 @@ public class ShopController {
         Hbox.setPrefWidth(629);
         cardViews.clear();
         for (int i = 0; i < cards.size(); i++) {
-            if (search_txtf.getText().length() == 0 || cards.get(i).getCardName().contains(search_txtf.getText())) {
+            if (search_txtf != null && (search_txtf.getText().length() == 0 || cards.get(i).getCardName().contains(search_txtf.getText()))) {
                 AnchorPane anchorPane = new AnchorPane();
                 anchorPane.setPrefWidth(275);
                 CardView cardView = new CardView(cards.get(i));
@@ -276,6 +276,16 @@ public class ShopController {
             Container.handleBack();
 
         }
+    }
+
+    public void handleSearchInputChanged() {
+        System.out.println("Search");
+        makeCardList();
+
+    }
+
+    public void handleTabSelectionChanged() {
+        makeCardList();
     }
 
     public Timeline getFastTimeline() {

@@ -88,6 +88,11 @@
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></JFXButton>
+            <JFXButton buttonType="RAISED" layoutX="1082.0" layoutY="717.0" onAction="#handleValidateDeck" prefHeight="25.0" prefWidth="168.0" ripplerFill="#ab9b9b" style="-fx-background-color: LightGreen;" stylesheets="@../../../css/jfx-button.css" text="Validate Deck">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
          </children>
       </AnchorPane>
    </children>
