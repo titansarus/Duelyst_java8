@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextArea?>
@@ -13,10 +14,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.CardCreatorController">
    <children>
-      <AnchorPane prefHeight="846.0" prefWidth="895.0">
+      <AnchorPane prefHeight="846.0" prefWidth="1213.0">
          <children>
             <JFXRadioButton fx:id="hero_rb" layoutX="93.0" layoutY="27.0" onAction="#handleHeroRb" text="Hero">
                <toggleGroup>
@@ -140,24 +140,24 @@
                   <HBox prefHeight="27.0" prefWidth="188.0">
                      <children>
                         <Label prefHeight="27.0" prefWidth="80.0" text="Card Name" />
-                        <JFXTextField />
+                        <JFXTextField fx:id="spellCardName_tf" />
                      </children>
                   </HBox>
                   <HBox prefHeight="27.0" prefWidth="188.0">
                      <children>
                         <Label prefHeight="27.0" prefWidth="80.0" text="Cost" />
-                        <JFXTextField />
+                        <JFXTextField fx:id="spellCost_tf" />
                      </children>
                   </HBox>
                   <HBox prefHeight="27.0" prefWidth="188.0">
                      <children>
                         <Label prefHeight="27.0" prefWidth="80.0" text="ManaCost" />
-                        <JFXTextField fx:id="spellManaCost_tf2" />
+                        <JFXTextField fx:id="spellManaCost_tf" />
                      </children>
                   </HBox>
                </children>
             </VBox>
-            <JFXButton layoutX="576.0" layoutY="770.0" onAction="#handleCreateCardBtn" prefHeight="54.0" prefWidth="280.0" style="-fx-background-color: #6200EE;" text="CREATE CARD" textFill="WHITE" />
+            <JFXButton layoutX="919.0" layoutY="778.0" onAction="#handleCreateCardBtn" prefHeight="54.0" prefWidth="280.0" style="-fx-background-color: #6200EE;" text="CREATE CARD" textFill="WHITE" />
             <JFXButton fx:id="back_btn" layoutX="41.0" layoutY="770.0" onAction="#handleBackBtn" prefHeight="54.0" prefWidth="148.0" style="-fx-background-color: #f44336;" text="Back" textFill="WHITE" />
             <JFXButton fx:id="image_btn" layoutX="45.0" layoutY="724.0" onAction="#handleSelectImage" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #67daff;" text="Select Image" />
             <JFXButton layoutX="166.0" layoutY="724.0" onAction="#handleSelectIdleGif" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #67daff;" text="Select Idle GIF" />
@@ -171,6 +171,47 @@
             <ImageView fx:id="hitGif_iv" fitHeight="164.0" fitWidth="102.0" layoutX="697.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" />
             <JFXButton layoutX="294.0" layoutY="724.0" onAction="#handleSelectRunGif" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #67daff;" text="Select Run Gif" />
             <ImageView fx:id="runGif_iv" fitHeight="164.0" fitWidth="102.0" layoutX="294.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" />
+            <VBox fx:id="buff_vb" layoutX="950.0" layoutY="56.0" opacity="0.3" prefHeight="450.0" prefWidth="217.0" style="-fx-background-color: Grey;">
+               <children>
+                  <HBox prefHeight="27.0" prefWidth="188.0">
+                     <children>
+                        <Label prefHeight="27.0" prefWidth="80.0" text="Buff Name" />
+                        <JFXTextField fx:id="buffName_tf" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="27.0" prefWidth="188.0">
+                     <children>
+                        <Label prefHeight="27.0" prefWidth="80.0" text="Buff Type" />
+                        <JFXComboBox fx:id="buffType_cb" prefHeight="25.0" prefWidth="129.0" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="27.0" prefWidth="188.0">
+                     <children>
+                        <Label prefHeight="27.0" prefWidth="80.0" text="Effect Value" />
+                        <JFXTextField fx:id="effectValue_tf" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="27.0" prefWidth="188.0">
+                     <children>
+                        <Label prefHeight="27.0" prefWidth="80.0" text="Delay" />
+                        <JFXTextField fx:id="delay_tf" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="27.0" prefWidth="188.0">
+                     <children>
+                        <Label prefHeight="27.0" prefWidth="80.0" text="Last" />
+                        <JFXTextField fx:id="buffLast_tf" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="27.0" prefWidth="188.0">
+                     <children>
+                        <Label prefHeight="27.0" prefWidth="101.0" text="Friend or Enemy" />
+                        <JFXComboBox fx:id="friendOrEnemy_cb" prefHeight="25.0" prefWidth="129.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <JFXCheckBox fx:id="buff_checkbox" layoutX="956.0" layoutY="27.0" onAction="#handleBuffCheckBox" text="Buff Or Special Power Information" />
          </children>
       </AnchorPane>
    </children>
