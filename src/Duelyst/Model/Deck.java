@@ -145,6 +145,7 @@ public class Deck implements Cloneable {
         return sum;
     }
 
+
     public void addCard(Card card) {
         if (card != null) {
             if (card instanceof Hero) {
@@ -159,6 +160,7 @@ public class Deck implements Cloneable {
         if (hero != null) {
             if (getHero() != null) {
                 getCards().remove(getHero());
+                this.account.getCardCollection().addCard(getHero());
                 setHero(hero);
                 getCards().add(hero);
             } else {

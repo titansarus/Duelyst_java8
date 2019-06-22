@@ -278,32 +278,32 @@ public class CardCollectionController {
     public void handelPreviousBtn() {
 
         if (Toggle.isSelected()) {
-            if (deckScroll!=0){
+            if (deckScroll != 0) {
                 deckScroll--;
             }
-            scrollPane_2.setHvalue(deckScroll*(4.0/cardCollectionCards_HB.getChildren().size()));
+            scrollPane_2.setHvalue(deckScroll * (4.0 / cardCollectionCards_HB.getChildren().size()));
         } else {
-            if (collectionScroll!=0){
+            if (collectionScroll != 0) {
                 collectionScroll--;
             }
-            scrollPane.setHvalue(collectionScroll*(4.0/cardCollectionCards_HB.getChildren().size()));
+            scrollPane.setHvalue(collectionScroll * (4.0 / cardCollectionCards_HB.getChildren().size()));
         }
-        System.out.println(deckScroll*(4.0/cardCollectionCards_HB.getChildren().size()));
+        System.out.println(deckScroll * (4.0 / cardCollectionCards_HB.getChildren().size()));
     }
 
     public void handelNextBtn() {
         if (Toggle.isSelected()) {
-            if (scrollPane_2.getHvalue()<0.95 || true){ //TODO CHECK THIS 0.95 ? Another Number??
+            if (scrollPane_2.getHvalue() < 0.95 || true) { //TODO CHECK THIS 0.95 ? Another Number??
                 deckScroll++;
             }
-            scrollPane_2.setHvalue(deckScroll*(4.0/cardCollectionCards_HB.getChildren().size()));
+            scrollPane_2.setHvalue(deckScroll * (4.0 / cardCollectionCards_HB.getChildren().size()));
         } else {
-            if (scrollPane.getHvalue()<0.95 || true){
+            if (scrollPane.getHvalue() < 0.95 || true) {
                 collectionScroll++;
             }
-            scrollPane.setHvalue(collectionScroll*(4.0/cardCollectionCards_HB.getChildren().size()));
+            scrollPane.setHvalue(collectionScroll * (4.0 / cardCollectionCards_HB.getChildren().size()));
         }
-        System.out.println(deckScroll*(4.0/cardCollectionCards_HB.getChildren().size()));
+        System.out.println(deckScroll * (4.0 / cardCollectionCards_HB.getChildren().size()));
     }
 
     public void handleExportDeckBtn() {
@@ -322,6 +322,19 @@ public class CardCollectionController {
         } else {
             Container.exceptionGenerator(new NoDeckSelectedException(), stackePane);
         }
+    }
+
+    public void handleValidateDeck() {
+        if (Account.getLoggedAccount().getCardCollection().getMainDeck() == null) {
+            Container.exceptionGenerator(new NoMainDeckSelectedException(), stackePane);
+            return;
+        }
+        if (Deck.validateDeck(Account.getLoggedAccount().getCardCollection().getMainDeck())) {
+            Container.notificationShower(DECK_IS_VALID_CONTENT, DECK_IS_VALID_TITLE, stackePane);
+        } else {
+            Container.exceptionGenerator(new DeckIsNotValidException(), stackePane);
+        }
+
     }
 
     public void exportDeck(String nameOfExportedDeck) {

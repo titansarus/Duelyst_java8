@@ -13,7 +13,7 @@ public class Constants {
             NO_MAIN_DECK_CONTENT = "Select or Create a Deck as Main Deck first", NO_DECK_SELECTED_CONTENT = "No Deck is Selected",
             NOT_ENOUGH_CARD_TO_IMPORT_CONTENT = "Not Enough Cards to Import!", INVALID_IMPORT_FILE_CONTENT = "Invalid File to Import",
             EMPTY_FIELD_EXCEPTION_CONTENT = "Please fill in all required fields!" , CELL_FILLED_BEFORE_CONTENT = "Cell has a Card on it!" , NOT_ENOUGHT_MANA_CONTENT = "You don't have enough mana for this action!",
-            CREATE_CARD_FIELD_NOT_COMPLETE_CONTENT ="Please fill all fields that are required for card creation";
+            CREATE_CARD_FIELD_NOT_COMPLETE_CONTENT ="Please fill all fields that are required for card creation" , DECK_IS_INVALID_TITLE = "Invalid Deck!" , DECK_IS_VALID_TITLE = "Valid Deck";
 
     //ERROR TITLE
     public static final String USER_EXIST_TITLE = "User Exist", USER_NOT_EXIST_TITLE = "User Not Exist", NOT_EXIST_LOGIN_USER_TITLE = "First Login!",
@@ -21,7 +21,8 @@ public class Constants {
             NO_CARD_SELECTED_IN_SHOP_TITLE = "Select a Card", DECK_EXIST_WITH_THIS_NAME_TITLE = "Deck Exists", NO_CARD_SELECTED_FROM_DECK_TITLE = "No Card Selected",
             NO_CARD_SELECTED_FROM_COLLECTION_TITLE = "No Card Selected", NO_MAIN_DECK_TITLE = "Main Deck is Not Selected", NO_DECK_SELECTED_TITLE = "No Deck is Selected",
             NOT_ENOUGH_CARD_TO_IMPORT_TITLE = "Not Enough Cards to Import!", INVALID_IMPORT_FILE_TITLE = "Invalid File", EMPTY_FIELD_EXCEPTION_TITLE = "Empty Fields!" , CELL_FILLED_BEFORE_TITLE = "Cell is not Empty!",
-            NOT_ENOUGHT_MANA_TITLE = "Not Enough Mana!" , CREATE_CARD_FIELD_NOT_COMPLETE_TITLE ="Some fields don't have valid input";
+            NOT_ENOUGHT_MANA_TITLE = "Not Enough Mana!" , CREATE_CARD_FIELD_NOT_COMPLETE_TITLE ="Some fields don't have valid input" , DECK_IS_INVALID_CONTENT = "Current main deck combination of cards is invalid!" ,
+            DECK_IS_VALID_CONTENT = "Selected Main Deck is Valid";
 
     //NOTIFICATION
     public static final String USER_CREATED_CONTENT = "User Created Successfully", USER_LOGINED_CONTENT = "User Logined Successfully", BUY_CONTENT = "Buy was Successful!",
@@ -33,7 +34,7 @@ public class Constants {
     public static final String NO_USER_LOGINED = "NO USER LOGINED", NO_MAIN_DECK = "No Main Deck";
 
 
-    public static final int INITIAL_DARICK = 10000;
+    public static final int INITIAL_DARICK = 100000;
 
 
     public static final String SHOP = "SHOP", MAIN_MENU = "MAIN_MENU", LOGIN = "LOGIN", LEADERBOARD = "LEADERBOARD", COLLECTION = "COLLECTION" , BATTLE = "BATTLE" , CARD_CREATOR = "CARD_CREATOR";
