@@ -27,7 +27,7 @@ public class Battle {
     private ArrayList<Buff> onDeathBuffs = new ArrayList<>();
     private ArrayList<Buff> passiveBuffs = new ArrayList<>();
 
-    public static final int VALID_COUNTER_WITH_BUFF = 1 , VALID_COUNTER_WITHOUT_BUFF = 2,INVALID_COUNTER_WITH_BUFF = 3 , INVALID_COUNTER_WITHOUT_BUFF = 4;
+    public static final int VALID_COUNTER_WITH_BUFF = 1, VALID_COUNTER_WITHOUT_BUFF = 2, INVALID_COUNTER_WITH_BUFF = 3, INVALID_COUNTER_WITHOUT_BUFF = 4;
 
     public void initializeCells() {
         for (int i = 0; i < BATTLE_ROWS; i++) {
@@ -42,6 +42,7 @@ public class Battle {
         setPlayer1(new Player(account1, account1.getCardCollection().getMainDeck()));
         setPlayer2(new Player(account2, account2.getCardCollection().getMainDeck()));
         setPlayingPlayer();
+
         initializeCells();
         nextTurn();
     }
@@ -112,13 +113,11 @@ public class Battle {
     }
 
     public int attack(Warrior attacker, Warrior attackedCard, boolean isFromCounterAttack) {
-        attackedCard.decreaseHealthPoint(attacker.getActionPower()-attackedCard.getShield());//TODO CHECK FOR BUFF
+        attackedCard.decreaseHealthPoint(attacker.getActionPower() - attackedCard.getShield());//TODO CHECK FOR BUFF
         //TODO CHECK FOR COUNTER ATTACK AND BUFF AND A LOT OF THINGS
         if (!isFromCounterAttack) {
             return VALID_COUNTER_WITH_BUFF; //RETURN DETERMINES THE CONTROLLER TO SHOW BUFF ANIMATION OR NOT? DO COUNTER ATTACK OR NOT?
-        }
-        else
-        {
+        } else {
             return INVALID_COUNTER_WITH_BUFF;
         }
     }

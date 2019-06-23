@@ -334,7 +334,7 @@
             }
           }
         ],
-        "selectedCard": "@root.0.cardCollection.decks.0.cards.5"
+        "selectedCard": "@root.0.cardCollection.cards.0"
       },
       "username": "a",
       "password": "a",
