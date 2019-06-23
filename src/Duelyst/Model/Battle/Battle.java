@@ -39,7 +39,9 @@ public class Battle {
     }
 
     public Battle(Account account1, Account account2, GameMode gameMode, GameGoal gameGoal) {
-        checkDeckAtFirst(account1,account2);
+        checkDeckAtFirst(account1, account2);
+        this.gameGoal = gameGoal;
+        this.gameMode = gameMode;
         runningBattle = this;
         setPlayer1(new Player(account1, account1.getCardCollection().getMainDeck()));
         setPlayer2(new Player(account2, account2.getCardCollection().getMainDeck()));
