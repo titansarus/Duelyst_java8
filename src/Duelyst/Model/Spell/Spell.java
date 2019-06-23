@@ -22,5 +22,9 @@ public class Spell extends Card {
     public Spell(String cardName, String cardDescription, int manaCost, int darikCost, String addressOfImage) {
         super(cardName, cardDescription, manaCost, darikCost, addressOfImage);
     }
+
+    public TargetCommunity getTargetCommunity() {
+        return targetCommunity;
+    }
 }
 

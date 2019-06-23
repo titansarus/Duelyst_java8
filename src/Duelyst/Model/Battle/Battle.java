@@ -2,10 +2,9 @@ package Duelyst.Model.Battle;
 
 import Duelyst.Exceptions.CellFilledBeforeException;
 import Duelyst.Exceptions.NotEnoughManaException;
-import Duelyst.Model.Account;
+import Duelyst.Model.*;
 import Duelyst.Model.Buffs.Buff;
-import Duelyst.Model.Card;
-import Duelyst.Model.Warrior;
+import Duelyst.Model.Spell.Spell;
 
 import java.util.ArrayList;
 
@@ -26,6 +25,8 @@ public class Battle {
     private ArrayList<Buff> onAttackBuffs = new ArrayList<>();
     private ArrayList<Buff> onDeathBuffs = new ArrayList<>();
     private ArrayList<Buff> passiveBuffs = new ArrayList<>();
+    private GameGoal gameGoal;
+    private GameMode gameMode;
 
     public static final int VALID_COUNTER_WITH_BUFF = 1, VALID_COUNTER_WITHOUT_BUFF = 2, INVALID_COUNTER_WITH_BUFF = 3, INVALID_COUNTER_WITHOUT_BUFF = 4;
 
@@ -37,14 +38,33 @@ public class Battle {
         }
     }
 
-    public Battle(Account account1, Account account2) {
+    public Battle(Account account1, Account account2, GameMode gameMode, GameGoal gameGoal) {
+        checkDeckAtFirst(account1, account2);
+        this.gameGoal = gameGoal;
+        this.gameMode = gameMode;
         runningBattle = this;
         setPlayer1(new Player(account1, account1.getCardCollection().getMainDeck()));
         setPlayer2(new Player(account2, account2.getCardCollection().getMainDeck()));
         setPlayingPlayer();
 
         initializeCells();
+        insertPlayerHeroesInMap();
+
         nextTurn();
+    }
+
+    private void checkDeckAtFirst(Account firstPlayer, Account secondPlayer) {
+        if (firstPlayer.getCardCollection().getMainDeck() == null) {
+            //TODO throw exception
+        }
+        if (secondPlayer.getCardCollection().getMainDeck() == null) {
+            //TODO throw exception
+        }
+    }
+
+    private void insertPlayerHeroesInMap() {
+        getGrid()[2][0].setWarrior(player1.getHero());
+        getGrid()[2][8].setWarrior(player2.getHero());
     }
 
     public void nextTurn() {
@@ -60,35 +80,36 @@ public class Battle {
 
     public void move(int destX, int destY) {
         if (getSelectedCell().getWarrior() != null) {
-            //TODO CHECK DISTANCE HERE OR SOMEWHERE ELSE:::
-
-            Cell cell = getGrid()[destX][destY];
-            if (cell.getWarrior() == null) {
-                cell.setWarrior(getSelectedCell().getWarrior());
-                getSelectedCell().setWarrior(null);
-                setSelectedCell(null);
+            if (getSelectedCell().getColumn() != destX || getSelectedCell().getRow() != destY) {
+                Cell cell = getGrid()[destX][destY];
+                if (cell.getWarrior() == null) {
+                    cell.setWarrior(getSelectedCell().getWarrior());
+                    getSelectedCell().setWarrior(null);
+                    setSelectedCell(null);
+                }
             }
-
         }
 
     }
 
     public void insertSelectedCard(int i, int j) {
+        if (getSelectedCard() instanceof Warrior) {
+            if (getGrid()[i][j].isEmpty()) {
+                if (getPlayingPlayer().getMana() >= getSelectedCard().getManaCost()) {
+                    getGrid()[i][j].setWarrior((Warrior) getSelectedCard());
+                    Warrior warrior = getGrid()[i][j].getWarrior();
 
-        //TODO SOME CHECKS NEEDED IF IT IS WARRIOR OR SPELL. CURRENTLY IS ONLY FOR WARRIOR.
-        if (getGrid()[i][j].isEmpty()) {
-            if (getPlayingPlayer().getMana() >= getSelectedCard().getManaCost()) {
-                getGrid()[i][j].setWarrior((Warrior) getSelectedCard());
-                Warrior warrior = getGrid()[i][j].getWarrior();
-
-                getPlayingPlayer().changeMana(-warrior.getManaCost());
-                getPlayingPlayer().getHand().remove(warrior);
-                playingPlayer.getInGameCards().add(getSelectedCard());
+                    getPlayingPlayer().changeMana(-warrior.getManaCost());
+                    getPlayingPlayer().getHand().remove(warrior);
+                    playingPlayer.getInGameCards().add(getSelectedCard());
+                } else {
+                    throw new NotEnoughManaException();
+                }
             } else {
-                throw new NotEnoughManaException();
+                throw new CellFilledBeforeException();
             }
-        } else {
-            throw new CellFilledBeforeException();
+        } else if (getSelectedCard() instanceof Spell) {
+            //TODO apply spell
         }
     }
 

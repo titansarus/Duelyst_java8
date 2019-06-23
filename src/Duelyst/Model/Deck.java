@@ -3,6 +3,7 @@ package Duelyst.Model;
 
 import Duelyst.Exceptions.NotEnoughCardsToImportException;
 import Duelyst.Model.Items.Item;
+import Duelyst.Model.Spell.Spell;
 import com.rits.cloning.Cloner;
 
 import java.util.ArrayList;
@@ -286,5 +287,26 @@ public class Deck implements Cloneable {
         return isValid;
     }
 
-
+    public static Deck AiDeckBuilder(int i,Ai ai) {
+        int[] heroNumber = {1, 5, 7};
+        int[][] spellNumbers = {{1, 7, 10, 11, 12, 18, 20}, {2, 3, 5, 9, 8, 13, 19}, {6, 10, 12, 14, 15, 16, 17}};
+        int[][] minionNumbers = {{1, 9, 11, 11, 13, 17, 18, 21, 22, 26, 38, 36, 40}, {2, 3, 5, 8, 12, 15, 15, 19, 23, 27, 30, 33, 39}, {6, 7, 10, 14, 16, 16, 20, 24, 25, 28, 29, 31, 34}};
+        int[] item = {1, 10, 5};
+        return AiDeckBuilderUtility(heroNumber[i - 1], spellNumbers[i - 1], minionNumbers[i - 1], item[i - 1],ai);
+    }
+    public static Deck AiDeckBuilderUtility(int heroNumber, int[] spellNumbers, int[] minionNumbers, int item,Ai ai) {
+        Deck deck = new Deck("AiDeck",ai);
+        Hero hero = (Hero) Card.findCardInArrayList("Hero_" + heroNumber, Shop.getInstance().getCards());
+        deck.addCard(hero);
+        for (int minionNumber : minionNumbers) {
+            Minion minion = (Minion) Card.findCardInArrayList("Minion_" + minionNumber, Shop.getInstance().getCards());
+            deck.addCard(minion);
+        }
+        for (int spellNumber:
+             spellNumbers) {
+            Spell spell  =(Spell) Card.findCardInArrayList("Spell_"+spellNumber,Shop.getInstance().getCards());
+            deck.addCard(spell);
+        }
+        return deck;
+    }
 }

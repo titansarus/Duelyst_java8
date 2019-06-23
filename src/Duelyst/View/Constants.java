@@ -70,7 +70,10 @@ public class Constants {
             CHOOSE_GAME_MODE = "Choose your game mode", SINGLEPLAYER_MODE = "Single-Player", MULTIPLAYER_MODE = "Multiplayer",
             CHOOSE_GAME_GOAL = "Choose your game goal", HOLD_FLAG = "Hold Flag", CAPTURE_FLAG = "Capture Flags", KILL_HERO = "Kil Hero",
             CHOOSE_GAME_LEVEL = "Choose Level", STORY_LEVEL_1 = "Story Level 1", STORY_LEVEL_2 = "Story Level 2", STORY_LEVEL_3 = "Story Level 3", CANCEL = "Cancel",
-            ACCEPT = "Accept", CHOOSE_DECK_NAME = "Give your Deck a name!", CHOOSE_IMPORT_DECK_NAME = "Give name for Import Deck";
+            ACCEPT = "Accept", CHOOSE_DECK_NAME = "Give your Deck a name!", CHOOSE_IMPORT_DECK_NAME = "Give name for Import Deck",
+            CHOOSE_SINGLE_PLAYER_MODE = "Choose your single player game mode", CHOOSE_DECK = "Choose Opponent Deck"
+            ,GAME_SINGLE_PLAYER_TITLE = "Mode",GAME_CUSTOM_TITLE = "Mode"
+            , CUSTOM_MODE = "custom", STORY_MODE = "story",CHOOSE_OPPONENT_TITLE = "Your opponent",CHOOSE_OPPNENT_BODY = "Choose Your opponent";
 
     public static final int MULTIPLAYER_INT = 2, SINGLEPLAYER_INT = 1, LEVEL_1 = 1, LEVEL_2 = 2, LEVEL_3 = 3, KILL_HERO_INT = 1, CAPTURE_FLAG_INT = 2, HOLD_FLAG_INT = 3;
 
