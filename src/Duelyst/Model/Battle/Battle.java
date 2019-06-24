@@ -2,6 +2,7 @@ package Duelyst.Model.Battle;
 
 import Duelyst.Exceptions.CellFilledBeforeException;
 import Duelyst.Exceptions.NotEnoughManaException;
+import Duelyst.Exceptions.NotValidDeckException;
 import Duelyst.Model.*;
 import Duelyst.Model.Buffs.Buff;
 import Duelyst.Model.Spell.Spell;
@@ -39,7 +40,6 @@ public class Battle {
     }
 
     public Battle(Account account1, Account account2, GameMode gameMode, GameGoal gameGoal) {
-        checkDeckAtFirst(account1, account2);
         this.gameGoal = gameGoal;
         this.gameMode = gameMode;
         runningBattle = this;
@@ -53,14 +53,7 @@ public class Battle {
         nextTurn();
     }
 
-    private void checkDeckAtFirst(Account firstPlayer, Account secondPlayer) {
-        if (firstPlayer.getCardCollection().getMainDeck() == null) {
-            //TODO throw exception
-        }
-        if (secondPlayer.getCardCollection().getMainDeck() == null) {
-            //TODO throw exception
-        }
-    }
+
 
     private void insertPlayerHeroesInMap() {
         getGrid()[2][0].setWarrior(player1.getHero());

@@ -1,7 +1,6 @@
 package Duelyst.Model;
 
 public class Ai extends Account {
-    Deck deck;
 
     public Ai(int numberOfAi) {
         super("AI:)","AI:)");
@@ -16,6 +15,6 @@ public class Ai extends Account {
     }
 
     public void setMainDeck(Deck deck) {
-        this.deck = deck;
+      getCardCollection().setMainDeck(deck);
     }
 }

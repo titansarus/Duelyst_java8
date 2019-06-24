@@ -478,6 +478,10 @@ public class BattleController {
 
     public void makeHandView() {
         for (int i = 0; i < SIZE_OF_HAND; i++) {
+
+                System.out.println("gi tot ==================================================== size : "+getBattle().getPlayingPlayer().getHand().size() );
+
+
             if (getBattle().getPlayingPlayer().getHand().get(i) != null) {
                 CardForBattle cardForBattle = new CardForBattle(getBattle().getPlayingPlayer().getHand().get(i));
                 cardForBattle.getCardController().setBattle(getBattle());

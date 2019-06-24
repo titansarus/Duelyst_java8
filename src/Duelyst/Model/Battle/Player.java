@@ -1,9 +1,6 @@
 package Duelyst.Model.Battle;
 
-import Duelyst.Model.Account;
-import Duelyst.Model.Card;
-import Duelyst.Model.Deck;
-import Duelyst.Model.Hero;
+import Duelyst.Model.*;
 import com.rits.cloning.Cloner;
 
 import java.util.ArrayList;
@@ -26,6 +23,10 @@ public class Player {
         Cloner cloner = new Cloner();
         this.account = account;
         this.deck = cloner.deepClone(deck);
+            System.out.println("----------------------------------\n========================");
+            System.out.println(account.getUsername()+ " - - " + deck.getDeckName() +" - "+ deck.getCards().size());
+            System.out.println("==================================\n------------------------");
+
         this.hand = new ArrayList<>();
         this.inGameCards = new ArrayList<>();
         initializeHand();
