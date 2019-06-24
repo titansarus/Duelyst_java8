@@ -13,6 +13,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -27,6 +29,7 @@ import static Duelyst.View.Constants.NO_USER_LOGINED;
 
 public class MainMenu {
 
+
     int singleOrMulti = 0; //1 == Single , 2 == Multi
     int storyModeLevel = 0; //1 == 1 , 2 == 2 , 3 ==3;
     int multiplayerModeGoal = 0; //1 == hero , 2 == capture_flags , 3== hold_flag
@@ -38,32 +41,32 @@ public class MainMenu {
     Label accountDarick_lbl;
 
     @FXML
-    JFXButton play_btn;
+    ImageView play_img;
 
     @FXML
-    JFXButton leaderboard_btn;
+    ImageView shop_img;
 
     @FXML
-    JFXButton quit_btn;
-
-
-    @FXML
-    JFXButton shop_btn;
+    ImageView collections_img;
 
 
     @FXML
-    JFXButton collection_btn;
+    ImageView quit_img;
 
 
     @FXML
-    JFXButton back_btn;
+    ImageView logout_img;
+
+
+    @FXML
+    ImageView leaderbords_img;
 
 
     @FXML
     StackPane stackPane;
 
     @FXML
-    JFXButton cardCreator_btn;
+    ImageView cardCreator_img;
 
 
     Timeline timeline = new Timeline();
@@ -84,11 +87,68 @@ public class MainMenu {
 
     public void runTimeline() {
         timeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
-            updateLoginedUser();
+            updateLoggedInUser();
             updateDarick();
         }), new KeyFrame(Duration.seconds(1)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+    }
+
+    public void playButtonGlow() {
+        play_img.setImage(new Image("res/ui/button_secondary_glow@2x.png"));
+    }
+
+    public void playButtonGlowDisapear() {
+        play_img.setImage(new Image("res/ui/button_secondary@2x.png"));
+    }
+
+    public void shopButtonGlow() {
+        shop_img.setImage(new Image("res/ui/button_secondary_glow@2x.png"));
+    }
+
+    public void shopButtonGlowDisapear() {
+        shop_img.setImage(new Image("res/ui/button_secondary@2x.png"));
+    }
+
+    public void collectionsButtonGlow() {
+        collections_img.setImage(new Image("res/ui/button_secondary_glow@2x.png"));
+    }
+
+    public void collectionsButtonGlowDisapear() {
+        collections_img.setImage(new Image("res/ui/button_secondary@2x.png"));
+    }
+
+    public void leaderBordsButtonGlow() {
+        leaderbords_img.setImage(new Image("res/ui/button_secondary_glow@2x.png"));
+    }
+
+    public void leaderBordsButtonGlowDisapear() {
+        leaderbords_img.setImage(new Image("res/ui/button_secondary@2x.png"));
+    }
+
+    public void cardCreatorButtonGlow() {
+        cardCreator_img.setImage(new Image("res/ui/button_secondary_glow@2x.png"));
+    }
+
+    public void cardCreatorButtonGlowDisapear() {
+        cardCreator_img.setImage(new Image("res/ui/button_secondary@2x.png"));
+    }
+
+    public void quitButtonGlow() {
+        quit_img.setImage(new Image("res/ui/button_secondary_glow@2x.png"));
+    }
+
+    public void quitButtonGlowDisapear() {
+        quit_img.setImage(new Image("res/ui/button_secondary@2x.png"));
+    }
+
+    public void logoutButtonGlow() {
+        logout_img.setImage(new Image("res/ui/button_secondary_glow@2x.png"));
+
+    }
+
+    public void logoutButtonGlowDisapear() {
+        logout_img.setImage(new Image("res/ui/button_secondary@2x.png"));
     }
 
 
@@ -100,7 +160,7 @@ public class MainMenu {
         }
     }
 
-    private void updateLoginedUser() {
+    private void updateLoggedInUser() {
         if (Account.getLoggedAccount() == null) {
             getLoginedAccount_lbl().setText(NO_USER_LOGINED);
             return;
@@ -289,7 +349,7 @@ public class MainMenu {
                 setMultiplayerModeGoal(KILL_HERO_INT);
                 System.out.println(getMultiplayerModeGoal());
                 Account account = chooseYourOpponent();
-                if (account!=null) {
+                if (account != null) {
                     Battle battle = new Battle(Account.getLoggedAccount(), account, GameMode.MULTI_PLAYER, GameGoal.KILL_HERO);
                     gotoBattle(battle);
                 }
@@ -304,7 +364,7 @@ public class MainMenu {
                 setMultiplayerModeGoal(CAPTURE_FLAG_INT);
                 System.out.println(getMultiplayerModeGoal());
                 Account account = chooseYourOpponent();
-                if (account!=null) {
+                if (account != null) {
                     Battle battle = new Battle(Account.getLoggedAccount(), account, GameMode.MULTI_PLAYER, GameGoal.COLLECT_FLAG);
                     gotoBattle(battle);
                 }
@@ -319,7 +379,7 @@ public class MainMenu {
                 setMultiplayerModeGoal(HOLD_FLAG_INT);
                 System.out.println(getMultiplayerModeGoal());
                 Account account = chooseYourOpponent();
-                if (account!=null) {
+                if (account != null) {
                     Battle battle = new Battle(Account.getLoggedAccount(), account, GameMode.MULTI_PLAYER, GameGoal.HOLD_FLAG);
                     gotoBattle(battle);
                 }

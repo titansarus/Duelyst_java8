@@ -29,6 +29,12 @@ import java.util.ArrayList;
 import static Duelyst.View.Constants.*;
 
 public class BattleController {
+
+
+    public ImageView endTurn_img;
+
+    public Label endTurn_lbl;
+
     @FXML
     HBox hand_hBox;
     @FXML
@@ -453,6 +459,14 @@ public class BattleController {
     public void handleEndTurnBtn() {
         battle.nextTurn();
         updateHand();
+    }
+
+    public void endTurnButtonGlow(){
+        endTurn_img.setImage(new Image("res/ui/button_end_turn_mine_glow.png"));//TODO Az Image Holder Estefade Nakardam
+    }
+
+    public void endTurnButtonGlowDisappear(){
+        endTurn_img.setImage(new Image("res/ui/button_end_turn_mine.png"));//TODO Az Image Holder Estefade Nakardam
     }
 
     public void updateHand() {

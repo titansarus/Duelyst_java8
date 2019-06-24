@@ -80,10 +80,10 @@ public class CardView extends Pane {
 
             if (card.getAddressOfImage().length() > 0) {
                 Image image = ImageHolder.findImageInImageHolders(card.getAddressOfImage());
-                cardController.setNameAndDscAndImg(card.getCardName(), card.getCardDescription(), image);
+                cardController.setNameAndDscAndImg(card.getCardName(), card.getCardDescription(), image, card.getManaCost());
                 //System.out.println(card.getAddressOfImage());
             } else {
-                cardController.setNameAndDscAndImg(card.getCardName(), card.getCardDescription(), heroImg);//TODO LATER WILL BE DELETED
+                cardController.setNameAndDscAndImg(card.getCardName(), card.getCardDescription(), heroImg,card.getManaCost());//TODO LATER WILL BE DELETED
             }
         }
     }

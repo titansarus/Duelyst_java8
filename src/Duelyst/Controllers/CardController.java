@@ -12,6 +12,13 @@ import javafx.scene.shape.Polygon;
 
 public class CardController {
     public Polygon manaCost_polygon;
+
+    public Label manaCost_lbl;
+
+    public Label attack_lbl;
+
+    public Label health_lbl;
+
     @FXML
     private Label name_lbl;
 
@@ -23,15 +30,19 @@ public class CardController {
 
     @FXML
     AnchorPane anchorPaneHolder;
+
     public void setNameAndDsc(String name, String dsc) {
         name_lbl.setText(name);
         dsc_lbl.setText(dsc);
         manaCost_polygon.setFill(new ImagePattern(new Image("/res/CardUI/manaCost.png")));
     }
 
-    public void setNameAndDscAndImg(String name, String dsc, Image img) {
+    public void setNameAndDscAndImg(String name, String dsc, Image img, int manaCost) {
         name_lbl.setText(name);
         dsc_lbl.setText(dsc);
+        manaCost_lbl.setText(manaCost + "");
+//        attack_lbl.setText(attackPower + "");//TODO AttackPower And HealthPoint Should Be Added
+//        health_lbl.setText(healthPoint + "");
         card_img.setImage(img);
     }
 

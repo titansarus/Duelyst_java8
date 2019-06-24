@@ -19,6 +19,9 @@
                   <InnerShadow color="#009dff" height="55.21" radius="26.3275" width="52.1" />
                </effect>
                 </Polygon>
+            <Label fx:id="manaCost_lbl" contentDisplay="CENTER" layoutX="13.0" layoutY="4.0" />
+            <Label fx:id="attack_lbl" layoutX="31.0" layoutY="230.0" />
+            <Label fx:id="health_lbl" layoutX="164.0" layoutY="230.0" />
             </children>
         </AnchorPane>
     </children>
