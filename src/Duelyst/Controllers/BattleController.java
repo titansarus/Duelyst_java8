@@ -282,6 +282,72 @@ public class BattleController {
 
     }
 
+    public void handleAttackFromAi(Warrior attacker , Warrior attacked)
+    {
+        CardOnField cardOnFieldAttacker = CardOnField.findCardOnFieldFromArrayList(cardsOnField, attacker);
+        CardOnField cardOnFieldAttacked = CardOnField.findCardOnFieldFromArrayList(cardsOnField, attacked);
+        int resultOfattack = getBattle().attack(((Warrior) cardOnFieldAttacker.getCard()), ((Warrior) cardOnFieldAttacked.getCard()), false);
+        boolean animationEnded = false;
+
+        cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfAttackGif()));
+
+        TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
+        tt1.setOnFinished(event1 -> {
+            cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
+        });
+        cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfGetDamageGif()));
+        TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
+        tt2.setOnFinished(event1 -> {
+            cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
+
+        });
+
+        ParallelTransition parallelTransition = new ParallelTransition(tt1, tt2);
+        if (resultOfattack == Battle.VALID_COUNTER_WITH_BUFF || resultOfattack == Battle.INVALID_COUNTER_WITH_BUFF) {
+            ImageView imageView = new ImageView(buffEffect);
+            anchorPane.getChildren().add(imageView);
+            imageView.relocate(cardOnFieldAttacked.getImageView().getLayoutX(), cardOnFieldAttacked.getImageView().getLayoutY());
+            TranslateTransition effectTransition = new TranslateTransition(Duration.millis(500), imageView);
+            effectTransition.setOnFinished(event2 -> {
+                anchorPane.getChildren().remove(imageView);
+            });
+            parallelTransition.getChildren().add(effectTransition);
+        }
+        parallelTransition.setOnFinished(event1 -> {
+            if (resultOfattack == Battle.VALID_COUNTER_WITH_BUFF || resultOfattack == Battle.VALID_COUNTER_WITHOUT_BUFF) {
+                int newResultOfAttack = getBattle().attack(((Warrior) cardOnFieldAttacked.getCard()), ((Warrior) cardOnFieldAttacker.getCard()), true);
+                cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfAttackGif()));
+                TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
+                tt3.setOnFinished(event2 -> {
+                    cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
+                });
+                cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfGetDamageGif()));
+                TranslateTransition tt4 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
+                tt4.setOnFinished(event2 -> {
+                    cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
+
+                });
+                ParallelTransition parallelTransition2 = new ParallelTransition(tt3, tt4);
+                if (newResultOfAttack == Battle.VALID_COUNTER_WITH_BUFF || newResultOfAttack == Battle.INVALID_COUNTER_WITH_BUFF) {
+                    ImageView imageView = new ImageView(buffEffect);
+                    anchorPane.getChildren().add(imageView);
+                    imageView.relocate(cardOnFieldAttacker.getImageView().getLayoutX(), cardOnFieldAttacker.getImageView().getLayoutY());
+                    TranslateTransition effectTransition2 = new TranslateTransition(Duration.millis(500), imageView);
+                    effectTransition2.setOnFinished(event2 -> {
+                        anchorPane.getChildren().remove(imageView);
+                    });
+                    parallelTransition2.getChildren().add(effectTransition2);
+                }
+
+                parallelTransition2.play();
+            }
+        });
+        parallelTransition.play();
+
+
+
+    }
+
 
     public void handleInsertCardClick() {
         int[] battleCoordinate = getBattle().findCellCoordinate(getBattle().getSelectedCell());

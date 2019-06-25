@@ -2,6 +2,7 @@ package Duelyst.Model.Battle;
 
 import Duelyst.Exceptions.CellFilledBeforeException;
 import Duelyst.Exceptions.NotEnoughManaException;
+import Duelyst.Exceptions.NotValidDeckException;
 import Duelyst.Model.*;
 import Duelyst.Model.Buffs.Buff;
 import Duelyst.Model.Spell.Spell;
@@ -25,6 +26,7 @@ public class Battle {
     private ArrayList<Buff> onAttackBuffs = new ArrayList<>();
     private ArrayList<Buff> onDeathBuffs = new ArrayList<>();
     private ArrayList<Buff> passiveBuffs = new ArrayList<>();
+    private ArrayList<Cell> validCells = new ArrayList<>();
     private GameGoal gameGoal;
     private GameMode gameMode;
 
@@ -39,10 +41,12 @@ public class Battle {
     }
 
     public Battle(Account account1, Account account2, GameMode gameMode, GameGoal gameGoal) {
-        checkDeckAtFirst(account1, account2);
         this.gameGoal = gameGoal;
         this.gameMode = gameMode;
         runningBattle = this;
+        if (account2 instanceof Ai){
+            ((Ai) account2).setBattle(this);
+        }
         setPlayer1(new Player(account1, account1.getCardCollection().getMainDeck()));
         setPlayer2(new Player(account2, account2.getCardCollection().getMainDeck()));
         setPlayingPlayer();
@@ -53,21 +57,14 @@ public class Battle {
         nextTurn();
     }
 
-    private void checkDeckAtFirst(Account firstPlayer, Account secondPlayer) {
-        if (firstPlayer.getCardCollection().getMainDeck() == null) {
-            //TODO throw exception
-        }
-        if (secondPlayer.getCardCollection().getMainDeck() == null) {
-            //TODO throw exception
-        }
-    }
 
     private void insertPlayerHeroesInMap() {
-        getGrid()[2][0].setWarrior(player1.getHero());
-        getGrid()[2][8].setWarrior(player2.getHero());
+        getGrid()[2][0].setWarrior(player1.getDeck().getHero());
+        getGrid()[2][8].setWarrior(player2.getDeck().getHero());
     }
 
     public void nextTurn() {
+        System.out.println("======================>>>> " + getGrid()[2][0].getWarrior().getCardName());
         turn++;
         setPlayingPlayer();
         getPlayer1().setManaFromTurn(getTurn());
@@ -75,7 +72,13 @@ public class Battle {
         setSelectedCell(null);
         setSelectedCard(null);
         getPlayingPlayer().getNextHand();
-
+        if (getPlayingPlayer().getAccount() instanceof Ai) {
+            ((Ai) getPlayingPlayer().getAccount()).playGame();
+            long startTime = System.nanoTime();
+            while ((System.nanoTime() - startTime) / 1000000 < 2000) {
+            }
+            nextTurn();
+        }
     }
 
     public void move(int destX, int destY) {
@@ -238,5 +241,164 @@ public class Battle {
 
     public void setAttackedCard(Card attackedCard) {
         this.attackedCard = attackedCard;
+    }
+
+
+    ///////////////////////////////////////////////////
+    private void clearValidCellsList() {
+        getValidCells().clear();
+    }
+
+    public ArrayList<Cell> getValidCells() {//
+        return validCells;
+    }
+
+
+    public void findValidCell(KindOfActionForValidCells kindOfActionForValidCells) {
+
+        clearValidCellsList();
+        switch (kindOfActionForValidCells) {
+            case MOVE:
+                findValidCellToMove();
+                break;
+            case ATTACK:
+                findValidCellToAttack();
+                break;
+            case INSERT:
+                findValidCellToInsert();
+                break;
+            case ITEM:
+                findValidCellToItem();
+                break;
+            case SPELL:
+                findValidCellToSpell();
+                break;
+        }
+    }
+
+    private void findValidCellToMove() {
+        if (!getSelectedCard().isAbleToMove())
+            return;
+        Warrior warrior = (Warrior) getSelectedCard();
+        for (Cell[] cell : getGrid()) {
+            for (Cell cell1 : cell) {
+                if (cell1.isEmpty() && getDistanceOfTwoCell(getCellOfWarrior(warrior), cell1) <= 2 && isValidMove(cell1))
+                    getValidCells().add(cell1);
+            }
+        }
+    }
+
+    private void findValidCellToAttack() {
+
+        Cell[][] cells = getGrid();
+        Warrior warrior = (Warrior) getSelectedCard();
+        for (Cell[] cell : cells) {
+            for (Cell cell1 : cell) {
+                if (!cell1.isEmpty() && isValidAttack(cell1, warrior))
+                    getValidCells().add(cell1);
+            }
+        }
+    }
+
+    private void findValidCellToInsert() {
+
+        Cell[][] cells = getGrid();
+
+        for (Cell[] cell : cells) {
+            for (Cell cell1 : cell) {
+                if (isValidInsert(cell1))
+                    getValidCells().add(cell1);
+            }
+        }
+    }
+
+    private void findValidCellToItem() {
+
+    }
+
+    private void findValidCellToSpell() {
+
+    }
+
+    private boolean isValidInsert(Cell destinationCell) {
+        Deck deck;
+        if (getTurn() % 2 == 1)
+            deck = player1.getDeck();
+        else
+            deck = player2.getDeck();
+        return (destinationCell != null) && destinationCell.isEmpty() && getDistanceOfTwoCell(destinationCell, getCellOfWarrior(deck.getHero())) <= 2;
+    }
+
+    private boolean isValidMove(Cell destinationCell) {
+        getCellOfWarrior((Warrior) getSelectedCard());
+        if (destinationCell.getRow() == getCellOfWarrior((Warrior) getSelectedCard()).getRow()) {
+            if (destinationCell.getColumn() < getCellOfWarrior((Warrior) getSelectedCard()).getColumn()) {
+                return getGrid()[destinationCell.getRow()][getCellOfWarrior((Warrior) getSelectedCard()).getColumn() - 1].isEmpty();
+            } else {
+                return getGrid()[destinationCell.getRow()][getCellOfWarrior((Warrior) getSelectedCard()).getColumn() + 1].isEmpty();
+            }
+
+        } else if (destinationCell.getColumn() == getCellOfWarrior((Warrior) getSelectedCard()).getColumn()) {
+            if (destinationCell.getRow() < getCellOfWarrior((Warrior) getSelectedCard()).getRow()) {
+                return getGrid()[getCellOfWarrior((Warrior) getSelectedCard()).getRow() - 1][destinationCell.getColumn()].isEmpty();
+            } else {
+                return getGrid()[getCellOfWarrior((Warrior) getSelectedCard()).getRow() + 1][destinationCell.getColumn()].isEmpty();
+            }
+        }
+        return false;
+    }
+
+
+    private boolean isValidAttack(Cell targetCell, Warrior warrior) {
+        if (targetCell.getWarrior().getAccount() == warrior.getAccount()) {
+            return false;
+        }
+        switch (warrior.getAttackKind()) {
+            case MELEE:
+                return isValidMeleeAttack(targetCell, warrior);
+            case RANGED:
+                return isValidRangedAttack(targetCell, warrior);
+            case HYBRID:
+                boolean flag1 = isValidRangedAttack(targetCell, warrior);
+                boolean flag2 = isValidMeleeAttack(targetCell, warrior);
+                return (flag1 || flag2);
+        }
+        return true;
+    }
+
+    private boolean isValidRangedAttack(Cell targetCell, Warrior warrior) {
+
+        if (getDistanceOfTwoCell(targetCell, getCellOfWarrior(warrior)) <= 1) {
+            return false;
+        } else {
+            return getDistanceOfTwoCell(targetCell, getCellOfWarrior(warrior)) <= warrior.getAttackRange();
+        }
+    }
+
+    private boolean isValidMeleeAttack(Cell targetCell, Warrior warrior) {
+        return getDistanceOfTwoCell(targetCell, getCellOfWarrior(warrior)) <= 1;
+    }
+
+    public int getDistanceOfTwoCell(Cell firstCell, Cell secondCell) {
+        if (firstCell == null || secondCell == null)
+            return 100;
+        return Math.abs(firstCell.getColumn() - secondCell.getColumn()) + Math.abs(firstCell.getRow() - secondCell.getRow());
+    }
+
+    public Cell getCellOfWarrior(Warrior warrior) {
+        for (Cell[] c :
+                getGrid()) {
+            for (Cell c1 :
+                    c) {
+                if (c1.getWarrior().equals(warrior)) {
+                    return c1;
+                }
+            }
+        }
+        return null;
+    }
+
+    public void setValidCells(ArrayList<Cell> validCells) {
+        this.validCells = validCells;
     }
 }

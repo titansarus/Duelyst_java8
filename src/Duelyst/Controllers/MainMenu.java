@@ -1,5 +1,6 @@
 package Duelyst.Controllers;
 
+import Duelyst.Exceptions.NotValidDeckException;
 import Duelyst.Model.*;
 import Duelyst.Model.Battle.Battle;
 import com.jfoenix.controls.JFXButton;
@@ -67,7 +68,6 @@ public class MainMenu {
 
     @FXML
     ImageView cardCreator_img;
-
 
     Timeline timeline = new Timeline();
 
@@ -245,6 +245,31 @@ public class MainMenu {
         Container.runNextScene(root, BATTLE);
     }
 
+    public void gotoBattle(Battle battle, Ai ai) {
+
+        Pane root = null;
+        FXMLLoader fxmlLoader = null;
+        try {
+            fxmlLoader = new FXMLLoader(getClass().getResource("../View/FXMLFiles/Battle.fxml"));
+            root = fxmlLoader.load();
+            int i = 0;
+            System.out.println(i);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        BattleController bc = fxmlLoader.getController();
+        bc.setBattle(battle);
+        bc.setHandHbox();
+        bc.makeAccountNames();
+        bc.makeGrids();
+        bc.runTimelines();
+        ai.setBattleController(bc);
+        stopTimeline();
+        Container.runNextScene(root, BATTLE);
+
+    }
+
 
     public void handleQuitBtn() {
         System.exit(0);
@@ -321,8 +346,7 @@ public class MainMenu {
 
 
     public void multiGoalSelection() {
-        GameMode gameMode;
-        GameGoal gameGoal;
+
         JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
         jfxDialogLayout.setHeading(new Text(CHOOSE_GAME_MODE));
         jfxDialogLayout.setBody(new Text(CHOOSE_GAME_MODE));
@@ -350,8 +374,7 @@ public class MainMenu {
                 System.out.println(getMultiplayerModeGoal());
                 Account account = chooseYourOpponent();
                 if (account != null) {
-                    Battle battle = new Battle(Account.getLoggedAccount(), account, GameMode.MULTI_PLAYER, GameGoal.KILL_HERO);
-                    gotoBattle(battle);
+                    createBattle(account, GameMode.MULTI_PLAYER, GameGoal.KILL_HERO);
                 }
                 jfxDialog.close();
 
@@ -365,8 +388,7 @@ public class MainMenu {
                 System.out.println(getMultiplayerModeGoal());
                 Account account = chooseYourOpponent();
                 if (account != null) {
-                    Battle battle = new Battle(Account.getLoggedAccount(), account, GameMode.MULTI_PLAYER, GameGoal.COLLECT_FLAG);
-                    gotoBattle(battle);
+                    createBattle(account, GameMode.MULTI_PLAYER, GameGoal.COLLECT_FLAG);
                 }
                 jfxDialog.close();
 
@@ -380,8 +402,7 @@ public class MainMenu {
                 System.out.println(getMultiplayerModeGoal());
                 Account account = chooseYourOpponent();
                 if (account != null) {
-                    Battle battle = new Battle(Account.getLoggedAccount(), account, GameMode.MULTI_PLAYER, GameGoal.HOLD_FLAG);
-                    gotoBattle(battle);
+                    createBattle(account, GameMode.MULTI_PLAYER, GameGoal.HOLD_FLAG);
                 }
                 jfxDialog.close();
             }
@@ -510,23 +531,36 @@ public class MainMenu {
         jfxButtons.add(cancel);
         for (Deck d :
                 Account.getLoggedAccount().getCardCollection().getDecks()) {
+            d.setValid(Deck.validateDeck(d));
             if (d.isValid()) {
                 JFXButton jfxButton = new JFXButton(d.getDeckName());
                 jfxButton.setStyle(DEFAULT_BUTTON_CSS);
                 jfxButtons.add(jfxButton);
             }
         }
+        JFXDialog jfxDialog = new JFXDialog(stackPane, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
         jfxDialogLayout.setActions(jfxButtons);
         for (JFXButton j :
                 jfxButtons) {
             j.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
+                    Ai ai = new Ai(0);
+                    Deck deck = null;
+                    for (Deck d :
+                            Account.getLoggedAccount().getCardCollection().getDecks()) {
+                        if (d.getDeckName().equals(j.getText())) {
+                            deck = d;
+                        }
+                    }
+                    Deck aiDeck = Deck.deepClone(deck);
+                    ai.setMainDeck(aiDeck);
+                    createBattle(ai, GameMode.SINGLE_PLAYER, GameGoal.KILL_HERO);
+                    jfxDialog.close();
                 }
             });
         }
 
-        JFXDialog jfxDialog = new JFXDialog(stackPane, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
         cancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -562,8 +596,7 @@ public class MainMenu {
             @Override
             public void handle(ActionEvent event) {
                 setStoryModeLevel(LEVEL_1);
-                Battle battle = new Battle(Account.getLoggedAccount(), Account.getLoggedAccount(), GameMode.SINGLE_PLAYER, GameGoal.COLLECT_FLAG);
-                gotoBattle(battle);
+                createBattle(Account.getLoggedAccount(), GameMode.SINGLE_PLAYER, GameGoal.COLLECT_FLAG);
                 jfxDialog.close();
 
             }
@@ -573,8 +606,7 @@ public class MainMenu {
             @Override
             public void handle(ActionEvent event) {
                 setStoryModeLevel(LEVEL_2);
-                Battle battle = new Battle(Account.getLoggedAccount(), Account.getLoggedAccount(), GameMode.SINGLE_PLAYER, GameGoal.KILL_HERO);
-                gotoBattle(battle);
+                createBattle(Account.getLoggedAccount(), GameMode.SINGLE_PLAYER, GameGoal.KILL_HERO);
                 jfxDialog.close();
             }
         });
@@ -582,8 +614,7 @@ public class MainMenu {
             @Override
             public void handle(ActionEvent event) {
                 setStoryModeLevel(LEVEL_3);
-                Battle battle = new Battle(Account.getLoggedAccount(), Account.getLoggedAccount(), GameMode.SINGLE_PLAYER, GameGoal.HOLD_FLAG);
-                gotoBattle(battle);
+                createBattle(Account.getLoggedAccount(), GameMode.SINGLE_PLAYER, GameGoal.HOLD_FLAG);
                 jfxDialog.close();
             }
         });
@@ -648,6 +679,25 @@ public class MainMenu {
         });
 
         jfxDialog.show();
+    }
+
+    private void createBattle(Account account, GameMode gameMode, GameGoal gameGoal) {
+        checkDeckAtFirst(Account.getLoggedAccount(), account);
+        Battle battle = new Battle(Account.getLoggedAccount(), account, gameMode, gameGoal);
+        if (account instanceof Ai) {
+            gotoBattle(battle, (Ai) account);
+        } else {
+            gotoBattle(battle);
+        }
+    }
+
+    private void checkDeckAtFirst(Account firstPlayer, Account secondPlayer) {
+        if (firstPlayer.getCardCollection().getMainDeck() == null) {
+            throw new NotValidDeckException();
+        }
+        if (secondPlayer.getCardCollection().getMainDeck() == null) {
+            throw new NotValidDeckException();
+        }
     }
 
 }

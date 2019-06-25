@@ -1,9 +1,6 @@
 package Duelyst.Model.Battle;
 
-import Duelyst.Model.Account;
-import Duelyst.Model.Card;
-import Duelyst.Model.Deck;
-import Duelyst.Model.Hero;
+import Duelyst.Model.*;
 import com.rits.cloning.Cloner;
 
 import java.util.ArrayList;
@@ -28,6 +25,7 @@ public class Player {
         this.deck = cloner.deepClone(deck);
         this.hand = new ArrayList<>();
         this.inGameCards = new ArrayList<>();
+        this.deck.removeCard(this.deck.getHero().getCardId());
         initializeHand();
     }
 
