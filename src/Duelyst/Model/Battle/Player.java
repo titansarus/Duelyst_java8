@@ -23,12 +23,9 @@ public class Player {
         Cloner cloner = new Cloner();
         this.account = account;
         this.deck = cloner.deepClone(deck);
-            System.out.println("----------------------------------\n========================");
-            System.out.println(account.getUsername()+ " - - " + deck.getDeckName() +" - "+ deck.getCards().size());
-            System.out.println("==================================\n------------------------");
-
         this.hand = new ArrayList<>();
         this.inGameCards = new ArrayList<>();
+        this.deck.removeCard(this.deck.getHero().getCardId());
         initializeHand();
     }
 
