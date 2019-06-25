@@ -12,8 +12,9 @@ import java.util.Random;
 public class SoulEater extends Item {
 
     public SoulEater() {
-        super("SoulEater", "Hengame Marge Har Nirooye Khodi Yek PowerBuff Ba Yek Vahed Afzayeshe Ghodrate Zarbe Rooye Yeki Az Niroohaye Khodi Emal Mishavad",
-                25000, true, false,"res/Items/SoulEater/SoulEater.png");
+        super("SoulEater", "Hengame Marge Har Nirooye Khodi Yek PowerBuff Ba Yek Vahed Afzayeshe Ghodrate Zarbe" +
+                " Rooye Yeki Az Niroohaye Khodi Emal Mishavad", 25000, true,
+                false, "res/Items/SoulEater/SoulEater.png");
     }
 
     @Override

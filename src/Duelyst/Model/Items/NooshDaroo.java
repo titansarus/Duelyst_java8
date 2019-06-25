@@ -10,7 +10,8 @@ public class NooshDaroo extends Item {
 
 
     public NooshDaroo() {
-        super("NooshDaroo", "6 Vahed Sathe Salamatie Nirooye Tasadofi Ra Afzayesh Midahad", 0, false, true);
+        super("NooshDaroo", "6 Vahed Sathe Salamatie Nirooye" +
+                " Tasadofi Ra Afzayesh Midahad", 0, false, true);
     }
 
     @Override

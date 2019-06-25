@@ -9,6 +9,8 @@ import java.util.Random;
 import static Duelyst.View.Constants.*;
 
 public class Player {
+
+    private ArrayList<Card> graveyard = new ArrayList<>();
     private Account account;
     private Deck deck;
     private ArrayList<Card> hand;
@@ -134,5 +136,9 @@ public class Player {
 
     public ArrayList<Card> getInGameCards() {
         return inGameCards;
+    }
+
+    public ArrayList<Card> getGraveyard() {
+        return graveyard;
     }
 }

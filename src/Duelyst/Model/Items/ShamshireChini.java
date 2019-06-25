@@ -7,7 +7,8 @@ import Duelyst.Model.Warrior;
 public class ShamshireChini extends Item {
 
     public ShamshireChini() {
-        super("ShamshireChini", "Baraye MeleeHa: 5 Ghodrate Zarbe Midahad", 0, false, true);
+        super("ShamshireChini", "Baraye " +
+                "MeleeHa: 5 Ghodrate Zarbe Midahad", 0, false, true);
     }
 
     @Override

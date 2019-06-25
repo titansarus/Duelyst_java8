@@ -13,7 +13,8 @@ public class MajooneRooeinTani extends Item {
 
 
     public MajooneRooeinTani() {
-        super("MajooneRooeinTani", "10 HolyBuff Dar Nirooye Tasadofie Khodi Baraye 2 Nobat Faal Mikonad", 0, false, true);
+        super("MajooneRooeinTani", "10 HolyBuff Dar Nirooye Tasadofie" +
+                " Khodi Baraye 2 Nobat Faal Mikonad", 0, false, true);
     }
 
     @Override
@@ -22,11 +23,10 @@ public class MajooneRooeinTani extends Item {
             return;
         Random random = new Random();
         int randomIndex = random.nextInt(getPlayer().getInGameCards().size());
-        for (int i = 0; i < 10; i++) {
-            Buff buff = new HolyBuff(BuffName.HOLY_BUFF, true, 2, 1);
-            buff.setWarrior((Warrior) getPlayer().getInGameCards().get(randomIndex));
-            Battle.getRunningBattle().getPassiveBuffs().add(buff);
-        }
+
+        Buff buff = new HolyBuff(BuffName.HOLY_BUFF, true, 2, 10);
+        buff.setWarrior((Warrior) getPlayer().getInGameCards().get(randomIndex));
+        Battle.getRunningBattle().getPassiveBuffs().add(buff);
 
     }
 }

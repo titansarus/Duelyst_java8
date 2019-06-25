@@ -7,7 +7,8 @@ public class MajooneMana extends Item {
 
 
     public MajooneMana() {
-        super("MajooneMana" , "Dar Nobate Baed Mana Ra 3 Vahed Afzayesg Midahad" , 0, false, true);
+        super("MajooneMana" , "Dar Nobate Baed Mana Ra 3 " +
+                "Vahed Afzayesg Midahad" , 0, false, true);
     }
 
     @Override

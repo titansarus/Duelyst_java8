@@ -11,7 +11,7 @@ public class ShockHammer extends Item {
 
 
     public ShockHammer() {
-        super("ShockHammer", "Heroe Khodi  Hengame Zarbe Baraye Yek Nobat Nirooye DOshman Ra Disarm Mikonad",
+        super("ShockHammer", "Heroe Khodi  Hengame Zarbe Baraye Yek Nobat Nirooye Doshman Ra Disarm Mikonad",
                 15000, true, false,"res/Items/ShockHammer/ShockHammer.png");
     }
 

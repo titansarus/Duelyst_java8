@@ -6,6 +6,10 @@ import Duelyst.Exceptions.NotEnoughManaException;
 import Duelyst.Exceptions.NotValidDeckException;
 import Duelyst.Model.*;
 import Duelyst.Model.Buffs.Buff;
+import Duelyst.Model.Buffs.BuffName;
+import Duelyst.Model.Buffs.HolyBuff;
+import Duelyst.Model.Buffs.PowerBuff;
+import Duelyst.Model.Items.*;
 import Duelyst.Model.Spell.Spell;
 
 import java.util.ArrayList;
@@ -46,7 +50,7 @@ public class Battle {
         this.gameGoal = gameGoal;
         this.gameMode = gameMode;
         runningBattle = this;
-        if (account2 instanceof Ai){
+        if (account2 instanceof Ai) {
             ((Ai) account2).setBattle(this);
         }
         setPlayer1(new Player(account1, account1.getCardCollection().getMainDeck()));
@@ -108,6 +112,16 @@ public class Battle {
                     getPlayingPlayer().changeMana(-warrior.getManaCost());
                     getPlayingPlayer().getHand().remove(warrior);
                     playingPlayer.getInGameCards().add(getSelectedCard());
+
+                    if (getPlayingPlayer().getDeck().getItem() instanceof AssassinationDagger) {//AssassinationDagger Item Apply
+                        getPlayingPlayer().getDeck().getItem().applyItem();
+                    } else if (getPlayingPlayer().getDeck().getItem() instanceof GhosleTaemid) {//GhosleTaemid Item Apply
+                        Buff buff = new HolyBuff(BuffName.HOLY_BUFF, true, 2, 1);
+                        buff.setWarrior(warrior);
+                        getPassiveBuffs().add(buff);
+                    }
+                    deleteDeathCardsFromMap();//Check For Death Cards
+
                 } else {
                     throw new NotEnoughManaException();
                 }
@@ -141,12 +155,70 @@ public class Battle {
 
     public int attack(Warrior attacker, Warrior attackedCard, boolean isFromCounterAttack) {
         attackedCard.decreaseHealthPoint(attacker.getActionPower() - attackedCard.getShield());//TODO CHECK FOR BUFF
+        this.attackedCard = attackedCard;
+        //KamaneDamol Item Apply
+        if (getPlayingPlayer().getDeck().getItem() instanceof KamaneDamol && attacker.equals(getPlayingPlayer().getDeck().getHero())) {
+            getPlayingPlayer().getDeck().getItem().applyItem();
+        } else if (getPlayingPlayer().getDeck().getItem() instanceof PoisonousDagger) {
+            getPlayingPlayer().getDeck().getItem().applyItem();
+        } else if (getPlayingPlayer().getDeck().getItem() instanceof ShockHammer) {
+            getPlayingPlayer().getDeck().getItem().applyItem();
+        }
+
+        getSelectedCell().setWarrior(null);
+        setSelectedCell(null);
+
+        deleteDeathCardsFromMap(); // Check For Death Cards
+
         //TODO CHECK FOR COUNTER ATTACK AND BUFF AND A LOT OF THINGS
         if (!isFromCounterAttack) {
             return VALID_COUNTER_WITH_BUFF; //RETURN DETERMINES THE CONTROLLER TO SHOW BUFF ANIMATION OR NOT? DO COUNTER ATTACK OR NOT?
         } else {
             return INVALID_COUNTER_WITH_BUFF;
         }
+    }
+
+    public void deleteDeathCardsFromMap() {
+        ArrayList<Card> firstDeathCards = findDeathCards(getPlayer1().getInGameCards());
+        ArrayList<Card> secondDeathCards = findDeathCards(getPlayer2().getInGameCards());
+        if (secondDeathCards.size() > 0)
+            System.out.println(secondDeathCards.get(0).getCardName());
+        deleteFromMap(firstDeathCards);
+        deleteFromMap(secondDeathCards);
+        addUsedCardsToGraveYard(firstDeathCards, secondDeathCards);
+    }
+
+    private void deleteFromMap(ArrayList<Card> cards) {
+        for (Card card : cards) {
+            getCellOfWarrior((Warrior) card).setWarrior(null);
+        }
+    }
+
+    private void addUsedCardsToGraveYard(ArrayList<Card> firstDeathCards, ArrayList<Card> secondDeathCards) {
+
+        for (int i = 0; i < getPlayer1().getDeck().getCards().size(); i++) {
+            if (getPlayer1().getDeck().getCards().get(i) instanceof Spell && getPlayer1().getDeck().getCards().get(i).isInGame()) {
+                getPlayer1().getDeck().getCards().add(getPlayer1().getDeck().getCards().get(i));
+            }
+        }
+        getPlayer1().getGraveyard().addAll(firstDeathCards);
+        getPlayer1().getInGameCards().removeAll(firstDeathCards);
+        getPlayer2().getGraveyard().addAll(secondDeathCards);
+        getPlayer2().getInGameCards().removeAll(secondDeathCards);
+    }
+
+    private ArrayList<Card> findDeathCards(ArrayList<Card> playerInGameCards) {
+
+        ArrayList<Card> deathCards = new ArrayList<>();
+        for (Card playerInGameCard : playerInGameCards) {
+            if (playerInGameCard.isInGame() && (playerInGameCard instanceof Warrior)) {
+                if (((Warrior) playerInGameCard).getHealthPoint() <= 0) {
+                    deathCards.add(playerInGameCard);
+                    playerInGameCard.setInGame(false);
+                }
+            }
+        }
+        return deathCards;
     }
 
 

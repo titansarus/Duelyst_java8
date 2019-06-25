@@ -8,7 +8,8 @@ import java.util.Random;
 public class RandomDamage extends Item {
 
     public RandomDamage() {
-        super("RandomDamage", "Be Nirooye Tasadofi Dar Zamin 2 Ghodrate Zarbe Midahad", 0, false, true);
+        super("RandomDamage", "Be Nirooye Tasadofi Dar Zamin 2" +
+                " Ghodrate Zarbe Midahad", 0, false, true);
     }
 
     @Override
