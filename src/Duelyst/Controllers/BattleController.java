@@ -201,9 +201,9 @@ public class BattleController {
                 ArrayList<Cell> cells = battle.getValidCells();
                 System.out.println(cells.size());
                 for (int i = 0; i < cells.size(); i++) {
-                    System.out.println(cells.get(i).getRow() + " <======> " +cells.get(i).getColumn());
+                    System.out.println(cells.get(i).getRow() + " <======> " + cells.get(i).getColumn());
                 }
-                if (!cells.contains(battle.getGrid()[coordinate[0]][coordinate[1]])){
+                if (!cells.contains(battle.getGrid()[coordinate[0]][coordinate[1]])) {
                     //TODO throw exception
 
                     return;
@@ -421,7 +421,7 @@ public class BattleController {
         int[] battleCoordinate = getBattle().findCellCoordinate(getBattle().getSelectedCell());
         battle.findValidCell(KindOfActionForValidCells.INSERT);
         ArrayList<Cell> cells = battle.getValidCells();
-        if (!cells.contains(battle.getGrid()[battleCoordinate[0]] [battleCoordinate[1]])){
+        if (!cells.contains(battle.getGrid()[battleCoordinate[0]][battleCoordinate[1]])) {
             //TODO throw exception
             return;
         }
@@ -530,18 +530,19 @@ public class BattleController {
     }
 
     public void removeImageViewFromCell(Card card) {
-
+        System.out.println("GI kharrrrrrrrrrrrrrrrrrrrrr");
         CardOnField cardOnField = CardOnField.getCardOnField(card);
-        if (cardOnField != null)
+        if (cardOnField != null) {
             anchorPane.getChildren().remove(cardOnField.getImageView());
+            System.out.println("giiiiiiiiiiiiii khar2");
+        }
     }
 
     public void rectangleOnMouseEnter(MouseEvent event, int i, int j) {
         Polygon p = (Polygon) event.getSource();
-        System.out.println(p.getPoints());
-        if (getBattle().getGrid()[i][j].getWarrior()!=null){
-            attackPower_lbl.setText(""+getBattle().getGrid()[i][j].getWarrior().getActionPower());
-            healthPoint_lbl.setText(""+getBattle().getGrid()[i][j].getWarrior().getHealthPoint());
+        if (getBattle().getGrid()[i][j].getWarrior() != null) {
+            attackPower_lbl.setText("" + getBattle().getGrid()[i][j].getWarrior().getActionPower());
+            healthPoint_lbl.setText("" + getBattle().getGrid()[i][j].getWarrior().getHealthPoint());
         }
         p.setStyle("-fx-fill: YELLOW");
     }
@@ -549,8 +550,7 @@ public class BattleController {
 
     public void rectangleOnMouseExited(MouseEvent event, int i, int j) {
         Polygon p = (Polygon) event.getSource();
-        System.out.println(p.getPoints());
-        if (getBattle().getGrid()[i][j].getWarrior()!=null){
+        if (getBattle().getGrid()[i][j].getWarrior() != null) {
             attackPower_lbl.setText("");
             healthPoint_lbl.setText("");
         }
@@ -659,6 +659,15 @@ public class BattleController {
 
     public void endTurnButtonGlowDisappear() {
         endTurn_img.setImage(new Image("res/ui/button_end_turn_mine.png"));//TODO Az Image Holder Estefade Nakardam
+    }
+
+    public void animationOfDeath(Warrior warrior) {
+        CardOnField cardOnField = CardOnField.getCardOnField(warrior);
+        if (cardOnField != null) {
+            cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders(warrior.getAddressOfDeathGif())));
+            anchorPane.getChildren().add(cardOnField.getImageView());
+            System.out.println("Giiiiiiiiiiiiiiiiiii");
+        }
     }
 
     public void updateHand() {

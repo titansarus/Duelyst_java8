@@ -1,5 +1,6 @@
 package Duelyst.Model.Battle;
 
+import Duelyst.Controllers.*;
 import Duelyst.Controllers.BattleController;
 import Duelyst.Exceptions.CellFilledBeforeException;
 import Duelyst.Exceptions.NotEnoughManaException;
@@ -11,6 +12,8 @@ import Duelyst.Model.Buffs.HolyBuff;
 import Duelyst.Model.Buffs.PowerBuff;
 import Duelyst.Model.Items.*;
 import Duelyst.Model.Spell.Spell;
+import Duelyst.Utility.ImageHolder;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 
@@ -125,6 +128,8 @@ public class Battle {
                     getGrid()[i][j].setWarrior((Warrior) getSelectedCard());
                     Warrior warrior = getGrid()[i][j].getWarrior();
 
+                    deleteDeathCardsFromMap(); // Check For Death Cards
+
                     warrior.setInGame(true);
 
                     warrior.setValidToMove(false);
@@ -189,6 +194,9 @@ public class Battle {
         attacker.setValidToMove(false);
         attacker.setValidToAttack(false);
 
+        if (isFromCounterAttack || (!attackedCard.isValidCounterAttack()))
+            deleteDeathCardsFromMap(); // Check For Death Cards
+
         setSelectedCell(null);
 
         //TODO CHECK FOR COUNTER ATTACK AND BUFF AND A LOT OF THINGS
@@ -215,6 +223,7 @@ public class Battle {
     private void deleteFromMap(ArrayList<Card> cards) {
         for (Card card : cards) {
             System.out.println("=========================>   " + card.getCardName());
+            battleController.animationOfDeath((Warrior) card);
             battleController.removeImageViewFromCell(card);
             getCellOfWarrior((Warrior) card).setWarrior(null);
         }
