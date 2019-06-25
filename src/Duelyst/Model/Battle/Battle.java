@@ -71,9 +71,7 @@ public class Battle {
     }
 
     public void nextTurn() {
-
-        System.out.println("Reza Gikhar :)  " + getCellOfWarrior(player1.getDeck().getHero()).getColumn()+getCellOfWarrior(player2.getDeck().getHero()).getColumn());
-
+        setTrueOfValidAttackAndMove();
         turn++;
         setPlayingPlayer();
         getPlayer1().setManaFromTurn(getTurn());
@@ -89,11 +87,31 @@ public class Battle {
         }
     }
 
+    private void setTrueOfValidAttackAndMove() {
+        for (Cell[] c:
+             getGrid()) {
+            for (Cell c1:
+                 c) {
+                if (c1.getWarrior()!= null){
+                    c1.getWarrior().setValidToAttack(true);
+                    c1.getWarrior().setValidToMove(true);
+                }
+            }
+        }
+    }
+
     public void move(int destX, int destY) {
+        findValidCell(KindOfActionForValidCells.MOVE);
+        ArrayList<Cell> cells = getValidCells();
+        if (!cells.contains(getGrid()[destX][destY])){
+            //TODO throw exception
+            return;
+        }
         if (getSelectedCell().getWarrior() != null) {
             if (getSelectedCell().getColumn() != destX || getSelectedCell().getRow() != destY) {
                 Cell cell = getGrid()[destX][destY];
                 if (cell.getWarrior() == null) {
+                    getSelectedCell().getWarrior().setValidToMove(false);
                     cell.setWarrior(getSelectedCell().getWarrior());
                     getSelectedCell().setWarrior(null);
                     setSelectedCell(null);
@@ -104,12 +122,19 @@ public class Battle {
     }
 
     public void insertSelectedCard(int i, int j) {
+        findValidCell(KindOfActionForValidCells.INSERT);
+        ArrayList<Cell> cells = getValidCells();
+        if (!cells.contains(getGrid()[i][j])){
+            //TODO throw exception
+            return;
+        }
         if (getSelectedCard() instanceof Warrior) {
             if (getGrid()[i][j].isEmpty()) {
                 if (getPlayingPlayer().getMana() >= getSelectedCard().getManaCost()) {
                     getGrid()[i][j].setWarrior((Warrior) getSelectedCard());
                     Warrior warrior = getGrid()[i][j].getWarrior();
-
+                    warrior.setValidToMove(false);
+                    warrior.setValidToAttack(false);
                     getPlayingPlayer().changeMana(-warrior.getManaCost());
                     getPlayingPlayer().getHand().remove(warrior);
                     playingPlayer.getInGameCards().add(getSelectedCard());
@@ -155,6 +180,7 @@ public class Battle {
     }
 
     public int attack(Warrior attacker, Warrior attackedCard, boolean isFromCounterAttack) {
+
         attackedCard.decreaseHealthPoint(attacker.getActionPower() - attackedCard.getShield());//TODO CHECK FOR BUFF
         this.attackedCard = attackedCard;
         //KamaneDamol Item Apply
@@ -165,9 +191,8 @@ public class Battle {
         } else if (getPlayingPlayer().getDeck().getItem() instanceof ShockHammer) {
             getPlayingPlayer().getDeck().getItem().applyItem();
         }
-
-        getSelectedCell().setWarrior(null);
-        setSelectedCell(null);
+        attacker.setValidToMove(false);
+        attacker.setValidToAttack(false);
 
         deleteDeathCardsFromMap(); // Check For Death Cards
 
