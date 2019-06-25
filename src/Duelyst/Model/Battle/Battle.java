@@ -11,6 +11,7 @@ import Duelyst.Model.Buffs.HolyBuff;
 import Duelyst.Model.Buffs.PowerBuff;
 import Duelyst.Model.Items.*;
 import Duelyst.Model.Spell.Spell;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
 import java.util.ArrayList;
 
@@ -60,19 +61,19 @@ public class Battle {
         initializeCells();
         insertPlayerHeroesInMap();
 
-       nextTurn();
+        nextTurn();
     }
 
 
     private void insertPlayerHeroesInMap() {
-        System.out.println("******************\n"+player1.getDeck().getHero().equals(player2.getDeck().getHero())+"********************\n");
+        System.out.println("******************\n" + player1.getDeck().getHero().equals(player2.getDeck().getHero()) + "********************\n");
         getGrid()[2][0].setWarrior(player1.getDeck().getHero());
         getGrid()[2][8].setWarrior(player2.getDeck().getHero());
     }
 
     public void nextTurn() {
 
-        System.out.println("Reza Gikhar :)  " + getCellOfWarrior(player1.getDeck().getHero()).getColumn()+getCellOfWarrior(player2.getDeck().getHero()).getColumn());
+//        System.out.println("Reza Gikhar :)  " + getCellOfWarrior(player1.getDeck().getHero()).getColumn() + getCellOfWarrior(player2.getDeck().getHero()).getColumn());
 
         turn++;
         setPlayingPlayer();
@@ -109,6 +110,7 @@ public class Battle {
                 if (getPlayingPlayer().getMana() >= getSelectedCard().getManaCost()) {
                     getGrid()[i][j].setWarrior((Warrior) getSelectedCard());
                     Warrior warrior = getGrid()[i][j].getWarrior();
+                    warrior.setInGame(true);
 
                     getPlayingPlayer().changeMana(-warrior.getManaCost());
                     getPlayingPlayer().getHand().remove(warrior);
@@ -121,7 +123,7 @@ public class Battle {
                         buff.setWarrior(warrior);
                         getPassiveBuffs().add(buff);
                     }
-                    deleteDeathCardsFromMap();//Check For Death Cards
+
 
                 } else {
                     throw new NotEnoughManaException();
@@ -166,10 +168,7 @@ public class Battle {
             getPlayingPlayer().getDeck().getItem().applyItem();
         }
 
-        getSelectedCell().setWarrior(null);
         setSelectedCell(null);
-
-        deleteDeathCardsFromMap(); // Check For Death Cards
 
         //TODO CHECK FOR COUNTER ATTACK AND BUFF AND A LOT OF THINGS
         if (!isFromCounterAttack) {
@@ -183,8 +182,10 @@ public class Battle {
     public void deleteDeathCardsFromMap() {
         ArrayList<Card> firstDeathCards = findDeathCards(getPlayer1().getInGameCards());
         ArrayList<Card> secondDeathCards = findDeathCards(getPlayer2().getInGameCards());
-        if (secondDeathCards.size() > 0)
-            System.out.println(secondDeathCards.get(0).getCardName());
+
+        System.out.println("==============================> Check Death Cards " + firstDeathCards.size());
+        System.out.println(getPlayer1().getInGameCards().size());
+
         deleteFromMap(firstDeathCards);
         deleteFromMap(secondDeathCards);
         addUsedCardsToGraveYard(firstDeathCards, secondDeathCards);
@@ -192,6 +193,8 @@ public class Battle {
 
     private void deleteFromMap(ArrayList<Card> cards) {
         for (Card card : cards) {
+            System.out.println("=========================>   " + card.getCardName());
+            battleController.removeImageViewFromCell(card);
             getCellOfWarrior((Warrior) card).setWarrior(null);
         }
     }
@@ -214,6 +217,7 @@ public class Battle {
         ArrayList<Card> deathCards = new ArrayList<>();
         for (Card playerInGameCard : playerInGameCards) {
             if (playerInGameCard.isInGame() && (playerInGameCard instanceof Warrior)) {
+                System.out.println(((Warrior) playerInGameCard).getHealthPoint() + " <====================================]]");
                 if (((Warrior) playerInGameCard).getHealthPoint() <= 0) {
                     deathCards.add(playerInGameCard);
                     playerInGameCard.setInGame(false);
@@ -464,7 +468,7 @@ public class Battle {
                 getGrid()) {
             for (Cell c1 :
                     c) {
-                if (c1.getWarrior()==null)
+                if (c1.getWarrior() == null)
                     continue;
                 if (c1.getWarrior().equals(warrior)) {
                     return c1;

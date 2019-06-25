@@ -24,6 +24,7 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static Duelyst.View.Constants.*;
@@ -34,6 +35,10 @@ public class BattleController {
     public ImageView endTurn_img;
 
     public Label endTurn_lbl;
+
+    public Label attackPower_lbl;
+
+    public Label healthPoint_lbl;
 
     @FXML
     HBox hand_hBox;
@@ -153,16 +158,20 @@ public class BattleController {
                     }
                 });
 
+                int finalJ = j;
+                int finalI = i;
                 rectangles[i][j].setOnMouseEntered(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        rectangleOnMouseEnter(event);
+                        rectangleOnMouseEnter(event, finalI, finalJ);
                     }
                 });
+
+
                 rectangles[i][j].setOnMouseExited(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        rectangleOnMouseExited(event);
+                        rectangleOnMouseExited(event, finalI, finalJ);
                     }
                 });
             }
@@ -217,6 +226,7 @@ public class BattleController {
 
         if (getBattle().getSelectedCard() != null) {//TODO SOME MORE CHECKS NEEDED
             handleInsertCardClick();
+
             return;
         }
     }
@@ -283,10 +293,10 @@ public class BattleController {
         });
         parallelTransition.play();
 
+        battle.deleteDeathCardsFromMap(); // Check For Death Cards
     }
 
-    public void handleAttackFromAi(Warrior attacker , Warrior attacked)
-    {
+    public void handleAttackFromAi(Warrior attacker, Warrior attacked) {
         CardOnField cardOnFieldAttacker = CardOnField.findCardOnFieldFromArrayList(cardsOnField, attacker);
         CardOnField cardOnFieldAttacked = CardOnField.findCardOnFieldFromArrayList(cardsOnField, attacked);
         int resultOfattack = getBattle().attack(((Warrior) cardOnFieldAttacker.getCard()), ((Warrior) cardOnFieldAttacked.getCard()), false);
@@ -346,28 +356,25 @@ public class BattleController {
             }
         });
         parallelTransition.play();
-
-
+        battle.deleteDeathCardsFromMap();
 
     }
 
-    public void insertPlayerHeroes()
-    {
-       getBattle().setPlayingPlayer(getBattle().getPlayer1());
+    public void insertPlayerHeroes() {
+        getBattle().setPlayingPlayer(getBattle().getPlayer1());
         getBattle().getPlayingPlayer().setHero(getBattle().getPlayer1().getDeck().getHero());
-        handleInsertCardClickAi(getBattle().getGrid()[2][0],getBattle().getPlayer1().getDeck().getHero());
+        handleInsertCardClickAi(getBattle().getGrid()[2][0], getBattle().getPlayer1().getDeck().getHero());
 
 
         getBattle().setPlayingPlayer(getBattle().getPlayer2());
         getBattle().getPlayingPlayer().setHero(getBattle().getPlayer2().getDeck().getHero());
-        handleInsertCardClickAi(getBattle().getGrid()[2][8],getBattle().getPlayer2().getDeck().getHero());
+        handleInsertCardClickAi(getBattle().getGrid()[2][8], getBattle().getPlayer2().getDeck().getHero());
 
         getBattle().setPlayingPlayer(getBattle().getPlayer1());
     }
 
 
-
-    public void handleInsertCardClickAi(Cell cell , Card card) {
+    public void handleInsertCardClickAi(Cell cell, Card card) {
         int[] battleCoordinate = getBattle().findCellCoordinate(cell);
         CardForBattle cardForBattle = CardForBattleController.findCardForBattleWithCard(getHand(), card);
         try {
@@ -377,7 +384,6 @@ public class BattleController {
             ObservableList<Double> points = polygon.getPoints();
 
 
-
             CardOnField cardOnField = new CardOnField();
             cardOnField.setCard(card);
             cardsOnField.add(cardOnField);
@@ -385,14 +391,15 @@ public class BattleController {
 
             getBattle().setSelectedCard(null);
             //   getHand().remove(cardForBattl e);
-  //          getBattle().setSelectedCard(null);
+            //          getBattle().setSelectedCard(null);
 //            cardForBattle.setCard(null);
         } catch (MyException e) {
             Container.exceptionGenerator(e, stackPane);
         }
         getBattle().setSelectedCell(null);
-    }
+        battle.deleteDeathCardsFromMap(); // Check For Death Cards
 
+    }
 
 
     public void handleInsertCardClick() {
@@ -407,7 +414,7 @@ public class BattleController {
             CardOnField cardOnField = new CardOnField();
             cardOnField.setCard(getBattle().getSelectedCard());
             cardsOnField.add(cardOnField);
-            sendIdleImageViewToCenterOfCell(cardOnField, polygon);
+            sendIdleImageViewToCenterOfCell(cardOnField, polygon);//Alireza
 
             //   getHand().remove(cardForBattle);
             getBattle().setSelectedCard(null);
@@ -416,9 +423,11 @@ public class BattleController {
             Container.exceptionGenerator(e, stackPane);
         }
         getBattle().setSelectedCell(null);
+        battle.deleteDeathCardsFromMap(); // Check For Death Cards
+
     }
 
-    public void moveAnimationRunAi(int[] coordinate , Warrior warrior) {
+    public void moveAnimationRunAi(int[] coordinate, Warrior warrior) {
         CardOnField cardOnField = CardOnField.findCardOnFieldFromArrayList(cardsOnField, warrior);
 
         Integer srcRow = getBattle().getSelectedCell().getRow();
@@ -436,7 +445,7 @@ public class BattleController {
 
         anchorPane.getChildren().remove(cardOnField.getImageView());
 
-        cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders( getBattle().getSelectedCell().getWarrior().getAddressOfRunGif())));
+        cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders(getBattle().getSelectedCell().getWarrior().getAddressOfRunGif())));
 
         anchorPane.getChildren().add(cardOnField.getImageView());
         TranslateTransition tt = new TranslateTransition(Duration.millis(500), cardOnField.getImageView());
@@ -472,7 +481,7 @@ public class BattleController {
 
         anchorPane.getChildren().remove(cardOnField.getImageView());
 
-        cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders( getBattle().getSelectedCell().getWarrior().getAddressOfRunGif())));
+        cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders(getBattle().getSelectedCell().getWarrior().getAddressOfRunGif())));
 
         anchorPane.getChildren().add(cardOnField.getImageView());
         TranslateTransition tt = new TranslateTransition(Duration.millis(500), cardOnField.getImageView());
@@ -492,24 +501,38 @@ public class BattleController {
 
     public void sendIdleImageViewToCenterOfCell(CardOnField cardOnField, Polygon polygon) {
         ObservableList<Double> points = polygon.getPoints();
-        cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders( cardOnField.getCard().getAddressOfIdleGif())));
+        cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders(cardOnField.getCard().getAddressOfIdleGif())));
         double x = calculateMidXFromPoint(points);
         double y = calculateMidYFromPoint(points);
         cardOnField.getImageView().relocate(x, y);
         anchorPane.getChildren().add(cardOnField.getImageView());
     }
 
-    public void rectangleOnMouseEnter(MouseEvent event) {
+    public void removeImageViewFromCell(Card card) {
+
+        CardOnField cardOnField = CardOnField.getCardOnField(card);
+        if (cardOnField != null)
+            anchorPane.getChildren().remove(cardOnField.getImageView());
+    }
+
+    public void rectangleOnMouseEnter(MouseEvent event, int i, int j) {
         Polygon p = (Polygon) event.getSource();
         System.out.println(p.getPoints());
-
+        if (getBattle().getGrid()[i][j].getWarrior()!=null){
+            attackPower_lbl.setText(""+getBattle().getGrid()[i][j].getWarrior().getActionPower());
+            healthPoint_lbl.setText(""+getBattle().getGrid()[i][j].getWarrior().getHealthPoint());
+        }
         p.setStyle("-fx-fill: YELLOW");
     }
 
-    public void rectangleOnMouseExited(MouseEvent event) {
+
+    public void rectangleOnMouseExited(MouseEvent event, int i, int j) {
         Polygon p = (Polygon) event.getSource();
         System.out.println(p.getPoints());
-
+        if (getBattle().getGrid()[i][j].getWarrior()!=null){
+            attackPower_lbl.setText("");
+            healthPoint_lbl.setText("");
+        }
         p.setStyle("-fx-fill: BLACK; -fx-opacity: 0.5");
     }
 
@@ -609,11 +632,11 @@ public class BattleController {
         updateHand();
     }
 
-    public void endTurnButtonGlow(){
+    public void endTurnButtonGlow() {
         endTurn_img.setImage(new Image("res/ui/button_end_turn_mine_glow.png"));//TODO Az Image Holder Estefade Nakardam
     }
 
-    public void endTurnButtonGlowDisappear(){
+    public void endTurnButtonGlowDisappear() {
         endTurn_img.setImage(new Image("res/ui/button_end_turn_mine.png"));//TODO Az Image Holder Estefade Nakardam
     }
 
@@ -664,8 +687,14 @@ public class BattleController {
 
 
 class CardOnField {
+
+    private static ArrayList<CardOnField> allCardOnFields = new ArrayList<>();
     private ImageView imageView;
     private Card card;
+
+    public CardOnField() {
+        allCardOnFields.add(this);
+    }
 
 
     public ImageView getImageView() {
@@ -693,6 +722,18 @@ class CardOnField {
             }
         }
         return null;
+    }
+
+    public static CardOnField getCardOnField(Card card) {
+        for (int i = 0; i < allCardOnFields.size(); i++) {
+            if (allCardOnFields.get(i).getCard().equals(card))
+                return allCardOnFields.get(i);
+        }
+        return null;
+    }
+
+    public static ArrayList<CardOnField> getAllCardOnFields() {
+        return allCardOnFields;
     }
 }
 
