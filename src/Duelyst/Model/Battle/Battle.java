@@ -410,6 +410,7 @@ public class Battle {
     }
 
     public void setBattleController(BattleController battleController) {
+
         this.battleController = battleController;
     }
 }

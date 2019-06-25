@@ -1773,6 +1773,27 @@
               "addressOfGetDamageGif": "",
               "addressOfDeathGif": ""
             }
+          },
+          {
+            "@type": "Duelyst.Model.Items.KingWisdom",
+            "@val": {
+              "isUsable": true,
+              "applyFirst": true,
+              "cardId": "saman_KingWisdom_1",
+              "manaCost": 0,
+              "darikCost": 9000,
+              "account": "@root.6",
+              "cardDescription": "Dar Hameye NobatHa Mana Yeki Ezafe Mishavad",
+              "cardName": "KingWisdom",
+              "isAbleToMove": true,
+              "isInGame": false,
+              "addressOfImage": "res/Items/KingWisdom/KingWisdom.png",
+              "addressOfIdleGif": "",
+              "addressOfRunGif": "",
+              "addressOfAttackGif": "",
+              "addressOfGetDamageGif": "",
+              "addressOfDeathGif": ""
+            }
           }
         ],
         "account": "@root.6",
@@ -2339,27 +2360,6 @@
                   "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Other/Gorg/Gorg_breathing.gif",
                   "addressOfDeathGif": "./res/Characters/UnitsCreated/Other/Gorg/Gorg_death.gif"
                 }
-              },
-              {
-                "@type": "Duelyst.Model.Items.KingWisdom",
-                "@val": {
-                  "isUsable": true,
-                  "applyFirst": true,
-                  "cardId": "saman_KingWisdom_1",
-                  "manaCost": 0,
-                  "darikCost": 9000,
-                  "account": "@root.6",
-                  "cardDescription": "Dar Hameye NobatHa Mana Yeki Ezafe Mishavad",
-                  "cardName": "KingWisdom",
-                  "isAbleToMove": true,
-                  "isInGame": false,
-                  "addressOfImage": "res/Items/KingWisdom/KingWisdom.png",
-                  "addressOfIdleGif": "",
-                  "addressOfRunGif": "",
-                  "addressOfAttackGif": "",
-                  "addressOfGetDamageGif": "",
-                  "addressOfDeathGif": ""
-                }
               }
             ],
             "minions": [
@@ -2398,8 +2398,7 @@
           }
         ],
         "mainDeck": "@root.6.cardCollection.decks.0",
-        "customCards": [],
-        "selectedCard": "@root.6.cardCollection.decks.0.cards.20"
+        "customCards": []
       },
       "username": "saman",
       "password": "saman",
