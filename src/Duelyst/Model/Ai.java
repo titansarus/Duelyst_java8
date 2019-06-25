@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class Ai extends Account {
     private BattleController battleController;
-
+    private Battle battle =null;
     public Ai(int numberOfAi) {
         super("AI:)", "AI:)");
         if (numberOfAi == 1) {
@@ -24,17 +24,21 @@ public class Ai extends Account {
         setDarick(1000000000);
     }
 
+    public void setBattle(Battle battle) {
+        this.battle = battle;
+    }
+
     public void setMainDeck(Deck deck) {
         getCardCollection().setMainDeck(deck);
     }
 
-    public static void playGame(Battle battle) {
-        insertCard(battle);
-        move(battle);
-        attack(battle);
+    public void playGame() {
+        insertCard();
+        move();
+        attack();
     }
 
-    private static void insertCard(Battle battle) {
+    private void insertCard() {
         try {
             Player player = battle.getPlayer2();
             ArrayList<Card> cards = player.getHand();
@@ -49,7 +53,7 @@ public class Ai extends Account {
         }
     }
 
-    private static void move(Battle battle) {
+    private void move() {
         try {
             Player player = battle.getPlayer2();
             ArrayList<Card> cards = player.getInGameCards();
@@ -64,7 +68,7 @@ public class Ai extends Account {
         }
     }
 
-    private static void attack(Battle battle) {
+    private void attack() {
         try {
             Player player = battle.getPlayer2();
             ArrayList<Card> cards = player.getInGameCards();

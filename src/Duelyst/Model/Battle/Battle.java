@@ -44,6 +44,9 @@ public class Battle {
         this.gameGoal = gameGoal;
         this.gameMode = gameMode;
         runningBattle = this;
+        if (account2 instanceof Ai){
+            ((Ai) account2).setBattle(this);
+        }
         setPlayer1(new Player(account1, account1.getCardCollection().getMainDeck()));
         setPlayer2(new Player(account2, account2.getCardCollection().getMainDeck()));
         setPlayingPlayer();
@@ -70,7 +73,7 @@ public class Battle {
         setSelectedCard(null);
         getPlayingPlayer().getNextHand();
         if (getPlayingPlayer().getAccount() instanceof Ai) {
-            Ai.playGame(this);
+            ((Ai) getPlayingPlayer().getAccount()).playGame();
             long startTime = System.nanoTime();
             while ((System.nanoTime() - startTime) / 1000000 < 2000) {
             }
