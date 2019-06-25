@@ -56,7 +56,7 @@ public class Battle {
         initializeCells();
         insertPlayerHeroesInMap();
 
-//        nextTurn();
+       nextTurn();
     }
 
 
@@ -66,7 +66,7 @@ public class Battle {
     }
 
     public void nextTurn() {
-        System.out.println("======================>>>> " + getGrid()[2][0].getWarrior().getCardName());
+  //      System.out.println("======================>>>> " + getGrid()[2][0].getWarrior().getCardName());
         turn++;
         setPlayingPlayer();
         getPlayer1().setManaFromTurn(getTurn());

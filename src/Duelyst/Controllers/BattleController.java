@@ -202,6 +202,7 @@ public class BattleController {
                 if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior())) {
                     System.out.println("YOUR CARD!!!");
                 } else {
+                    System.out.println("Attack");
                     handleAttackAnimation(coordinate);
 
                 }
@@ -350,8 +351,16 @@ public class BattleController {
 
     public void insertPlayerHeroes()
     {
+       getBattle().setPlayingPlayer(getBattle().getPlayer1());
+        getBattle().getPlayingPlayer().setHero(getBattle().getPlayer1().getDeck().getHero());
         handleInsertCardClickAi(getBattle().getGrid()[2][0],getBattle().getPlayer1().getDeck().getHero());
+
+
+        getBattle().setPlayingPlayer(getBattle().getPlayer2());
+        getBattle().getPlayingPlayer().setHero(getBattle().getPlayer2().getDeck().getHero());
         handleInsertCardClickAi(getBattle().getGrid()[2][8],getBattle().getPlayer2().getDeck().getHero());
+
+        getBattle().setPlayingPlayer(getBattle().getPlayer1());
     }
 
 
@@ -361,8 +370,10 @@ public class BattleController {
         CardForBattle cardForBattle = CardForBattleController.findCardForBattleWithCard(getHand(), card);
         try {
             getBattle().insertSelectedCard(battleCoordinate[0], battleCoordinate[1]);
+            getBattle().getPlayingPlayer().getInGameCards().add(card);
             Polygon polygon = rectangles[battleCoordinate[0]][battleCoordinate[1]];
             ObservableList<Double> points = polygon.getPoints();
+
 
 
             CardOnField cardOnField = new CardOnField();
@@ -370,7 +381,8 @@ public class BattleController {
             cardsOnField.add(cardOnField);
             sendIdleImageViewToCenterOfCell(cardOnField, polygon);
 
-            //   getHand().remove(cardForBattle);
+            getBattle().setSelectedCard(null);
+            //   getHand().remove(cardForBattl e);
   //          getBattle().setSelectedCard(null);
 //            cardForBattle.setCard(null);
         } catch (MyException e) {
