@@ -193,7 +193,9 @@ public class BattleController {
             if (getBattle().getSelectedCell() != getBattle().getGrid()[coordinate[0]][coordinate[1]] && getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior() == null) {
                 //TODO CHECK OF MANHATTAN DISTANCE AND CAN MOVE?
                 if (Cell.calculateManhattanDistance(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]]) <= 2) {
-                    moveAnimationRun(coordinate);
+                    if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getSelectedCell().getWarrior())) {
+                        moveAnimationRun(coordinate);
+                    }
                 }
                 return;
             } else if (getBattle().getSelectedCell() != getBattle().getGrid()[coordinate[0]][coordinate[1]] && getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior() != null) {
@@ -201,9 +203,13 @@ public class BattleController {
 
                 if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior())) {
                     System.out.println("YOUR CARD!!!");
+                    getBattle().setSelectedCell(null);
+                    getBattle().setSelectedCard(null);
                 } else {
                     System.out.println("Attack");
                     handleAttackAnimation(coordinate);
+                    getBattle().setSelectedCell(null);
+                    getBattle().setSelectedCard(null);
 
                 }
 
