@@ -138,14 +138,10 @@ public class BattleController {
         for (int i = 0; i < BATTLE_ROWS; i++) {
             for (int j = 0; j < BATTLE_COLUMNS; j++) {
                 rectangles[i][j] = new Polygon();
-                rectangles[i][j].getPoints().addAll(new Double[]{
-                        upLeftX + width * j + HEIGHT_PADDING_X + i * heightOfPoly_X + WIDTH_PADDING * j + heightOfPoly_X + width, upLeftY + i * HEIGHT_PADDING_Y + i * heightOfPoly_Y + heightOfPoly_Y,
+                rectangles[i][j].getPoints().addAll(upLeftX + width * j + HEIGHT_PADDING_X + i * heightOfPoly_X + WIDTH_PADDING * j + heightOfPoly_X + width, upLeftY + i * HEIGHT_PADDING_Y + i * heightOfPoly_Y + heightOfPoly_Y,
                         upLeftX + width * j + HEIGHT_PADDING_X + i * heightOfPoly_X + width + WIDTH_PADDING * j, upLeftY + i * HEIGHT_PADDING_Y + i * heightOfPoly_Y,
                         upLeftX + width * j + HEIGHT_PADDING_X + i * heightOfPoly_X + WIDTH_PADDING * j, upLeftY + i * HEIGHT_PADDING_Y + i * heightOfPoly_Y,
-                        upLeftX + width * j + HEIGHT_PADDING_X + i * heightOfPoly_X + heightOfPoly_X + WIDTH_PADDING * j, upLeftY + i * HEIGHT_PADDING_Y + i * heightOfPoly_Y + heightOfPoly_Y,
-
-
-                });
+                        upLeftX + width * j + HEIGHT_PADDING_X + i * heightOfPoly_X + heightOfPoly_X + WIDTH_PADDING * j, upLeftY + i * HEIGHT_PADDING_Y + i * heightOfPoly_Y + heightOfPoly_Y);
                 rectangles[i][j].setStyle("-fx-fill: BLACK;-fx-opacity: 0.5");
 
                 anchorPane.getChildren().addAll(rectangles[i][j]);
@@ -188,8 +184,7 @@ public class BattleController {
         Polygon p = (Polygon) event.getSource();
         int[] coordinate = findPolygonCoordinate(p);
 
-
-        if (getBattle().getSelectedCell() != null && getBattle().getSelectedCell().getWarrior() != null) {
+        if (getBattle().getSelectedCell() != null && getBattle().getSelectedCell().getWarrior() != null && getBattle().getPlayingPlayer().getInGameCards().contains(getBattle().getSelectedCell().getWarrior())) {
             if (getBattle().getSelectedCell() != getBattle().getGrid()[coordinate[0]][coordinate[1]] && getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior() == null) {
                 //TODO CHECK OF MANHATTAN DISTANCE AND CAN MOVE?
                 if (Cell.calculateManhattanDistance(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]]) <= 2) {
@@ -216,8 +211,9 @@ public class BattleController {
                 return;
             }
         }
-        getBattle().setSelectedCell(getBattle().getGrid()[coordinate[0]][coordinate[1]]);
 
+
+        getBattle().setSelectedCell(getBattle().getGrid()[coordinate[0]][coordinate[1]]);
 
         if (getBattle().getSelectedCard() != null) {//TODO SOME MORE CHECKS NEEDED
             handleInsertCardClick();
