@@ -60,17 +60,20 @@ public class Battle {
         initializeCells();
         insertPlayerHeroesInMap();
 
-//        nextTurn();
+       nextTurn();
     }
 
 
     private void insertPlayerHeroesInMap() {
+        System.out.println("******************\n"+player1.getDeck().getHero().equals(player2.getDeck().getHero())+"********************\n");
         getGrid()[2][0].setWarrior(player1.getDeck().getHero());
         getGrid()[2][8].setWarrior(player2.getDeck().getHero());
     }
 
     public void nextTurn() {
-        System.out.println("======================>>>> " + getGrid()[2][0].getWarrior().getCardName());
+
+        System.out.println("Reza Gikhar :)  " + getCellOfWarrior(player1.getDeck().getHero()).getColumn()+getCellOfWarrior(player2.getDeck().getHero()).getColumn());
+
         turn++;
         setPlayingPlayer();
         getPlayer1().setManaFromTurn(getTurn());
@@ -81,9 +84,7 @@ public class Battle {
         if (getPlayingPlayer().getAccount() instanceof Ai) {
             System.out.println("AI");
             ((Ai) getPlayingPlayer().getAccount()).playGame();
-            long startTime = System.nanoTime();
-            while ((System.nanoTime() - startTime) / 1000000 < 2000) {
-            }
+
             ((Ai) getPlayingPlayer().getAccount()).getBattleController().handleEndTurnBtn();
         }
     }
@@ -176,6 +177,7 @@ public class Battle {
         } else {
             return INVALID_COUNTER_WITH_BUFF;
         }
+
     }
 
     public void deleteDeathCardsFromMap() {
@@ -396,11 +398,8 @@ public class Battle {
     }
 
     private boolean isValidInsert(Cell destinationCell) {
-        Deck deck;
-        if (getTurn() % 2 == 1)
-            deck = player1.getDeck();
-        else
-            deck = player2.getDeck();
+        Deck deck = playingPlayer.getDeck();
+
         return (destinationCell != null) && destinationCell.isEmpty() && getDistanceOfTwoCell(destinationCell, getCellOfWarrior(deck.getHero())) <= 2;
     }
 
@@ -465,6 +464,8 @@ public class Battle {
                 getGrid()) {
             for (Cell c1 :
                     c) {
+                if (c1.getWarrior()==null)
+                    continue;
                 if (c1.getWarrior().equals(warrior)) {
                     return c1;
                 }

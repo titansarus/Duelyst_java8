@@ -138,14 +138,10 @@ public class BattleController {
         for (int i = 0; i < BATTLE_ROWS; i++) {
             for (int j = 0; j < BATTLE_COLUMNS; j++) {
                 rectangles[i][j] = new Polygon();
-                rectangles[i][j].getPoints().addAll(new Double[]{
-                        upLeftX + width * j + HEIGHT_PADDING_X + i * heightOfPoly_X + WIDTH_PADDING * j + heightOfPoly_X + width, upLeftY + i * HEIGHT_PADDING_Y + i * heightOfPoly_Y + heightOfPoly_Y,
+                rectangles[i][j].getPoints().addAll(upLeftX + width * j + HEIGHT_PADDING_X + i * heightOfPoly_X + WIDTH_PADDING * j + heightOfPoly_X + width, upLeftY + i * HEIGHT_PADDING_Y + i * heightOfPoly_Y + heightOfPoly_Y,
                         upLeftX + width * j + HEIGHT_PADDING_X + i * heightOfPoly_X + width + WIDTH_PADDING * j, upLeftY + i * HEIGHT_PADDING_Y + i * heightOfPoly_Y,
                         upLeftX + width * j + HEIGHT_PADDING_X + i * heightOfPoly_X + WIDTH_PADDING * j, upLeftY + i * HEIGHT_PADDING_Y + i * heightOfPoly_Y,
-                        upLeftX + width * j + HEIGHT_PADDING_X + i * heightOfPoly_X + heightOfPoly_X + WIDTH_PADDING * j, upLeftY + i * HEIGHT_PADDING_Y + i * heightOfPoly_Y + heightOfPoly_Y,
-
-
-                });
+                        upLeftX + width * j + HEIGHT_PADDING_X + i * heightOfPoly_X + heightOfPoly_X + WIDTH_PADDING * j, upLeftY + i * HEIGHT_PADDING_Y + i * heightOfPoly_Y + heightOfPoly_Y);
                 rectangles[i][j].setStyle("-fx-fill: BLACK;-fx-opacity: 0.5");
 
                 anchorPane.getChildren().addAll(rectangles[i][j]);
@@ -188,12 +184,13 @@ public class BattleController {
         Polygon p = (Polygon) event.getSource();
         int[] coordinate = findPolygonCoordinate(p);
 
-
-        if (getBattle().getSelectedCell() != null && getBattle().getSelectedCell().getWarrior() != null) {
+        if (getBattle().getSelectedCell() != null && getBattle().getSelectedCell().getWarrior() != null && getBattle().getPlayingPlayer().getInGameCards().contains(getBattle().getSelectedCell().getWarrior())) {
             if (getBattle().getSelectedCell() != getBattle().getGrid()[coordinate[0]][coordinate[1]] && getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior() == null) {
                 //TODO CHECK OF MANHATTAN DISTANCE AND CAN MOVE?
                 if (Cell.calculateManhattanDistance(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]]) <= 2) {
-                    moveAnimationRun(coordinate);
+                    if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getSelectedCell().getWarrior())) {
+                        moveAnimationRun(coordinate);
+                    }
                 }
                 return;
             } else if (getBattle().getSelectedCell() != getBattle().getGrid()[coordinate[0]][coordinate[1]] && getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior() != null) {
@@ -201,16 +198,22 @@ public class BattleController {
 
                 if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior())) {
                     System.out.println("YOUR CARD!!!");
+                    getBattle().setSelectedCell(null);
+                    getBattle().setSelectedCard(null);
                 } else {
+                    System.out.println("Attack");
                     handleAttackAnimation(coordinate);
+                    getBattle().setSelectedCell(null);
+                    getBattle().setSelectedCard(null);
 
                 }
 
                 return;
             }
         }
-        getBattle().setSelectedCell(getBattle().getGrid()[coordinate[0]][coordinate[1]]);
 
+
+        getBattle().setSelectedCell(getBattle().getGrid()[coordinate[0]][coordinate[1]]);
 
         if (getBattle().getSelectedCard() != null) {//TODO SOME MORE CHECKS NEEDED
             handleInsertCardClick();
@@ -350,8 +353,16 @@ public class BattleController {
 
     public void insertPlayerHeroes()
     {
+       getBattle().setPlayingPlayer(getBattle().getPlayer1());
+        getBattle().getPlayingPlayer().setHero(getBattle().getPlayer1().getDeck().getHero());
         handleInsertCardClickAi(getBattle().getGrid()[2][0],getBattle().getPlayer1().getDeck().getHero());
+
+
+        getBattle().setPlayingPlayer(getBattle().getPlayer2());
+        getBattle().getPlayingPlayer().setHero(getBattle().getPlayer2().getDeck().getHero());
         handleInsertCardClickAi(getBattle().getGrid()[2][8],getBattle().getPlayer2().getDeck().getHero());
+
+        getBattle().setPlayingPlayer(getBattle().getPlayer1());
     }
 
 
@@ -361,8 +372,10 @@ public class BattleController {
         CardForBattle cardForBattle = CardForBattleController.findCardForBattleWithCard(getHand(), card);
         try {
             getBattle().insertSelectedCard(battleCoordinate[0], battleCoordinate[1]);
+            getBattle().getPlayingPlayer().getInGameCards().add(card);
             Polygon polygon = rectangles[battleCoordinate[0]][battleCoordinate[1]];
             ObservableList<Double> points = polygon.getPoints();
+
 
 
             CardOnField cardOnField = new CardOnField();
@@ -370,7 +383,8 @@ public class BattleController {
             cardsOnField.add(cardOnField);
             sendIdleImageViewToCenterOfCell(cardOnField, polygon);
 
-            //   getHand().remove(cardForBattle);
+            getBattle().setSelectedCard(null);
+            //   getHand().remove(cardForBattl e);
   //          getBattle().setSelectedCard(null);
 //            cardForBattle.setCard(null);
         } catch (MyException e) {
