@@ -18,7 +18,7 @@ public class ShockHammer extends Item {
     @Override
     public void applyItem() {
         //TODO Hengame Attack Bayad Emal Shavad :)
-        if (Battle.getRunningBattle().getSelectedCard().equals(getPlayer().getHero())) {
+        if (Battle.getRunningBattle().getSelectedCell().getWarrior().equals(getPlayer().getHero())) {
             Buff buff = new DisarmBuff(BuffName.DISARM_BUFF, false, 1);
             buff.setWarrior((Warrior) Battle.getRunningBattle().getAttackedCard());
             Battle.getRunningBattle().getPassiveBuffs().add(buff);
