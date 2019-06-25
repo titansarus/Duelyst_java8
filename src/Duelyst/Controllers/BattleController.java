@@ -3,6 +3,7 @@ package Duelyst.Controllers;
 import Duelyst.Exceptions.MyException;
 import Duelyst.Model.Battle.Battle;
 import Duelyst.Model.Battle.Cell;
+import Duelyst.Model.Battle.KindOfActionForValidCells;
 import Duelyst.Model.Battle.Player;
 import Duelyst.Model.Card;
 import Duelyst.Model.Warrior;
@@ -195,9 +196,21 @@ public class BattleController {
 
         if (getBattle().getSelectedCell() != null && getBattle().getSelectedCell().getWarrior() != null && getBattle().getPlayingPlayer().getInGameCards().contains(getBattle().getSelectedCell().getWarrior())) {
             if (getBattle().getSelectedCell() != getBattle().getGrid()[coordinate[0]][coordinate[1]] && getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior() == null) {
-                //TODO CHECK OF MANHATTAN DISTANCE AND CAN MOVE?
+
+                battle.findValidCell(KindOfActionForValidCells.MOVE);
+                ArrayList<Cell> cells = battle.getValidCells();
+                System.out.println(cells.size());
+                for (int i = 0; i < cells.size(); i++) {
+                    System.out.println(cells.get(i).getRow() + " <======> " +cells.get(i).getColumn());
+                }
+                if (!cells.contains(battle.getGrid()[coordinate[0]][coordinate[1]])){
+                    //TODO throw exception
+
+                    return;
+                }
+
                 if (Cell.calculateManhattanDistance(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]]) <= 2) {
-                    if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getSelectedCell().getWarrior())) {
+                    if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getSelectedCell().getWarrior()) && getBattle().getSelectedCell().getWarrior().isValidToMove()) {
                         moveAnimationRun(coordinate);
                     }
                 }
@@ -378,6 +391,7 @@ public class BattleController {
         int[] battleCoordinate = getBattle().findCellCoordinate(cell);
         CardForBattle cardForBattle = CardForBattleController.findCardForBattleWithCard(getHand(), card);
         try {
+
             getBattle().insertSelectedCard(battleCoordinate[0], battleCoordinate[1]);
             getBattle().getPlayingPlayer().getInGameCards().add(card);
             Polygon polygon = rectangles[battleCoordinate[0]][battleCoordinate[1]];
@@ -403,7 +417,14 @@ public class BattleController {
 
 
     public void handleInsertCardClick() {
+
         int[] battleCoordinate = getBattle().findCellCoordinate(getBattle().getSelectedCell());
+        battle.findValidCell(KindOfActionForValidCells.INSERT);
+        ArrayList<Cell> cells = battle.getValidCells();
+        if (!cells.contains(battle.getGrid()[battleCoordinate[0]] [battleCoordinate[1]])){
+            //TODO throw exception
+            return;
+        }
         CardForBattle cardForBattle = CardForBattleController.findCardForBattleWithCard(getHand(), getBattle().getSelectedCard());
         try {
             getBattle().insertSelectedCard(battleCoordinate[0], battleCoordinate[1]);

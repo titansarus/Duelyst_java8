@@ -72,9 +72,6 @@ public class Battle {
 
     public void nextTurn() {
         setTrueOfValidAttackAndMove();
-
-//        System.out.println("Reza Gikhar :)  " + getCellOfWarrior(player1.getDeck().getHero()).getColumn() + getCellOfWarrior(player2.getDeck().getHero()).getColumn());
-
         turn++;
         setPlayingPlayer();
         getPlayer1().setManaFromTurn(getTurn());
@@ -91,11 +88,11 @@ public class Battle {
     }
 
     private void setTrueOfValidAttackAndMove() {
-        for (Cell[] c:
-             getGrid()) {
-            for (Cell c1:
-                 c) {
-                if (c1.getWarrior()!= null){
+        for (Cell[] c :
+                getGrid()) {
+            for (Cell c1 :
+                    c) {
+                if (c1.getWarrior() != null) {
                     c1.getWarrior().setValidToAttack(true);
                     c1.getWarrior().setValidToMove(true);
                 }
@@ -104,12 +101,7 @@ public class Battle {
     }
 
     public void move(int destX, int destY) {
-        findValidCell(KindOfActionForValidCells.MOVE);
-        ArrayList<Cell> cells = getValidCells();
-        if (!cells.contains(getGrid()[destX][destY])){
-            //TODO throw exception
-            return;
-        }
+
         if (getSelectedCell().getWarrior() != null) {
             if (getSelectedCell().getColumn() != destX || getSelectedCell().getRow() != destY) {
                 Cell cell = getGrid()[destX][destY];
@@ -118,6 +110,7 @@ public class Battle {
                     cell.setWarrior(getSelectedCell().getWarrior());
                     getSelectedCell().setWarrior(null);
                     setSelectedCell(null);
+
                 }
             }
         }
@@ -125,21 +118,18 @@ public class Battle {
     }
 
     public void insertSelectedCard(int i, int j) {
-        findValidCell(KindOfActionForValidCells.INSERT);
-        ArrayList<Cell> cells = getValidCells();
-        if (!cells.contains(getGrid()[i][j])){
-            //TODO throw exception
-            return;
-        }
+
         if (getSelectedCard() instanceof Warrior) {
             if (getGrid()[i][j].isEmpty()) {
                 if (getPlayingPlayer().getMana() >= getSelectedCard().getManaCost()) {
                     getGrid()[i][j].setWarrior((Warrior) getSelectedCard());
                     Warrior warrior = getGrid()[i][j].getWarrior();
+
                     warrior.setInGame(true);
 
                     warrior.setValidToMove(false);
                     warrior.setValidToAttack(false);
+
                     getPlayingPlayer().changeMana(-warrior.getManaCost());
                     getPlayingPlayer().getHand().remove(warrior);
                     playingPlayer.getInGameCards().add(getSelectedCard());
@@ -389,9 +379,9 @@ public class Battle {
     }
 
     private void findValidCellToMove() {
-        if (!getSelectedCard().isAbleToMove())
+        if (!getSelectedCell().getWarrior().isValidToMove())
             return;
-        Warrior warrior = (Warrior) getSelectedCard();
+        Warrior warrior = getSelectedCell().getWarrior();
         for (Cell[] cell : getGrid()) {
             for (Cell cell1 : cell) {
                 if (cell1.isEmpty() && getDistanceOfTwoCell(getCellOfWarrior(warrior), cell1) <= 2 && isValidMove(cell1))
@@ -403,7 +393,7 @@ public class Battle {
     private void findValidCellToAttack() {
 
         Cell[][] cells = getGrid();
-        Warrior warrior = (Warrior) getSelectedCard();
+        Warrior warrior = getSelectedCell().getWarrior();
         for (Cell[] cell : cells) {
             for (Cell cell1 : cell) {
                 if (!cell1.isEmpty() && isValidAttack(cell1, warrior))
@@ -439,19 +429,19 @@ public class Battle {
     }
 
     private boolean isValidMove(Cell destinationCell) {
-        getCellOfWarrior((Warrior) getSelectedCard());
-        if (destinationCell.getRow() == getCellOfWarrior((Warrior) getSelectedCard()).getRow()) {
-            if (destinationCell.getColumn() < getCellOfWarrior((Warrior) getSelectedCard()).getColumn()) {
-                return getGrid()[destinationCell.getRow()][getCellOfWarrior((Warrior) getSelectedCard()).getColumn() - 1].isEmpty();
+        getCellOfWarrior(getSelectedCell().getWarrior());
+        if (destinationCell.getRow() == getCellOfWarrior(getSelectedCell().getWarrior()).getRow()) {
+            if (destinationCell.getColumn() < getCellOfWarrior(getSelectedCell().getWarrior()).getColumn()) {
+                return getGrid()[destinationCell.getRow()][getCellOfWarrior(getSelectedCell().getWarrior()).getColumn() - 1].isEmpty();
             } else {
-                return getGrid()[destinationCell.getRow()][getCellOfWarrior((Warrior) getSelectedCard()).getColumn() + 1].isEmpty();
+                return getGrid()[destinationCell.getRow()][getCellOfWarrior(getSelectedCell().getWarrior()).getColumn() + 1].isEmpty();
             }
 
-        } else if (destinationCell.getColumn() == getCellOfWarrior((Warrior) getSelectedCard()).getColumn()) {
-            if (destinationCell.getRow() < getCellOfWarrior((Warrior) getSelectedCard()).getRow()) {
-                return getGrid()[getCellOfWarrior((Warrior) getSelectedCard()).getRow() - 1][destinationCell.getColumn()].isEmpty();
+        } else if (destinationCell.getColumn() == getCellOfWarrior(getSelectedCell().getWarrior()).getColumn()) {
+            if (destinationCell.getRow() < getCellOfWarrior(getSelectedCell().getWarrior()).getRow()) {
+                return getGrid()[getCellOfWarrior(getSelectedCell().getWarrior()).getRow() - 1][destinationCell.getColumn()].isEmpty();
             } else {
-                return getGrid()[getCellOfWarrior((Warrior) getSelectedCard()).getRow() + 1][destinationCell.getColumn()].isEmpty();
+                return getGrid()[getCellOfWarrior(getSelectedCell().getWarrior()).getRow() + 1][destinationCell.getColumn()].isEmpty();
             }
         }
         return false;
