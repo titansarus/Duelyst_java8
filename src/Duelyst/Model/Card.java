@@ -1,8 +1,6 @@
 package Duelyst.Model;
 
 
-import javafx.scene.image.ImageView;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -28,7 +26,7 @@ public class Card implements Cloneable {
     private String addressOfGetDamageGif="";
     private String addressOfDeathGif = "";
 
-    public static String makeNewID(String accountName, String cardName, int countOfCardsInPlayerCollection) {
+    static String makeNewID(String accountName, String cardName, int countOfCardsInPlayerCollection) {
         return accountName + "_" + cardName + "_" + (countOfCardsInPlayerCollection + 1);
     }
 

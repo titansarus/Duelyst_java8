@@ -6,9 +6,9 @@ import Duelyst.Model.Battle.Player;
 public class TajeDanaei extends Item {
 
 
-    public TajeDanaei(Player player) {
-        super(player, true, false);
-        setManaCost(300);
+    public TajeDanaei() {
+        super("TajeDanaei" ,"Mana Ra Dar 3 nobate Avval Yeki Ziad Mikonad",
+                300, true, false,"res/Items/TajeDanaei/TajeDanaei.png");
     }
 
     @Override

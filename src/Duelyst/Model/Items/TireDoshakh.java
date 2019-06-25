@@ -10,8 +10,8 @@ import java.util.Random;
 public class TireDoshakh extends Item {
 
 
-    public TireDoshakh(Player player) {
-        super(player, false, true);
+    public TireDoshakh() {
+        super("TireDoshakh", "Ghodrate Zarbeye Yek Nirooye Ranged Ya Hybride Tasadofi Ra 2 Vahed Afzayesh Midahad", 0, false, true);
     }
 
     @Override

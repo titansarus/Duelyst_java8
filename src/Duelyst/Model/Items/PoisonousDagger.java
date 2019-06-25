@@ -12,9 +12,9 @@ import java.util.Random;
 
 public class PoisonousDagger extends Item {
 
-    public PoisonousDagger(Player player) {
-        super(player, false, false);
-        setManaCost(7000);
+    public PoisonousDagger() {
+        super("PoisonousDagger", "Dar Hengame Zarbeye Nirooye Khodi  Baraye Yek Nobat Rooye Nirooye Tasadofie Doshman PosionBuff Emal Mikonad",
+                7000, false, false,"res/Items/PoisonousDagger/PoisonousDagger.png");
     }
 
     @Override

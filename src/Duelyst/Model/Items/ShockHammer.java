@@ -10,9 +10,9 @@ import Duelyst.Model.Warrior;
 public class ShockHammer extends Item {
 
 
-    public ShockHammer(Player player) {
-        super(player, true, false);
-        setManaCost(15000);
+    public ShockHammer() {
+        super("ShockHammer", "Heroe Khodi  Hengame Zarbe Baraye Yek Nobat Nirooye DOshman Ra Disarm Mikonad",
+                15000, true, false,"res/Items/ShockHammer/ShockHammer.png");
     }
 
     @Override

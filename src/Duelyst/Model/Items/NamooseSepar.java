@@ -8,8 +8,9 @@ import Duelyst.Model.Buffs.HolyBuff;
 
 public class NamooseSepar extends Item {
 
-    public NamooseSepar(Player player) {
-        super(player, true, true);
+    public NamooseSepar() {
+        super("NamooseSepar","Dar Heroye Khodi 12 HolyBuff Faal Mikonad",
+                4000,true, true,"res/Items/NamooseSepar/NamooseSepar.png");
     }
 
     @Override

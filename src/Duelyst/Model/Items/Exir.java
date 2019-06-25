@@ -11,8 +11,8 @@ import java.util.Random;
 
 public class Exir extends Item {
 
-    public Exir(Player player) {
-        super(player, false, true);
+    public Exir() {
+        super("Exir", "3 Vahed Salamti Ra Afzayesh Midahad Va Yek PowerBuff Ba 3 Vahede Afzayeshe Ghodrate Zarbe Baraye Minione Tasadofi Emal Mikonad", 0, false, true);
     }
 
     @Override
