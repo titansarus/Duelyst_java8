@@ -1,5 +1,6 @@
 package Duelyst.Model.Battle;
 
+import Duelyst.Controllers.BattleController;
 import Duelyst.Exceptions.CellFilledBeforeException;
 import Duelyst.Exceptions.NotEnoughManaException;
 import Duelyst.Exceptions.NotValidDeckException;
@@ -13,6 +14,7 @@ import static Duelyst.View.Constants.*;
 
 public class Battle {
     private static Battle runningBattle;
+    private BattleController battleController;
     private Player player1;
     private Player player2;
     private Player playingPlayer = null;
@@ -54,7 +56,7 @@ public class Battle {
         initializeCells();
         insertPlayerHeroesInMap();
 
-        nextTurn();
+//        nextTurn();
     }
 
 
@@ -73,11 +75,12 @@ public class Battle {
         setSelectedCard(null);
         getPlayingPlayer().getNextHand();
         if (getPlayingPlayer().getAccount() instanceof Ai) {
+            System.out.println("AI");
             ((Ai) getPlayingPlayer().getAccount()).playGame();
             long startTime = System.nanoTime();
             while ((System.nanoTime() - startTime) / 1000000 < 2000) {
             }
-            nextTurn();
+            ((Ai) getPlayingPlayer().getAccount()).getBattleController().handleEndTurnBtn();
         }
     }
 
@@ -400,5 +403,13 @@ public class Battle {
 
     public void setValidCells(ArrayList<Cell> validCells) {
         this.validCells = validCells;
+    }
+
+    public BattleController getBattleController() {
+        return battleController;
+    }
+
+    public void setBattleController(BattleController battleController) {
+        this.battleController = battleController;
     }
 }

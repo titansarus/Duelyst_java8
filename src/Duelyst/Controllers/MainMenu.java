@@ -241,6 +241,8 @@ public class MainMenu {
         bc.makeAccountNames();
         bc.makeGrids();
         bc.runTimelines();
+        battle.setBattleController(bc);
+        bc.insertPlayerHeroes();
         stopTimeline();
         Container.runNextScene(root, BATTLE);
     }
@@ -264,7 +266,9 @@ public class MainMenu {
         bc.makeAccountNames();
         bc.makeGrids();
         bc.runTimelines();
+        battle.setBattleController(bc);
         ai.setBattleController(bc);
+        bc.insertPlayerHeroes();
         stopTimeline();
         Container.runNextScene(root, BATTLE);
 

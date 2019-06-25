@@ -348,6 +348,38 @@ public class BattleController {
 
     }
 
+    public void insertPlayerHeroes()
+    {
+        handleInsertCardClickAi(getBattle().getGrid()[2][0],getBattle().getPlayer1().getDeck().getHero());
+        handleInsertCardClickAi(getBattle().getGrid()[2][8],getBattle().getPlayer2().getDeck().getHero());
+    }
+
+
+
+    public void handleInsertCardClickAi(Cell cell , Card card) {
+        int[] battleCoordinate = getBattle().findCellCoordinate(cell);
+        CardForBattle cardForBattle = CardForBattleController.findCardForBattleWithCard(getHand(), card);
+        try {
+            getBattle().insertSelectedCard(battleCoordinate[0], battleCoordinate[1]);
+            Polygon polygon = rectangles[battleCoordinate[0]][battleCoordinate[1]];
+            ObservableList<Double> points = polygon.getPoints();
+
+
+            CardOnField cardOnField = new CardOnField();
+            cardOnField.setCard(card);
+            cardsOnField.add(cardOnField);
+            sendIdleImageViewToCenterOfCell(cardOnField, polygon);
+
+            //   getHand().remove(cardForBattle);
+  //          getBattle().setSelectedCard(null);
+//            cardForBattle.setCard(null);
+        } catch (MyException e) {
+            Container.exceptionGenerator(e, stackPane);
+        }
+        getBattle().setSelectedCell(null);
+    }
+
+
 
     public void handleInsertCardClick() {
         int[] battleCoordinate = getBattle().findCellCoordinate(getBattle().getSelectedCell());
@@ -370,6 +402,42 @@ public class BattleController {
             Container.exceptionGenerator(e, stackPane);
         }
         getBattle().setSelectedCell(null);
+    }
+
+    public void moveAnimationRunAi(int[] coordinate , Warrior warrior) {
+        CardOnField cardOnField = CardOnField.findCardOnFieldFromArrayList(cardsOnField, warrior);
+
+        Integer srcRow = getBattle().getSelectedCell().getRow();
+        Integer srcCol = getBattle().getSelectedCell().getColumn();
+        Polygon srcPolygon = rectangles[srcRow][srcCol];
+        ObservableList<Double> srcPoints = srcPolygon.getPoints();
+        double srcx = calculateMidXFromPoint(srcPoints);
+        double srcy = calculateMidYFromPoint(srcPoints);
+
+        Polygon destPolygon = rectangles[coordinate[0]][coordinate[1]];
+        ObservableList<Double> destPoints = destPolygon.getPoints();
+        double x = calculateMidXFromPoint(destPoints);
+        double y = calculateMidYFromPoint(destPoints);
+
+
+        anchorPane.getChildren().remove(cardOnField.getImageView());
+
+        cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders( getBattle().getSelectedCell().getWarrior().getAddressOfRunGif())));
+
+        anchorPane.getChildren().add(cardOnField.getImageView());
+        TranslateTransition tt = new TranslateTransition(Duration.millis(500), cardOnField.getImageView());
+        tt.setFromX(srcx);
+        tt.setFromY(srcy);
+        tt.setToX(x);
+        tt.setToY(y);
+        tt.setOnFinished(event1 -> {
+            getBattle().move(coordinate[0], coordinate[1]);
+            cardOnField.getImageView().setImage(new Image(cardOnField.getCard().getAddressOfIdleGif()));
+//            getBattle().getGrid()[coordinate[0]][coordinate[1]].setWarrior(((Warrior) cardOnField.getCard()));
+            getBattle().setSelectedCell(null);
+        });
+        tt.play();
+        return;
     }
 
     public void moveAnimationRun(int[] coordinate) {
@@ -410,7 +478,7 @@ public class BattleController {
 
     public void sendIdleImageViewToCenterOfCell(CardOnField cardOnField, Polygon polygon) {
         ObservableList<Double> points = polygon.getPoints();
-        cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders( getBattle().getSelectedCard().getAddressOfIdleGif())));
+        cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders( cardOnField.getCard().getAddressOfIdleGif())));
         double x = calculateMidXFromPoint(points);
         double y = calculateMidYFromPoint(points);
         cardOnField.getImageView().relocate(x, y);

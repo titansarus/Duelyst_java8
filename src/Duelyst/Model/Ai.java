@@ -11,7 +11,8 @@ import java.util.Random;
 
 public class Ai extends Account {
     private BattleController battleController;
-    private Battle battle =null;
+    private Battle battle = null;
+
     public Ai(int numberOfAi) {
         super("AI:)", "AI:)");
         if (numberOfAi == 1) {
@@ -47,7 +48,8 @@ public class Ai extends Account {
             battle.setSelectedCard(card);
             battle.findValidCell(KindOfActionForValidCells.INSERT);
             Cell cell = battle.getValidCells().get(random.nextInt(battle.getValidCells().size()));
-            battle.insertSelectedCard(cell.getColumn(), cell.getRow());
+            getBattleController().handleInsertCardClickAi(cell, card);
+            // battle.insertSelectedCard(cell.getColumn(), cell.getRow());
         } catch (Exception e) {
             System.out.println("Ai can not insert");
         }
@@ -62,7 +64,8 @@ public class Ai extends Account {
             battle.setSelectedCard(card);
             battle.findValidCell(KindOfActionForValidCells.MOVE);
             Cell cell = battle.getValidCells().get(random.nextInt(battle.getValidCells().size()));
-            battle.move(cell.getColumn(), cell.getRow());
+            getBattleController().moveAnimationRunAi(new int[]{cell.getRow(), cell.getColumn()},(Warrior) card); //CHECK THAT CARD IS WARRIOR
+            //battle.move(cell.getColumn(), cell.getRow());
         } catch (Exception e) {
             System.out.println("Ai can not move");
         }
@@ -79,8 +82,8 @@ public class Ai extends Account {
             Cell cell = battle.getValidCells().get(random.nextInt(battle.getValidCells().size()));
             Warrior attacker = (Warrior) battle.getSelectedCard();
             Warrior attackedWarrior = cell.getWarrior();
-
-            battle.attack(attacker, attackedWarrior, false);
+            getBattleController().handleAttackFromAi(attacker, attackedWarrior);
+            //battle.attack(attacker, attackedWarrior, false);
         } catch (Exception e) {
             System.out.println("Ai can not attack");
         }

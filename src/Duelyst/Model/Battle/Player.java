@@ -26,6 +26,7 @@ public class Player {
         this.hand = new ArrayList<>();
         this.inGameCards = new ArrayList<>();
         this.deck.removeCard(this.deck.getHero().getCardId());
+        this.mana = 2;
         initializeHand();
     }
 
