@@ -43,8 +43,11 @@ public class Ai extends Account {
         try {
             Player player = battle.getPlayer2();
             ArrayList<Card> cards = player.getHand();
+            //
+            System.out.println("==---------------------------------------------------=>> : "+ cards.size());
+            //
             Random random = new Random();
-            Card card = cards.get(random.nextInt(5));
+            Card card = cards.get(random.nextInt(cards.size()));
             battle.setSelectedCard(card);
             battle.findValidCell(KindOfActionForValidCells.INSERT);
             Cell cell = battle.getValidCells().get(random.nextInt(battle.getValidCells().size()));
@@ -59,6 +62,9 @@ public class Ai extends Account {
         try {
             Player player = battle.getPlayer2();
             ArrayList<Card> cards = player.getInGameCards();
+            //
+            System.out.println("==---------------------------------------------------=>> : "+ cards.size());
+            //
             Random random = new Random();
             Card card = cards.get(random.nextInt(cards.size()));
             battle.setSelectedCard(card);

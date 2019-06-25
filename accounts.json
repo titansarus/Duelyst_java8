@@ -2406,5 +2406,51 @@
       "darick": 65900,
       "collectableItems": []
     }
+  },
+  {
+    "@type": "Duelyst.Model.Account",
+    "@val": {
+      "battleHistory": [],
+      "cardCollection": {
+        "cards": [
+          {
+            "@type": "Duelyst.Model.Minion",
+            "@val": {
+              "healthPoint": 6,
+              "actionPower": 4,
+              "attackRange": 7,
+              "attackKind": "RANGED",
+              "validCounterAttack": false,
+              "isDeath": false,
+              "shield": 0,
+              "isValidToAttack": true,
+              "IsValidToMove": true,
+              "cardId": "danial_Kamandare_Fars_1",
+              "manaCost": 2,
+              "darikCost": 300,
+              "account": "@root.7",
+              "cardDescription": "Normal",
+              "cardName": "Kamandare_Fars",
+              "isAbleToMove": true,
+              "isInGame": false,
+              "addressOfImage": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars.png",
+              "addressOfIdleGif": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars_idle.gif",
+              "addressOfRunGif": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars_run.gif",
+              "addressOfAttackGif": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars_attack.gif",
+              "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars_breathing.gif",
+              "addressOfDeathGif": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars_death.gif"
+            }
+          }
+        ],
+        "account": "@root.7",
+        "decks": [],
+        "customCards": []
+      },
+      "username": "danial",
+      "password": "danial",
+      "countOfWins": 0,
+      "darick": 99700,
+      "collectableItems": []
+    }
   }
 ]
