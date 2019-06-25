@@ -1,5 +1,6 @@
 package Duelyst.Model;
 
+import Duelyst.Controllers.BattleController;
 import Duelyst.Model.Battle.Battle;
 import Duelyst.Model.Battle.Cell;
 import Duelyst.Model.Battle.KindOfActionForValidCells;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Ai extends Account {
+    private BattleController battleController;
 
     public Ai(int numberOfAi) {
         super("AI:)", "AI:)");
@@ -73,10 +75,18 @@ public class Ai extends Account {
             Cell cell = battle.getValidCells().get(random.nextInt(battle.getValidCells().size()));
             Warrior attacker = (Warrior) battle.getSelectedCard();
             Warrior attackedWarrior = cell.getWarrior();
+
             battle.attack(attacker, attackedWarrior, false);
         } catch (Exception e) {
             System.out.println("Ai can not attack");
         }
     }
 
+    public BattleController getBattleController() {
+        return battleController;
+    }
+
+    public void setBattleController(BattleController battleController) {
+        this.battleController = battleController;
+    }
 }
