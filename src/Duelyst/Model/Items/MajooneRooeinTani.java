@@ -12,8 +12,8 @@ import java.util.Random;
 public class MajooneRooeinTani extends Item {
 
 
-    public MajooneRooeinTani(Player player) {
-        super(player, false, true);
+    public MajooneRooeinTani() {
+        super("MajooneRooeinTani", "10 HolyBuff Dar Nirooye Tasadofie Khodi Baraye 2 Nobat Faal Mikonad", 0, false, true);
     }
 
     @Override

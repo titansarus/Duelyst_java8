@@ -9,8 +9,8 @@ import java.util.Random;
 public class NooshDaroo extends Item {
 
 
-    public NooshDaroo(Player player) {
-        super(player, false, true);
+    public NooshDaroo() {
+        super("NooshDaroo", "6 Vahed Sathe Salamatie Nirooye Tasadofi Ra Afzayesh Midahad", 0, false, true);
     }
 
     @Override

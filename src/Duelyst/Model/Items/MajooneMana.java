@@ -6,8 +6,8 @@ import Duelyst.Model.Battle.Player;
 public class MajooneMana extends Item {
 
 
-    public MajooneMana(Player player) {
-        super(player, false, true);
+    public MajooneMana() {
+        super("MajooneMana" , "Dar Nobate Baed Mana Ra 3 Vahed Afzayesg Midahad" , 0, false, true);
     }
 
     @Override

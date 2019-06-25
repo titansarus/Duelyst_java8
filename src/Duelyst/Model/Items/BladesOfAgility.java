@@ -8,8 +8,9 @@ import java.util.Random;
 public class BladesOfAgility extends Item {
 
 
-    public BladesOfAgility(Player player) {
-        super(player, false, true);
+    public BladesOfAgility() {
+        super("BladesOfAgility","Be Ghodrate Zarbeye Yek Nirooye Khodi 6 Vahed Ezafe Mikonad",
+                0,false, true);
     }
 
     @Override

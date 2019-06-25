@@ -10,9 +10,9 @@ import Duelyst.Model.Warrior;
 
 public class KamaneDamol extends Item {
 
-    public KamaneDamol(Player player) {
-        super(player, true , false);
-        setManaCost(30000);
+    public KamaneDamol() {
+        super("KamaneDamol", "Tanha Baraye Ranged va Hybrid: Heroye Khodi Hengame Zarbeye Nirooye Doshman Ra Baraye Yek Nobat Disarm Mikonad",
+                30000, true , false,"res/Items/KamaneDamol/KamandeDamol.png");
     }
 
     @Override

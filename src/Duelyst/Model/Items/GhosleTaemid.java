@@ -4,9 +4,9 @@ import Duelyst.Model.Battle.Player;
 
 public class GhosleTaemid extends Item {
 
-    public GhosleTaemid(Player player) {
-        super(player, true , false);
-        setManaCost(20000);
+    public GhosleTaemid() {
+        super("GhosleTaemid","Har Minion Hengame Spawn Shodan Ta 2 Nobat HolyBuff Migirad",
+                20000 , true , false,"res/Items/GhosleTaemid/GhosleTaemid.png");
     }
 
     @Override

@@ -7,9 +7,9 @@ import Duelyst.Model.Warrior;
 
 public class PareSimorgh extends Item {
 
-    public PareSimorgh(Player player) {
-        super(player, true, true);
-        setManaCost(3500);
+    public PareSimorgh() {
+        super("PareSimorgh" ,"Baraye Hybrid Va Ranged: Az Heroe Harif 2 Vahed Ghodrate Zarbe Kam Mikonad (Yani Agar Ghahremane Harfi Hybrid Ya Ranged Bood In Ettefagh Mioftad)",
+                3500, true, true,"res/Items/PareSimorgh/PareSimorgh.png");
     }
 
     @Override

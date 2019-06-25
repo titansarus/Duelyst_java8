@@ -5,6 +5,7 @@ import Duelyst.Database.DatabaseCard;
 import Duelyst.Database.DatabaseCollectioner;
 import Duelyst.Model.Account;
 import Duelyst.Model.Card;
+import Duelyst.Model.Items.*;
 import Duelyst.Model.Shop;
 import Duelyst.Utility.CreateCardFromDatabaseCard;
 import com.gilecode.yagson.YaGson;
@@ -22,6 +23,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
+import java.util.Collections;
 
 import static Duelyst.View.Constants.LOGIN;
 
@@ -48,6 +50,7 @@ public class Main extends Application {
     public static void main(String[] args) {
         DatabaseCollectioner.DatabaseGenerator();
         Shop.getInstance().getCards().addAll(CreateCardFromDatabaseCard.createCards(DatabaseCard.getDatabaseCards()));
+        initItems();
 
         for (int i = 0; i < 100; i++) {
             Card card = new Card("card" + i, "desc" + i, 10, 10);
@@ -56,6 +59,11 @@ public class Main extends Application {
 
         initAccounts();
         launch(args);
+    }
+
+    public static void initItems() {
+        Collections.addAll(Shop.getInstance().getCards(), new TajeDanaei(), new NamooseSepar(), new KamaneDamol(), new PareSimorgh(),
+                new TerrorHood(), new KingWisdom(), new AssassinationDagger(), new PoisonousDagger(), new ShockHammer(), new SoulEater(), new GhosleTaemid());
     }
 
     @Override

@@ -11,9 +11,9 @@ import java.util.Random;
 
 public class TerrorHood extends Item {
 
-    public TerrorHood(Player player) {
-        super(player, true, false);
-        setManaCost(5000);
+    public TerrorHood() {
+        super("TerrorHood", "Dar Hengame Zarbe Yek WeaknessBuff Ba Kaheshe Ghodrate Zarbeye 2 Baraye Yek Nobat Be Nirooye Tasadofie Doshman Emal Mishavad",
+                5000, true, false, "res/Items/TerrorHood/TerrorHood.png");
     }
 
     @Override

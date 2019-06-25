@@ -36,8 +36,8 @@ public class CardView extends Pane {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        getChildren().add(view);
 
+        getChildren().add(view);
 
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

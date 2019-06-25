@@ -294,7 +294,7 @@ public class Deck implements Cloneable {
         int[] item = {1, 10, 5};
         return AiDeckBuilderUtility(heroNumber[i - 1], spellNumbers[i - 1], minionNumbers[i - 1], item[i - 1],ai);
     }
-    public static Deck AiDeckBuilderUtility(int heroNumber, int[] spellNumbers, int[] minionNumbers, int item,Ai ai) {
+    public static Deck AiDeckBuilderUtility(int heroNumber, int[] spellNumbers, int[] minionNumbers, int itemNumber,Ai ai) {
         Deck deck = new Deck("AiDeck",ai);
         Hero hero = (Hero) Card.findCardInArrayList("Hero_" + heroNumber, Shop.getInstance().getCards());
         deck.addCard(hero);
@@ -307,6 +307,7 @@ public class Deck implements Cloneable {
             Spell spell  =(Spell) Card.findCardInArrayList("Spell_"+spellNumber,Shop.getInstance().getCards());
             deck.addCard(spell);
         }
+        //TODO Item Should be Added
         return deck;
     }
 }

@@ -5,9 +5,11 @@ import Duelyst.Model.Battle.Player;
 
 public class AssassinationDagger extends Item {
 
-    public AssassinationDagger(Player player) {
-        super(player, true, false);
-        setManaCost(15000);
+
+
+    public AssassinationDagger() {
+        super("AssassinationDagger", "Hengame Gozashtane Har Nirooye Khodi Yek Vahed Be Heroye Doshman Zarbe Mizanad",
+                15000, true, false,"res/Items/AssasinationDagger/AssassinationDagger.png");
     }
 
     @Override
