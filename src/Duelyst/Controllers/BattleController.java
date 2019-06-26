@@ -258,6 +258,8 @@ public class BattleController {
                     getBattle().setSelectedCell(null);
                     getBattle().setSelectedCard(null);
                 } else if (getBattle().getSelectedCell().getWarrior().isValidToAttack()) {
+                    if (!isValidAttack(getBattle().getSelectedCell(),getBattle().getGrid()[coordinate[0]][coordinate[1]]))
+                        return;
                     System.out.println("Attack");
                     handleAttackAnimation(coordinate);
                     getBattle().setSelectedCell(null);
@@ -278,6 +280,40 @@ public class BattleController {
             return;
         }
     }
+
+    //////////////////////////reza
+    private boolean isValidAttack(Cell targetCell, Cell sourceCell) {
+
+        switch (sourceCell.getWarrior().getAttackKind()) {
+            case MELEE:
+                return isValidMeleeAttack(targetCell,sourceCell);
+            case RANGED:
+                return isValidRangedAttack(sourceCell,targetCell, sourceCell.getWarrior());
+            case HYBRID:
+                boolean flag1 = isValidMeleeAttack(targetCell,sourceCell);
+                boolean flag2 = isValidRangedAttack(sourceCell,targetCell, sourceCell.getWarrior());
+                return (flag1 || flag2);
+        }
+        return true;
+    }
+
+    private boolean isValidRangedAttack(Cell sourceCell,Cell targetCell, Warrior warrior) {
+
+        if (Cell.calculateManhattanDistance(targetCell, targetCell) <= 1) {
+            return false;
+        } else {
+            return Cell.calculateManhattanDistance(targetCell, targetCell) <= warrior.getAttackRange();
+        }
+    }
+
+    private boolean isValidMeleeAttack(Cell targetCell, Cell sourceCell) {
+        return Cell.calculateManhattanDistance(targetCell, sourceCell) <= 1;
+    }
+
+
+
+
+    ////////////////////////alireza
 
     public void handleAttackAnimation(int[] coordinate) {
         getBattle().setAttackedCard(getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior());

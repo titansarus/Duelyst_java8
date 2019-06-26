@@ -207,7 +207,6 @@ public class MainMenu {
     }
     public void handleSave(){
         Account.saveAccount();
-
     }
 
     public void handleCardCreator() {
