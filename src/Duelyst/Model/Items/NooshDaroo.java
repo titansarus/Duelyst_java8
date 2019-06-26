@@ -17,7 +17,13 @@ public class NooshDaroo extends Item {
     @Override
     public void applyItem() {
         Random random = new Random();
+        if (getPlayer().getInGameCards().size() == 0) {
+            return;
+        }
         int randomIndex = random.nextInt(getPlayer().getInGameCards().size());
+        while (!(getPlayer().getInGameCards().get(randomIndex) instanceof Warrior)) {
+            randomIndex = random.nextInt(getPlayer().getInGameCards().size());
+        }
         if (getPlayer().getInGameCards().size() > 0)
             ((Warrior) getPlayer().getInGameCards().get(randomIndex)).increaseHealthPoint(6);
     }

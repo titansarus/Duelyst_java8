@@ -18,6 +18,8 @@ public class Exir extends Item {
 
     @Override
     public void applyItem() {
+        if (getPlayer().getInGameCards().size() == 0)
+            return;
         Random random = new Random();
         int randomIndex = random.nextInt(getPlayer().getInGameCards().size());
         while (!(getPlayer().getInGameCards().get(randomIndex) instanceof Warrior)) {

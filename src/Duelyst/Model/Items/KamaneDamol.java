@@ -18,7 +18,7 @@ public class KamaneDamol extends Item {
     @Override
     public void applyItem() {
         if (getPlayer().getHero().getAttackKind() != AttackKind.MELEE) {
-            Buff buff = new DisarmBuff(1);
+            Buff buff = new DisarmBuff(2);
             Battle.getRunningBattle().getOnAttackBuffs().add(buff);
             buff.setWarrior((Warrior) Battle.getRunningBattle().getAttackedCard());
         }
