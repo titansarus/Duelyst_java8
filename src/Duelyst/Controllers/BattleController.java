@@ -1,10 +1,7 @@
 package Duelyst.Controllers;
 
 import Duelyst.Exceptions.MyException;
-import Duelyst.Model.Battle.Battle;
-import Duelyst.Model.Battle.Cell;
-import Duelyst.Model.Battle.KindOfActionForValidCells;
-import Duelyst.Model.Battle.Player;
+import Duelyst.Model.Battle.*;
 import Duelyst.Model.Card;
 import Duelyst.Model.Warrior;
 import Duelyst.Utility.ImageHolder;
@@ -190,6 +187,34 @@ public class BattleController {
         }
     }
 
+    public void initFlagImages() {
+        for (int i = 0; i < battle.getGrid().length; i++) {
+            for (int j = 0; j < battle.getGrid().length; j++) {
+                if (battle.getGrid()[i][j].getFlag() != null) {
+                    setFlagImage(i, j, battle.getGrid()[i][j].getFlag());
+                }
+            }
+        }
+    }
+
+    public void setFlagImage(int i, int j, Flag flag) {
+
+        Polygon polygon = rectangles[i][j];
+        ObservableList<Double> points = polygon.getPoints();
+        ImageView imageView = new ImageView(new Image(Flag.getImage()));
+        double x = calculateMidXFromPoint(points);
+        double y = calculateMidYFromPoint(points);
+        imageView.relocate(x, y);
+        flag.setImageView(imageView);
+        anchorPane.getChildren().add(imageView);
+
+    }
+
+    public void removeFlagImage(Flag flag) {
+        anchorPane.getChildren().remove(flag.getImageView());
+    }
+
+
     public double calculateMidXFromPoint(ObservableList<Double> points) {
         return (points.get(0) + points.get(2) + points.get(4) + points.get(6)) / 4.00 - width - heightOfPoly_X;
     }
@@ -233,7 +258,7 @@ public class BattleController {
                     System.out.println("YOUR CARD!!!");
                     getBattle().setSelectedCell(null);
                     getBattle().setSelectedCard(null);
-                } else if (getBattle().getSelectedCell().getWarrior().isValidToAttack()){
+                } else if (getBattle().getSelectedCell().getWarrior().isValidToAttack()) {
                     System.out.println("Attack");
                     handleAttackAnimation(coordinate);
                     getBattle().setSelectedCell(null);
@@ -890,7 +915,8 @@ public class BattleController {
     }
 
 
-    public void collectibleItemGif(){
+    public void collectibleItemGif() {
+
 
     }
 }

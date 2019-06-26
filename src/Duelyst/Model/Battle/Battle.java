@@ -62,9 +62,12 @@ public class Battle implements Cloneable {
         }
     }
 
-    public Battle(Account account1, Account account2, GameMode gameMode, GameGoal gameGoal) {
+    public Battle(Account account1, Account account2, GameMode gameMode, GameGoal gameGoal, BattleController battleController) {
         this.gameGoal = gameGoal;
         this.gameMode = gameMode;
+        setBattleController(battleController);
+        battleController.setBattle(this);
+        battleController.makeGrids();
         runningBattle = this;
         if (account2 instanceof Ai) {
             ((Ai) account2).setBattle(this);
@@ -80,8 +83,9 @@ public class Battle implements Cloneable {
             collectableFlags = new ArrayList<>();
             setFlagForCollectFlagGameModes();
         } else if (gameGoal == GameGoal.HOLD_FLAG) {
-            Flag flag = new Flag(KindOfFlag.HOLD_FLAG, 2, 4);
-            getGrid()[2][4].setFlag(flag);
+            holdFlag = new Flag(KindOfFlag.HOLD_FLAG, 2, 4);
+            getGrid()[2][4].setFlag(holdFlag);
+            battleController.initFlagImages();
         }
 
         nextTurn();
@@ -96,9 +100,13 @@ public class Battle implements Cloneable {
 
     public void nextTurn() {
 
+        if (gameGoal == GameGoal.HOLD_FLAG && holdFlag.getWarrior()!=null) {
+            holdFlag.setNumberOfTurn(holdFlag.getNumberOfTurn() + 1);
+        }
         applyPassiveAndSpawnBuffs(onSpawnBuffs);
         applyPassiveAndSpawnBuffs(passiveBuffs);
         endGame();
+
 
         setTrueOfValidAttackAndMove();
         turn++;
@@ -146,7 +154,7 @@ public class Battle implements Cloneable {
                         if (holdFlag.getX() == destX && holdFlag.getY() == destY) {
                             holdFlag.setWarrior(getSelectedCell().getWarrior());
                             getGrid()[destX][destY].setFlag(null);
-                            //TODO graphic
+                            battleController.removeFlagImage(holdFlag);
                         }
                     }
                     if (gameGoal == GameGoal.COLLECT_FLAG) {
@@ -155,7 +163,7 @@ public class Battle implements Cloneable {
                             if (f.getX() == destX && f.getY() == destY) {
                                 playingPlayer.setNumberOfFlag(playingPlayer.getNumberOfFlag() + 1);
                                 getGrid()[destX][destY].setFlag(null);
-                                //TODO graphic
+                                battleController.removeFlagImage(f);
                             }
                         }
                     }
@@ -211,7 +219,7 @@ public class Battle implements Cloneable {
                     if (getPlayingPlayer().getDeck().getItem() instanceof AssassinationDagger) {//AssassinationDagger Item Apply
                         getPlayingPlayer().getDeck().getItem().applyItem();
                     } else if (getPlayingPlayer().getDeck().getItem() instanceof GhosleTaemid) {//GhosleTaemid Item Apply
-                        Buff buff = new HolyBuff( 2, 1);
+                        Buff buff = new HolyBuff(2, 1);
                         buff.setWarrior(warrior);
                         getPassiveBuffs().add(buff);
                     }
@@ -333,6 +341,7 @@ public class Battle implements Cloneable {
                 getCellOfWarrior((Warrior) card).setFlag(holdFlag);
                 holdFlag.setWarrior(null);
                 holdFlag.setNumberOfTurn(0);
+                battleController.initFlagImages();
             }
             battleController.animationOfDeath((Warrior) card);
             battleController.removeImageViewFromCell(card);
@@ -341,9 +350,9 @@ public class Battle implements Cloneable {
     }
 
     private void aaplayDeathBuff(Card card) {
-        for (Buff b:
-             onDeathBuffs) {
-            if (b.getWarrior().equals(card)){
+        for (Buff b :
+                onDeathBuffs) {
+            if (b.getWarrior().equals(card)) {
                 ApplyBuff.getInstance().applyBuff(b);
             }
         }
@@ -652,7 +661,7 @@ public class Battle implements Cloneable {
         }
         endOfKillHeroGameMode();
         if (isEndGame()) {
-            int numberOfWin = 0;
+            int numberOfWin;
             if (draw) {
                 numberOfWin = 3;
                 String h1 = "*draw* vs " + player2.getAccount().getUsername();
@@ -690,10 +699,14 @@ public class Battle implements Cloneable {
             canDraw = true;
             this.setEndGame(true);
             setWinner(player1.getAccount());
+            System.out.println("Hero Killed");
+
         }
         if (player2.getDeck().getHero().getHealthPoint() <= 0) {
             this.setEndGame(true);
             setWinner(player2.getAccount());
+            System.out.println("Hero Killed");
+
             if (canDraw) {
                 draw = true;
             }
@@ -711,9 +724,11 @@ public class Battle implements Cloneable {
         if (player1.getNumberOfFlag() >= 3) {
             setWinner(player1.getAccount());
             setEndGame(true);
+            System.out.println("collect 3 flag");
         } else if (player2.getNumberOfFlag() >= 3) {
             setWinner(player2.getAccount());
             setEndGame(true);
+            System.out.println("collect 3 flag");
         }
     }
 
@@ -729,6 +744,7 @@ public class Battle implements Cloneable {
             collectableFlags.add(flag);
         }
 
+        battleController.initFlagImages();
     }
 
     private void getNRandomNumber(int[] randomX, int[] randomY, int first, int last, int extra) {

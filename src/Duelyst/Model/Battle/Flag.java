@@ -1,6 +1,8 @@
 package Duelyst.Model.Battle;
 
 import Duelyst.Model.Warrior;
+import javafx.scene.image.ImageView;
+
 
 public class Flag {
     private Warrior warrior;
@@ -8,11 +10,17 @@ public class Flag {
     private int numberOfTurn = 0;
     private int x;
     private int y;
+    private static String image = "res/Items/Flag/CollectFlag.png";
+    private ImageView imageView;
 
     public Flag(KindOfFlag kindOfFlag, int x, int y) {
         this.kindOfFlag = kindOfFlag;
         this.x = x;
         this.y = y;
+    }
+
+    public static String getImage() {
+        return image;
     }
 
     public Warrior getWarrior() {
@@ -53,5 +61,13 @@ public class Flag {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
     }
 }

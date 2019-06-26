@@ -214,7 +214,7 @@ public class MainMenu {
 
     }
 
-    public void gotoBattle(Battle battle) {
+    public void gotoBattle(Account account, GameMode gameMode, GameGoal gameGoal) {
         Pane root = null;
         FXMLLoader fxmlLoader = null;
         try {
@@ -225,20 +225,18 @@ public class MainMenu {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         BattleController bc = fxmlLoader.getController();
-        bc.setBattle(battle);
+
+        Battle battle = new Battle(Account.getLoggedAccount(), account, gameMode, gameGoal, bc);
         bc.setHandHbox();
         bc.makeAccountNames();
-        bc.makeGrids();
         bc.runTimelines();
-        battle.setBattleController(bc);
         bc.insertPlayerHeroes();
         stopTimeline();
         Container.runNextScene(root, BATTLE);
     }
 
-    public void gotoBattle(Battle battle, Ai ai) {
+    public void gotoBattle(Ai ai, GameMode gameMode, GameGoal gameGoal) {
 
         Pane root = null;
         FXMLLoader fxmlLoader = null;
@@ -250,14 +248,13 @@ public class MainMenu {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         BattleController bc = fxmlLoader.getController();
-        bc.setBattle(battle);
+
+
+        Battle battle = new Battle(Account.getLoggedAccount(), ai, gameMode, gameGoal , bc);
         bc.setHandHbox();
         bc.makeAccountNames();
-        bc.makeGrids();
         bc.runTimelines();
-        battle.setBattleController(bc);
         ai.setBattleController(bc);
         bc.insertPlayerHeroes();
         stopTimeline();
@@ -678,11 +675,11 @@ public class MainMenu {
 
     private void createBattle(Account account, GameMode gameMode, GameGoal gameGoal) {
         checkDeckAtFirst(Account.getLoggedAccount(), account);
-        Battle battle = new Battle(Account.getLoggedAccount(), account, gameMode, gameGoal);
+
         if (account instanceof Ai) {
-            gotoBattle(battle, (Ai) account);
+            gotoBattle((Ai) account, gameMode, gameGoal);
         } else {
-            gotoBattle(battle);
+            gotoBattle(account, gameMode, gameGoal);
         }
     }
 
