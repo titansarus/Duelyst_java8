@@ -11,42 +11,42 @@
    <children>
       <AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: BLACk; -fx-background-image: url('/res/Backgrounds/main-menu-back.jpg'); -fx-background-size: cover;">
          <children>
-            <ImageView fx:id="play_img" fitHeight="67.0" fitWidth="207.0" layoutX="100.0" layoutY="129.0" onMouseClicked="#handlePlayBtn" onMouseEntered="#playButtonGlow" onMouseExited="#playButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="play_img" fitHeight="87.0" fitWidth="256.0" layoutX="392.0" layoutY="123.0" onMouseClicked="#handlePlayBtn" onMouseEntered="#playButtonGlow" onMouseExited="#playButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../res/ui/button_secondary@2x.png" />
                </image>
             </ImageView>
-            <Label layoutX="173.0" layoutY="138.0" onMouseClicked="#handlePlayBtn" onMouseEntered="#playButtonGlow" onMouseExited="#playButtonGlowDisapear" text="Play" textFill="WHITE">
+            <Label layoutX="489.0" layoutY="138.0" onMouseClicked="#handlePlayBtn" onMouseEntered="#playButtonGlow" onMouseExited="#playButtonGlowDisapear" text="Play" textFill="WHITE">
                <font>
                   <Font name="System Italic" size="33.0" />
                </font>
             </Label>
-            <ImageView fx:id="shop_img" fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="220.0" onMouseClicked="#handleShopBtn" onMouseEntered="#shopButtonGlow" onMouseExited="#shopButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="shop_img" fitHeight="87.0" fitWidth="256.0" layoutX="392.0" layoutY="214.0" onMouseClicked="#handleShopBtn" onMouseEntered="#shopButtonGlow" onMouseExited="#shopButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../res/ui/button_secondary@2x.png" />
                </image>
             </ImageView>
-            <Label layoutX="168.0" layoutY="229.0" onMouseClicked="#handleShopBtn" onMouseEntered="#shopButtonGlow" onMouseExited="#shopButtonGlowDisapear" text="Shop" textFill="#f8f8f8">
+            <Label layoutX="485.0" layoutY="232.0" onMouseClicked="#handleShopBtn" onMouseEntered="#shopButtonGlow" onMouseExited="#shopButtonGlowDisapear" text="Shop" textFill="#f8f8f8">
                <font>
                   <Font name="System Italic" size="33.0" />
                </font>
             </Label>
-            <ImageView fx:id="collections_img" fitHeight="80.0" fitWidth="250.0" layoutX="93.0" layoutY="304.0" onMouseClicked="#handleCollectionBtn" onMouseEntered="#collectionsButtonGlow" onMouseExited="#collectionsButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="collections_img" fitHeight="87.0" fitWidth="256.0" layoutX="392.0" layoutY="305.0" onMouseClicked="#handleCollectionBtn" onMouseEntered="#collectionsButtonGlow" onMouseExited="#collectionsButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../res/ui/button_secondary@2x.png" />
                </image>
             </ImageView>
-            <Label layoutX="136.0" layoutY="320.0" onMouseClicked="#handleCollectionBtn" onMouseEntered="#collectionsButtonGlow" onMouseExited="#collectionsButtonGlowDisapear" text="Collections" textFill="WHITE">
+            <Label layoutX="443.0" layoutY="323.0" onMouseClicked="#handleCollectionBtn" onMouseEntered="#collectionsButtonGlow" onMouseExited="#collectionsButtonGlowDisapear" text="Collections" textFill="WHITE">
                <font>
                   <Font name="System Italic" size="33.0" />
                </font>
             </Label>
-            <ImageView fx:id="quit_img" fitHeight="85.0" fitWidth="256.0" layoutX="86.0" layoutY="585.0" onMouseClicked="#handleQuitBtn" onMouseEntered="#quitButtonGlow" onMouseExited="#quitButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="quit_img" fitHeight="73.0" fitWidth="213.0" layoutX="38.0" layoutY="664.0" onMouseClicked="#handleQuitBtn" onMouseEntered="#quitButtonGlow" onMouseExited="#quitButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../res/ui/button_secondary@2x.png" />
                </image>
             </ImageView>
-            <Label layoutX="182.0" layoutY="603.0" onMouseClicked="#handleQuitBtn" onMouseEntered="#quitButtonGlow" onMouseExited="#quitButtonGlowDisapear" text="Quit" textFill="WHITE">
+            <Label layoutX="113.0" layoutY="675.0" onMouseClicked="#handleQuitBtn" onMouseEntered="#quitButtonGlow" onMouseExited="#quitButtonGlowDisapear" text="Quit" textFill="WHITE">
                <font>
                   <Font size="33.0" />
                </font>
@@ -67,32 +67,42 @@
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <ImageView fx:id="logout_img" fitHeight="73.0" fitWidth="213.0" layoutX="762.0" layoutY="664.0" onMouseClicked="#handleBackBtn" onMouseEntered="#logoutButtonGlow" onMouseExited="#logoutButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="logout_img" fitHeight="73.0" fitWidth="213.0" layoutX="772.0" layoutY="664.0" onMouseClicked="#handleBackBtn" onMouseEntered="#logoutButtonGlow" onMouseExited="#logoutButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../res/ui/button_secondary@2x.png" />
                </image>
             </ImageView>
-            <Label layoutX="817.0" layoutY="675.0" onMouseClicked="#handleBackBtn" onMouseEntered="#logoutButtonGlow" onMouseExited="#logoutButtonGlowDisapear" text="Logout" textFill="WHITE">
+            <Label layoutX="827.0" layoutY="675.0" onMouseClicked="#handleBackBtn" onMouseEntered="#logoutButtonGlow" onMouseExited="#logoutButtonGlowDisapear" text="Logout" textFill="WHITE">
                <font>
                   <Font size="33.0" />
                </font>
             </Label>
-            <ImageView fx:id="leaderbords_img" fitHeight="87.0" fitWidth="256.0" layoutX="85.0" layoutY="401.0" onMouseClicked="#handleLeaderboardBtn" onMouseEntered="#leaderBordsButtonGlow" onMouseExited="#leaderBordsButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="leaderbords_img" fitHeight="87.0" fitWidth="256.0" layoutX="385.0" layoutY="401.0" onMouseClicked="#handleLeaderboardBtn" onMouseEntered="#leaderBordsButtonGlow" onMouseExited="#leaderBordsButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../res/ui/button_secondary@2x.png" />
                </image>
             </ImageView>
-            <Label layoutX="127.0" layoutY="419.0" onMouseClicked="#handleLeaderboardBtn" onMouseEntered="#leaderBordsButtonGlow" onMouseExited="#leaderBordsButtonGlowDisapear" text="Leaderbords" textFill="WHITE">
+            <Label layoutX="426.0" layoutY="419.0" onMouseClicked="#handleLeaderboardBtn" onMouseEntered="#leaderBordsButtonGlow" onMouseExited="#leaderBordsButtonGlowDisapear" text="Leaderbords" textFill="WHITE">
                <font>
                   <Font name="System Italic" size="33.0" />
                </font>
             </Label>
-            <ImageView fx:id="cardCreator_img" fitHeight="85.0" fitWidth="278.0" layoutX="86.0" layoutY="493.0" onMouseClicked="#handleCardCreator" onMouseEntered="#cardCreatorButtonGlow" onMouseExited="#cardCreatorButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="cardCreator_img" fitHeight="87.0" fitWidth="256.0" layoutX="385.0" layoutY="493.0" onMouseClicked="#handleCardCreator" onMouseEntered="#cardCreatorButtonGlow" onMouseExited="#cardCreatorButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../res/ui/button_secondary@2x.png" />
                </image>
             </ImageView>
-            <Label layoutX="122.0" layoutY="511.0" onMouseClicked="#handleCardCreator" onMouseEntered="#cardCreatorButtonGlow" onMouseExited="#cardCreatorButtonGlowDisapear" text="Card Creator" textFill="WHITE">
+            <Label layoutX="421.0" layoutY="511.0" onMouseClicked="#handleCardCreator" onMouseEntered="#cardCreatorButtonGlow" onMouseExited="#cardCreatorButtonGlowDisapear" text="Card Creator" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="33.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="save_img" fitHeight="87.0" fitWidth="256.0" layoutX="386.0" layoutY="578.0" onMouseClicked="#handleSave" onMouseEntered="#saveButtonGlow" onMouseExited="#saveButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_secondary@2x.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="469.0" layoutY="596.0" onMouseClicked="#handleSave" onMouseEntered="#saveButtonGlow" onMouseExited="#saveButtonGlowDisapear" prefHeight="49.0" prefWidth="89.0" text=" Save" textFill="WHITE">
                <font>
                   <Font name="System Italic" size="33.0" />
                </font>
