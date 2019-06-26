@@ -8,11 +8,11 @@ public class MajooneMana extends Item {
 
     public MajooneMana() {
         super("MajooneMana" , "Dar Nobate Baed Mana Ra 3 " +
-                "Vahed Afzayesg Midahad" , 0, false, true);
+                "Vahed Afzayesh Midahad" , 0, false, true);
     }
 
     @Override
     public void applyItem() {
-        getPlayer().setMana(getPlayer().getMana() + 3);
+        getPlayer().setManaYIntercpet(getPlayer().getManaYIntercpet() + 3);
     }
 }

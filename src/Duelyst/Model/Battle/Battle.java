@@ -7,7 +7,6 @@ import Duelyst.Exceptions.NotEnoughManaException;
 import Duelyst.Model.*;
 import Duelyst.Model.Buffs.ApplyBuff;
 import Duelyst.Model.Buffs.Buff;
-import Duelyst.Model.Buffs.BuffName;
 import Duelyst.Model.Buffs.HolyBuff;
 import Duelyst.Model.Items.*;
 import Duelyst.Model.Spell.Spell;
@@ -37,7 +36,7 @@ public class Battle implements Cloneable {
     private ArrayList<Cell> validCells = new ArrayList<>();
     private GameGoal gameGoal;
     private GameMode gameMode;
-    private int numberOfFlagForWin = 3;
+//    private int numberOfFlagForWin = 3;
     private Account winner;
     private boolean draw = false;
     private boolean endGame;
@@ -50,7 +49,6 @@ public class Battle implements Cloneable {
 
     public static Battle deepClone(Battle battle) {//TODO UnCompelete
         Cloner cloner = new Cloner();
-        cloner.dontClone(Account.class);
         return cloner.deepClone(battle);
     }
 
@@ -88,16 +86,6 @@ public class Battle implements Cloneable {
             battleController.initFlagImages();
         }
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    battleController.randomCollectibleItemGenerator();
-                }
-            }
-        });
-        thread.start();
-
         nextTurn();
     }
 
@@ -109,6 +97,24 @@ public class Battle implements Cloneable {
     }
 
     public void nextTurn() {
+
+
+        if (getPlayingPlayer().getDeck().getItem().isApplyFirst()) {
+            getPlayingPlayer().getDeck().getItem().applyItem();
+        }
+
+        if (getPlayingPlayer().getCollectibleItem() != null && getPlayingPlayer().getCollectibleItem().isApplyFirst()) {
+            getPlayingPlayer().getCollectibleItem().applyItem();
+        }
+
+
+        if (getPlayingPlayer().getDeck().getItem() instanceof TajeDanaei) {
+            getPlayingPlayer().getDeck().getItem().applyItem();
+        }
+
+        if (getTurn() % 6 == 0) {
+            battleController.randomCollectibleItemGenerator();
+        }
 
         if (gameGoal == GameGoal.HOLD_FLAG && holdFlag.getWarrior() != null) {
             holdFlag.setNumberOfTurn(holdFlag.getNumberOfTurn() + 1);
@@ -160,6 +166,11 @@ public class Battle implements Cloneable {
             if (getSelectedCell().getColumn() != destX || getSelectedCell().getRow() != destY) {
                 Cell cell = getGrid()[destX][destY];
                 if (cell.getWarrior() == null) {
+                    if (getGrid()[destX][destY].getCollectibleItem() != null) {
+                        getPlayingPlayer().setCollectibleItem(getGrid()[destX][destY].getCollectibleItem());
+                        getGrid()[destX][destY].getCollectibleItem().setPlayer(getPlayingPlayer());
+                        battleController.deleteItemImage(getGrid()[destX][destY].getCollectibleItem());
+                    }
                     if (gameGoal == GameGoal.HOLD_FLAG) {
                         if (holdFlag.getX() == destX && holdFlag.getY() == destY) {
                             holdFlag.setWarrior(getSelectedCell().getWarrior());
@@ -196,6 +207,12 @@ public class Battle implements Cloneable {
                     getGrid()[i][j].setWarrior((Warrior) getSelectedCard());
                     Warrior warrior = getGrid()[i][j].getWarrior();
 
+                    if (getGrid()[i][j].getCollectibleItem() != null) {
+                        getPlayingPlayer().setCollectibleItem(getGrid()[i][j].getCollectibleItem());
+                        battleController.deleteItemImage(getGrid()[i][j].getCollectibleItem());
+                        getGrid()[i][j].getCollectibleItem().setPlayer(getPlayingPlayer());
+                    }
+
                     deleteDeathCardsFromMap(); // Check For Death Cards
 
                     warrior.setInGame(true);
@@ -203,8 +220,8 @@ public class Battle implements Cloneable {
                     if (gameGoal == GameGoal.HOLD_FLAG) {
                         if (holdFlag.getX() == i && holdFlag.getY() == j) {
                             holdFlag.setWarrior(getSelectedCell().getWarrior());
+                            battleController.removeFlagImage(holdFlag);
                             getGrid()[i][j].setFlag(null);
-                            //TODO graphic
                         }
                     }
                     if (gameGoal == GameGoal.COLLECT_FLAG) {
@@ -212,8 +229,8 @@ public class Battle implements Cloneable {
                                 collectableFlags) {
                             if (f.getX() == i && f.getY() == j) {
                                 playingPlayer.setNumberOfFlag(playingPlayer.getNumberOfFlag() + 1);
+                                battleController.removeFlagImage(f);
                                 getGrid()[i][j].setFlag(null);
-                                //TODO graphic
                             }
                         }
                     }
@@ -296,11 +313,16 @@ public class Battle implements Cloneable {
         //KamaneDamol Item Apply
         if (getPlayingPlayer().getDeck().getItem() instanceof KamaneDamol && attacker.equals(getPlayingPlayer().getDeck().getHero())) {
             getPlayingPlayer().getDeck().getItem().applyItem();
-        } else if (getPlayingPlayer().getDeck().getItem() instanceof PoisonousDagger) {
-            getPlayingPlayer().getDeck().getItem().applyItem();
         } else if (getPlayingPlayer().getDeck().getItem() instanceof ShockHammer) {
             getPlayingPlayer().getDeck().getItem().applyItem();
+        } else if (getPlayingPlayer().getDeck().getItem() instanceof TerrorHood) {
+            getPlayingPlayer().getDeck().getItem().applyItem();
         }
+
+        if (getPlayingPlayer().getCollectibleItem() instanceof PoisonousDagger) {
+            getPlayingPlayer().getCollectibleItem().applyItem();
+        }
+
         applyBuffOnAttackAndOnDefend(attacker, onAttackBuffs);
         applyBuffOnAttackAndOnDefend(attackedCard, onDefendBuffs);
         attacker.setValidToMove(false);
@@ -346,7 +368,7 @@ public class Battle implements Cloneable {
     private void deleteFromMap(ArrayList<Card> cards) {
         for (Card card : cards) {
 
-            aaplayDeathBuff(card);
+            applyDeathBuff(card);
 
             if (gameGoal == GameGoal.HOLD_FLAG && holdFlag.getWarrior().equals(card)) {
                 getCellOfWarrior((Warrior) card).setFlag(holdFlag);
@@ -360,7 +382,7 @@ public class Battle implements Cloneable {
         }
     }
 
-    private void aaplayDeathBuff(Card card) {
+    private void applyDeathBuff(Card card) {
         for (Buff b :
                 onDeathBuffs) {
             if (b.getWarrior().equals(card)) {
@@ -376,6 +398,11 @@ public class Battle implements Cloneable {
                 getPlayer1().getDeck().getCards().add(getPlayer1().getDeck().getCards().get(i));
             }
         }
+        for (int i = 0; i < getPlayer2().getDeck().getCards().size(); i++) {
+            if (getPlayer2().getDeck().getCards().get(i) instanceof Spell && getPlayer2().getDeck().getCards().get(i).isInGame()) {
+                getPlayer2().getDeck().getCards().add(getPlayer2().getDeck().getCards().get(i));
+            }
+        }
         getPlayer1().getGraveyard().addAll(firstDeathCards);
         getPlayer1().getInGameCards().removeAll(firstDeathCards);
         getPlayer2().getGraveyard().addAll(secondDeathCards);
@@ -389,6 +416,9 @@ public class Battle implements Cloneable {
             if (playerInGameCard.isInGame() && (playerInGameCard instanceof Warrior)) {
                 System.out.println(((Warrior) playerInGameCard).getHealthPoint() + " <====================================]]");
                 if (((Warrior) playerInGameCard).getHealthPoint() <= 0) {
+                    if (getPlayingPlayer().getInGameCards().contains(playerInGameCard) && getPlayingPlayer().getDeck().getItem() instanceof SoulEater) {
+                        getPlayingPlayer().getDeck().getItem().applyItem();
+                    }
                     deathCards.add(playerInGameCard);
                     playerInGameCard.setInGame(false);
                 }

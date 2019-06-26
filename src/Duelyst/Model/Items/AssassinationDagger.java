@@ -21,5 +21,4 @@ public class AssassinationDagger extends Item {
             player = Battle.getRunningBattle().getPlayer1();
         player.getHero().decreaseHealthPoint(1);
     }
-    //TODO Dar Insert Kardan Bayad Emal Shavad :)
 }

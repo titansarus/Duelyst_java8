@@ -1,6 +1,7 @@
 package Duelyst.Model.Battle;
 
 import Duelyst.Model.*;
+import Duelyst.Model.Items.Item;
 import com.rits.cloning.Cloner;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class Player {
     private ArrayList<Card> hand;
     private Integer mana;
     private Hero hero;
+    private Item collectibleItem;
     private ArrayList<Card> inGameCards;
     private int numberOfFlag=0;
     private Integer manaYIntercpet = 2; //Arz az mabdae system afzayesh mana. Baraye test ya cheat mode roe addad balatr az 2 set mishavad.
@@ -148,5 +150,13 @@ public class Player {
 
     public void setNumberOfFlag(int numberOfFlag) {
         this.numberOfFlag = numberOfFlag;
+    }
+
+    public Item getCollectibleItem() {
+        return collectibleItem;
+    }
+
+    public void setCollectibleItem(Item collectibleItem) {
+        this.collectibleItem = collectibleItem;
     }
 }

@@ -496,7 +496,7 @@ public class BattleController {
 
             CardOnField cardOnField = new CardOnField();
             cardsOnField.add(cardOnField);
-            cardOnField.setCard(getBattle().getSelectedCard());
+            cardOnField.setCard(cell.getCollectibleItem());
             sendIdleImageViewToCenterOfCell(cardOnField, polygon);
 
         } catch (MyException e) {
@@ -919,24 +919,23 @@ public class BattleController {
 
     public void randomCollectibleItemGenerator() {
 
-        long startTime = System.nanoTime();
-
-        //2Seconds Time Delay For Loading :))...
-        Thread thread = new Thread(() -> {
-            while ((System.nanoTime() - startTime) / 1000000 < 4000) {//TODO Time Kame Bayad Bishtar She
-            }
-            collectibleItemSet();
-        });
-        thread.start();
-
+        collectibleItemSet();
     }
 
 
-    public void collectibleItemSet() {
+    private void collectibleItemSet() {
         Cell cell = getRandomCellForCollectibleIteInsert();
+        if(cell == null)
+            return;
         cell.setCollectibleItem(getRandomCollectibleItem());
         handleInsertCollectibleItem(cell);
     }
+
+    public void deleteItemImage(Item item) {
+        CardOnField cardOnField = CardOnField.getCardOnField(item);
+        anchorPane.getChildren().remove(cardOnField.getImageView());
+    }
+
 
     public Item getRandomCollectibleItem() {
         Random random = new Random();
@@ -970,9 +969,9 @@ public class BattleController {
         Random random = new Random();
         row = random.nextInt(5);
         column = random.nextInt(9);
-        while (battle.getGrid()[row][column].getWarrior() == null) {
-            row = random.nextInt(5);
-            column = random.nextInt(9);
+        if (battle.getGrid()[row][column].getWarrior() != null || battle.getGrid()[row][column].getFlag()
+                != null || battle.getGrid()[row][column].getCollectibleItem() != null) {
+            return null;
         }
         return battle.getGrid()[row][column];
     }
