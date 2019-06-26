@@ -307,7 +307,7 @@ public class CardCreatorController {
             String name = getHeroCardName_tf().getText();
             String desc = getHeroDesc_ta().getText();
             if (name == null || name.length() <= 0) {
-                name= "res/cardCreatorDefualt/default.png";
+                return;
             }
             int ap = Integer.parseInt(getHeroAP_tf().getText());
             int hp = Integer.parseInt(getHeroHP_tf().getText());
@@ -349,7 +349,7 @@ public class CardCreatorController {
             String name = getMinionCardName_tf().getText();
             String desc = getMinionDesc_ta().getText();
             if (name == null || name.length() <= 0) {
-                name= "res/cardCreatorDefualt/default.png";
+                return;
             }
             int ap = Integer.parseInt(getMinionAP_tf().getText());
             int hp = Integer.parseInt(getMinionHP_tf().getText());
