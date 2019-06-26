@@ -2,6 +2,7 @@ package Duelyst.Model.Battle;
 
 import Duelyst.Controllers.BattleController;
 import Duelyst.Exceptions.CellFilledBeforeException;
+import Duelyst.Exceptions.MyException;
 import Duelyst.Exceptions.NotEnoughManaException;
 import Duelyst.Model.*;
 import Duelyst.Model.Buffs.ApplyBuff;
@@ -47,7 +48,7 @@ public class Battle implements Cloneable {
     public static final int VALID_COUNTER_WITH_BUFF = 1, VALID_COUNTER_WITHOUT_BUFF = 2, INVALID_COUNTER_WITH_BUFF = 3, INVALID_COUNTER_WITHOUT_BUFF = 4;
 
 
-    public static Battle deepClone(Battle battle) {
+    public static Battle deepClone(Battle battle) {//TODO UnCompelete
         Cloner cloner = new Cloner();
         cloner.dontClone(Account.class);
         return cloner.deepClone(battle);
@@ -679,6 +680,7 @@ public class Battle implements Cloneable {
             }
             battleController.backToMenuInEndOfGame(numberOfWin);
             System.out.println("Game End");
+            throw new MyException("Game End", "GameOver");
         }
 
     }

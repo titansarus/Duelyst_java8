@@ -875,8 +875,25 @@ public class BattleController {
         quit_img.setImage(new Image("res/ui/button_primary_middle@2x.png"));
     }
 
-}
+    public void randomCollectibleItemGenerator() {
 
+        long startTime = System.nanoTime();
+
+        //2Seconds Time Delay For Loading :))...
+        Thread thread = new Thread(() -> {
+            while ((System.nanoTime() - startTime) / 1000000 < 60000) {
+            }
+
+        });
+        thread.start();
+
+    }
+
+
+    public void collectibleItemGif(){
+
+    }
+}
 
 class CardOnField {
 

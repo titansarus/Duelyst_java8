@@ -66,22 +66,20 @@ public class Deck implements Cloneable {
 
 
         if (Deck.findDeckInArrayList(deck.getDeckName(), cardCollection.getDecks()) != null) {
-            Deck.giveCardOfDeckToCardCollection(Deck.findDeckInArrayList(deck.getDeckName(), cardCollection. getDecks()),cardCollection );
-            cardCollection.getDecks().remove(Deck.findDeckInArrayList(deck.getDeckName(),cardCollection.getDecks()));
+            Deck.giveCardOfDeckToCardCollection(Deck.findDeckInArrayList(deck.getDeckName(), cardCollection.getDecks()), cardCollection);
+            cardCollection.getDecks().remove(Deck.findDeckInArrayList(deck.getDeckName(), cardCollection.getDecks()));
             cardCollection.setMainDeck(null);
         }
 
-        Deck exportedDeck = new Deck(deck.getDeckName(),cardCollection.getAccount());
-        for (int i =0;i<deck.getCards().size();i++)
-        {
+        Deck exportedDeck = new Deck(deck.getDeckName(), cardCollection.getAccount());
+        for (int i = 0; i < deck.getCards().size(); i++) {
             Card card = deck.getCards().get(i);
-            if (card!=null)
-            {
+            if (card != null) {
                 card.setAccount(cardCollection.getAccount());
-                card.setCardId(Card.makeNewID(cardCollection.getAccount().getUsername(),card.getCardName(),CardCollection.getCountOfCard(cardCollection.getCards(),card)));
+                card.setCardId(Card.makeNewID(cardCollection.getAccount().getUsername(), card.getCardName(), CardCollection.getCountOfCard(cardCollection.getCards(), card)));
                 //TODO CHECK FOR HERO
                 exportedDeck.addCard(card);
-                cardCollection.removeCard(Card.findCardInArrayListByName(card.getCardName(),cardCollection.getCards()));
+                cardCollection.removeCard(Card.findCardInArrayListByName(card.getCardName(), cardCollection.getCards()));
             }
         }
         cardCollection.getDecks().add(exportedDeck);
@@ -153,9 +151,13 @@ public class Deck implements Cloneable {
                 addHero((Hero) card);
             } else if (card instanceof Minion) {
                 addMinion((Minion) card);
+            } else if (card instanceof Item) {
+                item = (Item) card;
             } else getCards().add(card);
         }
     }
+
+
 
     private void addHero(Hero hero) {
         if (hero != null) {
@@ -287,24 +289,25 @@ public class Deck implements Cloneable {
         return isValid;
     }
 
-    public static Deck AiDeckBuilder(int i,Ai ai) {
+    public static Deck AiDeckBuilder(int i, Ai ai) {
         int[] heroNumber = {1, 5, 7};
         int[][] spellNumbers = {{1, 7, 10, 11, 12, 18, 20}, {2, 3, 5, 9, 8, 13, 19}, {6, 10, 12, 14, 15, 16, 17}};
         int[][] minionNumbers = {{1, 9, 11, 11, 13, 17, 18, 21, 22, 26, 38, 36, 40}, {2, 3, 5, 8, 12, 15, 15, 19, 23, 27, 30, 33, 39}, {6, 7, 10, 14, 16, 16, 20, 24, 25, 28, 29, 31, 34}};
         int[] item = {1, 10, 5};
-        return AiDeckBuilderUtility(heroNumber[i - 1], spellNumbers[i - 1], minionNumbers[i - 1], item[i - 1],ai);
+        return AiDeckBuilderUtility(heroNumber[i - 1], spellNumbers[i - 1], minionNumbers[i - 1], item[i - 1], ai);
     }
-    public static Deck AiDeckBuilderUtility(int heroNumber, int[] spellNumbers, int[] minionNumbers, int itemNumber,Ai ai) {
-        Deck deck = new Deck("AiDeck",ai);
+
+    public static Deck AiDeckBuilderUtility(int heroNumber, int[] spellNumbers, int[] minionNumbers, int itemNumber, Ai ai) {
+        Deck deck = new Deck("AiDeck", ai);
         Hero hero = (Hero) Card.findCardInArrayList("Hero_" + heroNumber, Shop.getInstance().getCards());
         deck.addCard(hero);
         for (int minionNumber : minionNumbers) {
             Minion minion = (Minion) Card.findCardInArrayList("Minion_" + minionNumber, Shop.getInstance().getCards());
             deck.addCard(minion);
         }
-        for (int spellNumber:
-             spellNumbers) {
-            Spell spell  =(Spell) Card.findCardInArrayList("Spell_"+spellNumber,Shop.getInstance().getCards());
+        for (int spellNumber :
+                spellNumbers) {
+            Spell spell = (Spell) Card.findCardInArrayList("Spell_" + spellNumber, Shop.getInstance().getCards());
             deck.addCard(spell);
         }
         //TODO Item Should be Added

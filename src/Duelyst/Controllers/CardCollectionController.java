@@ -34,6 +34,7 @@ import static Duelyst.View.Constants.*;
 
 public class CardCollectionController {
 
+    public ImageView item_img;
     @FXML
     JFXButton back_btn;
 
@@ -282,6 +283,7 @@ public class CardCollectionController {
                 deckScroll--;
             }
             scrollPane_2.setHvalue(deckScroll * (4.0 / cardCollectionCards_HB.getChildren().size()));
+
         } else {
             if (collectionScroll != 0) {
                 collectionScroll--;
@@ -446,7 +448,7 @@ public class CardCollectionController {
 
     public void runSlowTimeline() {
         slowTimeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
-            updateLoginedUser();
+            updateLoggedInUser();
             updateDarick();
             updateMainDeck();
             updateColor();
@@ -548,7 +550,7 @@ public class CardCollectionController {
         }
     }
 
-    private void updateLoginedUser() {
+    private void updateLoggedInUser() {
         if (Account.getLoggedAccount() == null) {
             getLoggedAccount_lbl().setText(NO_USER_LOGINED);
             return;
