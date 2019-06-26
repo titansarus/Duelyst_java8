@@ -211,9 +211,9 @@ public class Battle implements Cloneable {
 
                     warrior.setValidToMove(false);
                     warrior.setValidToAttack(false);
+                    getPlayingPlayer().getHand().remove(warrior);
 
                     getPlayingPlayer().changeMana(-warrior.getManaCost());
-                    getPlayingPlayer().getHand().remove(warrior);
                     playingPlayer.getInGameCards().add(getSelectedCard());
 
                     if (getPlayingPlayer().getDeck().getItem() instanceof AssassinationDagger) {//AssassinationDagger Item Apply
@@ -235,6 +235,7 @@ public class Battle implements Cloneable {
 
             Spell spell = (Spell) getSelectedCard();
             ArrayList<Buff> buffs = spell.getBuffs();
+            getPlayingPlayer().getHand().remove(getSelectedCard());
             for (Buff b :
                     buffs) {
                 switch (spell.getTimeOfApply()) {
