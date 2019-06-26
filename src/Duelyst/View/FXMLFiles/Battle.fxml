@@ -38,7 +38,7 @@
                </font>
             </Label>
             <HBox fx:id="hand_hBox" layoutX="325.0" layoutY="712.0" prefHeight="144.0" prefWidth="893.0" />
-            <Label fx:id="p2Acc_lbl" layoutX="1452.0" layoutY="3.0" text="Player1" textFill="RED">
+            <Label fx:id="p2Acc_lbl" layoutX="1452.0" layoutY="3.0" text="Player2" textFill="RED">
                <font>
                   <Font name="System Bold" size="36.0" />
                </font>
@@ -79,6 +79,11 @@
                   <Font name="System Bold Italic" size="20.0" />
                </font>
             </Label>
+            <ImageView fitHeight="101.0" fitWidth="77.0" layoutX="30.0" layoutY="784.0" onMouseClicked="#handleGraveYardButton" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/graveYard.png" />
+               </image>
+            </ImageView>
          </children>
       
       </AnchorPane>

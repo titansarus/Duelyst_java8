@@ -55,10 +55,6 @@ public class ShopController {
     Tab sell_tab;
 
     @FXML
-    HBox listOfCards_HBox;
-
-
-    @FXML
     JFXButton action_btn;
 
     @FXML
@@ -288,9 +284,6 @@ public class ShopController {
         return fastTimeline;
     }
 
-    public HBox getListOfCards_HBox() {
-        return listOfCards_HBox;
-    }
 
     public JFXButton getAction_btn() {
         return action_btn;

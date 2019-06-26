@@ -1,14 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.net.URL?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Reflection?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Duelyst.Controllers.GraveYardController"
-            prefHeight="400.0" prefWidth="600.0">
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.GraveYardController">
+    <children>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="738.0" prefWidth="827.0" style="-fx-background-image: url('/res/Backgrounds/shopBackground.png')">
+            <children>
+                <TabPane fx:id="shopList_tabPane" layoutX="118.0" layoutY="59.0" prefHeight="548.0" prefWidth="621.0" style="-fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10; -fx-background-color: transparent;" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                        <Tab fx:id="buy_tab" onSelectionChanged="#handleTabSelectionChanged" style="-fx-background-color: rgba(23,56,73,0.8);" text="Player1">
+                            <content>
+                                <ScrollPane fx:id="buyScrollPane" hbarPolicy="NEVER" prefHeight="408.0" prefWidth="621.0" style="-fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10; -fx-background-color: transparent;" vbarPolicy="NEVER">
+                                    <content>
+                                        <HBox fx:id="buy_aPane" prefHeight="388.0" prefWidth="621.0" style="-fx-background-color: transparent;" />
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                        <Tab fx:id="sell_tab" onSelectionChanged="#handleTabSelectionChanged" style="-fx-background-color: rgba(23,56,73,0.8);" text="Player2">
+                            <content>
+                                <ScrollPane fx:id="sellScrollPane" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
+                                    <content>
+                                        <HBox fx:id="sell_aPane" prefHeight="511.0" prefWidth="622.0" style="-fx-background-color: transparent;" />
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                    </tabs>
+                    <stylesheets>
+                        <URL value="@../../../css/scroll-bar.css" />
+                        <URL value="@../../../css/tab-pane-new.css" />
+                    </stylesheets>
+                </TabPane>
+                <JFXTextField fx:id="search_txtf" focusColor="#fbd951" layoutX="524.0" layoutY="14.0" onAction="#handleSearchInputChanged" onInputMethodTextChanged="#handleSearchInputChanged" onKeyTyped="#handleSearchInputChanged" prefHeight="25.0" prefWidth="188.0" promptText="Search..." style="-fx-text-fill: white; -fx-opacity: 0.7; -fx-background-color: rgba(0,0,0,1);" stylesheets="@../../../css/jfx-textfield.css" unFocusColor="#06416b">
+                    <effect>
+                        <Reflection />
+                    </effect>
+                </JFXTextField>
+                <JFXButton fx:id="next_btn" layoutX="443.0" layoutY="628.0" onAction="#handleNextButton" />
+                <JFXButton fx:id="previous_btn" layoutX="247.0" layoutY="628.0" onAction="#handlePreviousButton" />
+                <ImageView fitHeight="114.0" fitWidth="114.0" layoutY="-1.0" onMouseClicked="#handleBackBtn" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../res/ui/button_back_corner@2x.png" />
+                    </image>
+                    <effect>
+                        <DropShadow color="#403535" height="30.33" offsetX="5.0" offsetY="5.0" radius="13.11" width="24.11" />
+                    </effect>
+                </ImageView>
+            </children>
+        </AnchorPane>
+    </children>
 
-</AnchorPane>
+</StackPane>
