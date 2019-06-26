@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXDialogLayout;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -33,14 +34,14 @@ import static Duelyst.View.Constants.NO_USER_LOGINED;
 public class MainMenu {
 
 
+    public Pane saveNotification_pane;
     int singleOrMulti = 0; //1 == Single , 2 == Multi
     int storyModeLevel = 0; //1 == 1 , 2 == 2 , 3 ==3;
     int multiplayerModeGoal = 0; //1 == hero , 2 == capture_flags , 3== hold_flag
-    Account selectedAccoutForMultiPlayer=null;
+    Account selectedAccoutForMultiPlayer = null;
 
     @FXML
     Label loginedAccount_lbl;
-
 
 
     @FXML
@@ -132,6 +133,7 @@ public class MainMenu {
     public void cardCreatorButtonGlowDisapear() {
         cardCreator_img.setImage(new Image("res/ui/button_secondary@2x.png"));
     }
+
     public void saveButtonGlow() {
         save_img.setImage(new Image("res/ui/button_secondary_glow@2x.png"));
     }
@@ -205,8 +207,15 @@ public class MainMenu {
         }
 
     }
-    public void handleSave(){
+
+    public void handleSave() {
         Account.saveAccount();
+        TranslateTransition tt = new TranslateTransition(Duration.millis(3000), saveNotification_pane);
+        tt.setFromX(610);
+        tt.setToX(400);
+        tt.setAutoReverse(true);
+        tt.setCycleCount(2);
+        tt.play();
     }
 
     public void handleCardCreator() {
@@ -385,7 +394,7 @@ public class MainMenu {
                 Account account = chooseYourOpponent();
                 System.out.println(selectedAccoutForMultiPlayer.getUsername());
                 if (selectedAccoutForMultiPlayer != null) {
-                    System.out.println(account.getUsername()+"<<--------------------------------------------");
+                    System.out.println(account.getUsername() + "<<--------------------------------------------");
                     createBattle(account, GameMode.MULTI_PLAYER, GameGoal.KILL_HERO);
                 }
                 jfxDialog.close();
@@ -463,7 +472,7 @@ public class MainMenu {
                             Account.getAccounts()) {
                         if (a.getUsername().equals(j.getText())) {
                             selectedAccount[0] = a;
-                            selectedAccoutForMultiPlayer=a;
+                            selectedAccoutForMultiPlayer = a;
                             System.out.println(selectedAccount[0].getUsername());
                         }
                     }

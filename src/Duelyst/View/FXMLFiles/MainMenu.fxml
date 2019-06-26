@@ -4,12 +4,13 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
 <StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.MainMenu">
    <children>
-      <AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: BLACk; -fx-background-image: url('/res/Backgrounds/main-menu-back.jpg'); -fx-background-size: cover;">
+      <AnchorPane maxHeight="768.0" maxWidth="1024.0" minHeight="768.0" minWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: BLACk; -fx-background-image: url('/res/Backgrounds/main-menu-back.jpg'); -fx-background-size: cover;">
          <children>
             <ImageView fx:id="play_img" fitHeight="87.0" fitWidth="256.0" layoutX="392.0" layoutY="123.0" onMouseClicked="#handlePlayBtn" onMouseEntered="#playButtonGlow" onMouseExited="#playButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -77,38 +78,47 @@
                   <Font size="33.0" />
                </font>
             </Label>
-            <ImageView fx:id="leaderbords_img" fitHeight="87.0" fitWidth="256.0" layoutX="385.0" layoutY="401.0" onMouseClicked="#handleLeaderboardBtn" onMouseEntered="#leaderBordsButtonGlow" onMouseExited="#leaderBordsButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="leaderbords_img" fitHeight="87.0" fitWidth="256.0" layoutX="393.0" layoutY="401.0" onMouseClicked="#handleLeaderboardBtn" onMouseEntered="#leaderBordsButtonGlow" onMouseExited="#leaderBordsButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../res/ui/button_secondary@2x.png" />
                </image>
             </ImageView>
-            <Label layoutX="426.0" layoutY="419.0" onMouseClicked="#handleLeaderboardBtn" onMouseEntered="#leaderBordsButtonGlow" onMouseExited="#leaderBordsButtonGlowDisapear" text="Leaderbords" textFill="WHITE">
+            <Label layoutX="434.0" layoutY="419.0" onMouseClicked="#handleLeaderboardBtn" onMouseEntered="#leaderBordsButtonGlow" onMouseExited="#leaderBordsButtonGlowDisapear" text="Leaderbords" textFill="WHITE">
                <font>
                   <Font name="System Italic" size="33.0" />
                </font>
             </Label>
-            <ImageView fx:id="cardCreator_img" fitHeight="87.0" fitWidth="256.0" layoutX="385.0" layoutY="493.0" onMouseClicked="#handleCardCreator" onMouseEntered="#cardCreatorButtonGlow" onMouseExited="#cardCreatorButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="cardCreator_img" fitHeight="87.0" fitWidth="256.0" layoutX="393.0" layoutY="493.0" onMouseClicked="#handleCardCreator" onMouseEntered="#cardCreatorButtonGlow" onMouseExited="#cardCreatorButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../res/ui/button_secondary@2x.png" />
                </image>
             </ImageView>
-            <Label layoutX="421.0" layoutY="511.0" onMouseClicked="#handleCardCreator" onMouseEntered="#cardCreatorButtonGlow" onMouseExited="#cardCreatorButtonGlowDisapear" text="Card Creator" textFill="WHITE">
+            <Label layoutX="429.0" layoutY="511.0" onMouseClicked="#handleCardCreator" onMouseEntered="#cardCreatorButtonGlow" onMouseExited="#cardCreatorButtonGlowDisapear" text="Card Creator" textFill="WHITE">
                <font>
                   <Font name="System Italic" size="33.0" />
                </font>
             </Label>
-            <ImageView fx:id="save_img" fitHeight="87.0" fitWidth="256.0" layoutX="386.0" layoutY="578.0" onMouseClicked="#handleSave" onMouseEntered="#saveButtonGlow" onMouseExited="#saveButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="save_img" fitHeight="87.0" fitWidth="256.0" layoutX="394.0" layoutY="578.0" onMouseClicked="#handleSave" onMouseEntered="#saveButtonGlow" onMouseExited="#saveButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../res/ui/button_secondary@2x.png" />
                </image>
             </ImageView>
-            <Label layoutX="469.0" layoutY="596.0" onMouseClicked="#handleSave" onMouseEntered="#saveButtonGlow" onMouseExited="#saveButtonGlowDisapear" prefHeight="49.0" prefWidth="89.0" text=" Save" textFill="WHITE">
+            <Label layoutX="476.0" layoutY="596.0" onMouseClicked="#handleSave" onMouseEntered="#saveButtonGlow" onMouseExited="#saveButtonGlowDisapear" prefHeight="49.0" prefWidth="89.0" text=" Save" textFill="WHITE">
                <font>
                   <Font name="System Italic" size="33.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
+      <Pane fx:id="saveNotification_pane" maxHeight="54.0" maxWidth="180.0" minHeight="54.0" minWidth="180.0" prefHeight="54.0" prefWidth="180.0" stylesheets="@../../../css/saveGameNotification.css" translateX="615.0" translateY="-290.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="32.0" layoutY="20.0" text="Game Saved Successfully" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="10.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
    </children>
 
 </StackPane>
