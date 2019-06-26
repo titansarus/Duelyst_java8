@@ -280,7 +280,7 @@ public class Battle {
         for (Card card : cards) {
             System.out.println("=========================>   " + card.getCardName());
             battleController.animationOfDeath((Warrior) card);
-//            battleController.removeImageViewFromCell(card);
+            battleController.removeImageViewFromCell(card);
             getCellOfWarrior((Warrior) card).setWarrior(null);
         }
     }

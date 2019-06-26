@@ -568,7 +568,7 @@ public class BattleController {
             cardOnField.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnField.getCard().getAddressOfDeathGif()));
 
             TranslateTransition tt = new TranslateTransition(Duration.millis(2000), cardOnField.getImageView());
-            tt.setOnFinished(event -> removeImageViewFromCell(warrior));
+//            tt.setOnFinished(event -> anchorPane.getChildren().remove(cardOnField.getImageView()));
             tt.play();
 
 
