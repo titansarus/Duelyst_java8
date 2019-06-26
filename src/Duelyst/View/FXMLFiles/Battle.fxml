@@ -6,6 +6,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
 <StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.BattleController">
@@ -84,6 +86,21 @@
                   <Image url="@../../../res/ui/graveYard.png" />
                </image>
             </ImageView>
+            <ImageView fx:id="gameResult_img" fitHeight="202.0" fitWidth="786.0" layoutX="416.0" layoutY="329.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="gameResult_lbl" alignment="CENTER" contentDisplay="CENTER" layoutX="609.0" layoutY="384.0" prefHeight="45.0" prefWidth="410.0" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold Italic" size="40.0" />
+               </font>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop color="#8ba0f7" />
+                        <Stop color="#8ba0f7" offset="0.007246376811594203" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+            </Label>
          </children>
       
       </AnchorPane>

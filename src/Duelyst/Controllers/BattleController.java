@@ -44,6 +44,8 @@ public class BattleController {
     public Label attackPower_lbl;
 
     public Label healthPoint_lbl;
+    public ImageView gameResult_img;
+    public Label gameResult_lbl;
 
     @FXML
     HBox hand_hBox;
@@ -768,18 +770,39 @@ public class BattleController {
     public ArrayList<CardForBattle> getHand() {
         return hand;
     }
-    public void backToMenuInEndOfGame(int loseOrWinOrDraw){//lose 1 , //win 2 , //draw 3
-        long startTime = System.nanoTime();
-        //2Seconds Time Delay For Loading :))...
-        Thread thread = new Thread(() -> {
-            while ((System.nanoTime() - startTime) / 1000000 < 4000) {
-            }
+
+    public void backToMenuInEndOfGame(int loseOrWinOrDraw) {//lose 1 , //win 2 , //draw 3
+        gameResultAnimation(loseOrWinOrDraw);
+    }
+
+    private void gameResultAnimation(int kind) {
+        if (kind == 1) {
+            gameResult_img.setImage(new Image("res/ui/notification_enemy_turn@2x.png"));
+            gameResult_lbl.setText("You Loose");
+        } else if (kind == 2) {
+            gameResult_img.setImage(new Image("res/ui/notification_go@2x.png"));
+            gameResult_lbl.setText("You Win");
+        } else {
+            gameResult_img.setImage(new Image("res/ui/notification_go@2x.png"));
+            gameResult_lbl.setText("Draw!");
+        }
+        FadeTransition ft = new FadeTransition(Duration.millis(3000), gameResult_img);
+        FadeTransition ft2 = new FadeTransition(Duration.millis(3000), gameResult_lbl);
+        ft.setOnFinished(event -> {
             if (Container.scenes.size() > 0) {
                 Container.handleBack();
             }
         });
-        thread.start();
-
+        ft.setFromValue(0);
+        ft.setToValue(100);
+        ft2.setFromValue(0);
+        ft2.setToValue(100);
+        ft.setCycleCount(2);
+        ft2.setCycleCount(2);
+        ft.setAutoReverse(true);
+        ft2.setAutoReverse(true);
+        ft.play();
+        ft2.play();
     }
 }
 
