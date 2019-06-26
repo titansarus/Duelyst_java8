@@ -24,7 +24,7 @@ public class MajooneRooeinTani extends Item {
         Random random = new Random();
         int randomIndex = random.nextInt(getPlayer().getInGameCards().size());
 
-        Buff buff = new HolyBuff(BuffName.HOLY_BUFF, true, 2, 10);
+        Buff buff = new HolyBuff(2, 10);
         buff.setWarrior((Warrior) getPlayer().getInGameCards().get(randomIndex));
         Battle.getRunningBattle().getPassiveBuffs().add(buff);
 

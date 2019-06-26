@@ -4,8 +4,8 @@ import Duelyst.Model.Card;
 
 public class DisarmBuff extends Buff {
 
-    public DisarmBuff(BuffName buffName, boolean isPositive, int numberOfTurn) {
-        super(buffName, isPositive,numberOfTurn);
+    public DisarmBuff(int numberOfTurn) {
+        super(BuffName.DISARM_BUFF, false, numberOfTurn);
     }
 
 }

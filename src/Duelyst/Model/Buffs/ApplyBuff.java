@@ -1,6 +1,5 @@
 package Duelyst.Model.Buffs;
 
-import Duelyst.Model.Battle.Cell;
 import Duelyst.Model.Warrior;
 
 public class ApplyBuff {
@@ -92,15 +91,16 @@ public class ApplyBuff {
         WeaknessBuff weaknessBuff = ((WeaknessBuff) buff);
         Warrior warrior = buff.getWarrior();
         if (weaknessBuff.isForPower()) {
-            warrior.decreaseActionPower(weaknessBuff.getIncreaseNumber());
+            warrior.decreaseActionPower(weaknessBuff.getDecreaseNumber());
         } else {
-            warrior.decreaseHealthPoint(weaknessBuff.getIncreaseNumber());
+            warrior.decreaseHealthPoint(weaknessBuff.getDecreaseNumber());
         }
     }
 
     public void stunBuff(Buff buff) {
         StunBuff stunBuff = ((StunBuff) buff);
         Warrior warrior = stunBuff.getWarrior();
+        warrior.setStun(true);
         warrior.setValidCounterAttack(false);
         warrior.setValidToAttack(false);
         warrior.setValidToMove(false);
@@ -148,6 +148,7 @@ public class ApplyBuff {
     public void cancelStunBuff(Buff buff) {
         StunBuff stunBuff = ((StunBuff) buff);
         Warrior warrior = stunBuff.getWarrior();
+        warrior.setStun(false);
         warrior.setValidCounterAttack(true);
         warrior.setValidToAttack(true);
         warrior.setValidToMove(true);
@@ -157,9 +158,9 @@ public class ApplyBuff {
         WeaknessBuff weaknessBuff = ((WeaknessBuff) buff);
         Warrior warrior = buff.getWarrior();
         if (weaknessBuff.isForPower()) {
-            warrior.increaseActionPower(weaknessBuff.getIncreaseNumber());
+            warrior.increaseActionPower(weaknessBuff.getDecreaseNumber());
         } else {
-            warrior.increaseHealthPoint(weaknessBuff.getIncreaseNumber());
+            warrior.increaseHealthPoint(weaknessBuff.getDecreaseNumber());
         }
     }
 

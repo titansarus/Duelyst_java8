@@ -25,7 +25,7 @@ public class Exir extends Item {
         }
         if (getPlayer().getInGameCards().size() > 0) {
             ((Warrior) getPlayer().getInGameCards().get(randomIndex)).increaseHealthPoint(3);
-            Buff buff = new PowerBuff(BuffName.POWER_BUFF, true, 100000, true, 3);
+            Buff buff = new PowerBuff(100000, true, 3);
             buff.setWarrior((Warrior) getPlayer().getInGameCards().get(randomIndex));
             Battle.getRunningBattle().getPassiveBuffs().add(buff);
         }

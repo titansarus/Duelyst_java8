@@ -233,7 +233,7 @@ public class BattleController {
                     System.out.println("YOUR CARD!!!");
                     getBattle().setSelectedCell(null);
                     getBattle().setSelectedCard(null);
-                } else {
+                } else if (getBattle().getSelectedCell().getWarrior().isValidToAttack()){
                     System.out.println("Attack");
                     handleAttackAnimation(coordinate);
                     getBattle().setSelectedCell(null);
@@ -740,7 +740,7 @@ public class BattleController {
     }
 
     public void makeHandView() {
-        for (int i = 0; i < SIZE_OF_HAND; i++) {
+        for (int i = 0; i < getBattle().getPlayingPlayer().getHand().size(); i++) {
             if (getBattle().getPlayingPlayer().getHand().get(i) != null) {
                 CardForBattle cardForBattle = new CardForBattle(getBattle().getPlayingPlayer().getHand().get(i));
                 cardForBattle.getCardController().setBattle(getBattle());

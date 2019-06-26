@@ -1,22 +1,20 @@
 package Duelyst.Model.Buffs;
 
-import Duelyst.Model.Card;
-
 public class WeaknessBuff extends Buff {
     private boolean isForPower;
-    private int increaseNumber;
+    private int decreaseNumber;
 
-    public WeaknessBuff(BuffName buffName, boolean isPositive, int numberOfTurn, boolean isForPower, int increaseNumber) {
-        super(buffName, isPositive, numberOfTurn);
+    public WeaknessBuff(int numberOfTurn, boolean isForPower, int decreaseNumber) {
+        super(BuffName.WEAKNESS_BUFF, false, numberOfTurn);
         this.isForPower = isForPower;
-        this.increaseNumber = increaseNumber;
+        this.decreaseNumber = decreaseNumber;
     }
 
     public boolean isForPower() {
         return isForPower;
     }
 
-    public int getIncreaseNumber() {
-        return increaseNumber;
+    public int getDecreaseNumber() {
+        return decreaseNumber;
     }
 }
