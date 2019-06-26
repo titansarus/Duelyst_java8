@@ -188,7 +188,7 @@ public class BattleController {
 
     public void initFlagImages() {
         for (int i = 0; i < battle.getGrid().length; i++) {
-            for (int j = 0; j < battle.getGrid().length; j++) {
+            for (int j = 0; j < battle.getGrid()[i].length; j++) {
                 if (battle.getGrid()[i][j].getFlag() != null) {
                     setFlagImage(i, j, battle.getGrid()[i][j].getFlag());
                 }
@@ -238,11 +238,11 @@ public class BattleController {
                 for (int i = 0; i < cells.size(); i++) {
                     System.out.println(cells.get(i).getRow() + " <======> " + cells.get(i).getColumn());
                 }
-                if (!cells.contains(battle.getGrid()[coordinate[0]][coordinate[1]])) {
-                    //TODO throw exception
-
-                    return;
-                }
+//                if (!cells.contains(battle.getGrid()[coordinate[0]][coordinate[1]])) {
+//                    //TODO throw exception
+//
+//                    return;
+//                }
 
                 if (Cell.calculateManhattanDistance(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]]) <= 2) {
                     if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getSelectedCell().getWarrior()) && getBattle().getSelectedCell().getWarrior().isValidToMove()) {

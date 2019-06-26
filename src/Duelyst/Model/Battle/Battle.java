@@ -533,7 +533,7 @@ public class Battle implements Cloneable {
         Warrior warrior = getSelectedCell().getWarrior();
         for (Cell[] cell : getGrid()) {
             for (Cell cell1 : cell) {
-                if (cell1.isEmpty() && Cell.calculateManhattanDistance(getCellOfWarrior(warrior), cell1) <= 2 && isValidMove(cell1))
+                if (cell1.isEmpty() && getDistanceOfTwoCell(getCellOfWarrior(warrior), cell1) <= 2)
                     getValidCells().add(cell1);
             }
         }
@@ -749,7 +749,7 @@ public class Battle implements Cloneable {
         int[] randomY = new int[6];
         getNRandomNumber(randomX, randomY, 0, 3, 0);
         getNRandomNumber(randomX, randomY, 3, 6, 5);
-        for (int i = 0; i < randomX.length; i++) {
+        for (int i = 0; i < 6; i++) {
             Flag flag = new Flag(KindOfFlag.COLLECTABLE_FLAG, randomX[i], randomY[i]);
             getGrid()[randomX[i]][randomY[i]].setFlag(flag);
             collectableFlags.add(flag);
