@@ -694,23 +694,15 @@ public class MainMenu {
             }
         });
 
-        multiplayer.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setSingleOrMulti(MULTIPLAYER_INT);
-                System.out.println(singleOrMulti);
-                jfxDialog.close();
+        multiplayer.setOnAction(event -> {
+            setSingleOrMulti(MULTIPLAYER_INT);
+            System.out.println(singleOrMulti);
+            jfxDialog.close();
 
-                multiGoalSelection();
-            }
+            multiGoalSelection();
         });
 
-        cancel.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                jfxDialog.close();
-            }
-        });
+        cancel.setOnAction(event -> jfxDialog.close());
 
         jfxDialog.show();
     }

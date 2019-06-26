@@ -453,11 +453,14 @@ public class BattleController {
         getBattle().setPlayingPlayer(getBattle().getPlayer1());
         getBattle().getPlayingPlayer().setHero(getBattle().getPlayer1().getDeck().getHero());
         handleInsertCardClickAi(getBattle().getGrid()[2][0], getBattle().getPlayer1().getDeck().getHero());
+            getBattle().getPlayer1().getInGameCards().add(getBattle().getPlayer1().getDeck().getHero());
 
 
         getBattle().setPlayingPlayer(getBattle().getPlayer2());
         getBattle().getPlayingPlayer().setHero(getBattle().getPlayer2().getDeck().getHero());
         handleInsertCardClickAi(getBattle().getGrid()[2][8], getBattle().getPlayer2().getDeck().getHero());
+        getBattle().getPlayer2().getInGameCards().add(getBattle().getPlayer2().getDeck().getHero());
+
 
         getBattle().setPlayingPlayer(getBattle().getPlayer1());
     }
@@ -469,7 +472,7 @@ public class BattleController {
         try {
 
             getBattle().insertSelectedCard(battleCoordinate[0], battleCoordinate[1]);
-            getBattle().getPlayingPlayer().getInGameCards().add(card);
+//            getBattle().getPlayingPlayer().getInGameCards().add(card);
             Polygon polygon = rectangles[battleCoordinate[0]][battleCoordinate[1]];
             ObservableList<Double> points = polygon.getPoints();
 
