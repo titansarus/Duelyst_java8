@@ -27,6 +27,7 @@ import static Duelyst.View.Constants.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 import static Duelyst.View.Constants.NO_USER_LOGINED;
 
 public class MainMenu {
@@ -39,6 +40,8 @@ public class MainMenu {
 
     @FXML
     Label loginedAccount_lbl;
+
+
 
     @FXML
     Label accountDarick_lbl;
@@ -70,6 +73,9 @@ public class MainMenu {
 
     @FXML
     ImageView cardCreator_img;
+
+    @FXML
+    ImageView save_img;
 
     Timeline timeline = new Timeline();
 
@@ -125,6 +131,13 @@ public class MainMenu {
 
     public void cardCreatorButtonGlowDisapear() {
         cardCreator_img.setImage(new Image("res/ui/button_secondary@2x.png"));
+    }
+    public void saveButtonGlow() {
+        save_img.setImage(new Image("res/ui/button_secondary_glow@2x.png"));
+    }
+
+    public void saveButtonGlowDisapear() {
+        save_img.setImage(new Image("res/ui/button_secondary@2x.png"));
     }
 
     public void quitButtonGlow() {
@@ -190,6 +203,10 @@ public class MainMenu {
             Container.handleBack();
             Shop.getInstance().getCards().removeAll(Account.getLoggedAccount().getCardCollection().getCustomCards());
         }
+
+    }
+    public void handleSave(){
+        Account.saveAccount();
 
     }
 
