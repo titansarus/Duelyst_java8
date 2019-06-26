@@ -72,6 +72,11 @@ public class Battle implements Cloneable {
         }
         setPlayer1(new Player(account1, account1.getCardCollection().getMainDeck()));
         setPlayer2(new Player(account2, account2.getCardCollection().getMainDeck()));
+
+        setPlayerOfItem(player1);
+        setPlayerOfItem(player2);
+
+
         setPlayingPlayer();
 
         initializeCells();
@@ -87,6 +92,12 @@ public class Battle implements Cloneable {
         }
 
         nextTurn();
+    }
+
+    private void setPlayerOfItem(Player player1) {
+        if (player1.getDeck().getItem() != null) {
+            player1.getDeck().getItem().setPlayer(player1);
+        }
     }
 
 
@@ -722,6 +733,7 @@ public class Battle implements Cloneable {
                     player2.getAccount().setCountOfWins(player2.getAccount().getCountOfWins() + 1);
                 }
             }
+            Account.saveAccount();
             battleController.backToMenuInEndOfGame(numberOfWin);
             System.out.println("Game End");
             throw new MyException("Game End", "GameOver");

@@ -3210,6 +3210,29 @@
               "@root.8.cardCollection.decks.0.cards.19"
             ],
             "hero": "@root.8.cardCollection.decks.0.cards.0",
+            "item": {
+              "@type": "Duelyst.Model.Items.TajeDanaei",
+              "@val": {
+                "applied": false,
+                "returnToDefault": false,
+                "isUsable": true,
+                "applyFirst": false,
+                "cardId": "rez_TajeDanaei_1",
+                "manaCost": 0,
+                "darikCost": 300,
+                "account": "@root.8",
+                "cardDescription": "Mana Ra Dar 3 nobate Avval Yeki Ziad Mikonad",
+                "cardName": "TajeDanaei",
+                "isAbleToMove": true,
+                "isInGame": false,
+                "addressOfImage": "res/Items/TajeDanaei/TajeDanaei.png",
+                "addressOfIdleGif": "res/Items/CollectibleItem.gif",
+                "addressOfRunGif": "",
+                "addressOfAttackGif": "",
+                "addressOfGetDamageGif": "",
+                "addressOfDeathGif": ""
+              }
+            },
             "account": "@root.8",
             "deckName": "rez",
             "isValid": false
@@ -3221,7 +3244,7 @@
       "username": "rez",
       "password": "rez",
       "countOfWins": 0,
-      "darick": 79250,
+      "darick": 78950,
       "collectableItems": []
     }
   }

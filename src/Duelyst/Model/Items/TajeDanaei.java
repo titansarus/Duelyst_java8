@@ -19,7 +19,7 @@ public class TajeDanaei extends Item {
             getPlayer().setManaYIntercpet(getPlayer().getManaYIntercpet() + 1);
             applied = true;
             returnToDefault = true;
-        } else if (returnToDefault) {
+        } else if (returnToDefault && Battle.getRunningBattle().getTurn() > 6) {
             getPlayer().setManaYIntercpet(getPlayer().getManaYIntercpet() - 1);
             returnToDefault = false;
         }
