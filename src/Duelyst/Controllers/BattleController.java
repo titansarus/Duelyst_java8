@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -26,6 +27,7 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -539,6 +541,28 @@ public class BattleController {
         if (cardOnField != null) {
             anchorPane.getChildren().remove(cardOnField.getImageView());
         }
+    }
+
+    public void handleGraveYardButton() {
+
+        Pane root = null;
+        FXMLLoader fxmlLoader = null;
+        try {
+            fxmlLoader = new FXMLLoader(getClass().getResource("../View/FXMLFiles/GraveYard.fxml"));
+            root = fxmlLoader.load();
+            int i = 0;
+            System.out.println(i);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stopTimeline();
+        Container.runNextScene(root, GRAVE_YARD);
+
+    }
+
+    public void stopTimeline() {
+        slowTimeline.stop();
+        fastTimeLine.stop();
     }
 
     public void animationOfDeath(Warrior warrior) {
