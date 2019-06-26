@@ -307,7 +307,7 @@ public class CardCreatorController {
             String name = getHeroCardName_tf().getText();
             String desc = getHeroDesc_ta().getText();
             if (name == null || name.length() <= 0) {
-                throw new CreateCardFieldNotCompleteException();
+                name= "res/cardCreatorDefualt/default.png";
             }
             int ap = Integer.parseInt(getHeroAP_tf().getText());
             int hp = Integer.parseInt(getHeroHP_tf().getText());
@@ -349,7 +349,7 @@ public class CardCreatorController {
             String name = getMinionCardName_tf().getText();
             String desc = getMinionDesc_ta().getText();
             if (name == null || name.length() <= 0) {
-                throw new CreateCardFieldNotCompleteException();
+                name= "res/cardCreatorDefualt/default.png";
             }
             int ap = Integer.parseInt(getMinionAP_tf().getText());
             int hp = Integer.parseInt(getMinionHP_tf().getText());
@@ -358,7 +358,6 @@ public class CardCreatorController {
             int manaCost = Integer.parseInt(getMinionManaCost_tf().getText());
             AttackKind attackKind = AttackKind.getFromString(getMinionAttackType_cb().getValue());
             ArrayList<String> imagesAddress = createImagesInFolderAndGiveAddress(name);
-            //TODO IMAGES MUST BE OKD
             Minion minion = new Minion(name, desc, manaCost, cost, hp, ap, range, attackKind, 0, imagesAddress.get(0),
                     imagesAddress.get(1),
                     imagesAddress.get(2),
