@@ -1,5 +1,6 @@
 package Duelyst.Model.Battle;
 
+import Duelyst.Controllers.*;
 import Duelyst.Controllers.BattleController;
 import Duelyst.Exceptions.CellFilledBeforeException;
 import Duelyst.Exceptions.NotEnoughManaException;
@@ -9,6 +10,8 @@ import Duelyst.Model.Buffs.BuffName;
 import Duelyst.Model.Buffs.HolyBuff;
 import Duelyst.Model.Items.*;
 import Duelyst.Model.Spell.Spell;
+import Duelyst.Utility.ImageHolder;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -162,6 +165,10 @@ public class Battle {
                     getGrid()[i][j].setWarrior((Warrior) getSelectedCard());
                     Warrior warrior = getGrid()[i][j].getWarrior();
 
+                    deleteDeathCardsFromMap(); // Check For Death Cards
+
+                    warrior.setInGame(true);
+
                     if (gameGoal==GameGoal.HOLD_FLAG){
                         if (holdFlag.getX()==i && holdFlag.getY()==j){
                             holdFlag.setWarrior(getSelectedCell().getWarrior());
@@ -195,7 +202,7 @@ public class Battle {
                         buff.setWarrior(warrior);
                         getPassiveBuffs().add(buff);
                     }
-                    deleteDeathCardsFromMap();//Check For Death Cards
+
 
                 } else {
                     throw new NotEnoughManaException();
@@ -243,7 +250,10 @@ public class Battle {
         attacker.setValidToMove(false);
         attacker.setValidToAttack(false);
 
-        deleteDeathCardsFromMap(); // Check For Death Cards
+        if (isFromCounterAttack || (!attackedCard.isValidCounterAttack()))
+            deleteDeathCardsFromMap(); // Check For Death Cards
+
+        setSelectedCell(null);
 
         //TODO CHECK FOR COUNTER ATTACK AND BUFF AND A LOT OF THINGS
         if (!isFromCounterAttack) {
@@ -257,8 +267,10 @@ public class Battle {
     public void deleteDeathCardsFromMap() {
         ArrayList<Card> firstDeathCards = findDeathCards(getPlayer1().getInGameCards());
         ArrayList<Card> secondDeathCards = findDeathCards(getPlayer2().getInGameCards());
-        if (secondDeathCards.size() > 0)
-            System.out.println(secondDeathCards.get(0).getCardName());
+
+        System.out.println("==============================> Check Death Cards " + firstDeathCards.size());
+        System.out.println(getPlayer1().getInGameCards().size());
+
         deleteFromMap(firstDeathCards);
         deleteFromMap(secondDeathCards);
         addUsedCardsToGraveYard(firstDeathCards, secondDeathCards);
@@ -266,6 +278,9 @@ public class Battle {
 
     private void deleteFromMap(ArrayList<Card> cards) {
         for (Card card : cards) {
+            System.out.println("=========================>   " + card.getCardName());
+            battleController.animationOfDeath((Warrior) card);
+            battleController.removeImageViewFromCell(card);
             getCellOfWarrior((Warrior) card).setWarrior(null);
         }
     }
@@ -288,6 +303,7 @@ public class Battle {
         ArrayList<Card> deathCards = new ArrayList<>();
         for (Card playerInGameCard : playerInGameCards) {
             if (playerInGameCard.isInGame() && (playerInGameCard instanceof Warrior)) {
+                System.out.println(((Warrior) playerInGameCard).getHealthPoint() + " <====================================]]");
                 if (((Warrior) playerInGameCard).getHealthPoint() <= 0) {
                     deathCards.add(playerInGameCard);
                     playerInGameCard.setInGame(false);

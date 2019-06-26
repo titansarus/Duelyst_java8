@@ -59,6 +59,26 @@
                   <Font size="20.0" />
                </font>
             </Label>
+            <ImageView fitHeight="80.0" fitWidth="82.0" layoutX="459.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/icon_atk.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="attackPower_lbl" alignment="CENTER" contentDisplay="CENTER" layoutX="496.0" layoutY="54.0" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="80.0" fitWidth="77.0" layoutX="544.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/icon_hp.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="healthPoint_lbl" alignment="CENTER" contentDisplay="CENTER" layoutX="581.0" layoutY="54.0" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
          </children>
       
       </AnchorPane>
