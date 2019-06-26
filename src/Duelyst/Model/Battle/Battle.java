@@ -98,11 +98,6 @@ public class Battle implements Cloneable {
 
     public void nextTurn() {
 
-
-        if (getPlayingPlayer().getDeck().getItem().isApplyFirst()) {
-            getPlayingPlayer().getDeck().getItem().applyItem();
-        }
-
         if (getPlayingPlayer().getCollectibleItem() != null && getPlayingPlayer().getCollectibleItem().isApplyFirst()) {
             getPlayingPlayer().getCollectibleItem().applyItem();
         }
