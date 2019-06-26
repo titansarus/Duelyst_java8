@@ -12,6 +12,7 @@ import Duelyst.View.ViewClasses.CardForBattle;
 import com.jfoenix.controls.JFXButton;
 import javafx.animation.*;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -304,9 +305,11 @@ public class BattleController {
                 parallelTransition2.play();
             }
         });
-        parallelTransition.play();
 
         battle.deleteDeathCardsFromMap(); // Check For Death Cards
+
+        parallelTransition.play();
+
     }
 
     public void handleAttackFromAi(Warrior attacker, Warrior attacked) {
@@ -363,13 +366,15 @@ public class BattleController {
                         anchorPane.getChildren().remove(imageView);
                     });
                     parallelTransition2.getChildren().add(effectTransition2);
+                } else {
+
+                    battle.deleteDeathCardsFromMap();
                 }
 
                 parallelTransition2.play();
             }
         });
         parallelTransition.play();
-        battle.deleteDeathCardsFromMap();
 
     }
 
@@ -517,7 +522,6 @@ public class BattleController {
             getBattle().setSelectedCell(null);
         });
         tt.play();
-        return;
     }
 
     public void sendIdleImageViewToCenterOfCell(CardOnField cardOnField, Polygon polygon) {
@@ -530,11 +534,45 @@ public class BattleController {
     }
 
     public void removeImageViewFromCell(Card card) {
-        System.out.println("GI kharrrrrrrrrrrrrrrrrrrrrr");
+
         CardOnField cardOnField = CardOnField.getCardOnField(card);
         if (cardOnField != null) {
             anchorPane.getChildren().remove(cardOnField.getImageView());
-            System.out.println("giiiiiiiiiiiiii khar2");
+        }
+    }
+
+    public void animationOfDeath(Warrior warrior) {
+        CardOnField cardOnField = CardOnField.getCardOnField(warrior);
+        if (cardOnField != null) {
+
+//            Polygon polygon = null;
+//            Cell cell = battle.getCellOfWarrior(warrior);
+//            for (int i = 0; i < battle.getGrid().length; i++) {
+//                for (int j = 0; j < battle.getGrid().length; j++) {
+//                    if (battle.getGrid()[i][j].equals(cell)) {
+//                        System.out.println("Peida Kard :DDDDDDDDDDDDDDDDDDDDDDDDDDD");
+//                        polygon = rectangles[i][j];
+//                        break;
+//                    }
+//                }
+//            }
+//            ObservableList<Double> points = polygon.getPoints();
+//
+//
+//            double x = calculateMidXFromPoint(points);
+//            double y = calculateMidYFromPoint(points);
+//            System.out.println(x + "  ][  " + y);
+//            cardOnField.getImageView().relocate(x, y);
+
+            System.out.println("Oomade Ke Bekesheeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+            cardOnField.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnField.getCard().getAddressOfDeathGif()));
+
+            TranslateTransition tt = new TranslateTransition(Duration.millis(2000), cardOnField.getImageView());
+            tt.setOnFinished(event -> removeImageViewFromCell(warrior));
+            tt.play();
+
+
+            System.out.println("Giiiiiiiiiiiiiiiiiii");
         }
     }
 
@@ -661,14 +699,6 @@ public class BattleController {
         endTurn_img.setImage(new Image("res/ui/button_end_turn_mine.png"));//TODO Az Image Holder Estefade Nakardam
     }
 
-    public void animationOfDeath(Warrior warrior) {
-        CardOnField cardOnField = CardOnField.getCardOnField(warrior);
-        if (cardOnField != null) {
-            cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders(warrior.getAddressOfDeathGif())));
-            anchorPane.getChildren().add(cardOnField.getImageView());
-            System.out.println("Giiiiiiiiiiiiiiiiiii");
-        }
-    }
 
     public void updateHand() {
         //TODO IT IS THE SAME AS setHandHbox but maybe some of them need more checks. so currently they are two different method.;

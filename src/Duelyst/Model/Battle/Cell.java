@@ -56,4 +56,10 @@ public class Cell {
     public static int calculateManhattanDistance(Cell cell1, Cell cell2) {
         return Math.abs(cell1.column - cell2.column) + Math.abs(cell1.row - cell2.row);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Cell cell = (Cell) obj;
+        return cell.getRow().equals(getRow()) && cell.getColumn().equals(getColumn());
+    }
 }
