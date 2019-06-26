@@ -588,7 +588,7 @@ public class MainMenu {
             @Override
             public void handle(ActionEvent event) {
                 setStoryModeLevel(LEVEL_1);
-                createBattle(Account.getLoggedAccount(), GameMode.SINGLE_PLAYER, GameGoal.COLLECT_FLAG);
+                createBattle(new Ai(1), GameMode.SINGLE_PLAYER, GameGoal.COLLECT_FLAG);
                 jfxDialog.close();
 
             }
@@ -598,7 +598,7 @@ public class MainMenu {
             @Override
             public void handle(ActionEvent event) {
                 setStoryModeLevel(LEVEL_2);
-                createBattle(Account.getLoggedAccount(), GameMode.SINGLE_PLAYER, GameGoal.KILL_HERO);
+                createBattle(new Ai(2), GameMode.SINGLE_PLAYER, GameGoal.KILL_HERO);
                 jfxDialog.close();
             }
         });
@@ -606,7 +606,7 @@ public class MainMenu {
             @Override
             public void handle(ActionEvent event) {
                 setStoryModeLevel(LEVEL_3);
-                createBattle(Account.getLoggedAccount(), GameMode.SINGLE_PLAYER, GameGoal.HOLD_FLAG);
+                createBattle(new Ai(3), GameMode.SINGLE_PLAYER, GameGoal.HOLD_FLAG);
                 jfxDialog.close();
             }
         });

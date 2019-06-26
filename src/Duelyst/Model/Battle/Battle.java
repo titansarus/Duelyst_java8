@@ -88,6 +88,16 @@ public class Battle implements Cloneable {
             battleController.initFlagImages();
         }
 
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    battleController.randomCollectibleItemGenerator();
+                }
+            }
+        });
+        thread.start();
+
         nextTurn();
     }
 
@@ -100,7 +110,7 @@ public class Battle implements Cloneable {
 
     public void nextTurn() {
 
-        if (gameGoal == GameGoal.HOLD_FLAG && holdFlag.getWarrior()!=null) {
+        if (gameGoal == GameGoal.HOLD_FLAG && holdFlag.getWarrior() != null) {
             holdFlag.setNumberOfTurn(holdFlag.getNumberOfTurn() + 1);
         }
         applyPassiveAndSpawnBuffs(onSpawnBuffs);
@@ -523,7 +533,7 @@ public class Battle implements Cloneable {
         Warrior warrior = getSelectedCell().getWarrior();
         for (Cell[] cell : getGrid()) {
             for (Cell cell1 : cell) {
-                if (cell1.isEmpty() && getDistanceOfTwoCell(getCellOfWarrior(warrior), cell1) <= 2 && isValidMove(cell1))
+                if (cell1.isEmpty() && Cell.calculateManhattanDistance(getCellOfWarrior(warrior), cell1) <= 2 && isValidMove(cell1))
                     getValidCells().add(cell1);
             }
         }

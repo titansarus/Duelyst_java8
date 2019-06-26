@@ -1,6 +1,7 @@
 package Duelyst.Model.Battle;
 
 import Duelyst.Model.Card;
+import Duelyst.Model.Items.Item;
 import Duelyst.Model.Warrior;
 
 import static Duelyst.View.Constants.*;
@@ -9,6 +10,7 @@ public class Cell {
     private Integer row, column;
     private Warrior warrior;
     private Flag flag;
+    private Item collectibleItem;
 
     public Cell(Integer row, Integer column) {
         this.row = row;
@@ -70,5 +72,13 @@ public class Cell {
     public boolean equals(Object obj) {
         Cell cell = (Cell) obj;
         return cell.getRow().equals(getRow()) && cell.getColumn().equals(getColumn());
+    }
+
+    public Item getCollectibleItem() {
+        return collectibleItem;
+    }
+
+    public void setCollectibleItem(Item collectibleItem) {
+        this.collectibleItem = collectibleItem;
     }
 }

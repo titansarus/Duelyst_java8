@@ -258,6 +258,10 @@ public class Card implements Cloneable {
         this.addressOfIdleGif = addressOfIdleGif;
     }
 
+    public void setAddressOfIdleGif(String addressOfIdleGif) {
+        this.addressOfIdleGif = addressOfIdleGif;
+    }
+
     public String getAddressOfIdleGif() {
         return addressOfIdleGif;
     }

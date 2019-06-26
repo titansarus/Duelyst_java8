@@ -6,24 +6,27 @@ import Duelyst.Model.Card;
 
 import java.util.ArrayList;
 
-public abstract class Item extends Card{
+public abstract class Item extends Card {
 
     private static ArrayList<Item> allItems = new ArrayList<>();
 
     private Player player;
     private boolean isUsable;
     private boolean applyFirst;
+    private static String collectibleItemGif = "res/Items/CollectibleItem.gif";
 
-    public Item(String itemName, String description,int darikCost, boolean isUsable, boolean applyFirst) {
-        super(itemName,description,0,darikCost);
+    public Item(String itemName, String description, int darikCost, boolean isUsable, boolean applyFirst) {
+        super(itemName, description, 0, darikCost);
         this.isUsable = isUsable;
         this.applyFirst = applyFirst;
+        setAddressOfIdleGif(collectibleItemGif);
     }
 
-    public Item(String itemName, String description,int darikCost, boolean isUsable, boolean applyFirst , String imageAddress) {
-        super(itemName,description,0,darikCost,imageAddress);
+    public Item(String itemName, String description, int darikCost, boolean isUsable, boolean applyFirst, String imageAddress) {
+        super(itemName, description, 0, darikCost, imageAddress);
         this.isUsable = isUsable;
         this.applyFirst = applyFirst;
+        setAddressOfIdleGif(collectibleItemGif);
     }
 
     public static void addItem(Item item) {
@@ -36,6 +39,10 @@ public abstract class Item extends Card{
 
     public static ArrayList<Item> getAllItems() {
         return allItems;
+    }
+
+    public static String getCollectibleItemGif() {
+        return collectibleItemGif;
     }
 
     public abstract void applyItem();

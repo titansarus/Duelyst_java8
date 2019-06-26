@@ -3,14 +3,13 @@ package Duelyst.Controllers;
 import Duelyst.Exceptions.MyException;
 import Duelyst.Model.Battle.*;
 import Duelyst.Model.Card;
+import Duelyst.Model.Items.*;
 import Duelyst.Model.Warrior;
 import Duelyst.Utility.ImageHolder;
 import Duelyst.View.ViewClasses.CardForBattle;
 import com.jfoenix.controls.JFXButton;
 import javafx.animation.*;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,8 +25,8 @@ import javafx.util.Duration;
 
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static Duelyst.View.Constants.*;
 
@@ -274,7 +273,7 @@ public class BattleController {
         getBattle().setSelectedCell(getBattle().getGrid()[coordinate[0]][coordinate[1]]);
 
         if (getBattle().getSelectedCard() != null) {//TODO SOME MORE CHECKS NEEDED
-            handleInsertCardClick();
+            handleInsertCardClick(getBattle().getSelectedCell());
 
             return;
         }
@@ -456,9 +455,9 @@ public class BattleController {
     }
 
 
-    public void handleInsertCardClick() {
+    public void handleInsertCardClick(Cell cell) {
 
-        int[] battleCoordinate = getBattle().findCellCoordinate(getBattle().getSelectedCell());
+        int[] battleCoordinate = getBattle().findCellCoordinate(cell);
         battle.findValidCell(KindOfActionForValidCells.INSERT);
         ArrayList<Cell> cells = battle.getValidCells();
         if (!cells.contains(battle.getGrid()[battleCoordinate[0]][battleCoordinate[1]])) {
@@ -469,13 +468,12 @@ public class BattleController {
         try {
             getBattle().insertSelectedCard(battleCoordinate[0], battleCoordinate[1]);
             Polygon polygon = rectangles[battleCoordinate[0]][battleCoordinate[1]];
-            ObservableList<Double> points = polygon.getPoints();
 
 
             CardOnField cardOnField = new CardOnField();
             cardOnField.setCard(getBattle().getSelectedCard());
             cardsOnField.add(cardOnField);
-            sendIdleImageViewToCenterOfCell(cardOnField, polygon);//Alireza
+            sendIdleImageViewToCenterOfCell(cardOnField, polygon);
 
             //   getHand().remove(cardForBattle);
             getBattle().setSelectedCard(null);
@@ -485,7 +483,26 @@ public class BattleController {
         }
         getBattle().setSelectedCell(null);
         battle.deleteDeathCardsFromMap(); // Check For Death Cards
+    }
 
+    public void handleInsertCollectibleItem(Cell cell) {
+
+        int[] battleCoordinate = getBattle().findCellCoordinate(cell);
+
+        try {
+
+            Polygon polygon = rectangles[battleCoordinate[0]][battleCoordinate[1]];
+
+
+            CardOnField cardOnField = new CardOnField();
+            cardsOnField.add(cardOnField);
+            cardOnField.setCard(getBattle().getSelectedCard());
+            sendIdleImageViewToCenterOfCell(cardOnField, polygon);
+
+        } catch (MyException e) {
+            Container.exceptionGenerator(e, stackPane);
+        }
+        battle.deleteDeathCardsFromMap(); // Check For Death Cards
     }
 
     public void moveAnimationRunAi(int[] coordinate, Warrior warrior) {
@@ -906,19 +923,60 @@ public class BattleController {
 
         //2Seconds Time Delay For Loading :))...
         Thread thread = new Thread(() -> {
-            while ((System.nanoTime() - startTime) / 1000000 < 60000) {
+            while ((System.nanoTime() - startTime) / 1000000 < 4000) {//TODO Time Kame Bayad Bishtar She
             }
-
+            collectibleItemSet();
         });
         thread.start();
 
     }
 
 
-    public void collectibleItemGif() {
-
-
+    public void collectibleItemSet() {
+        Cell cell = getRandomCellForCollectibleIteInsert();
+        cell.setCollectibleItem(getRandomCollectibleItem());
+        handleInsertCollectibleItem(cell);
     }
+
+    public Item getRandomCollectibleItem() {
+        Random random = new Random();
+        int number = 1 + random.nextInt(9);
+        switch (number) {
+            case 1:
+                return new NooshDaroo();
+            case 2:
+                return new TireDoshakh();
+            case 3:
+                return new Exir();
+            case 4:
+                return new MajooneMana();
+            case 5:
+                return new MajooneRooeinTani();
+            case 6:
+                return new NefrineMarg();
+            case 7:
+                return new RandomDamage();
+            case 8:
+                return new BladesOfAgility();
+            case 9:
+                return new ShamshireChini();
+        }
+        return null;
+    }
+
+
+    private Cell getRandomCellForCollectibleIteInsert() {
+        int row, column;
+        Random random = new Random();
+        row = random.nextInt(5);
+        column = random.nextInt(9);
+        while (battle.getGrid()[row][column].getWarrior() == null) {
+            row = random.nextInt(5);
+            column = random.nextInt(9);
+        }
+        return battle.getGrid()[row][column];
+    }
+
 }
 
 class CardOnField {
