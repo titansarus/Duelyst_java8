@@ -25,8 +25,12 @@ public class TerrorHood extends Item {
             player = Battle.getRunningBattle().getPlayer1();
         Random random = new Random();
         int randomIndex = random.nextInt(player.getInGameCards().size());
-        if (player.getInGameCards().size() == 0)
+        if (player.getInGameCards().size() == 0) {
             return;
+        }
+        while (!(getPlayer().getInGameCards().get(randomIndex) instanceof Warrior)) {
+            randomIndex = random.nextInt(getPlayer().getInGameCards().size());
+        }
         Buff buff = new WeaknessBuff(1, true, 2);
         buff.setWarrior((Warrior) player.getInGameCards().get(randomIndex));
         Battle.getRunningBattle().getPassiveBuffs().add(buff);

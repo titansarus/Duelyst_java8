@@ -36,7 +36,7 @@ public class Battle implements Cloneable {
     private ArrayList<Cell> validCells = new ArrayList<>();
     private GameGoal gameGoal;
     private GameMode gameMode;
-//    private int numberOfFlagForWin = 3;
+    //    private int numberOfFlagForWin = 3;
     private Account winner;
     private boolean draw = false;
     private boolean endGame;
@@ -308,7 +308,7 @@ public class Battle implements Cloneable {
         //KamaneDamol Item Apply
         if (getPlayingPlayer().getDeck().getItem() instanceof KamaneDamol && attacker.equals(getPlayingPlayer().getDeck().getHero())) {
             getPlayingPlayer().getDeck().getItem().applyItem();
-        } else if (getPlayingPlayer().getDeck().getItem() instanceof ShockHammer) {
+        } else if (attacker.equals(getPlayingPlayer().getDeck().getHero()) && getPlayingPlayer().getDeck().getItem() instanceof ShockHammer) {
             getPlayingPlayer().getDeck().getItem().applyItem();
         } else if (getPlayingPlayer().getDeck().getItem() instanceof TerrorHood) {
             getPlayingPlayer().getDeck().getItem().applyItem();

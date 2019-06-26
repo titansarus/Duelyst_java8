@@ -28,9 +28,12 @@ public class PoisonousDagger extends Item {
 
         if (player.getInGameCards().size() == 0)
             return;
-
         Random random = new Random();
         int randomIndex = random.nextInt(player.getInGameCards().size());
+        while (!(getPlayer().getInGameCards().get(randomIndex) instanceof Warrior)) {
+            randomIndex = random.nextInt(getPlayer().getInGameCards().size());
+        }
+
         Buff buff = new PoisonBuff(1, true);
         buff.setWarrior((Warrior) player.getInGameCards().get(randomIndex));
         Battle.getRunningBattle().getPassiveBuffs().add(buff);

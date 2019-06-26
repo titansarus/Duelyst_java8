@@ -20,8 +20,13 @@ public class SoulEater extends Item {
     @Override
     public void applyItem() {
         //TODO Hengame Mordane Nirooye Khodi Bayad Emal Shavad :)
+        if (getPlayer().getInGameCards().size() == 0)
+            return;
         Random random = new Random();
         int randomIndex = random.nextInt(getPlayer().getInGameCards().size());
+        while (!(getPlayer().getInGameCards().get(randomIndex) instanceof Warrior)) {
+            randomIndex = random.nextInt(getPlayer().getInGameCards().size());
+        }
         Buff buff = new PowerBuff(100000, true, 1);
         buff.setWarrior((Warrior) getPlayer().getInGameCards().get(randomIndex));
         Battle.getRunningBattle().getPassiveBuffs().add(buff);

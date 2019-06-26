@@ -19,10 +19,15 @@ public class MajooneRooeinTani extends Item {
 
     @Override
     public void applyItem() {
-        if (getPlayer().getInGameCards().size() == 0)
-            return;
         Random random = new Random();
-        int randomIndex = random.nextInt(getPlayer().getInGameCards().size());
+        if (getPlayer().getInGameCards().size() == 0) {
+            return;
+        }
+        int randomIndex;
+        randomIndex = random.nextInt(getPlayer().getInGameCards().size());
+        while (!(getPlayer().getInGameCards().get(randomIndex) instanceof Warrior)) {
+            randomIndex = random.nextInt(getPlayer().getInGameCards().size());
+        }
 
         Buff buff = new HolyBuff(2, 10);
         buff.setWarrior((Warrior) getPlayer().getInGameCards().get(randomIndex));
