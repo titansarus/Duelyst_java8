@@ -16,7 +16,7 @@
 
 <StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.CardCreatorController">
    <children>
-      <AnchorPane prefHeight="846.0" prefWidth="1213.0">
+      <AnchorPane prefHeight="846.0" prefWidth="1213.0" style="-fx-background-image: url('res/Backgrounds/cardCreatorBackGround.jpg');">
          <children>
             <JFXRadioButton fx:id="hero_rb" layoutX="93.0" layoutY="27.0" onAction="#handleHeroRb" text="Hero">
                <toggleGroup>
@@ -159,17 +159,17 @@
             </VBox>
             <JFXButton layoutX="919.0" layoutY="778.0" onAction="#handleCreateCardBtn" prefHeight="54.0" prefWidth="280.0" style="-fx-background-color: #6200EE;" text="CREATE CARD" textFill="WHITE" />
             <JFXButton fx:id="back_btn" layoutX="41.0" layoutY="770.0" onAction="#handleBackBtn" prefHeight="54.0" prefWidth="148.0" style="-fx-background-color: #f44336;" text="Back" textFill="WHITE" />
-            <JFXButton fx:id="image_btn" layoutX="45.0" layoutY="724.0" onAction="#handleSelectImage" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #67daff;" text="Select Image" />
-            <JFXButton layoutX="166.0" layoutY="724.0" onAction="#handleSelectIdleGif" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #67daff;" text="Select Idle GIF" />
-            <JFXButton layoutX="418.0" layoutY="724.0" onAction="#handleSelectAttackGif" prefHeight="25.0" prefWidth="115.0" style="-fx-background-color: #67daff;" text="Select Attack GIF" />
-            <JFXButton layoutX="554.0" layoutY="724.0" onAction="#handleSelectDeathGif" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #67daff;" text="Select Death Gif" />
-            <JFXButton layoutX="684.0" layoutY="724.0" onAction="#handleSelectHitGif" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #67daff;" text="Select Hit Gif" />
+            <JFXButton fx:id="image_btn" layoutX="45.0" layoutY="717.0" onAction="#handleSelectImage" prefHeight="31.0" prefWidth="123.0" style="-fx-background-color: #67daff;" text="Select Image" />
+            <JFXButton layoutX="225.0" layoutY="717.0" onAction="#handleSelectIdleGif" prefHeight="31.0" prefWidth="115.0" style="-fx-background-color: #67daff;" text="Select Idle GIF" />
+            <JFXButton layoutX="640.0" layoutY="717.0" onAction="#handleSelectAttackGif" prefHeight="31.0" prefWidth="140.0" style="-fx-background-color: #67daff;" text="Select Attack GIF" />
+            <JFXButton layoutX="856.0" layoutY="717.0" onAction="#handleSelectDeathGif" prefHeight="31.0" prefWidth="140.0" style="-fx-background-color: #67daff;" text="Select Death Gif" />
+            <JFXButton layoutX="1059.0" layoutY="717.0" onAction="#handleSelectHitGif" prefHeight="31.0" prefWidth="115.0" style="-fx-background-color: #67daff;" text="Select Hit Gif" />
             <ImageView fx:id="cardImage_iv" fitHeight="164.0" fitWidth="102.0" layoutX="45.0" layoutY="546.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="idleGif_iv" fitHeight="164.0" fitWidth="102.0" layoutX="166.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="attackGif_iv" fitHeight="164.0" fitWidth="102.0" layoutX="425.0" layoutY="546.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="deathGif_iv" fitHeight="164.0" fitWidth="102.0" layoutX="554.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="hitGif_iv" fitHeight="164.0" fitWidth="102.0" layoutX="697.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" />
-            <JFXButton layoutX="294.0" layoutY="724.0" onAction="#handleSelectRunGif" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #67daff;" text="Select Run Gif" />
+            <JFXButton layoutX="425.0" layoutY="717.0" onAction="#handleSelectRunGif" prefHeight="31.0" prefWidth="115.0" style="-fx-background-color: #67daff;" text="Select Run Gif" />
             <ImageView fx:id="runGif_iv" fitHeight="164.0" fitWidth="102.0" layoutX="294.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" />
             <VBox fx:id="buff_vb" layoutX="950.0" layoutY="56.0" opacity="0.3" prefHeight="450.0" prefWidth="217.0" style="-fx-background-color: Grey;">
                <children>
