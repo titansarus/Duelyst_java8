@@ -74,15 +74,6 @@ public class MainMenu {
     @FXML
     public void initialize() {
         runTimeline();
-
-
-//        play_btn.setGraphic(new ImageView(playImg));
-//        shop_btn.setGraphic(new ImageView(shopImg));
-//        quit_btn.setGraphic(new ImageView(quitImg));
-//        collection_btn.setGraphic(new ImageView(collectionImg));
-//        leaderboard_btn.setGraphic(new ImageView(leaderboardsImg));
-//        back_btn.setGraphic(new ImageView(backImg));
-
     }
 
     public void runTimeline() {

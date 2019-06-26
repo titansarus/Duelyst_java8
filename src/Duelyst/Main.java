@@ -69,7 +69,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage = Container.stage;
-        primaryStage.initStyle(StageStyle.DECORATED);
+        primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.setX(100);
+        primaryStage.setY(100);
         primaryStage.setScene(Container.scenes.getLast());
         primaryStage.show();
     }
