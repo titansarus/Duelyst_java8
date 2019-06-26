@@ -17,7 +17,7 @@ public class Player {
     private Integer mana;
     private Hero hero;
     private ArrayList<Card> inGameCards;
-
+    private int numberOfFlag=0;
     private Integer manaYIntercpet = 2; //Arz az mabdae system afzayesh mana. Baraye test ya cheat mode roe addad balatr az 2 set mishavad.
 
 
@@ -140,5 +140,13 @@ public class Player {
 
     public ArrayList<Card> getGraveyard() {
         return graveyard;
+    }
+
+    public int getNumberOfFlag() {
+        return numberOfFlag;
+    }
+
+    public void setNumberOfFlag(int numberOfFlag) {
+        this.numberOfFlag = numberOfFlag;
     }
 }

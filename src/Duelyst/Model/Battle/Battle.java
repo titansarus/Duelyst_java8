@@ -4,18 +4,17 @@ import Duelyst.Controllers.*;
 import Duelyst.Controllers.BattleController;
 import Duelyst.Exceptions.CellFilledBeforeException;
 import Duelyst.Exceptions.NotEnoughManaException;
-import Duelyst.Exceptions.NotValidDeckException;
 import Duelyst.Model.*;
 import Duelyst.Model.Buffs.Buff;
 import Duelyst.Model.Buffs.BuffName;
 import Duelyst.Model.Buffs.HolyBuff;
-import Duelyst.Model.Buffs.PowerBuff;
 import Duelyst.Model.Items.*;
 import Duelyst.Model.Spell.Spell;
 import Duelyst.Utility.ImageHolder;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static Duelyst.View.Constants.*;
 
@@ -38,6 +37,14 @@ public class Battle {
     private ArrayList<Cell> validCells = new ArrayList<>();
     private GameGoal gameGoal;
     private GameMode gameMode;
+    private int numberOfFlagForWin =3;
+    private Account winner;
+    private boolean endGame;
+    private Flag holdFlag;
+    private ArrayList<Flag> collectableFlags;
+
+
+
 
     public static final int VALID_COUNTER_WITH_BUFF = 1, VALID_COUNTER_WITHOUT_BUFF = 2, INVALID_COUNTER_WITH_BUFF = 3, INVALID_COUNTER_WITHOUT_BUFF = 4;
 
@@ -63,6 +70,14 @@ public class Battle {
         initializeCells();
         insertPlayerHeroesInMap();
 
+        if (gameGoal==GameGoal.COLLECT_FLAG){
+            collectableFlags =new ArrayList<>();
+            setFlagForCollectFlagGameModes();
+        }else if (gameGoal==GameGoal.HOLD_FLAG){
+            Flag flag = new Flag(KindOfFlag.HOLD_FLAG,2,4);
+            getGrid()[2][4].setFlag(flag);
+        }
+
         nextTurn();
     }
 
@@ -74,6 +89,11 @@ public class Battle {
     }
 
     public void nextTurn() {
+        endGame();
+        if (isEndGame()) {
+            //TODO graphic && end game && set hisroty
+            return;
+        }
         setTrueOfValidAttackAndMove();
         turn++;
         setPlayingPlayer();
@@ -109,6 +129,23 @@ public class Battle {
             if (getSelectedCell().getColumn() != destX || getSelectedCell().getRow() != destY) {
                 Cell cell = getGrid()[destX][destY];
                 if (cell.getWarrior() == null) {
+                    if (gameGoal==GameGoal.HOLD_FLAG){
+                        if (holdFlag.getX()==destX && holdFlag.getY()==destY){
+                            holdFlag.setWarrior(getSelectedCell().getWarrior());
+                            getGrid()[destX][destY].setFlag(null);
+                            //TODO graphic
+                        }
+                    }
+                    if (gameGoal==GameGoal.COLLECT_FLAG){
+                        for (Flag f:
+                             collectableFlags) {
+                            if (f.getX()==destX && f.getY()==destY){
+                                playingPlayer.setNumberOfFlag(playingPlayer.getNumberOfFlag()+1);
+                                getGrid()[destX][destY].setFlag(null);
+                                //TODO graphic
+                            }
+                        }
+                    }
                     getSelectedCell().getWarrior().setValidToMove(false);
                     cell.setWarrior(getSelectedCell().getWarrior());
                     getSelectedCell().setWarrior(null);
@@ -131,6 +168,25 @@ public class Battle {
                     deleteDeathCardsFromMap(); // Check For Death Cards
 
                     warrior.setInGame(true);
+
+                    if (gameGoal==GameGoal.HOLD_FLAG){
+                        if (holdFlag.getX()==i && holdFlag.getY()==j){
+                            holdFlag.setWarrior(getSelectedCell().getWarrior());
+                            getGrid()[i][j].setFlag(null);
+                            //TODO graphic
+                        }
+                    }
+                    if (gameGoal==GameGoal.COLLECT_FLAG){
+                        for (Flag f:
+                                collectableFlags) {
+                            if (f.getX()==i && f.getY()==j){
+                                playingPlayer.setNumberOfFlag(playingPlayer.getNumberOfFlag()+1);
+                                getGrid()[i][j].setFlag(null);
+                                //TODO graphic
+                            }
+                        }
+                    }
+
 
                     warrior.setValidToMove(false);
                     warrior.setValidToAttack(false);
@@ -519,5 +575,108 @@ public class Battle {
     public void setBattleController(BattleController battleController) {
 
         this.battleController = battleController;
+    }
+
+    public void endGame() {
+
+        switch (gameGoal) {
+            case KILL_HERO:
+                endOfKillHeroGameMode();
+                break;
+            case HOLD_FLAG:
+                endOfHoldFlagGameMode();
+                break;
+            case COLLECT_FLAG:
+                endOfCollectFlagGameMode();
+        }
+
+    }
+    private void endOfKillHeroGameMode() {
+        if (player1.getDeck().getHero().getHealthPoint() <= 0) {
+            this.setEndGame(true);
+            setWinner(player1.getAccount());
+        } else if (player2.getDeck().getHero().getHealthPoint() <= 0) {
+            this.setEndGame(true);
+            setWinner(player2.getAccount());
+        }
+    }
+
+    private void endOfHoldFlagGameMode() {
+        if (holdFlag.getNumberOfTurn() == 6) {
+            setWinner(holdFlag.getWarrior().getAccount());
+            setEndGame(true);
+        }
+    }
+
+    private void endOfCollectFlagGameMode() {
+        if (player1.getNumberOfFlag() >= 3) {
+            setWinner(player1.getAccount());
+            setEndGame(true);
+        } else if (player2.getNumberOfFlag() >= 3) {
+            setWinner(player2.getAccount());
+            setEndGame(true);
+        }
+    }
+
+
+    private void setFlagForCollectFlagGameModes() {
+        int[] randomX = new int[6];
+        int[] randomY = new int[6];
+        getNRandomNumber(randomX, randomY, 0, 3, 0);
+        getNRandomNumber(randomX, randomY, 3, 6, 5);
+        for (int i = 0; i < randomX.length; i++) {
+            Flag flag = new Flag(KindOfFlag.COLLECTABLE_FLAG,randomX[i],randomY[i]);
+            getGrid()[randomX[i]][randomY[i]].setFlag(flag);
+            collectableFlags.add(flag);
+        }
+
+    }
+
+    private void getNRandomNumber(int[] randomX, int[] randomY, int first, int last, int extra) {
+
+        Random random = new Random();
+        int rx, ry;
+        for (int i = first; i < last; i++) {
+            rx = random.nextInt(5);
+            ry = random.nextInt(4) + extra;
+            while (hasPoint(randomX, randomY, rx, ry)) {
+                rx = random.nextInt(5);
+                ry = random.nextInt(4) + extra;
+            }
+            randomX[i] = rx;
+            randomY[i] = ry;
+        }
+    }
+
+    private boolean hasPoint(int[] arrayX, int[] arrayY, int rx, int ry) {
+        for (int i = 0; i < arrayX.length; i++) {
+            if (arrayX[i] == rx && arrayY[i] == ry)
+                return true;
+        }
+        return (rx == 2 && ry == 0) || (rx == 2 && ry == 8);
+    }
+
+    public void setEndGame(boolean endGame) {
+        this.endGame = endGame;
+    }
+
+    public void setWinner(Account winner) {
+        this.winner = winner;
+    }
+
+    public GameMode getGameMode() {
+        return gameMode;
+    }
+
+    public void setGameMode(GameMode gameMode) {
+        this.gameMode = gameMode;
+    }
+
+    public Account getWinner() {
+        return winner;
+    }
+
+    public boolean isEndGame() {
+        return endGame;
     }
 }

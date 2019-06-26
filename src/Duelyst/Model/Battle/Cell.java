@@ -8,6 +8,7 @@ import static Duelyst.View.Constants.*;
 public class Cell {
     private Integer row, column;
     private Warrior warrior;
+    private Flag flag;
 
     public Cell(Integer row, Integer column) {
         this.row = row;
@@ -55,6 +56,14 @@ public class Cell {
 
     public static int calculateManhattanDistance(Cell cell1, Cell cell2) {
         return Math.abs(cell1.column - cell2.column) + Math.abs(cell1.row - cell2.row);
+    }
+
+    public Flag getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Flag flag) {
+        this.flag = flag;
     }
 
     @Override
