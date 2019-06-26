@@ -90,10 +90,7 @@ public class Battle {
 
     public void nextTurn() {
         endGame();
-        if (isEndGame()) {
-            //TODO graphic && end game && set hisroty
-            return;
-        }
+
         setTrueOfValidAttackAndMove();
         turn++;
         setPlayingPlayer();
@@ -213,6 +210,7 @@ public class Battle {
         } else if (getSelectedCard() instanceof Spell) {
             //TODO apply spell
         }
+        endGame();
     }
 
 
@@ -250,8 +248,10 @@ public class Battle {
         attacker.setValidToMove(false);
         attacker.setValidToAttack(false);
 
-        if (isFromCounterAttack || (!attackedCard.isValidCounterAttack()))
+        if (isFromCounterAttack || (!attackedCard.isValidCounterAttack())) {
             deleteDeathCardsFromMap(); // Check For Death Cards
+            endGame();
+        }
 
         setSelectedCell(null);
 
@@ -279,6 +279,11 @@ public class Battle {
     private void deleteFromMap(ArrayList<Card> cards) {
         for (Card card : cards) {
             System.out.println("=========================>   " + card.getCardName());
+            if (gameGoal==GameGoal.HOLD_FLAG && holdFlag.getWarrior().equals(card)){
+                getCellOfWarrior((Warrior) card).setFlag(holdFlag);
+                holdFlag.setWarrior(null);
+                holdFlag.setNumberOfTurn(0);
+            }
             battleController.animationOfDeath((Warrior) card);
             battleController.removeImageViewFromCell(card);
             getCellOfWarrior((Warrior) card).setWarrior(null);
@@ -580,14 +585,16 @@ public class Battle {
     public void endGame() {
 
         switch (gameGoal) {
-            case KILL_HERO:
-                endOfKillHeroGameMode();
-                break;
             case HOLD_FLAG:
                 endOfHoldFlagGameMode();
                 break;
             case COLLECT_FLAG:
                 endOfCollectFlagGameMode();
+        }
+        endOfKillHeroGameMode();
+        if (isEndGame()) {
+            //TODO graphic && end game && set hisroty
+            System.out.println("Game End");
         }
 
     }
