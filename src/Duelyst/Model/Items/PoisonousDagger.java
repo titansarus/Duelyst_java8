@@ -14,7 +14,7 @@ public class PoisonousDagger extends Item {
 
     public PoisonousDagger() {
         super("PoisonousDagger", "Dar Hengame Zarbeye Nirooye Khodi  Baraye Yek Nobat Rooye Nirooye Tasadofie Doshman PosionBuff Emal Mikonad",
-                7000, false, false,"res/Items/PoisonousDagger/PoisonousDagger.png");
+                7000, false, false, "res/Items/PoisonousDagger/PoisonousDagger.png");
     }
 
     @Override
@@ -31,7 +31,7 @@ public class PoisonousDagger extends Item {
 
         Random random = new Random();
         int randomIndex = random.nextInt(player.getInGameCards().size());
-        Buff buff = new PoisonBuff(BuffName.POISON_BUFF, false, 1, true);
+        Buff buff = new PoisonBuff(1, true);
         buff.setWarrior((Warrior) player.getInGameCards().get(randomIndex));
         Battle.getRunningBattle().getPassiveBuffs().add(buff);
     }

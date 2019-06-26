@@ -18,6 +18,7 @@ public class Warrior extends Card implements Cloneable {
     private int shield;
     private boolean isValidToAttack = true;
     private boolean IsValidToMove = true;
+    private boolean isStun=false;
 
 
     public Warrior(String cardName, String cardDescription, int manaCost, int darikCost) {
@@ -156,6 +157,14 @@ public class Warrior extends Card implements Cloneable {
 
     public AttackKind getAttackKind() {
         return attackKind;
+    }
+
+    public boolean isStun() {
+        return isStun;
+    }
+
+    public void setStun(boolean stun) {
+        isStun = stun;
     }
 
 

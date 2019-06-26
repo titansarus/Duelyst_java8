@@ -6,8 +6,8 @@ public class PowerBuff extends Buff {
     private boolean isForPower;
     private int increaseNumber;
 
-    public PowerBuff(BuffName buffName, boolean isPositive, int numberOfTurn, boolean isForPower, int increaseNumber) {
-        super(buffName, isPositive, numberOfTurn);
+    public PowerBuff(int numberOfTurn, boolean isForPower, int increaseNumber) {
+        super(BuffName.POWER_BUFF, true, numberOfTurn);
         this.isForPower = isForPower;
         this.increaseNumber = increaseNumber;
     }

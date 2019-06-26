@@ -4,6 +4,7 @@ import Duelyst.Controllers.BattleController;
 import Duelyst.Exceptions.CellFilledBeforeException;
 import Duelyst.Exceptions.NotEnoughManaException;
 import Duelyst.Model.*;
+import Duelyst.Model.Buffs.ApplyBuff;
 import Duelyst.Model.Buffs.Buff;
 import Duelyst.Model.Buffs.BuffName;
 import Duelyst.Model.Buffs.HolyBuff;
@@ -85,6 +86,9 @@ public class Battle {
     }
 
     public void nextTurn() {
+
+        applyPassiveAndSpawnBuffs(onSpawnBuffs);
+        applyPassiveAndSpawnBuffs(passiveBuffs);
         endGame();
 
         setTrueOfValidAttackAndMove();
@@ -103,12 +107,19 @@ public class Battle {
         }
     }
 
+    private void applyPassiveAndSpawnBuffs(ArrayList<Buff> onSpawnBuffs) {
+        for (Buff b1 :
+                onSpawnBuffs) {
+            ApplyBuff.getInstance().applyBuff(b1);
+        }
+    }
+
     private void setTrueOfValidAttackAndMove() {
         for (Cell[] c :
                 getGrid()) {
             for (Cell c1 :
                     c) {
-                if (c1.getWarrior() != null) {
+                if (c1.getWarrior() != null && !c1.getWarrior().isStun()) {
                     c1.getWarrior().setValidToAttack(true);
                     c1.getWarrior().setValidToMove(true);
                 }
@@ -191,7 +202,7 @@ public class Battle {
                     if (getPlayingPlayer().getDeck().getItem() instanceof AssassinationDagger) {//AssassinationDagger Item Apply
                         getPlayingPlayer().getDeck().getItem().applyItem();
                     } else if (getPlayingPlayer().getDeck().getItem() instanceof GhosleTaemid) {//GhosleTaemid Item Apply
-                        Buff buff = new HolyBuff(BuffName.HOLY_BUFF, true, 2, 1);
+                        Buff buff = new HolyBuff( 2, 1);
                         buff.setWarrior(warrior);
                         getPassiveBuffs().add(buff);
                     }
@@ -204,7 +215,28 @@ public class Battle {
                 throw new CellFilledBeforeException();
             }
         } else if (getSelectedCard() instanceof Spell) {
-            //TODO apply spell
+
+            Spell spell = (Spell) getSelectedCard();
+            ArrayList<Buff> buffs = spell.getBuffs();
+            for (Buff b :
+                    buffs) {
+                switch (spell.getTimeOfApply()) {
+                    case PASSIVE:
+                        passiveBuffs.add(b);
+                        break;
+                    case ON_DEATH:
+                        onDeathBuffs.add(b);
+                        break;
+                    case ON_SPAWN:
+                        onSpawnBuffs.add(b);
+                        break;
+                    case ON_ATTACK:
+                        onAttackBuffs.add(b);
+                        break;
+                    case ON_DEFEND:
+                        onDefendBuffs.add(b);
+                }
+            }
         }
         endGame();
     }
@@ -241,6 +273,8 @@ public class Battle {
         } else if (getPlayingPlayer().getDeck().getItem() instanceof ShockHammer) {
             getPlayingPlayer().getDeck().getItem().applyItem();
         }
+        applyBuffOnAttackAndOnDefend(attacker, onAttackBuffs);
+        applyBuffOnAttackAndOnDefend(attackedCard, onDefendBuffs);
         attacker.setValidToMove(false);
         attacker.setValidToAttack(false);
 
@@ -260,6 +294,15 @@ public class Battle {
 
     }
 
+    private void applyBuffOnAttackAndOnDefend(Warrior warrior, ArrayList<Buff> buffs) {
+        for (Buff b1 :
+                buffs) {
+            if (b1.getWarrior().equals(warrior)) {
+                ApplyBuff.getInstance().applyBuff(b1);
+            }
+        }
+    }
+
     public void deleteDeathCardsFromMap() {
         ArrayList<Card> firstDeathCards = findDeathCards(getPlayer1().getInGameCards());
         ArrayList<Card> secondDeathCards = findDeathCards(getPlayer2().getInGameCards());
@@ -274,7 +317,9 @@ public class Battle {
 
     private void deleteFromMap(ArrayList<Card> cards) {
         for (Card card : cards) {
-            System.out.println("=========================>   " + card.getCardName());
+
+            aaplayDeathBuff(card);
+
             if (gameGoal == GameGoal.HOLD_FLAG && holdFlag.getWarrior().equals(card)) {
                 getCellOfWarrior((Warrior) card).setFlag(holdFlag);
                 holdFlag.setWarrior(null);
@@ -283,6 +328,15 @@ public class Battle {
             battleController.animationOfDeath((Warrior) card);
             battleController.removeImageViewFromCell(card);
             getCellOfWarrior((Warrior) card).setWarrior(null);
+        }
+    }
+
+    private void aaplayDeathBuff(Card card) {
+        for (Buff b:
+             onDeathBuffs) {
+            if (b.getWarrior().equals(card)){
+                ApplyBuff.getInstance().applyBuff(b);
+            }
         }
     }
 

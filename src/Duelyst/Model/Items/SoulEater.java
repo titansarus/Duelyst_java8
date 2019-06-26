@@ -13,7 +13,7 @@ public class SoulEater extends Item {
 
     public SoulEater() {
         super("SoulEater", "Hengame Marge Har Nirooye Khodi Yek PowerBuff Ba Yek Vahed Afzayeshe Ghodrate Zarbe" +
-                " Rooye Yeki Az Niroohaye Khodi Emal Mishavad", 25000, true,
+                        " Rooye Yeki Az Niroohaye Khodi Emal Mishavad", 25000, true,
                 false, "res/Items/SoulEater/SoulEater.png");
     }
 
@@ -22,7 +22,7 @@ public class SoulEater extends Item {
         //TODO Hengame Mordane Nirooye Khodi Bayad Emal Shavad :)
         Random random = new Random();
         int randomIndex = random.nextInt(getPlayer().getInGameCards().size());
-        Buff buff = new PowerBuff(BuffName.POWER_BUFF, true, 100000, true, 1);
+        Buff buff = new PowerBuff(100000, true, 1);
         buff.setWarrior((Warrior) getPlayer().getInGameCards().get(randomIndex));
         Battle.getRunningBattle().getPassiveBuffs().add(buff);
     }

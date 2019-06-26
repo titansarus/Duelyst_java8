@@ -12,13 +12,13 @@ public class KamaneDamol extends Item {
 
     public KamaneDamol() {
         super("KamaneDamol", "Tanha Baraye Ranged va Hybrid: Heroye Khodi Hengame Zarbeye Nirooye Doshman Ra Baraye Yek Nobat Disarm Mikonad",
-                30000, true , false,"res/Items/KamaneDamol/KamandeDamol.png");
+                30000, true, false, "res/Items/KamaneDamol/KamandeDamol.png");
     }
 
     @Override
     public void applyItem() {
         if (getPlayer().getHero().getAttackKind() != AttackKind.MELEE) {
-            Buff buff = new DisarmBuff(BuffName.DISARM_BUFF, false, 1);
+            Buff buff = new DisarmBuff(1);
             Battle.getRunningBattle().getOnAttackBuffs().add(buff);
             buff.setWarrior((Warrior) Battle.getRunningBattle().getAttackedCard());
         }

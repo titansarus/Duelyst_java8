@@ -6,8 +6,8 @@ public class HolyBuff extends Buff {
     private int numberOfHealthIncrease;
 
 
-    public HolyBuff(BuffName buffName, boolean isPositive, int numberOfTurn, int numberOfHealthIncrease) {
-        super(buffName, isPositive, numberOfTurn);
+    public HolyBuff(int numberOfTurn, int numberOfHealthIncrease) {
+        super(BuffName.HOLY_BUFF, true, numberOfTurn);
         this.numberOfHealthIncrease = numberOfHealthIncrease;//TODO in adad ro bde b shield card
     }
 

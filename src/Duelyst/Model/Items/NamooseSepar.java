@@ -9,13 +9,13 @@ import Duelyst.Model.Buffs.HolyBuff;
 public class NamooseSepar extends Item {
 
     public NamooseSepar() {
-        super("NamooseSepar","Dar Heroye Khodi 12 HolyBuff Faal Mikonad",
-                4000,true, true,"res/Items/NamooseSepar/NamooseSepar.png");
+        super("NamooseSepar", "Dar Heroye Khodi 12 HolyBuff Faal Mikonad",
+                4000, true, true, "res/Items/NamooseSepar/NamooseSepar.png");
     }
 
     @Override
     public void applyItem() {
-        Buff buff = new HolyBuff(BuffName.HOLY_BUFF, true, 12, 1);
+        Buff buff = new HolyBuff(12, 1);
         buff.setWarrior(getPlayer().getHero());
         Battle.getRunningBattle().getPassiveBuffs().add(buff);
     }

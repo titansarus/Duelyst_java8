@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Shop {
 
     private ArrayList<Card> cards = new ArrayList<>();
-    private static Shop instance;
+    private static Shop instance ;
     private ShopMode shopMode = ShopMode.BUY;
 
     private Card selectedCard = null;

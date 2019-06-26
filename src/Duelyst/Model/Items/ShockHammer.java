@@ -12,14 +12,14 @@ public class ShockHammer extends Item {
 
     public ShockHammer() {
         super("ShockHammer", "Heroe Khodi  Hengame Zarbe Baraye Yek Nobat Nirooye Doshman Ra Disarm Mikonad",
-                15000, true, false,"res/Items/ShockHammer/ShockHammer.png");
+                15000, true, false, "res/Items/ShockHammer/ShockHammer.png");
     }
 
     @Override
     public void applyItem() {
         //TODO Hengame Attack Bayad Emal Shavad :)
         if (Battle.getRunningBattle().getSelectedCell().getWarrior().equals(getPlayer().getHero())) {
-            Buff buff = new DisarmBuff(BuffName.DISARM_BUFF, false, 1);
+            Buff buff = new DisarmBuff(1);
             buff.setWarrior((Warrior) Battle.getRunningBattle().getAttackedCard());
             Battle.getRunningBattle().getPassiveBuffs().add(buff);
         }

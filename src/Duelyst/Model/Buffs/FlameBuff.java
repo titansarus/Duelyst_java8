@@ -3,8 +3,8 @@ package Duelyst.Model.Buffs;
 public class FlameBuff extends Buff {
     private boolean isForCard;
 
-    public FlameBuff(BuffName buffName, boolean isPositive, int numberOfTurn, boolean isForCard) {
-        super(buffName, isPositive, numberOfTurn);
+    public FlameBuff(int numberOfTurn, boolean isForCard) {
+        super(BuffName.FLAME_BUFF, false, numberOfTurn);
         this.isForCard = isForCard;
     }
 
