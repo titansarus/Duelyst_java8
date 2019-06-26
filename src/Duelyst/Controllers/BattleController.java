@@ -46,6 +46,11 @@ public class BattleController {
     public Label healthPoint_lbl;
     public ImageView gameResult_img;
     public Label gameResult_lbl;
+    public Pane pause_pane;
+    public ImageView pauseArrow_img;
+    public ImageView continue_img;
+    public ImageView saveGame_img;
+    public ImageView quit_img;
 
     @FXML
     HBox hand_hBox;
@@ -801,9 +806,75 @@ public class BattleController {
         ft2.setCycleCount(2);
         ft.setAutoReverse(true);
         ft2.setAutoReverse(true);
+
         ft.play();
         ft2.play();
     }
+
+    public void handlePauseArrowImageMouseEntered() {
+        pauseArrow_img.setOpacity(1);
+    }
+
+    public void handlePauseArrowImageMouseExited() {
+        pauseArrow_img.setOpacity(0.5);
+    }
+
+    public void handlePauseArrowImageClicked() {
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1000), pause_pane);
+        anchorPane.setOpacity(0.7);
+        anchorPane.setDisable(true);
+        tt.setFromY(910);
+        tt.setToY(300);
+        tt.setRate(1);
+        tt.play();
+    }
+
+    public void handleContinueImage() {
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1000), pause_pane);
+        tt.setFromY(300);
+        tt.setToY(910);
+        tt.setRate(1);
+        tt.setOnFinished(event -> {
+            anchorPane.setDisable(false);
+            anchorPane.setOpacity(1);
+        });
+        tt.play();
+    }
+
+    public void handleSaveGameImg() {
+        //TODO Save Unfinished Game
+    }
+
+    public void handleQuitImg() {
+        if (Container.scenes.size() > 0) {
+            Container.handleBack();
+        }
+    }
+
+    public void continueImageGlow() {
+        continue_img.setImage(new Image("res/ui/button_primary_middle_glow@2x.png"));
+    }
+
+    public void continueImageGlowDisapear() {
+        continue_img.setImage(new Image("res/ui/button_primary_middle@2x.png"));
+    }
+
+    public void saveGameImageGlow() {
+        saveGame_img.setImage(new Image("res/ui/button_primary_middle_glow@2x.png"));
+    }
+
+    public void saveGameImageGlowDisapear() {
+        saveGame_img.setImage(new Image("res/ui/button_primary_middle@2x.png"));
+    }
+
+    public void quitImageGlow() {
+        quit_img.setImage(new Image("res/ui/button_primary_middle_glow@2x.png"));
+    }
+
+    public void quitImageGlowDisapear() {
+        quit_img.setImage(new Image("res/ui/button_primary_middle@2x.png"));
+    }
+
 }
 
 

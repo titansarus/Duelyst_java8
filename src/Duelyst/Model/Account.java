@@ -1,5 +1,6 @@
 package Duelyst.Model;
 
+import Duelyst.Model.Battle.Battle;
 import Duelyst.Model.Items.Item;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
@@ -16,7 +17,9 @@ public class Account implements Cloneable {
     private static Account loggedAccount = null;
     private static ArrayList<Account> accounts = new ArrayList<>();
     private ArrayList<String> battleHistory;
-   //THIS IS NOT USED. WILL USE CARD_COLLECTION
+    private ArrayList<Battle> battles = new ArrayList<>();
+
+    //THIS IS NOT USED. WILL USE CARD_COLLECTION
     private CardCollection cardCollection;
 
     private String username;
@@ -51,8 +54,6 @@ public class Account implements Cloneable {
         accountsCopy.sort(((Comparator<Account>) (o1, o2) -> o2.getCountOfWins() - o1.getCountOfWins()).thenComparing((o1, o2) -> o1.getUsername().compareTo(o2.getUsername())));
         return accountsCopy;
     }
-
-
 
 
     public static boolean accountExistInArrayList(String username, ArrayList<Account> accounts) {
@@ -110,7 +111,6 @@ public class Account implements Cloneable {
     }
 
 
-
     public CardCollection getCardCollection() {
         return cardCollection;
     }
@@ -118,7 +118,6 @@ public class Account implements Cloneable {
     public void setCardCollection(CardCollection cardCollection) {
         this.cardCollection = cardCollection;
     }
-
 
 
     public String getUsername() {
@@ -159,6 +158,14 @@ public class Account implements Cloneable {
 
     public void setCollectableItems(ArrayList<Item> collectableItems) {
         this.collectableItems = collectableItems;
+    }
+
+    public ArrayList<Battle> getBattles() {
+        return battles;
+    }
+
+    public void setBattles(ArrayList<Battle> battles) {
+        this.battles = battles;
     }
 }
 

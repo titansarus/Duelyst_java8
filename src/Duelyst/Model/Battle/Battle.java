@@ -10,13 +10,14 @@ import Duelyst.Model.Buffs.BuffName;
 import Duelyst.Model.Buffs.HolyBuff;
 import Duelyst.Model.Items.*;
 import Duelyst.Model.Spell.Spell;
+import com.rits.cloning.Cloner;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import static Duelyst.View.Constants.*;
 
-public class Battle {
+public class Battle implements Cloneable {
     private static Battle runningBattle;
     private BattleController battleController;
     private Player player1;
@@ -44,6 +45,13 @@ public class Battle {
 
 
     public static final int VALID_COUNTER_WITH_BUFF = 1, VALID_COUNTER_WITHOUT_BUFF = 2, INVALID_COUNTER_WITH_BUFF = 3, INVALID_COUNTER_WITHOUT_BUFF = 4;
+
+
+    public static Battle deepClone(Battle battle) {
+        Cloner cloner = new Cloner();
+        cloner.dontClone(Account.class);
+        return cloner.deepClone(battle);
+    }
 
     public void initializeCells() {
         for (int i = 0; i < BATTLE_ROWS; i++) {
