@@ -1,6 +1,5 @@
 package Duelyst.Model.Battle;
 
-import Duelyst.Controllers.*;
 import Duelyst.Controllers.BattleController;
 import Duelyst.Exceptions.CellFilledBeforeException;
 import Duelyst.Exceptions.NotEnoughManaException;
@@ -10,8 +9,6 @@ import Duelyst.Model.Buffs.BuffName;
 import Duelyst.Model.Buffs.HolyBuff;
 import Duelyst.Model.Items.*;
 import Duelyst.Model.Spell.Spell;
-import Duelyst.Utility.ImageHolder;
-import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -37,13 +34,12 @@ public class Battle {
     private ArrayList<Cell> validCells = new ArrayList<>();
     private GameGoal gameGoal;
     private GameMode gameMode;
-    private int numberOfFlagForWin =3;
+    private int numberOfFlagForWin = 3;
     private Account winner;
+    private boolean draw = false;
     private boolean endGame;
     private Flag holdFlag;
     private ArrayList<Flag> collectableFlags;
-
-
 
 
     public static final int VALID_COUNTER_WITH_BUFF = 1, VALID_COUNTER_WITHOUT_BUFF = 2, INVALID_COUNTER_WITH_BUFF = 3, INVALID_COUNTER_WITHOUT_BUFF = 4;
@@ -70,11 +66,11 @@ public class Battle {
         initializeCells();
         insertPlayerHeroesInMap();
 
-        if (gameGoal==GameGoal.COLLECT_FLAG){
-            collectableFlags =new ArrayList<>();
+        if (gameGoal == GameGoal.COLLECT_FLAG) {
+            collectableFlags = new ArrayList<>();
             setFlagForCollectFlagGameModes();
-        }else if (gameGoal==GameGoal.HOLD_FLAG){
-            Flag flag = new Flag(KindOfFlag.HOLD_FLAG,2,4);
+        } else if (gameGoal == GameGoal.HOLD_FLAG) {
+            Flag flag = new Flag(KindOfFlag.HOLD_FLAG, 2, 4);
             getGrid()[2][4].setFlag(flag);
         }
 
@@ -126,18 +122,18 @@ public class Battle {
             if (getSelectedCell().getColumn() != destX || getSelectedCell().getRow() != destY) {
                 Cell cell = getGrid()[destX][destY];
                 if (cell.getWarrior() == null) {
-                    if (gameGoal==GameGoal.HOLD_FLAG){
-                        if (holdFlag.getX()==destX && holdFlag.getY()==destY){
+                    if (gameGoal == GameGoal.HOLD_FLAG) {
+                        if (holdFlag.getX() == destX && holdFlag.getY() == destY) {
                             holdFlag.setWarrior(getSelectedCell().getWarrior());
                             getGrid()[destX][destY].setFlag(null);
                             //TODO graphic
                         }
                     }
-                    if (gameGoal==GameGoal.COLLECT_FLAG){
-                        for (Flag f:
-                             collectableFlags) {
-                            if (f.getX()==destX && f.getY()==destY){
-                                playingPlayer.setNumberOfFlag(playingPlayer.getNumberOfFlag()+1);
+                    if (gameGoal == GameGoal.COLLECT_FLAG) {
+                        for (Flag f :
+                                collectableFlags) {
+                            if (f.getX() == destX && f.getY() == destY) {
+                                playingPlayer.setNumberOfFlag(playingPlayer.getNumberOfFlag() + 1);
                                 getGrid()[destX][destY].setFlag(null);
                                 //TODO graphic
                             }
@@ -166,18 +162,18 @@ public class Battle {
 
                     warrior.setInGame(true);
 
-                    if (gameGoal==GameGoal.HOLD_FLAG){
-                        if (holdFlag.getX()==i && holdFlag.getY()==j){
+                    if (gameGoal == GameGoal.HOLD_FLAG) {
+                        if (holdFlag.getX() == i && holdFlag.getY() == j) {
                             holdFlag.setWarrior(getSelectedCell().getWarrior());
                             getGrid()[i][j].setFlag(null);
                             //TODO graphic
                         }
                     }
-                    if (gameGoal==GameGoal.COLLECT_FLAG){
-                        for (Flag f:
+                    if (gameGoal == GameGoal.COLLECT_FLAG) {
+                        for (Flag f :
                                 collectableFlags) {
-                            if (f.getX()==i && f.getY()==j){
-                                playingPlayer.setNumberOfFlag(playingPlayer.getNumberOfFlag()+1);
+                            if (f.getX() == i && f.getY() == j) {
+                                playingPlayer.setNumberOfFlag(playingPlayer.getNumberOfFlag() + 1);
                                 getGrid()[i][j].setFlag(null);
                                 //TODO graphic
                             }
@@ -279,7 +275,7 @@ public class Battle {
     private void deleteFromMap(ArrayList<Card> cards) {
         for (Card card : cards) {
             System.out.println("=========================>   " + card.getCardName());
-            if (gameGoal==GameGoal.HOLD_FLAG && holdFlag.getWarrior().equals(card)){
+            if (gameGoal == GameGoal.HOLD_FLAG && holdFlag.getWarrior().equals(card)) {
                 getCellOfWarrior((Warrior) card).setFlag(holdFlag);
                 holdFlag.setWarrior(null);
                 holdFlag.setNumberOfTurn(0);
@@ -593,18 +589,50 @@ public class Battle {
         }
         endOfKillHeroGameMode();
         if (isEndGame()) {
-            //TODO graphic && end game && set hisroty
+            int numberOfWin = 0;
+            if (draw) {
+                numberOfWin = 3;
+                String h1 = "*draw* vs " + player2.getAccount().getUsername();
+                player1.getAccount().getBattleHistory().add(h1);
+                String h2 = "-draw- vs " + player1.getAccount().getUsername();
+                player2.getAccount().getBattleHistory().add(h2);
+                //TODO graphic
+            } else {
+                if (player1.getAccount().equals(getWinner())) {
+                    numberOfWin = 2;
+                    String h1 = "*win* vs " + player2.getAccount().getUsername();
+                    player1.getAccount().getBattleHistory().add(h1);
+                    player1.getAccount().setCountOfWins(player1.getAccount().getCountOfWins() + 1);
+                    String h2 = "-lose- vs " + player1.getAccount().getUsername();
+                    player2.getAccount().getBattleHistory().add(h2);
+                } else {
+                    numberOfWin = 1;
+                    String h1 = "-lose- vs " + player2.getAccount().getUsername();
+                    player1.getAccount().getBattleHistory().add(h1);
+                    String h2 = "*win* vs " + player1.getAccount().getUsername();
+                    player2.getAccount().getBattleHistory().add(h2);
+                    player2.getAccount().setCountOfWins(player2.getAccount().getCountOfWins() + 1);
+                }
+            }
+            battleController.backToMenuInEndOfGame(numberOfWin);
             System.out.println("Game End");
         }
 
     }
+
     private void endOfKillHeroGameMode() {
+        boolean canDraw = false;
         if (player1.getDeck().getHero().getHealthPoint() <= 0) {
+            canDraw = true;
             this.setEndGame(true);
             setWinner(player1.getAccount());
-        } else if (player2.getDeck().getHero().getHealthPoint() <= 0) {
+        }
+        if (player2.getDeck().getHero().getHealthPoint() <= 0) {
             this.setEndGame(true);
             setWinner(player2.getAccount());
+            if (canDraw) {
+                draw = true;
+            }
         }
     }
 
@@ -632,7 +660,7 @@ public class Battle {
         getNRandomNumber(randomX, randomY, 0, 3, 0);
         getNRandomNumber(randomX, randomY, 3, 6, 5);
         for (int i = 0; i < randomX.length; i++) {
-            Flag flag = new Flag(KindOfFlag.COLLECTABLE_FLAG,randomX[i],randomY[i]);
+            Flag flag = new Flag(KindOfFlag.COLLECTABLE_FLAG, randomX[i], randomY[i]);
             getGrid()[randomX[i]][randomY[i]].setFlag(flag);
             collectableFlags.add(flag);
         }

@@ -11,6 +11,7 @@ import Duelyst.Utility.ImageHolder;
 import Duelyst.View.ViewClasses.CardForBattle;
 import com.jfoenix.controls.JFXButton;
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -743,6 +744,19 @@ public class BattleController {
     public ArrayList<CardForBattle> getHand() {
         return hand;
     }
+    public void backToMenuInEndOfGame(int loseOrWinOrDraw){//lose 1 , //win 2 , //draw 3
+        long startTime = System.nanoTime();
+        //2Seconds Time Delay For Loading :))...
+        Thread thread = new Thread(() -> {
+            while ((System.nanoTime() - startTime) / 1000000 < 4000) {
+            }
+            if (Container.scenes.size() > 0) {
+                Container.handleBack();
+            }
+        });
+        thread.start();
+
+    }
 }
 
 
@@ -795,5 +809,6 @@ class CardOnField {
     public static ArrayList<CardOnField> getAllCardOnFields() {
         return allCardOnFields;
     }
+
 }
 
