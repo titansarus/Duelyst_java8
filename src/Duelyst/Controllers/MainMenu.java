@@ -623,7 +623,7 @@ public class MainMenu {
             public void handle(ActionEvent event) {
                 setStoryModeLevel(LEVEL_1);
                 Ai ai = new Ai(0);
-                ai.setMainDeck(Deck.deepClone(Account.getLoggedAccount().getCardCollection().getMainDeck()));
+                ai.setMainDeck(Deck.deepClone(Account.findAccountInArrayList("saman",Account.getAccounts()).getCardCollection().getMainDeck()));
                 createBattle(ai, GameMode.SINGLE_PLAYER, GameGoal.COLLECT_FLAG);
                 jfxDialog.close();
 
@@ -635,7 +635,7 @@ public class MainMenu {
             public void handle(ActionEvent event) {
                 setStoryModeLevel(LEVEL_2);
                 Ai ai = new Ai(0);
-                ai.setMainDeck(Deck.deepClone(Account.getLoggedAccount().getCardCollection().getMainDeck()));
+                ai.setMainDeck(Deck.deepClone(Account.findAccountInArrayList("saman",Account.getAccounts()).getCardCollection().getMainDeck()));
                 createBattle(ai, GameMode.SINGLE_PLAYER, GameGoal.KILL_HERO);
                 jfxDialog.close();
             }
@@ -645,7 +645,9 @@ public class MainMenu {
             public void handle(ActionEvent event) {
                 setStoryModeLevel(LEVEL_3);
                 Ai ai = new Ai(0);
-                ai.setMainDeck(Deck.deepClone(Account.getLoggedAccount().getCardCollection().getMainDeck()));
+
+
+                ai.setMainDeck(Deck.deepClone(Account.findAccountInArrayList("saman",Account.getAccounts()).getCardCollection().getMainDeck()));
                 createBattle(ai, GameMode.SINGLE_PLAYER, GameGoal.HOLD_FLAG);
                 jfxDialog.close();
             }

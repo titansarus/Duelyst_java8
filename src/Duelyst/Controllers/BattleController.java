@@ -299,10 +299,11 @@ public class BattleController {
 
     private boolean isValidRangedAttack(Cell sourceCell,Cell targetCell, Warrior warrior) {
 
-        if (Cell.calculateManhattanDistance(targetCell, targetCell) <= 1) {
+        if (Cell.calculateManhattanDistance(targetCell, sourceCell) <= 1) {
             return false;
         } else {
-            return Cell.calculateManhattanDistance(targetCell, targetCell) <= warrior.getAttackRange();
+            System.out.println("==>> "+ warrior.getCardName() + " - " +warrior.getAttackRange()+ " "+ (Cell.calculateManhattanDistance(targetCell, targetCell) <= warrior.getAttackRange()));
+            return Cell.calculateManhattanDistance(sourceCell, targetCell) <= warrior.getAttackRange();
         }
     }
 
