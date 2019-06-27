@@ -733,7 +733,6 @@ public class Battle implements Cloneable {
                     player2.getAccount().setCountOfWins(player2.getAccount().getCountOfWins() + 1);
                 }
             }
-            Account.saveAccount();
             battleController.backToMenuInEndOfGame(numberOfWin);
             System.out.println("Game End");
             throw new MyException("Game End", "GameOver");
