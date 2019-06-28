@@ -18,15 +18,18 @@ import java.util.Random;
 import static Duelyst.View.Constants.*;
 
 public class Battle implements Cloneable {
+
+    private static ArrayList<Battle> unfinishedBattles = new ArrayList<>();
+
     private static Battle runningBattle;
     private BattleController battleController;
     private Player player1;
     private Player player2;
-    private Player playingPlayer = null;
+    private Player playingPlayer;
     private Cell[][] grid = new Cell[BATTLE_ROWS][BATTLE_COLUMNS];
     private int turn = 0;//At First next turn is invocked and first turn will be 1
     private Card selectedCard;
-    private Card attackedCard;//TODO Cardi ke Behesh Attack Khorde
+    private Card attackedCard;
     private Cell selectedCell;
     private ArrayList<Buff> onSpawnBuffs = new ArrayList<>();
     private ArrayList<Buff> onDefendBuffs = new ArrayList<>();
@@ -36,7 +39,6 @@ public class Battle implements Cloneable {
     private ArrayList<Cell> validCells = new ArrayList<>();
     private GameGoal gameGoal;
     private GameMode gameMode;
-    //    private int numberOfFlagForWin = 3;
     private Account winner;
     private boolean draw = false;
     private boolean endGame;
@@ -47,9 +49,14 @@ public class Battle implements Cloneable {
     public static final int VALID_COUNTER_WITH_BUFF = 1, VALID_COUNTER_WITHOUT_BUFF = 2, INVALID_COUNTER_WITH_BUFF = 3, INVALID_COUNTER_WITHOUT_BUFF = 4;
 
 
-    public static Battle deepClone(Battle battle) {//TODO UnCompelete
+    public static Battle deepClone(Battle battle) {
         Cloner cloner = new Cloner();
+        cloner.dontClone(BattleController.class);
         return cloner.deepClone(battle);
+    }
+
+    public static ArrayList<Battle> getUnfinishedBattles() {
+        return unfinishedBattles;
     }
 
     public void initializeCells() {
@@ -715,7 +722,6 @@ public class Battle implements Cloneable {
                 player1.getAccount().getBattleHistory().add(h1);
                 String h2 = "-draw- vs " + player1.getAccount().getUsername();
                 player2.getAccount().getBattleHistory().add(h2);
-                //TODO graphic
             } else {
                 if (player1.getAccount().equals(getWinner())) {
                     numberOfWin = 2;
@@ -733,6 +739,7 @@ public class Battle implements Cloneable {
                     player2.getAccount().setCountOfWins(player2.getAccount().getCountOfWins() + 1);
                 }
             }
+
             battleController.backToMenuInEndOfGame(numberOfWin);
             System.out.println("Game End");
             throw new MyException("Game End", "GameOver");

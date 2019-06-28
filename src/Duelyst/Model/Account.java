@@ -1,7 +1,6 @@
 package Duelyst.Model;
 
 import Duelyst.Model.Battle.Battle;
-import Duelyst.Model.Items.Item;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 
@@ -16,25 +15,22 @@ import static Duelyst.View.Constants.*;
 public class Account implements Cloneable {
     private static Account loggedAccount = null;
     private static ArrayList<Account> accounts = new ArrayList<>();
-    private ArrayList<String> battleHistory;
+    private ArrayList<String> battleHistory = new ArrayList<>();
     private ArrayList<Battle> battles = new ArrayList<>();
 
     //THIS IS NOT USED. WILL USE CARD_COLLECTION
     private CardCollection cardCollection;
 
     private String username;
-    private String password = null;
+    private String password;
     private int countOfWins;
     private int darick;
-    private ArrayList<Item> collectableItems;
 
     public Account(String username, String password) {
         this.username = username;
         this.password = password;
-        battleHistory = new ArrayList<>();
 
         darick = INITIAL_DARICK;
-        collectableItems = new ArrayList<>();
         accounts.add(this);
         cardCollection = new CardCollection(this);
     }
@@ -152,20 +148,9 @@ public class Account implements Cloneable {
         this.darick = darick;
     }
 
-    public ArrayList<Item> getCollectableItems() {
-        return collectableItems;
-    }
-
-    public void setCollectableItems(ArrayList<Item> collectableItems) {
-        this.collectableItems = collectableItems;
-    }
-
     public ArrayList<Battle> getBattles() {
         return battles;
     }
 
-    public void setBattles(ArrayList<Battle> battles) {
-        this.battles = battles;
-    }
 }
 

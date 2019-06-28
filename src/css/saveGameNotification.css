@@ -3,3 +3,8 @@
     -fx-background-size: cover;
     -fx-background-color: transparent;
 }
+#saveBattleNotification_pane {
+    -fx-background-image: url('/res/ui/notification_quest_small.png');
+    -fx-background-size: cover;
+    -fx-background-color: transparent;
+}

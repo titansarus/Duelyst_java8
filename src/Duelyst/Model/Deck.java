@@ -152,11 +152,16 @@ public class Deck implements Cloneable {
             } else if (card instanceof Minion) {
                 addMinion((Minion) card);
             } else if (card instanceof Item) {
-                item = (Item) card;
+                if (this.getItem() == null)
+                    item = (Item) card;
+                else {
+                    Account.getLoggedAccount().getCardCollection().getCards().add(item);
+                    getCards().remove(item);
+                    item = (Item) card;
+                }
             } else getCards().add(card);
         }
     }
-
 
 
     private void addHero(Hero hero) {

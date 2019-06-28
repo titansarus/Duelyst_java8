@@ -17,6 +17,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
@@ -35,6 +36,7 @@ import static Duelyst.View.Constants.*;
 public class CardCollectionController {
 
     public ImageView item_img;
+    public Label showDeckItem_lbl;
     @FXML
     JFXButton back_btn;
 
@@ -485,6 +487,8 @@ public class CardCollectionController {
             deckScroll = 0;
             scrollPane_2.setDisable(true);
             deck_hbox.setDisable(true);
+            item_img.setImage(null);
+            showDeckItem_lbl.setText("");
 
             scrollPane_2.setVisible(false);
             scrollPane.setVisible(true);
@@ -495,6 +499,8 @@ public class CardCollectionController {
             collectionScroll = 0;
             scrollPane.setDisable(true);
             cardCollectionCards_HB.setDisable(true);
+            item_img.setImage(new Image(Account.getLoggedAccount().getCardCollection().getMainDeck().getItem().getAddressOfImage()));
+            showDeckItem_lbl.setText("Item: " + Account.getLoggedAccount().getCardCollection().getMainDeck().getItem().getCardName());
 
             scrollPane.setVisible(false);
             scrollPane_2.setVisible(true);
@@ -572,7 +578,6 @@ public class CardCollectionController {
 
         }
     }
-
 
     public JFXButton getBack_btn() {
         return back_btn;

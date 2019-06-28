@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,7 +12,7 @@
 
 <StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.MainMenu">
    <children>
-      <AnchorPane maxHeight="768.0" maxWidth="1024.0" minHeight="768.0" minWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: BLACk; -fx-background-image: url('/res/Backgrounds/main-menu-back.jpg'); -fx-background-size: cover;">
+      <AnchorPane fx:id="anchorPane" maxHeight="768.0" maxWidth="1024.0" minHeight="768.0" minWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: BLACk; -fx-background-image: url('/res/Backgrounds/main-menu-back.jpg'); -fx-background-size: cover;">
          <children>
             <ImageView fx:id="play_img" fitHeight="87.0" fitWidth="256.0" layoutX="392.0" layoutY="123.0" onMouseClicked="#handlePlayBtn" onMouseEntered="#playButtonGlow" onMouseExited="#playButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -108,8 +110,36 @@
                   <Font name="System Italic" size="33.0" />
                </font>
             </Label>
+            <ImageView fitHeight="93.0" fitWidth="77.0" layoutX="916.0" layoutY="27.0" onMouseClicked="#handleBattleHistoryButton" onMouseEntered="#battleHistoryButtonGlow" onMouseExited="#battleHistoryButtonGlowDisappear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/armory@2x.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="battleHistoryButtonGlow_img" fitHeight="110.0" fitWidth="104.0" layoutX="903.0" layoutY="14.0" onMouseClicked="#handleBattleHistoryButton" onMouseEntered="#battleHistoryButtonGlow" onMouseExited="#battleHistoryButtonGlowDisappear" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/armory_glow_outline@2x.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
+      <Pane fx:id="battleHistory_pane" maxHeight="524.0" maxWidth="300.0" minHeight="300.0" minWidth="150.0" opacity="0.0" prefHeight="507.0" prefWidth="287.0" translateY="-650.0">
+         <children>
+            <ScrollPane fx:id="battleHistoryScrollPane_spane" hbarPolicy="NEVER" prefHeight="524.0" prefWidth="300.0">
+              <content>
+                <AnchorPane fx:id="battleHistoryAnchorePane_apane" minHeight="0.0" minWidth="0.0" prefHeight="447.0" prefWidth="301.0" />
+              </content>
+            </ScrollPane>
+            <ImageView fx:id="battleHistoryClose_btn" fitHeight="77.0" fitWidth="48.0" layoutX="252.0" onMouseClicked="#handleBattleHistoryCloseButton" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_close@2x.png" />
+               </image>
+            </ImageView>
+         </children>
+         <stylesheets>
+            <URL value="@../../../css/battleHistory.css" />
+            <URL value="@../../../css/scroll-bar.css" />
+         </stylesheets>
+      </Pane>
       <Pane fx:id="saveNotification_pane" maxHeight="54.0" maxWidth="180.0" minHeight="54.0" minWidth="180.0" prefHeight="54.0" prefWidth="180.0" stylesheets="@../../../css/saveGameNotification.css" translateX="615.0" translateY="-290.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="32.0" layoutY="20.0" text="Game Saved Successfully" textFill="WHITE">

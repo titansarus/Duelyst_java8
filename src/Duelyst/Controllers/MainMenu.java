@@ -6,11 +6,7 @@ import Duelyst.Model.Battle.Battle;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
-import javafx.application.Platform;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -35,10 +32,15 @@ public class MainMenu {
 
 
     public Pane saveNotification_pane;
-    int singleOrMulti = 0; //1 == Single , 2 == Multi
-    int storyModeLevel = 0; //1 == 1 , 2 == 2 , 3 ==3;
-    int multiplayerModeGoal = 0; //1 == hero , 2 == capture_flags , 3== hold_flag
-    Account selectedAccoutForMultiPlayer = null;
+    public Pane battleHistory_pane;
+    public ImageView battleHistoryClose_btn;
+    public AnchorPane anchorPane;
+    public ImageView battleHistoryButtonGlow_img;
+    public AnchorPane battleHistoryAnchorePane_apane;
+    private int singleOrMulti = 0; //1 == Single , 2 == Multi
+    private int storyModeLevel = 0; //1 == 1 , 2 == 2 , 3 ==3;
+    private int multiplayerModeGoal = 0; //1 == hero , 2 == capture_flags , 3== hold_flag
+    private Account selectedAccoutForMultiPlayer = null;
 
     @FXML
     Label loginedAccount_lbl;
@@ -78,14 +80,14 @@ public class MainMenu {
     @FXML
     ImageView save_img;
 
-    Timeline timeline = new Timeline();
+    private Timeline timeline = new Timeline();
 
     @FXML
     public void initialize() {
         runTimeline();
     }
 
-    public void runTimeline() {
+    private void runTimeline() {
         timeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
             updateLoggedInUser();
             updateDarick();
@@ -237,7 +239,7 @@ public class MainMenu {
         setSingleOrMulti(0);
         setStoryModeLevel(0);
         setMultiplayerModeGoal(0);
-        singleOrMutliPrompt();
+        singleOrMultiPrompt();
 
     }
 
@@ -263,7 +265,7 @@ public class MainMenu {
         Container.runNextScene(root, BATTLE);
     }
 
-    public void gotoBattle(Ai ai, GameMode gameMode, GameGoal gameGoal) {
+    private void gotoBattle(Ai ai, GameMode gameMode, GameGoal gameGoal) {
 
         Pane root = null;
         FXMLLoader fxmlLoader = null;
@@ -364,7 +366,7 @@ public class MainMenu {
     }
 
 
-    public void multiGoalSelection() {
+    private void multiGoalSelection() {
 
         JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
         jfxDialogLayout.setHeading(new Text(CHOOSE_GAME_MODE));
@@ -386,60 +388,46 @@ public class MainMenu {
 
         JFXDialog jfxDialog = new JFXDialog(stackPane, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
 
-        killHero.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setMultiplayerModeGoal(KILL_HERO_INT);
-                System.out.println(getMultiplayerModeGoal());
-                Account account = chooseYourOpponent();
-                System.out.println(selectedAccoutForMultiPlayer.getUsername());
-                if (selectedAccoutForMultiPlayer != null) {
-                    System.out.println(account.getUsername() + "<<--------------------------------------------");
-                    createBattle(account, GameMode.MULTI_PLAYER, GameGoal.KILL_HERO);
-                }
-                jfxDialog.close();
-
+        killHero.setOnAction(event -> {
+            setMultiplayerModeGoal(KILL_HERO_INT);
+            System.out.println(getMultiplayerModeGoal());
+            Account account = chooseYourOpponent();
+            System.out.println(selectedAccoutForMultiPlayer.getUsername());
+            if (selectedAccoutForMultiPlayer != null) {
+                System.out.println(account.getUsername() + "<<--------------------------------------------");
+                createBattle(account, GameMode.MULTI_PLAYER, GameGoal.KILL_HERO);
             }
+            jfxDialog.close();
+
         });
 
-        captureFlag.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setMultiplayerModeGoal(CAPTURE_FLAG_INT);
-                System.out.println(getMultiplayerModeGoal());
-                Account account = chooseYourOpponent();
-                if (selectedAccoutForMultiPlayer != null) {
-                    createBattle(account, GameMode.MULTI_PLAYER, GameGoal.COLLECT_FLAG);
-                }
-                jfxDialog.close();
+        captureFlag.setOnAction(event -> {
+            setMultiplayerModeGoal(CAPTURE_FLAG_INT);
+            System.out.println(getMultiplayerModeGoal());
+            Account account = chooseYourOpponent();
+            if (selectedAccoutForMultiPlayer != null) {
+                createBattle(account, GameMode.MULTI_PLAYER, GameGoal.COLLECT_FLAG);
+            }
+            jfxDialog.close();
 
 
-            }
         });
-        holdFlag.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setMultiplayerModeGoal(HOLD_FLAG_INT);
-                System.out.println(getMultiplayerModeGoal());
-                Account account = chooseYourOpponent();
-                if (selectedAccoutForMultiPlayer != null) {
-                    createBattle(account, GameMode.MULTI_PLAYER, GameGoal.HOLD_FLAG);
-                }
-                jfxDialog.close();
+        holdFlag.setOnAction(event -> {
+            setMultiplayerModeGoal(HOLD_FLAG_INT);
+            System.out.println(getMultiplayerModeGoal());
+            Account account = chooseYourOpponent();
+            if (selectedAccoutForMultiPlayer != null) {
+                createBattle(account, GameMode.MULTI_PLAYER, GameGoal.HOLD_FLAG);
             }
+            jfxDialog.close();
         });
 
-        cancel.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                jfxDialog.close();
-            }
-        });
+        cancel.setOnAction(event -> jfxDialog.close());
 
         jfxDialog.show();
     }
 
-    public Account chooseYourOpponent() {
+    private Account chooseYourOpponent() {
         final Account[] selectedAccount = {null};
         JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
         jfxDialogLayout.setHeading(new Text(CHOOSE_OPPONENT_TITLE));
@@ -465,34 +453,26 @@ public class MainMenu {
         jfxDialogLayout.setActions(jfxButtons);
         for (JFXButton j :
                 jfxButtons) {
-            j.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    for (Account a :
-                            Account.getAccounts()) {
-                        if (a.getUsername().equals(j.getText())) {
-                            selectedAccount[0] = a;
-                            selectedAccoutForMultiPlayer = a;
-                            System.out.println(selectedAccount[0].getUsername());
-                        }
+            j.setOnAction(event -> {
+                for (Account a :
+                        Account.getAccounts()) {
+                    if (a.getUsername().equals(j.getText())) {
+                        selectedAccount[0] = a;
+                        selectedAccoutForMultiPlayer = a;
+                        System.out.println(selectedAccount[0].getUsername());
                     }
                 }
             });
         }
 
         JFXDialog jfxDialog = new JFXDialog(stackPane, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
-        cancel.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                jfxDialog.close();
-            }
-        });
+        cancel.setOnAction(event -> jfxDialog.close());
 
         jfxDialog.show();
         return selectedAccount[0];
     }
 
-    public void singleModeSelection() {
+    private void singleModeSelection() {
         JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
         jfxDialogLayout.setHeading(new Text(GAME_SINGLE_PLAYER_TITLE));
         jfxDialogLayout.setBody(new Text(CHOOSE_SINGLE_PLAYER_MODE));
@@ -512,40 +492,29 @@ public class MainMenu {
 
         JFXDialog jfxDialog = new JFXDialog(stackPane, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
 
-        customMode.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setSingleOrMulti(SINGLEPLAYER_INT);
-                System.out.println(singleOrMulti);
+        customMode.setOnAction(event -> {
+            setSingleOrMulti(SINGLEPLAYER_INT);
+            System.out.println(singleOrMulti);
 
-                jfxDialog.close();
+            jfxDialog.close();
 
-                customModeSelection();
-            }
+            customModeSelection();
         });
 
-        storyMode.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setSingleOrMulti(MULTIPLAYER_INT);
-                System.out.println(singleOrMulti);
-                jfxDialog.close();
+        storyMode.setOnAction(event -> {
+            setSingleOrMulti(MULTIPLAYER_INT);
+            System.out.println(singleOrMulti);
+            jfxDialog.close();
 
-                storyModeSelection();
-            }
+            storyModeSelection();
         });
 
-        cancel.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                jfxDialog.close();
-            }
-        });
+        cancel.setOnAction(event -> jfxDialog.close());
 
         jfxDialog.show();
     }
 
-    public void customModeSelection() {
+    private void customModeSelection() {
         JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
         jfxDialogLayout.setHeading(new Text(GAME_CUSTOM_TITLE));
         jfxDialogLayout.setBody(new Text(CHOOSE_DECK));
@@ -568,36 +537,28 @@ public class MainMenu {
         jfxDialogLayout.setActions(jfxButtons);
         for (JFXButton j :
                 jfxButtons) {
-            j.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    Ai ai = new Ai(0);
-                    Deck deck = null;
-                    for (Deck d :
-                            Account.getLoggedAccount().getCardCollection().getDecks()) {
-                        if (d.getDeckName().equals(j.getText())) {
-                            deck = d;
-                        }
+            j.setOnAction(event -> {
+                Ai ai = new Ai(0);
+                Deck deck = null;
+                for (Deck d :
+                        Account.getLoggedAccount().getCardCollection().getDecks()) {
+                    if (d.getDeckName().equals(j.getText())) {
+                        deck = d;
                     }
-                    Deck aiDeck = Deck.deepClone(deck);
-                    ai.setMainDeck(aiDeck);
-                    createBattle(ai, GameMode.SINGLE_PLAYER, GameGoal.KILL_HERO);
-                    jfxDialog.close();
                 }
+                Deck aiDeck = Deck.deepClone(deck);
+                ai.setMainDeck(aiDeck);
+                createBattle(ai, GameMode.SINGLE_PLAYER, GameGoal.KILL_HERO);
+                jfxDialog.close();
             });
         }
 
-        cancel.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                jfxDialog.close();
-            }
-        });
+        cancel.setOnAction(event -> jfxDialog.close());
 
         jfxDialog.show();
     }
 
-    public void storyModeSelection() {
+    private void storyModeSelection() {
         JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
         jfxDialogLayout.setHeading(new Text(CHOOSE_GAME_LEVEL));
         jfxDialogLayout.setBody(new Text(CHOOSE_GAME_LEVEL));
@@ -618,53 +579,39 @@ public class MainMenu {
 
         JFXDialog jfxDialog = new JFXDialog(stackPane, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
 
-        story_level_1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setStoryModeLevel(LEVEL_1);
-                Ai ai = new Ai(0);
-                ai.setMainDeck(Deck.deepClone(Account.findAccountInArrayList("saman",Account.getAccounts()).getCardCollection().getMainDeck()));
-                createBattle(ai, GameMode.SINGLE_PLAYER, GameGoal.COLLECT_FLAG);
-                jfxDialog.close();
+        story_level_1.setOnAction(event -> {
+            setStoryModeLevel(LEVEL_1);
+            Ai ai = new Ai(0);
+            ai.setMainDeck(Deck.deepClone(Account.findAccountInArrayList("saman", Account.getAccounts()).getCardCollection().getMainDeck()));
+            createBattle(ai, GameMode.SINGLE_PLAYER, GameGoal.COLLECT_FLAG);
+            jfxDialog.close();
 
-            }
         });
 
-        story_level_2.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setStoryModeLevel(LEVEL_2);
-                Ai ai = new Ai(0);
-                ai.setMainDeck(Deck.deepClone(Account.findAccountInArrayList("saman",Account.getAccounts()).getCardCollection().getMainDeck()));
-                createBattle(ai, GameMode.SINGLE_PLAYER, GameGoal.KILL_HERO);
-                jfxDialog.close();
-            }
+        story_level_2.setOnAction(event -> {
+            setStoryModeLevel(LEVEL_2);
+            Ai ai = new Ai(0);
+            ai.setMainDeck(Deck.deepClone(Account.findAccountInArrayList("saman", Account.getAccounts()).getCardCollection().getMainDeck()));
+            createBattle(ai, GameMode.SINGLE_PLAYER, GameGoal.KILL_HERO);
+            jfxDialog.close();
         });
-        story_level_3.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setStoryModeLevel(LEVEL_3);
-                Ai ai = new Ai(0);
+        story_level_3.setOnAction(event -> {
+            setStoryModeLevel(LEVEL_3);
+            Ai ai = new Ai(0);
 
 
-                ai.setMainDeck(Deck.deepClone(Account.findAccountInArrayList("saman",Account.getAccounts()).getCardCollection().getMainDeck()));
-                createBattle(ai, GameMode.SINGLE_PLAYER, GameGoal.HOLD_FLAG);
-                jfxDialog.close();
-            }
+            ai.setMainDeck(Deck.deepClone(Account.findAccountInArrayList("saman", Account.getAccounts()).getCardCollection().getMainDeck()));
+            createBattle(ai, GameMode.SINGLE_PLAYER, GameGoal.HOLD_FLAG);
+            jfxDialog.close();
         });
-        cancel.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                jfxDialog.close();
-            }
-        });
+        cancel.setOnAction(event -> jfxDialog.close());
 
 
         jfxDialog.show();
     }
 
 
-    public void singleOrMutliPrompt() {
+    public void singleOrMultiPrompt() {
         JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
         jfxDialogLayout.setHeading(new Text(GAME_MODE_TITLE));
         jfxDialogLayout.setBody(new Text(CHOOSE_GAME_MODE));
@@ -682,16 +629,13 @@ public class MainMenu {
 
         JFXDialog jfxDialog = new JFXDialog(stackPane, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
 
-        singlePlayer.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setSingleOrMulti(SINGLEPLAYER_INT);
-                System.out.println(singleOrMulti);
+        singlePlayer.setOnAction(event -> {
+            setSingleOrMulti(SINGLEPLAYER_INT);
+            System.out.println(singleOrMulti);
 
-                jfxDialog.close();
+            jfxDialog.close();
 
-                singleModeSelection();
-            }
+            singleModeSelection();
         });
 
         multiplayer.setOnAction(event -> {
@@ -723,6 +667,58 @@ public class MainMenu {
         }
         if (secondPlayer.getCardCollection().getMainDeck() == null) {
             throw new NotValidDeckException();
+        }
+    }
+
+    public void battleHistoryButtonGlow() {
+        battleHistoryButtonGlow_img.setOpacity(1);
+    }
+
+    public void battleHistoryButtonGlowDisappear() {
+        battleHistoryButtonGlow_img.setOpacity(0);
+    }
+
+    public void handleBattleHistoryButton() {
+
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1), battleHistory_pane);
+        tt.setFromY(-650);
+        tt.setToY(0);
+        tt.play();
+
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), battleHistory_pane);
+        ft.setFromValue(0);
+        ft.setToValue(1);
+        anchorPane.setOpacity(0.5);
+        anchorPane.setDisable(true);
+        ft.play();
+        showBattleHistory();
+    }
+
+    public void handleBattleHistoryCloseButton() {
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), battleHistory_pane);
+        ft.setFromValue(1);
+        ft.setToValue(0);
+        ft.setOnFinished(event -> {
+            anchorPane.setOpacity(1);
+            anchorPane.setDisable(false);
+            battleHistory_pane.setOpacity(0);
+            TranslateTransition tt = new TranslateTransition(Duration.millis(1), battleHistory_pane);
+            tt.setFromY(0);
+            tt.setToY(-650);
+            tt.play();
+        });
+        ft.play();
+    }
+
+    private void showBattleHistory() {
+        ArrayList<String> history = Account.getLoggedAccount().getBattleHistory();
+        for (int i = 0; i < history.size(); i++) {
+            Label label = new Label();
+            label.setText((i + 1) + ") " + history.get(i));
+            label.setStyle("-fx-font-size: 20; -fx-font-style: italic;-fx-font-weight: bold");
+            battleHistoryAnchorePane_apane.getChildren().add(label);
+            label.setLayoutY(100 * i);
+            label.setLayoutX(80);
         }
     }
 

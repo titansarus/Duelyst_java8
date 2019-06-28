@@ -1,0 +1,13 @@
+#battleHistory_pane {
+    -fx-background-color: transparent;
+}
+
+#battleHistoryAnchorePane_apane {
+    -fx-background-color: transparent;
+}
+
+#battleHistoryScrollPane_spane .viewport {
+    -fx-background-color: transparent;
+    -fx-background-image: url('/res/Backgrounds/play_mode_rankedladder.jpg');
+
+}

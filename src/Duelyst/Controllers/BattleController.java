@@ -7,7 +7,6 @@ import Duelyst.Model.Items.*;
 import Duelyst.Model.Warrior;
 import Duelyst.Utility.ImageHolder;
 import Duelyst.View.ViewClasses.CardForBattle;
-import com.jfoenix.controls.JFXButton;
 import javafx.animation.*;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -47,6 +46,7 @@ public class BattleController {
     public ImageView continue_img;
     public ImageView saveGame_img;
     public ImageView quit_img;
+    public Pane saveBattleNotification_pane;
 
     @FXML
     HBox hand_hBox;
@@ -58,8 +58,6 @@ public class BattleController {
     HBox p2Mana_hb;
     @FXML
     HBox p1Mana_hb;
-    @FXML
-    JFXButton end_turn_btn;
 
     @FXML
     Label upLeft;
@@ -78,14 +76,14 @@ public class BattleController {
     StackPane stackPane;
 
 
-    double heightOfPoly_Y;
-    double heightOfPoly_X;
-    double width;
+    private double heightOfPoly_Y;
+    private double heightOfPoly_X;
+    private double width;
 
-    ArrayList<CardForBattle> hand = new ArrayList<>();
-    ArrayList<CardOnField> cardsOnField = new ArrayList<>();
+    private ArrayList<CardForBattle> hand = new ArrayList<>();
+    private ArrayList<CardOnField> cardsOnField = new ArrayList<>();
 
-    Polygon[][] rectangles = new Polygon[BATTLE_ROWS][BATTLE_COLUMNS];
+    private Polygon[][] rectangles = new Polygon[BATTLE_ROWS][BATTLE_COLUMNS];
 
     @FXML
     public void initialize() {
@@ -93,16 +91,16 @@ public class BattleController {
 //        end_turn_btn.setBackground(new Background( backgroundImage));
     }
 
-    Battle battle;
-    Timeline slowTimeline = new Timeline();
-    Timeline fastTimeLine = new Timeline();
+    private Battle battle;
+    private Timeline slowTimeline = new Timeline();
+    private Timeline fastTimeLine = new Timeline();
 
-    public void runTimelines() {
+    void runTimelines() {
         runSlowTimeline();
         runVeryFastTimeLine();
     }
 
-    public void runSlowTimeline() {
+    private void runSlowTimeline() {
         slowTimeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
             hand.get(0).getView();
             updateMana();
@@ -112,7 +110,7 @@ public class BattleController {
         slowTimeline.play();
     }
 
-    public void runVeryFastTimeLine() {
+    private void runVeryFastTimeLine() {
         fastTimeLine = new Timeline(new KeyFrame(Duration.ZERO, event -> {
             rotateCardImageViews();
         }), new KeyFrame(Duration.millis(20)));
@@ -120,7 +118,7 @@ public class BattleController {
         fastTimeLine.play();
     }
 
-    public void emptyCardsOfHand() {
+    private void emptyCardsOfHand() {
         for (int i = 0; i < getHand().size(); i++) {
             if (getHand().get(i) != null && getHand().get(i).getCard() == null) {
                 getHand().get(i).getCardController().setImageOfCard(null);
@@ -158,30 +156,14 @@ public class BattleController {
                 rectangles[i][j].setStyle("-fx-fill: BLACK;-fx-opacity: 0.5");
 
                 anchorPane.getChildren().addAll(rectangles[i][j]);
-                rectangles[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        rectangleOnMouseClicked(event);
-
-                    }
-                });
+                rectangles[i][j].setOnMouseClicked(event -> rectangleOnMouseClicked(event));
 
                 int finalJ = j;
                 int finalI = i;
-                rectangles[i][j].setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        rectangleOnMouseEnter(event, finalI, finalJ);
-                    }
-                });
+                rectangles[i][j].setOnMouseEntered(event -> rectangleOnMouseEnter(event, finalI, finalJ));
 
 
-                rectangles[i][j].setOnMouseExited(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        rectangleOnMouseExited(event, finalI, finalJ);
-                    }
-                });
+                rectangles[i][j].setOnMouseExited(event -> rectangleOnMouseExited(event, finalI, finalJ));
             }
         }
     }
@@ -258,7 +240,7 @@ public class BattleController {
                     getBattle().setSelectedCell(null);
                     getBattle().setSelectedCard(null);
                 } else if (getBattle().getSelectedCell().getWarrior().isValidToAttack()) {
-                    if (!isValidAttack(getBattle().getSelectedCell(),getBattle().getGrid()[coordinate[0]][coordinate[1]]))
+                    if (!isValidAttack(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]]))
                         return;
                     System.out.println("Attack");
                     handleAttackAnimation(coordinate);
@@ -281,28 +263,27 @@ public class BattleController {
         }
     }
 
-    //////////////////////////reza
     private boolean isValidAttack(Cell targetCell, Cell sourceCell) {
 
         switch (sourceCell.getWarrior().getAttackKind()) {
             case MELEE:
-                return isValidMeleeAttack(targetCell,sourceCell);
+                return isValidMeleeAttack(targetCell, sourceCell);
             case RANGED:
-                return isValidRangedAttack(sourceCell,targetCell, sourceCell.getWarrior());
+                return isValidRangedAttack(sourceCell, targetCell, sourceCell.getWarrior());
             case HYBRID:
-                boolean flag1 = isValidMeleeAttack(targetCell,sourceCell);
-                boolean flag2 = isValidRangedAttack(sourceCell,targetCell, sourceCell.getWarrior());
+                boolean flag1 = isValidMeleeAttack(targetCell, sourceCell);
+                boolean flag2 = isValidRangedAttack(sourceCell, targetCell, sourceCell.getWarrior());
                 return (flag1 || flag2);
         }
         return true;
     }
 
-    private boolean isValidRangedAttack(Cell sourceCell,Cell targetCell, Warrior warrior) {
+    private boolean isValidRangedAttack(Cell sourceCell, Cell targetCell, Warrior warrior) {
 
         if (Cell.calculateManhattanDistance(targetCell, sourceCell) <= 1) {
             return false;
         } else {
-            System.out.println("==>> "+ warrior.getCardName() + " - " +warrior.getAttackRange()+ " "+ (Cell.calculateManhattanDistance(targetCell, targetCell) <= warrior.getAttackRange()));
+            System.out.println("==>> " + warrior.getCardName() + " - " + warrior.getAttackRange() + " " + (Cell.calculateManhattanDistance(targetCell, targetCell) <= warrior.getAttackRange()));
             return Cell.calculateManhattanDistance(sourceCell, targetCell) <= warrior.getAttackRange();
         }
     }
@@ -311,10 +292,6 @@ public class BattleController {
         return Cell.calculateManhattanDistance(targetCell, sourceCell) <= 1;
     }
 
-
-
-
-    ////////////////////////alireza
 
     public void handleAttackAnimation(int[] coordinate) {
         getBattle().setAttackedCard(getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior());
@@ -453,7 +430,7 @@ public class BattleController {
         getBattle().setPlayingPlayer(getBattle().getPlayer1());
         getBattle().getPlayingPlayer().setHero(getBattle().getPlayer1().getDeck().getHero());
         handleInsertCardClickAi(getBattle().getGrid()[2][0], getBattle().getPlayer1().getDeck().getHero());
-            getBattle().getPlayer1().getInGameCards().add(getBattle().getPlayer1().getDeck().getHero());
+        getBattle().getPlayer1().getInGameCards().add(getBattle().getPlayer1().getDeck().getHero());
 
 
         getBattle().setPlayingPlayer(getBattle().getPlayer2());
@@ -873,6 +850,10 @@ public class BattleController {
             gameResult_img.setImage(new Image("res/ui/notification_go@2x.png"));
             gameResult_lbl.setText("Draw!");
         }
+        anchorPane.getChildren().remove(gameResult_img);
+        anchorPane.getChildren().remove(gameResult_lbl);
+        anchorPane.getChildren().add(gameResult_img);
+        anchorPane.getChildren().add(gameResult_lbl);
         FadeTransition ft = new FadeTransition(Duration.millis(3000), gameResult_img);
         FadeTransition ft2 = new FadeTransition(Duration.millis(3000), gameResult_lbl);
         ft.setOnFinished(event -> {
@@ -924,7 +905,15 @@ public class BattleController {
     }
 
     public void handleSaveGameImg() {
-        //TODO Save Unfinished Game
+//        Battle battle = Battle.deepClone(Battle.getRunningBattle());
+//        Battle.getUnfinishedBattles().add(battle);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), saveBattleNotification_pane);
+        tt.setFromX(900);
+        tt.setToX(600);
+        tt.setCycleCount(2);
+        tt.setAutoReverse(true);
+        tt.play();
+
     }
 
     public void handleQuitImg() {
@@ -965,7 +954,7 @@ public class BattleController {
 
     private void collectibleItemSet() {
         Cell cell = getRandomCellForCollectibleIteInsert();
-        if(cell == null)
+        if (cell == null)
             return;
         cell.setCollectibleItem(getRandomCollectibleItem());
         handleInsertCollectibleItem(cell);
@@ -1024,16 +1013,16 @@ class CardOnField {
     private ImageView imageView;
     private Card card;
 
-    public CardOnField() {
+    CardOnField() {
         allCardOnFields.add(this);
     }
 
 
-    public ImageView getImageView() {
+    ImageView getImageView() {
         return imageView;
     }
 
-    public void setImageView(ImageView imageView) {
+    void setImageView(ImageView imageView) {
         this.imageView = imageView;
     }
 
@@ -1045,21 +1034,21 @@ class CardOnField {
         this.card = card;
     }
 
-    public static CardOnField findCardOnFieldFromArrayList(ArrayList<CardOnField> arrayList, Card card) {
+    static CardOnField findCardOnFieldFromArrayList(ArrayList<CardOnField> arrayList, Card card) {
         if (card != null && arrayList != null && arrayList.size() > 0) {
-            for (int i = 0; i < arrayList.size(); i++) {
-                if (arrayList.get(i).getCard().equals(card)) {
-                    return arrayList.get(i);
+            for (CardOnField cardOnField : arrayList) {
+                if (cardOnField.getCard().equals(card)) {
+                    return cardOnField;
                 }
             }
         }
         return null;
     }
 
-    public static CardOnField getCardOnField(Card card) {
-        for (int i = 0; i < allCardOnFields.size(); i++) {
-            if (allCardOnFields.get(i).getCard().equals(card))
-                return allCardOnFields.get(i);
+    static CardOnField getCardOnField(Card card) {
+        for (CardOnField allCardOnField : allCardOnFields) {
+            if (allCardOnField.getCard().equals(card))
+                return allCardOnField;
         }
         return null;
     }

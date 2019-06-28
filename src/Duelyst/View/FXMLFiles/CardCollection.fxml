@@ -34,8 +34,8 @@
                   <Reflection />
                </effect>
             </JFXTextField>
-            <Label fx:id="loginedAccount_lbl" layoutX="128.0" layoutY="24.0" prefHeight="17.0" prefWidth="168.0" textAlignment="CENTER" />
-            <Label fx:id="accountDarick_lbl" layoutX="128.0" layoutY="39.0" prefHeight="21.0" prefWidth="114.0" textFill="#171717" />
+            <Label fx:id="loginedAccount_lbl" layoutX="158.0" layoutY="24.0" prefHeight="17.0" prefWidth="168.0" textAlignment="CENTER" />
+            <Label fx:id="accountDarick_lbl" layoutX="158.0" layoutY="42.0" prefHeight="21.0" prefWidth="114.0" textFill="#171717" />
             <Label layoutX="24.0" layoutY="24.0" prefHeight="15.0" prefWidth="152.0" text="Logined Account" />
             <Label layoutX="24.0" layoutY="41.0" text="Darick" />
             <JFXButton fx:id="back_btn" buttonType="RAISED" layoutX="1113.0" layoutY="742.0" onAction="#handleBackBtn" prefHeight="25.0" prefWidth="114.0" ripplerFill="#080000" text=" " textFill="#eeeaea">
@@ -95,12 +95,15 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXButton>
-            <ImageView fx:id="item_img" fitHeight="102.0" fitWidth="135.0" layoutX="480.0" layoutY="605.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fitHeight="112.0" fitWidth="114.0" layoutX="489.0" layoutY="599.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="item_img" fitHeight="121.0" fitWidth="105.0" layoutX="1118.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../res/ui/ranked_chevron_plate.png" />
-               </image>
-            </ImageView>
+                  <Image url="@../../../res/Items/AssasinationDagger/AssassinationDagger.png" />
+               </image></ImageView>
+            <Label fx:id="showDeckItem_lbl" alignment="CENTER" contentDisplay="CENTER" layoutX="1071.0" layoutY="73.0" prefHeight="21.0" prefWidth="188.0" text="Item">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

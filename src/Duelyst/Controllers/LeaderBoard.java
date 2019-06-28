@@ -32,7 +32,6 @@ public class LeaderBoard {
 
     public void updateTable() {
         ArrayList<Account> accounts = Account.accountsSorter(Account.getAccounts());
-//        scrollPane.setMinHeight(500)
         ArrayList<AccountInfo> accountInfos = new ArrayList<>();
         int count = 0;
         for (int i = 0; i < accounts.size(); i++) {

@@ -261,8 +261,7 @@
       "username": "a",
       "password": "a",
       "countOfWins": 0,
-      "darick": 1392,
-      "collectableItems": []
+      "darick": 1392
     }
   },
   {
@@ -278,8 +277,7 @@
       "username": "b",
       "password": "b",
       "countOfWins": 0,
-      "darick": 10000,
-      "collectableItems": []
+      "darick": 10000
     }
   },
   {
@@ -294,8 +292,7 @@
       "username": "alireza",
       "password": "alireza",
       "countOfWins": 0,
-      "darick": 10000,
-      "collectableItems": []
+      "darick": 10000
     }
   },
   {
@@ -311,8 +308,7 @@
       "username": "c",
       "password": "c",
       "countOfWins": 0,
-      "darick": 10000,
-      "collectableItems": []
+      "darick": 10000
     }
   },
   {
@@ -909,8 +905,7 @@
       "username": "d",
       "password": "d",
       "countOfWins": 0,
-      "darick": 4000,
-      "collectableItems": []
+      "darick": 4000
     }
   },
   {
@@ -1568,8 +1563,7 @@
       "username": "e",
       "password": "e",
       "countOfWins": 0,
-      "darick": 85000,
-      "collectableItems": []
+      "darick": 85000
     }
   },
   {
@@ -2513,8 +2507,7 @@
       "username": "saman",
       "password": "saman",
       "countOfWins": 0,
-      "darick": 65300,
-      "collectableItems": []
+      "darick": 65300
     }
   },
   {
@@ -2560,8 +2553,7 @@
       "username": "danial",
       "password": "danial",
       "countOfWins": 0,
-      "darick": 99700,
-      "collectableItems": []
+      "darick": 99700
     }
   },
   {
@@ -2598,6 +2590,27 @@
               "addressOfAttackGif": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars_attack.gif",
               "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars_breathing.gif",
               "addressOfDeathGif": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars_death.gif"
+            }
+          },
+          {
+            "@type": "Duelyst.Model.Items.GhosleTaemid",
+            "@val": {
+              "isUsable": true,
+              "applyFirst": false,
+              "cardId": "rez_GhosleTaemid_1",
+              "manaCost": 0,
+              "darikCost": 20000,
+              "account": "@root.8",
+              "cardDescription": "Har Minion Hengame Spawn Shodan Ta 2 Nobat HolyBuff Migirad",
+              "cardName": "GhosleTaemid",
+              "isAbleToMove": true,
+              "isInGame": false,
+              "addressOfImage": "res/Items/GhosleTaemid/GhosleTaemid.png",
+              "addressOfIdleGif": "res/Items/CollectibleItem.gif",
+              "addressOfRunGif": "",
+              "addressOfAttackGif": "",
+              "addressOfGetDamageGif": "",
+              "addressOfDeathGif": ""
             }
           }
         ],
@@ -3239,13 +3252,13 @@
           }
         ],
         "mainDeck": "@root.8.cardCollection.decks.0",
-        "customCards": []
+        "customCards": [],
+        "selectedCard": "@root.8.cardCollection.cards.1"
       },
       "username": "rez",
       "password": "rez",
       "countOfWins": 0,
-      "darick": 78950,
-      "collectableItems": []
+      "darick": 58950
     }
   }
 ]

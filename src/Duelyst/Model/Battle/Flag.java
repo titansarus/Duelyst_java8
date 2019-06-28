@@ -13,7 +13,7 @@ public class Flag {
     private static String image = "res/Items/Flag/CollectFlag.png";
     private ImageView imageView;
 
-    public Flag(KindOfFlag kindOfFlag, int x, int y) {
+    Flag(KindOfFlag kindOfFlag, int x, int y) {
         this.kindOfFlag = kindOfFlag;
         this.x = x;
         this.y = y;
