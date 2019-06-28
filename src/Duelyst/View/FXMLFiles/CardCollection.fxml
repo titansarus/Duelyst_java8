@@ -95,7 +95,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXButton>
-            <ImageView fx:id="item_img" fitHeight="121.0" fitWidth="105.0" layoutX="1118.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="item_img" fitHeight="121.0" fitWidth="105.0" layoutX="1118.0" layoutY="6.0" onMouseClicked="#handleItemImage" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../res/Items/AssasinationDagger/AssassinationDagger.png" />
                </image></ImageView>

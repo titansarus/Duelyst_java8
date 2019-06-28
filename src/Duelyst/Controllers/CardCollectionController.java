@@ -499,9 +499,10 @@ public class CardCollectionController {
             collectionScroll = 0;
             scrollPane.setDisable(true);
             cardCollectionCards_HB.setDisable(true);
-            item_img.setImage(new Image(Account.getLoggedAccount().getCardCollection().getMainDeck().getItem().getAddressOfImage()));
-            showDeckItem_lbl.setText("Item: " + Account.getLoggedAccount().getCardCollection().getMainDeck().getItem().getCardName());
-
+            if (Account.getLoggedAccount().getCardCollection().getMainDeck().getItem() != null) {
+                item_img.setImage(new Image(Account.getLoggedAccount().getCardCollection().getMainDeck().getItem().getAddressOfImage()));
+                showDeckItem_lbl.setText("Item: " + Account.getLoggedAccount().getCardCollection().getMainDeck().getItem().getCardName());
+            }
             scrollPane.setVisible(false);
             scrollPane_2.setVisible(true);
 
@@ -536,6 +537,15 @@ public class CardCollectionController {
         updateColorOfCardViewArray(cardViewsOfCollection);
         updateColorOfCardViewArray(cardViewsOfDeck);
 
+    }
+
+    public void handleItemImage() {
+        if (Account.getLoggedAccount().getCardCollection().getMainDeck().getItem() != null) {
+            Account.getLoggedAccount().getCardCollection().getCards().add(Account.getLoggedAccount().getCardCollection().getMainDeck().getItem());
+            Account.getLoggedAccount().getCardCollection().getMainDeck().setItem(null);
+            item_img.setImage(null);
+            showDeckItem_lbl.setText("");
+        }
     }
 
     public void updateColorOfCardViewArray(ArrayList<CardView> cardViews) {
