@@ -520,17 +520,17 @@ public class BattleController {
         ObservableList<Double> points = polygon.getPoints();
         double x = calculateMidXFromPoint(points);
         double y = calculateMidYFromPoint(points);
-        ImageView imageView = new ImageView(ImageHolder.findImageInImageHolders(cardOnField.getCard().getAddressOfIdleGif()));
-        anchorPane.getChildren().add(imageView);
-        imageView.relocate(x, y);
-        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), imageView);
+       final ImageView imageView2 = new ImageView(ImageHolder.findImageInImageHolders(cardOnField.getCard().getAddressOfIdleGif()));
+        anchorPane.getChildren().add(imageView2);
+        imageView2.relocate(x, y);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), imageView2);
         tt.setOnFinished(event -> {
-
-
-                    anchorPane.getChildren().remove(imageView);
+                    anchorPane.getChildren().remove(imageView2);
                 }
 
         );
+
+        tt.play();
     }
 
     public void handleInsertCollectibleItem(Cell cell) {
