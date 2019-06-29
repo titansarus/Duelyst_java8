@@ -500,9 +500,11 @@ public class BattleController {
             CardOnField cardOnField = new CardOnField();
             cardOnField.setCard(getBattle().getSelectedCard());
             cardsOnField.add(cardOnField);
-            if (!(cardOnField.getCard() instanceof Spell))
+            if (!(cardOnField.getCard() instanceof Spell)) {
                 sendIdleImageViewToCenterOfCell(cardOnField, polygon);
-
+            } else {
+                showSpellOnFiled(cardOnField,polygon);
+            }
             //   getHand().remove(cardForBattle);
             getBattle().setSelectedCard(null);
             cardForBattle.setCard(null);
@@ -511,6 +513,24 @@ public class BattleController {
         }
         getBattle().setSelectedCell(null);
         battle.deleteDeathCardsFromMap(); // Check For Death Cards
+    }
+
+
+    public void showSpellOnFiled(CardOnField cardOnField, Polygon polygon) {
+        ObservableList<Double> points = polygon.getPoints();
+        double x = calculateMidXFromPoint(points);
+        double y = calculateMidYFromPoint(points);
+        ImageView imageView = new ImageView(ImageHolder.findImageInImageHolders(cardOnField.getCard().getAddressOfIdleGif()));
+        anchorPane.getChildren().add(imageView);
+        imageView.relocate(x, y);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), imageView);
+        tt.setOnFinished(event -> {
+
+
+                    anchorPane.getChildren().remove(imageView);
+                }
+
+        );
     }
 
     public void handleInsertCollectibleItem(Cell cell) {
