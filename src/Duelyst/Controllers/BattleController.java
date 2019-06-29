@@ -475,12 +475,12 @@ public class BattleController {
     public void handleInsertCardClick(Cell cell) {
 
         int[] battleCoordinate = getBattle().findCellCoordinate(cell);
-        battle.findValidCell(KindOfActionForValidCells.INSERT);
-        ArrayList<Cell> cells = battle.getValidCells();
-        if (!cells.contains(battle.getGrid()[battleCoordinate[0]][battleCoordinate[1]])) {
-            //TODO throw exception
-            return;
-        }
+//        battle.findValidCell(KindOfActionForValidCells.INSERT);
+//        ArrayList<Cell> cells = battle.getValidCells();
+//        if (!cells.contains(battle.getGrid()[battleCoordinate[0]][battleCoordinate[1]])) {
+//            //TODO throw exception
+//            return;
+//        }
         CardForBattle cardForBattle = CardForBattleController.findCardForBattleWithCard(getHand(), getBattle().getSelectedCard());
         try {
             getBattle().insertSelectedCard(battleCoordinate[0], battleCoordinate[1]);

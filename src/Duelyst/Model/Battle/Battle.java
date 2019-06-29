@@ -273,6 +273,12 @@ public class Battle implements Cloneable {
         } else if (getSelectedCard() instanceof Spell) {
             System.out.println("spell !! ");
             findValidCell(KindOfActionForValidCells.SPELL);
+            //
+            for (Cell c:
+                 validCells) {
+                System.out.println(c.getRow()+ "  -  " + c.getColumn());
+            }
+            //reza
             if (!validCells.contains(getGrid()[i][j])){
                 throw new CellFilledBeforeException();
             }
@@ -310,7 +316,9 @@ public class Battle implements Cloneable {
     }
 
     public int attack(Warrior attacker, Warrior attackedCard, boolean isFromCounterAttack) {
-
+        if (isFromCounterAttack && !attacker.isValidCounterAttack()){
+            return -1;
+        }
         attackedCard.decreaseHealthPoint(attacker.getActionPower() - attackedCard.getShield());//TODO CHECK FOR BUFF
         this.attackedCard = attackedCard;
         //KamaneDamol Item Apply

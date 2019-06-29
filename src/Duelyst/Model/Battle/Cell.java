@@ -58,7 +58,7 @@ public class Cell {
 
     public static int calculateManhattanDistance(Cell cell1, Cell cell2) {
 //        System.out.println("==============>>>> "+ Math.abs(cell1.column - cell2.column) + Math.abs(cell1.row - cell2.row));
-        return Math.abs(cell1.column - cell2.column) + Math.abs(cell1.row - cell2.row);
+        return Math.abs(cell1.column+ - cell2.column) + Math.abs(cell1.row - cell2.row);
     }
 
     public Flag getFlag() {
