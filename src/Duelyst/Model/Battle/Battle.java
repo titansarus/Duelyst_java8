@@ -106,11 +106,11 @@ public class Battle implements Cloneable {
     private void initValidCounter(Account account1, Account account2) {
         account1.getCardCollection().getMainDeck().getHero().setValidCounterAttack(true);
         account2.getCardCollection().getMainDeck().getHero().setValidCounterAttack(true);
-        for (Minion m:
-             account1.getCardCollection().getMainDeck().getMinions()) {
+        for (Minion m :
+                account1.getCardCollection().getMainDeck().getMinions()) {
             m.setValidCounterAttack(true);
         }
-        for (Minion m:
+        for (Minion m :
                 account2.getCardCollection().getMainDeck().getMinions()) {
             m.setValidCounterAttack(true);
         }
@@ -290,12 +290,12 @@ public class Battle implements Cloneable {
             System.out.println("spell !! ");
             findValidCell(KindOfActionForValidCells.SPELL);
 
-            for (Cell c:
-                 validCells) {
-                System.out.println(c.getRow()+ "  -  " + c.getColumn());
+            for (Cell c :
+                    validCells) {
+                System.out.println(c.getRow() + "  -  " + c.getColumn());
             }
 
-            if (!validCells.contains(getGrid()[i][j])){
+            if (!validCells.contains(getGrid()[i][j])) {
                 throw new NotValidCellForSpellException();
             }
             Spell spell = (Spell) getSelectedCard();
@@ -303,11 +303,37 @@ public class Battle implements Cloneable {
             getPlayingPlayer().getHand().remove(getSelectedCard());
             for (Buff b :
                     buffs) {
+                switch (spell.getTargetCommunity()) {
+                    case ENEMY_WARRIOR:
+                    case FRIENDLY_WARRIOR:
+                        b.setWarrior(getGrid()[i][j].getWarrior());
+                        ApplyBuff.getInstance().applyBuff(b);
+                        break;
+                    case ALL_OF_FRIEND:
+                        applyAllTargetBuffs(b,playingPlayer);
+                        break;
+                    case ALL_OF_ENEMY:
+                       applyAllTargetBuffs(b,(player1.equals(playingPlayer))?player2:player1);
+                        break;
+                    case CELLS:
+                        b.setCell(getGrid()[i][j]);
+
+                }
                 ApplyBuff.getInstance().applyBuff(b);
             }
         }
         if (!endGame) {
             endGame();
+        }
+    }
+
+    private void applyAllTargetBuffs(Buff b , Player player) {
+        for (Card card:
+             player.getInGameCards()) {
+            if (card instanceof Warrior){
+                b.setWarrior((Warrior) card);
+                ApplyBuff.getInstance().applyBuff(b);
+            }
         }
     }
 
@@ -366,7 +392,7 @@ public class Battle implements Cloneable {
         setSelectedCell(null);
 
         //TODO CHECK FOR COUNTER ATTACK AND BUFF AND A LOT OF THINGS
-        if (!isFromCounterAttack && !attackedCard.isValidCounterAttack()){
+        if (!isFromCounterAttack && !attackedCard.isValidCounterAttack()) {
             return INVALID_COUNTER_WITH_BUFF;
         }
         if (!isFromCounterAttack) {
