@@ -65,6 +65,9 @@ public class Constants {
     public static final Image buffEffect = new Image(Constants.class.getResourceAsStream("../../res/effects/explosion.gif"));
 
 
+    public static final String PATH_OF_MAIN_THEME = "src/res/Music/main_theme.mp3" , MAIN_THEME = "MAIN_THEME" , SOUND_PLAYER = "SOUND_PLAYER";
+
+
     //OTHER CONSTANTS
     public static final String ALERT_OK = "OK", GAME_MODE_TITLE = "Game Mode", GAME_GOAL_TITLE = "Game Goal",
             CHOOSE_GAME_MODE = "Choose your game mode", SINGLEPLAYER_MODE = "Single-Player", MULTIPLAYER_MODE = "Multiplayer",

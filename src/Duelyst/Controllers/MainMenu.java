@@ -15,11 +15,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import static Duelyst.View.Constants.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -83,6 +86,7 @@ public class MainMenu {
 
     private Timeline timeline = new Timeline();
 
+
     @FXML
     public void initialize() {
         runTimeline();
@@ -119,6 +123,10 @@ public class MainMenu {
     }
 
     public void playButtonGlow() {
+//        File file = new File("src/res/Music/button_hover.m4a");
+//        Media media = new Media(file.toURI().toString());
+//        Container.runMediaPlayer(Container.soundPlayer ,media,100,true,1,SOUND_PLAYER );
+
         play_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
     }
 

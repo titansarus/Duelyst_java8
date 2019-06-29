@@ -19,10 +19,13 @@ import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.apache.commons.math3.analysis.function.Power;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -30,7 +33,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static Duelyst.View.Constants.LOGIN;
+import static Duelyst.View.Constants.*;
 
 public class Main extends Application {
 
@@ -71,6 +74,15 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+
+        File file = new File(PATH_OF_MAIN_THEME);
+        Media media = new Media(file.toURI().toString());
+
+        Container.runMediaPlayer(Container.mainThemePlayer,media,0.1,true,Integer.MAX_VALUE , MAIN_THEME);
+
+        System.out.println(file.toURI().toString());
+
         primaryStage = Container.stage;
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setX(100);

@@ -23,6 +23,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -39,6 +41,10 @@ public class Container {
     public static Stage stage = new Stage();
     public static Deque<Scene> scenes = new LinkedList<>();
     public static Deque<String> nameOfMenus = new LinkedList<>();
+
+    public static MediaPlayer mainThemePlayer;
+
+    public static MediaPlayer soundPlayer;
 
 
     public static void exceptionGenerator(MyException e, StackPane pane) {
@@ -72,6 +78,24 @@ public class Container {
 
         jfxDialog.show();
 
+    }
+
+    public static void runMediaPlayer(MediaPlayer mediaPlayer , Media media , double volume , boolean autoplay ,int cycleCount , String typeOfPlayer)
+    {
+        if (typeOfPlayer.equals(MAIN_THEME))
+        {
+            mainThemePlayer = new MediaPlayer(media);
+            mediaPlayer = mainThemePlayer;
+        }
+        if (typeOfPlayer.equals(SOUND_PLAYER))
+        {
+            soundPlayer = new MediaPlayer(media);
+            mediaPlayer = soundPlayer;
+        }
+
+        mediaPlayer.setVolume(volume);
+        mediaPlayer.setAutoPlay(autoplay);
+        mediaPlayer.setCycleCount(cycleCount);
     }
 
 
