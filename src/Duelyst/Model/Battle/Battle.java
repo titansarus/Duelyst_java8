@@ -2,7 +2,6 @@ package Duelyst.Model.Battle;
 
 import Duelyst.Controllers.BattleController;
 import Duelyst.Exceptions.CellFilledBeforeException;
-import Duelyst.Exceptions.MyException;
 import Duelyst.Exceptions.NotEnoughManaException;
 import Duelyst.Model.*;
 import Duelyst.Model.Buffs.ApplyBuff;
@@ -109,7 +108,6 @@ public class Battle implements Cloneable {
 
 
     private void insertPlayerHeroesInMap() {
-        System.out.println("******************\n" + player1.getDeck().getHero().equals(player2.getDeck().getHero()) + "********************\n");
         getGrid()[2][0].setWarrior(player1.getDeck().getHero());
         getGrid()[2][8].setWarrior(player2.getDeck().getHero());
     }
@@ -273,28 +271,17 @@ public class Battle implements Cloneable {
                 throw new CellFilledBeforeException();
             }
         } else if (getSelectedCard() instanceof Spell) {
-
+            System.out.println("spell !! ");
+            findValidCell(KindOfActionForValidCells.SPELL);
+            if (!validCells.contains(getGrid()[i][j])){
+                throw new CellFilledBeforeException();
+            }
             Spell spell = (Spell) getSelectedCard();
             ArrayList<Buff> buffs = spell.getBuffs();
             getPlayingPlayer().getHand().remove(getSelectedCard());
             for (Buff b :
                     buffs) {
-                switch (spell.getTimeOfApply()) {
-                    case PASSIVE:
-                        passiveBuffs.add(b);
-                        break;
-                    case ON_DEATH:
-                        onDeathBuffs.add(b);
-                        break;
-                    case ON_SPAWN:
-                        onSpawnBuffs.add(b);
-                        break;
-                    case ON_ATTACK:
-                        onAttackBuffs.add(b);
-                        break;
-                    case ON_DEFEND:
-                        onDefendBuffs.add(b);
-                }
+                ApplyBuff.getInstance().applyBuff(b);
             }
         }
         if (!endGame) {
@@ -341,8 +328,10 @@ public class Battle implements Cloneable {
 
         applyBuffOnAttackAndOnDefend(attacker, onAttackBuffs);
         applyBuffOnAttackAndOnDefend(attackedCard, onDefendBuffs);
-        attacker.setValidToMove(false);
-        attacker.setValidToAttack(false);
+        if (!isFromCounterAttack) {
+            attacker.setValidToMove(false);
+            attacker.setValidToAttack(false);
+        }
 
         if (isFromCounterAttack || (!attackedCard.isValidCounterAttack())) {
             deleteDeathCardsFromMap(); // Check For Death Cards
@@ -432,7 +421,7 @@ public class Battle implements Cloneable {
         ArrayList<Card> deathCards = new ArrayList<>();
         for (Card playerInGameCard : playerInGameCards) {
             if (playerInGameCard.isInGame() && (playerInGameCard instanceof Warrior)) {
-                System.out.println(((Warrior) playerInGameCard).getHealthPoint() + " <====================================]]");
+//                System.out.println(((Warrior) playerInGameCard).getHealthPoint() + " <====================================]]");
                 if (((Warrior) playerInGameCard).getHealthPoint() <= 0) {
                     if (getPlayingPlayer().getInGameCards().contains(playerInGameCard) && getPlayingPlayer().getDeck().getItem() instanceof SoulEater) {
                         getPlayingPlayer().getDeck().getItem().applyItem();
@@ -450,7 +439,7 @@ public class Battle implements Cloneable {
         return player1;
     }
 
-    public void setPlayer1(Player player1) {
+    private void setPlayer1(Player player1) {
         this.player1 = player1;
     }
 
@@ -458,7 +447,7 @@ public class Battle implements Cloneable {
         return player2;
     }
 
-    public void setPlayer2(Player player2) {
+    private void setPlayer2(Player player2) {
         this.player2 = player2;
     }
 
@@ -482,7 +471,7 @@ public class Battle implements Cloneable {
         return playingPlayer;
     }
 
-    public void setPlayingPlayer() {
+    private void setPlayingPlayer() {
         if (turn % 2 == 1) {
             this.playingPlayer = player1;
             return;
@@ -543,12 +532,11 @@ public class Battle implements Cloneable {
     }
 
 
-    ///////////////////////////////////////////////////
     private void clearValidCellsList() {
         getValidCells().clear();
     }
 
-    public ArrayList<Cell> getValidCells() {//
+    public ArrayList<Cell> getValidCells() {
         return validCells;
     }
 
@@ -616,8 +604,44 @@ public class Battle implements Cloneable {
     }
 
     private void findValidCellToSpell() {
-
+        ArrayList<Cell> cells = new ArrayList<>();
+        switch (((Spell) getSelectedCard()).getTargetCommunity()) {
+            case FRIENDLY_WARRIOR:
+                findValidCellForSpell(cells, playingPlayer);
+                break;
+            case ENEMY_WARRIOR:
+                Player player = (player1.equals(playingPlayer)) ? player2 : player1;
+                findValidCellForSpell(cells, player);
+                break;
+            case CELLS:
+            case ALL_OF_ENEMY:
+            case ALL_OF_FRIEND:
+                getAllCells(cells);
+        }
     }
+
+    private void getAllCells(ArrayList<Cell> cells) {
+        for (Cell[] cells1 :
+                getGrid()) {
+            for (Cell cell :
+                    cells1) {
+                cells.add(cell);
+            }
+        }
+    }
+
+    private void findValidCellForSpell(ArrayList<Cell> cells, Player player) {
+        for (Cell[] cells1 :
+                getGrid()) {
+            for (Cell cell :
+                    cells1) {
+                if (cell.getWarrior() != null && player.getInGameCards().contains(cell.getWarrior())) {
+                    cells.add(cell);
+                }
+            }
+        }
+    }
+
 
     private boolean isValidInsert(Cell destinationCell) {
         Deck deck = playingPlayer.getDeck();
@@ -744,10 +768,8 @@ public class Battle implements Cloneable {
                     player2.getAccount().setCountOfWins(player2.getAccount().getCountOfWins() + 1);
                 }
             }
-            System.out.println("***************************************************************************************************  "+numberOfWin+" - "+player1.getAccount().getUsername());
             battleController.backToMenuInEndOfGame(numberOfWin);
             System.out.println("Game End");
-//            throw new MyException("Game End", "GameOver");
         }
 
     }
@@ -757,14 +779,12 @@ public class Battle implements Cloneable {
         if (player1.getDeck().getHero().getHealthPoint() <= 0) {
             canDraw = true;
             this.setEndGame(true);
-            setWinner(player1.getAccount());
-            System.out.println("Hero Killed");
+            setWinner(player2.getAccount());
 
         }
         if (player2.getDeck().getHero().getHealthPoint() <= 0) {
             this.setEndGame(true);
-            setWinner(player2.getAccount());
-            System.out.println("Hero Killed");
+            setWinner(player1.getAccount());
 
             if (canDraw) {
                 draw = true;

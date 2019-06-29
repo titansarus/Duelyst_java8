@@ -21,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.apache.commons.math3.analysis.function.Power;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -55,11 +56,6 @@ public class Main extends Application {
         DatabaseCollectioner.DatabaseGenerator();
         Shop.getInstance().getCards().addAll(CreateCardFromDatabaseCard.createCards(DatabaseCard.getDatabaseCards()));
         initItems();
-
-        for (int i = 0; i < 100; i++) {
-            Card card = new Card("card" + i, "desc" + i, 10, 10);
-            Shop.getInstance().getCards().add(card);
-        }
 
         makeSpell();
 
@@ -129,39 +125,55 @@ public class Main extends Application {
         //TODO edame doros ni
 
         spell = new Spell("Lighting Bolt","",2,1250,TargetCommunity.ENEMY_WARRIOR);
+        spell.getBuffs().add(new WeaknessBuff(1,false,8));
         Shop.getInstance().getCards().add(spell);
 
+
         spell = new Spell("Poison Lake","",5,900,TargetCommunity.CELLS);
+        spell.getBuffs().add(new PoisonBuff(1,false));
         Shop.getInstance().getCards().add(spell);
 
         spell = new Spell("Madness","",0,650,TargetCommunity.FRIENDLY_WARRIOR);
+        spell.getBuffs().add(new DisarmBuff(1));
+        spell.getBuffs().add(new PowerBuff(3,true,4));
         Shop.getInstance().getCards().add(spell);
 
         spell = new Spell("All Disarm","",9,2000,TargetCommunity.ALL_OF_ENEMY);
+        spell.getBuffs().add(new DisarmBuff(1));
         Shop.getInstance().getCards().add(spell);
 
         spell = new Spell("All Poison","",8,1500,TargetCommunity.ALL_OF_ENEMY);
+        spell.getBuffs().add(new PoisonBuff(4,true));
         Shop.getInstance().getCards().add(spell);
 
         spell = new Spell("Dispel","",0,2100,TargetCommunity.ENEMY_WARRIOR);
+        //TODO wtf?!
         Shop.getInstance().getCards().add(spell);
 
         spell = new Spell("Health with profit","",0,2250,TargetCommunity.FRIENDLY_WARRIOR);
+        spell.getBuffs().add(new WeaknessBuff(1,false,6));
+        spell.getBuffs().add(new HolyBuff(2,3));
         Shop.getInstance().getCards().add(spell);
 
         spell = new Spell("Power up","",2,2500,TargetCommunity.FRIENDLY_WARRIOR);
+        spell.getBuffs().add(new PowerBuff(1,true,6));
         Shop.getInstance().getCards().add(spell);
 
         spell = new Spell("All Power","",4,2000,TargetCommunity.ALL_OF_FRIEND);
+        spell.getBuffs().add(new PowerBuff(500,true,2));
         Shop.getInstance().getCards().add(spell);
 
         spell = new Spell("Weakening","",1,1000,TargetCommunity.ENEMY_WARRIOR);
+        spell.getBuffs().add(new WeaknessBuff(1,false,4));
         Shop.getInstance().getCards().add(spell);
 
         spell = new Spell("Sacrifice","",2,1600,TargetCommunity.FRIENDLY_WARRIOR);
+        spell.getBuffs().add(new WeaknessBuff(1,false,6));
+        spell.getBuffs().add(new PowerBuff(1,true,8));
         Shop.getInstance().getCards().add(spell);
 
         spell = new Spell("Shock","",1,1200,TargetCommunity.ENEMY_WARRIOR);
+        spell.getBuffs().add(new StunBuff(2));
         Shop.getInstance().getCards().add(spell);
 
     }
