@@ -67,8 +67,7 @@ public class Ai extends Account {
             //
             Random random = new Random();
             Card card = cards.get(random.nextInt(cards.size()));
-//            for (Card card:
-//                 cards) {
+
             try {
                 System.out.println("================================><><> " + card.getCardName());
                 battle.setSelectedCell(battle.getCellOfWarrior((Warrior) card));
@@ -76,14 +75,10 @@ public class Ai extends Account {
                 battle.findValidCell(KindOfActionForValidCells.MOVE);
                 Cell cell = battle.getValidCells().get(random.nextInt(battle.getValidCells().size()));
                 getBattleController().moveAnimationRunAi(new int[]{cell.getRow(), cell.getColumn()}, (Warrior) card); //CHECK THAT CARD IS WARRIOR
-//                    battle.move(cell.getColumn(), cell.getRow());
             } catch (Exception e) {
-//                    e.printStackTrace();
                 System.out.println("Ai can not move");
             }
-//            }
         } catch (Exception e) {
-//            e.printStackTrace();
             System.out.println("Ai can not move");
         }
     }

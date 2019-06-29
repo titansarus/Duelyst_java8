@@ -6,6 +6,7 @@
 <?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.Reflection?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -17,16 +18,16 @@
 
 <StackPane fx:id="stackePane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.CardCollectionController">
    <children>
-      <AnchorPane prefHeight="809.0" prefWidth="1251.0" style="-fx-background-image: url('res/Backgrounds/CollectionBackGround.jpg'); -fx-background-size: cover;" stylesheets="@../../../css/hiddenBackGround.css">
+      <AnchorPane prefHeight="809.0" prefWidth="1251.0" style="-fx-background-image: url('/res/Backgrounds/CollectionBackGround.jpg'); -fx-background-size: cover;" stylesheets="@../../../css/hiddenBackGround.css">
          <children>
             <Label layoutX="1113.0" layoutY="562.0" prefHeight="121.0" prefWidth="105.0" text="Drag and Drop deck json to import it here!" wrapText="true">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <ScrollPane fx:id="scrollPane" layoutX="25.0" layoutY="131.0" prefHeight="522.0" prefWidth="1039.0" stylesheets="@../../../css/scroll-bar.css">
+            <ScrollPane fx:id="scrollPane" layoutX="-1.0" layoutY="131.0" prefHeight="522.0" prefWidth="1065.0" stylesheets="@../../../css/scroll-bar.css">
                <content>
-                  <HBox fx:id="cardCollectionCards_HB" focusTraversable="true" prefHeight="490.0" prefWidth="1030.0" />
+                  <HBox fx:id="cardCollectionCards_HB" focusTraversable="true" prefHeight="518.0" prefWidth="1063.0" />
                </content>
             </ScrollPane>
             <JFXTextField fx:id="search_txtf" labelFloat="true" layoutX="863.0" layoutY="94.0" prefHeight="25.0" prefWidth="188.0" promptText="Search..." style="-fx-background-color: lightgray;" stylesheets="@../../../css/jfx-textfield.css">
@@ -34,67 +35,29 @@
                   <Reflection />
                </effect>
             </JFXTextField>
-            <Label fx:id="loginedAccount_lbl" layoutX="158.0" layoutY="24.0" prefHeight="17.0" prefWidth="168.0" textAlignment="CENTER" />
-            <Label fx:id="accountDarick_lbl" layoutX="158.0" layoutY="42.0" prefHeight="21.0" prefWidth="114.0" textFill="#171717" />
-            <Label layoutX="24.0" layoutY="24.0" prefHeight="15.0" prefWidth="152.0" text="Logined Account" />
-            <Label layoutX="24.0" layoutY="41.0" text="Darick" />
-            <JFXButton fx:id="back_btn" buttonType="RAISED" layoutX="1113.0" layoutY="742.0" onAction="#handleBackBtn" prefHeight="25.0" prefWidth="114.0" ripplerFill="#080000" text=" " textFill="#eeeaea">
-               <font>
-                  <Font size="25.0" />
-               </font>
-            </JFXButton>
-            <ScrollPane fx:id="scrollPane_2" layoutX="24.0" layoutY="131.0" opacity="0.85" prefHeight="522.0" prefWidth="1039.0" stylesheets="@../../../css/scroll-bar.css">
+            <Label fx:id="loginedAccount_lbl" layoutX="296.0" layoutY="29.0" prefHeight="17.0" prefWidth="168.0" textAlignment="CENTER" />
+            <Label fx:id="accountDarick_lbl" layoutX="296.0" layoutY="53.0" prefHeight="21.0" prefWidth="114.0" textFill="#171717" />
+            <Label layoutX="139.0" layoutY="29.0" prefHeight="15.0" prefWidth="152.0" text="Logined Account" />
+            <Label layoutX="139.0" layoutY="53.0" text="Darick" />
+            <ScrollPane fx:id="scrollPane_2" layoutX="-2.0" layoutY="131.0" opacity="0.85" prefHeight="522.0" prefWidth="1065.0" stylesheets="@../../../css/scroll-bar.css">
                <content>
-                  <HBox fx:id="deck_hbox" focusTraversable="true" prefHeight="490.0" prefWidth="1030.0" />
+                  <HBox fx:id="deck_hbox" focusTraversable="true" prefHeight="519.0" prefWidth="1053.0" />
                </content>
             </ScrollPane>
-            <JFXButton fx:id="createDeck_btn" layoutX="488.0" layoutY="751.0" onAction="#handleCreateDeck" prefHeight="38.0" prefWidth="114.0" style="-fx-background-color: #464646;" stylesheets="@../../../css/jfx-button.css" text=" " />
+            <JFXButton fx:id="createDeck_btn" layoutX="531.0" layoutY="723.0" onAction="#handleCreateDeck" opacity="0.8" prefHeight="38.0" prefWidth="114.0" style="-fx-background-color: #464646;" stylesheets="@../../../css/jfx-button.css" text=" " />
             <Label fx:id="mainDeck_lbl" layoutX="1029.0" layoutY="31.0" prefHeight="17.0" prefWidth="168.0" textAlignment="CENTER" />
             <Label fx:id="MainDeck" layoutX="769.0" layoutY="31.0" prefHeight="15.0" prefWidth="152.0" text="Main Deck" />
-            <JFXButton fx:id="sendToDeck" layoutX="187.0" layoutY="757.0" onAction="#handleSendToDeck" textFill="#e5ff00">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font></JFXButton>
-            <JFXButton fx:id="sendToCollection" layoutX="845.0" layoutY="757.0" onAction="#handleSendBackToCollection" textFill="#e5ff00">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font></JFXButton>
             <JFXComboBox fx:id="listOfDecks_cb" layoutX="1089.0" layoutY="131.0" onAction="#IClicked" onMouseClicked="#populateComboBox" prefHeight="25.0" prefWidth="152.0" />
-            <JFXButton fx:id="selectAsMainDeck_btn" buttonType="RAISED" layoutX="1081.0" layoutY="197.0" onAction="#handleSelectAsMainDeck" prefHeight="25.0" prefWidth="168.0" ripplerFill="#ab9b9b" style="-fx-background-color: LightGreen;" stylesheets="@../../../css/jfx-button.css" text="Select As Main Deck">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </JFXButton>
-            <JFXButton fx:id="deleteDeck_btn" buttonType="RAISED" layoutX="1081.0" layoutY="259.0" onAction="#handleDeleteDeck" prefHeight="25.0" prefWidth="168.0" ripplerFill="#ab9b9b" style="-fx-background-color: Orange;" stylesheets="@../../../css/jfx-button.css" text="Delete Deck">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </JFXButton>
-            <JFXButton fx:id="exportDeck_btn" buttonType="RAISED" layoutX="1081.0" layoutY="405.0" onAction="#handleExportDeckBtn" prefHeight="25.0" prefWidth="168.0" ripplerFill="#ab9b9b" style="-fx-background-color: LightGreen;" stylesheets="@../../../css/jfx-button.css" text="Export Deck">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </JFXButton>
-            <JFXButton buttonType="RAISED" layoutX="1081.0" layoutY="502.0" onAction="#handleImportDeck" prefHeight="25.0" prefWidth="168.0" ripplerFill="#ab9b9b" style="-fx-background-color: LightGreen;" stylesheets="@../../../css/jfx-button.css" text="Import Deck">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </JFXButton>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="155.0" layoutX="1098.0" layoutY="545.0" onDragDropped="#handleDragDropped" onDragOver="#handleDragOver" opacity="0.4" stroke="BLACK" strokeType="INSIDE" width="135.0" />
             <JFXToggleButton fx:id="Toggle" layoutX="523.0" layoutY="9.0" text="Deck" />
-            <JFXButton fx:id="Previous" layoutX="296.0" layoutY="654.0" onAction="#handelPreviousBtn" textFill="#e5ff00">
+            <JFXButton fx:id="Previous" layoutX="334.0" layoutY="654.0" onAction="#handelPreviousBtn" textFill="#e5ff00">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></JFXButton>
-            <JFXButton fx:id="next" layoutX="705.0" layoutY="654.0" onAction="#handelNextBtn" textFill="#e5ff00">
+            <JFXButton fx:id="next" layoutX="732.0" layoutY="654.0" onAction="#handelNextBtn" textFill="#e5ff00">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></JFXButton>
-            <JFXButton buttonType="RAISED" layoutX="1082.0" layoutY="717.0" onAction="#handleValidateDeck" prefHeight="25.0" prefWidth="168.0" ripplerFill="#ab9b9b" style="-fx-background-color: LightGreen;" stylesheets="@../../../css/jfx-button.css" text="Validate Deck">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </JFXButton>
             <ImageView fx:id="item_img" fitHeight="121.0" fitWidth="105.0" layoutX="1118.0" layoutY="6.0" onMouseClicked="#handleItemImage" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../res/Items/AssasinationDagger/AssassinationDagger.png" />
@@ -102,6 +65,84 @@
             <Label fx:id="showDeckItem_lbl" alignment="CENTER" contentDisplay="CENTER" layoutX="1071.0" layoutY="73.0" prefHeight="21.0" prefWidth="188.0" text="Item">
                <font>
                   <Font name="System Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="98.0" fitWidth="96.0" layoutY="-2.0" onMouseClicked="#handleBackBtn" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_back_corner@2x.png" />
+               </image>
+               <effect>
+                  <DropShadow color="#403535" height="30.33" offsetX="5.0" offsetY="5.0" radius="13.11" width="24.11" />
+               </effect>
+            </ImageView>
+            <ImageView fx:id="selectAsMainDeck_img" fitHeight="60.0" fitWidth="168.0" layoutX="1078.0" layoutY="175.0" onMouseClicked="#handleSelectAsMainDeck" onMouseEntered="#setAsMainDeckButtonGlow" onMouseExited="#setAsMainDeckButtonGlowDisappear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_confirm@2x.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1110.0" layoutY="194.0" onMouseClicked="#handleSelectAsMainDeck" onMouseEntered="#setAsMainDeckButtonGlow" text="Set As Main Deck" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="deleteDeck_img" fitHeight="54.0" fitWidth="168.0" layoutX="1085.0" layoutY="242.0" onMouseClicked="#handleDeleteDeck" onMouseEntered="#deleteDeckButtonGlow" onMouseExited="#deleteDeckeButtonGlowDisappear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_cancel@2x.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1130.0" layoutY="260.0" onMouseClicked="#handleDeleteDeck" onMouseEntered="#deleteDeckButtonGlow" text="Delete Deck" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="exportDeck_img" fitHeight="54.0" fitWidth="162.0" layoutX="1086.0" layoutY="392.0" onMouseClicked="#handleExportDeckBtn" onMouseEntered="#exportDeckButtonGlow" onMouseExited="#exportDeckButtonGlowDisappear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_confirm@2x.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1134.0" layoutY="410.0" onMouseClicked="#handleExportDeckBtn" onMouseEntered="#exportDeckButtonGlow" text="Export Deck" textFill="#fcfcfc">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="importDeck_img" fitHeight="60.0" fitWidth="162.0" layoutX="1089.0" layoutY="466.0" onMouseClicked="#handleImportDeck" onMouseEntered="#importDeckButtonGlow" onMouseExited="#importDeckButtonGlowDisappear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_confirm@2x.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1133.0" layoutY="484.0" onMouseClicked="#handleImportDeck" onMouseEntered="#importDeckButtonGlow" text="Import Deck" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="validateDeck_img" fitHeight="54.0" fitWidth="162.0" layoutX="1089.0" layoutY="724.0" onMouseClicked="#handleValidateDeck" onMouseEntered="#validateDeckButtonGlow" onMouseExited="#validateDeckButtonGlowDisappear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_confirm@2x.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1128.0" layoutY="742.0" onMouseClicked="#handleValidateDeck" onMouseEntered="#validateDeckButtonGlow" text="Validate Deck" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="sendToCollection_img" fitHeight="71.0" fitWidth="178.0" layoutX="705.0" layoutY="726.0" onMouseClicked="#handleSendBackToCollection" onMouseEntered="#sendToCollectionButtonGlow" onMouseExited="#sendToCollectionButtonGlowDisappear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_end_turn_mine.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="742.0" layoutY="753.0" onMouseClicked="#handleSendBackToCollection" onMouseEntered="#sendToCollectionButtonGlow" text="Send To Collection" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="sendToDeck_img" fitHeight="71.0" fitWidth="215.0" layoutX="264.0" layoutY="726.0" onMouseClicked="#handleSendToDeck" onMouseEntered="#sendToDeckButtonGlow" onMouseExited="#sentToDeckButtonGlowDisappear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_end_turn_mine.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="313.0" layoutY="754.0" onMouseClicked="#handleSendToDeck" onMouseEntered="#sendToDeckButtonGlow" text="Send To Deck" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
                </font>
             </Label>
          </children>

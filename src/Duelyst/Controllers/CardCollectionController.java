@@ -37,17 +37,16 @@ public class CardCollectionController {
 
     public ImageView item_img;
     public Label showDeckItem_lbl;
-    @FXML
-    JFXButton back_btn;
+    public ImageView selectAsMainDeck_img;
+    public ImageView deleteDeck_img;
+    public ImageView exportDeck_img;
+    public ImageView importDeck_img;
+    public ImageView validateDeck_img;
+    public ImageView sendToCollection_img;
+    public ImageView sendToDeck_img;
 
     @FXML
     Label MainDeck;
-
-    @FXML
-    JFXButton sendToDeck;
-
-    @FXML
-    JFXButton sendToCollection;
 
     @FXML
     JFXButton Previous;
@@ -92,16 +91,6 @@ public class CardCollectionController {
     @FXML
     JFXComboBox<String> listOfDecks_cb;
 
-    @FXML
-    JFXButton selectAsMainDeck_btn;
-
-    @FXML
-    JFXButton deleteDeck_btn;
-
-    @FXML
-    JFXButton exportDeck_btn;
-
-
     private String createDeckName; //These Are used just for the time we are getting input from user.
     private String importDeckName;
     private double deckScroll = 0;
@@ -120,12 +109,10 @@ public class CardCollectionController {
         scrollPane_2.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane_2.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-        back_btn.setGraphic(new ImageView(backImg));
+
         createDeck_btn.setGraphic(new ImageView(createDeckImg));
         next.setGraphic(new ImageView(nextImg));
         Previous.setGraphic(new ImageView(previousImg));
-        sendToCollection.setGraphic(new ImageView(Constants.sendToCollection));
-        sendToDeck.setGraphic(new ImageView(sendToDeckImg));
         MainDeck.setGraphic(new ImageView(MainDeckImg));
 
 
@@ -589,8 +576,60 @@ public class CardCollectionController {
         }
     }
 
-    public JFXButton getBack_btn() {
-        return back_btn;
+    public void setAsMainDeckButtonGlow() {
+        selectAsMainDeck_img.setImage(new Image("res/ui/button_confirm_glow@2x.png"));
+    }
+
+    public void setAsMainDeckButtonGlowDisappear() {
+        selectAsMainDeck_img.setImage(new Image("res/ui/button_confirm@2x.png"));
+    }
+
+    public void deleteDeckButtonGlow() {
+        deleteDeck_img.setImage(new Image("res/ui/button_cancel_glow@2x.png"));
+    }
+
+    public void deleteDeckeButtonGlowDisappear() {
+        deleteDeck_img.setImage(new Image("res/ui/button_cancel@2x.png"));
+    }
+
+    public void exportDeckButtonGlow() {
+        exportDeck_img.setImage(new Image("res/ui/button_confirm_glow@2x.png"));
+    }
+
+    public void exportDeckButtonGlowDisappear() {
+        exportDeck_img.setImage(new Image("res/ui/button_confirm@2x.png"));
+    }
+
+    public void importDeckButtonGlow() {
+        importDeck_img.setImage(new Image("res/ui/button_confirm_glow@2x.png"));
+    }
+
+    public void importDeckButtonGlowDisappear() {
+        importDeck_img.setImage(new Image("res/ui/button_confirm@2x.png"));
+    }
+
+    public void validateDeckButtonGlow() {
+        validateDeck_img.setImage(new Image("res/ui/button_confirm_glow@2x.png"));
+    }
+
+    public void validateDeckButtonGlowDisappear() {
+        validateDeck_img.setImage(new Image("res/ui/button_confirm@2x.png"));
+    }
+
+    public void sendToCollectionButtonGlow() {
+        sendToCollection_img.setImage(new Image("res/ui/button_end_turn_mine_glow.png"));
+    }
+
+    public void sendToCollectionButtonGlowDisappear() {
+        sendToCollection_img.setImage(new Image("res/ui/button_end_turn_mine.png"));
+    }
+
+    public void sendToDeckButtonGlow() {
+        sendToDeck_img.setImage(new Image("res/ui/button_end_turn_mine_glow.png"));
+    }
+
+    public void sentToDeckButtonGlowDisappear() {
+        sendToDeck_img.setImage(new Image("res/ui/button_end_turn_mine.png"));
     }
 
     public Label getLoggedAccount_lbl() {

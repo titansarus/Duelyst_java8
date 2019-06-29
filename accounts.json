@@ -2687,35 +2687,6 @@
               {
                 "@type": "Duelyst.Model.Minion",
                 "@val": {
-                  "healthPoint": 4,
-                  "actionPower": 4,
-                  "attackRange": 3,
-                  "attackKind": "HYBRID",
-                  "validCounterAttack": false,
-                  "isDeath": false,
-                  "shield": 0,
-                  "isValidToAttack": true,
-                  "IsValidToMove": true,
-                  "isStun": false,
-                  "cardId": "rez_NeyzeDare_Toorani_1",
-                  "manaCost": 1,
-                  "darikCost": 600,
-                  "account": "@root.8",
-                  "cardDescription": "Normal",
-                  "cardName": "NeyzeDare_Toorani",
-                  "isAbleToMove": true,
-                  "isInGame": false,
-                  "addressOfImage": "./res/Characters/UnitsCreated/Toorani/NeyzeDareToorani/NeyzeDare_Toorani.png",
-                  "addressOfIdleGif": "./res/Characters/UnitsCreated/Toorani/NeyzeDareToorani/NeyzeDare_Toorani_idle.gif",
-                  "addressOfRunGif": "./res/Characters/UnitsCreated/Toorani/NeyzeDareToorani/NeyzeDare_Toorani_run.gif",
-                  "addressOfAttackGif": "./res/Characters/UnitsCreated/Toorani/NeyzeDareToorani/NeyzeDare_Toorani_attack.gif",
-                  "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Toorani/NeyzeDareToorani/NeyzeDare_Toorani_breathing.gif",
-                  "addressOfDeathGif": "./res/Characters/UnitsCreated/Toorani/NeyzeDareToorani/NeyzeDare_Toorani_death.gif"
-                }
-              },
-              {
-                "@type": "Duelyst.Model.Minion",
-                "@val": {
                   "healthPoint": 6,
                   "actionPower": 6,
                   "attackRange": 0,
@@ -3176,12 +3147,42 @@
                   "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars_breathing.gif",
                   "addressOfDeathGif": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars_death.gif"
                 }
+              },
+              {
+                "@type": "Duelyst.Model.Minion",
+                "@val": {
+                  "healthPoint": 4,
+                  "actionPower": 4,
+                  "attackRange": 3,
+                  "attackKind": "HYBRID",
+                  "validCounterAttack": false,
+                  "isDeath": false,
+                  "shield": 0,
+                  "isValidToAttack": true,
+                  "IsValidToMove": true,
+                  "isStun": false,
+                  "cardId": "rez_NeyzeDare_Toorani_1",
+                  "manaCost": 1,
+                  "darikCost": 600,
+                  "account": "@root.8",
+                  "cardDescription": "Normal",
+                  "cardName": "NeyzeDare_Toorani",
+                  "isAbleToMove": true,
+                  "isInGame": false,
+                  "addressOfImage": "./res/Characters/UnitsCreated/Toorani/NeyzeDareToorani/NeyzeDare_Toorani.png",
+                  "addressOfIdleGif": "./res/Characters/UnitsCreated/Toorani/NeyzeDareToorani/NeyzeDare_Toorani_idle.gif",
+                  "addressOfRunGif": "./res/Characters/UnitsCreated/Toorani/NeyzeDareToorani/NeyzeDare_Toorani_run.gif",
+                  "addressOfAttackGif": "./res/Characters/UnitsCreated/Toorani/NeyzeDareToorani/NeyzeDare_Toorani_attack.gif",
+                  "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Toorani/NeyzeDareToorani/NeyzeDare_Toorani_breathing.gif",
+                  "addressOfDeathGif": "./res/Characters/UnitsCreated/Toorani/NeyzeDareToorani/NeyzeDare_Toorani_death.gif"
+                }
               }
             ],
             "minions": [
               "@root.8.cardCollection.decks.0.cards.1",
               "@root.8.cardCollection.cards.0",
               "@root.8.cardCollection.decks.0.cards.2",
+              "@root.8.cardCollection.decks.0.cards.19",
               "@root.8.cardCollection.decks.0.cards.3",
               "@root.8.cardCollection.decks.0.cards.4",
               "@root.8.cardCollection.decks.0.cards.5",
