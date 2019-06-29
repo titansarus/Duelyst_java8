@@ -265,11 +265,6 @@ public class BattleController {
         }
     }
 
-    private void attackSound() {
-        File file = new File(ATTACK_SOUND);
-        Media media = new Media(file.toURI().toString());
-        Container.runMediaPlayer(Container.soundPlayer, media, 1, true, 1, SOUND_PLAYER);
-    }
 
     private boolean isValidAttack(Cell targetCell, Cell sourceCell) {
 
@@ -526,12 +521,6 @@ public class BattleController {
         }
         getBattle().setSelectedCell(null);
         battle.deleteDeathCardsFromMap(); // Check For Death Cards
-    }
-
-    public void moveSound() {
-        File file = new File(MOVE_SOUND);
-        Media media = new Media(file.toURI().toString());
-        Container.runMediaPlayer(Container.soundPlayer, media, 1, true, 1, SOUND_PLAYER);
     }
 
 
@@ -890,6 +879,7 @@ public class BattleController {
         return hand;
     }
 
+
     public void backToMenuInEndOfGame(int loseOrWinOrDraw) {//lose 1 , //win 2 , //draw 3
         gameResultAnimation(loseOrWinOrDraw);
     }
@@ -898,19 +888,22 @@ public class BattleController {
         if (kind == 1) {
             gameResult_img.setImage(new Image("res/ui/notification_enemy_turn@2x.png"));
             gameResult_lbl.setText("You Loose");
+            loseSound();
         } else if (kind == 2) {
             gameResult_img.setImage(new Image("res/ui/notification_go@2x.png"));
             gameResult_lbl.setText("You Win");
+            victorySound();
         } else {
             gameResult_img.setImage(new Image("res/ui/notification_go@2x.png"));
             gameResult_lbl.setText("Draw!");
+            loseSound();
         }
         anchorPane.getChildren().remove(gameResult_img);
         anchorPane.getChildren().remove(gameResult_lbl);
         anchorPane.getChildren().add(gameResult_img);
         anchorPane.getChildren().add(gameResult_lbl);
-        FadeTransition ft = new FadeTransition(Duration.millis(3000), gameResult_img);
-        FadeTransition ft2 = new FadeTransition(Duration.millis(3000), gameResult_lbl);
+        FadeTransition ft = new FadeTransition(Duration.millis(5000), gameResult_img);
+        FadeTransition ft2 = new FadeTransition(Duration.millis(5000), gameResult_lbl);
         ft.setOnFinished(event -> {
             if (Container.scenes.size() > 0) {
                 Container.handleBack();
@@ -1060,6 +1053,29 @@ public class BattleController {
         return battle.getGrid()[row][column];
     }
 
+
+    public void moveSound() {
+        playSound(MOVE_SOUND);
+    }
+
+    public void loseSound() {
+        playSound(LOSE_SOUND);
+    }
+
+    private void attackSound() {
+        playSound(ATTACK_SOUND);
+    }
+
+    public void victorySound() {
+        playSound(VICTORY_SOUND);
+    }
+
+    public void playSound(String address) {
+        File file = new File(address);
+        Media media = new Media(file.toURI().toString());
+        Container.runMediaPlayer(Container.soundPlayer, media, 1, true, 1, SOUND_PLAYER);
+    }
+
 }
 
 class CardOnField {
@@ -1108,9 +1124,11 @@ class CardOnField {
         return null;
     }
 
+
     public static ArrayList<CardOnField> getAllCardOnFields() {
         return allCardOnFields;
     }
+
 
 }
 

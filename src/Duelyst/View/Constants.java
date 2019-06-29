@@ -66,7 +66,7 @@ public class Constants {
 
 
     public static final String PATH_OF_MAIN_THEME = "src/res/Music/main_theme.mp3", BUTTON_HOVER_SOUND = "src/res/Music/button_hover.m4a", CLICK_SOUND = "src/res/Music/onclick.m4a",
-            ATTACK_SOUND = "src/res/Music/attack.m4a" , MOVE_SOUND = "src/res/Music/walk.mp3";
+            ATTACK_SOUND = "src/res/Music/attack.m4a" , MOVE_SOUND = "src/res/Music/walk.mp3" , LOSE_SOUND = "src/res/Music/lose_sound.mp3" , VICTORY_SOUND = "src/res/Music/victory.m4a";
     public static final String MAIN_THEME = "MAIN_THEME", SOUND_PLAYER = "SOUND_PLAYER";
 
 
