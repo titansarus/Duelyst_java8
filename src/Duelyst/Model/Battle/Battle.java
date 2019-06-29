@@ -134,8 +134,9 @@ public class Battle implements Cloneable {
         }
         applyPassiveAndSpawnBuffs(onSpawnBuffs);
         applyPassiveAndSpawnBuffs(passiveBuffs);
-        endGame();
-
+        if (!endGame) {
+            endGame();
+        }
 
         setTrueOfValidAttackAndMove();
         turn++;
@@ -296,7 +297,9 @@ public class Battle implements Cloneable {
                 }
             }
         }
-        endGame();
+        if (!endGame) {
+            endGame();
+        }
     }
 
 
@@ -343,7 +346,9 @@ public class Battle implements Cloneable {
 
         if (isFromCounterAttack || (!attackedCard.isValidCounterAttack())) {
             deleteDeathCardsFromMap(); // Check For Death Cards
-            endGame();
+            if (!endGame) {
+                endGame();
+            }
         }
 
         setSelectedCell(null);
@@ -723,7 +728,7 @@ public class Battle implements Cloneable {
                 String h2 = "-draw- vs " + player1.getAccount().getUsername();
                 player2.getAccount().getBattleHistory().add(h2);
             } else {
-                if (player1.getAccount().equals(getWinner())) {
+                if (player1.getAccount().getUsername().equals(getWinner().getUsername())) {
                     numberOfWin = 2;
                     String h1 = "*win* vs " + player2.getAccount().getUsername();
                     player1.getAccount().getBattleHistory().add(h1);
@@ -739,10 +744,10 @@ public class Battle implements Cloneable {
                     player2.getAccount().setCountOfWins(player2.getAccount().getCountOfWins() + 1);
                 }
             }
-
+            System.out.println("***************************************************************************************************  "+numberOfWin+" - "+player1.getAccount().getUsername());
             battleController.backToMenuInEndOfGame(numberOfWin);
             System.out.println("Game End");
-            throw new MyException("Game End", "GameOver");
+//            throw new MyException("Game End", "GameOver");
         }
 
     }

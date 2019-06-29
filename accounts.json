@@ -2560,7 +2560,6 @@
     "@type": "Duelyst.Model.Account",
     "@val": {
       "battleHistory": [],
-      "battles": [],
       "cardCollection": {
         "cards": [
           {
@@ -2590,27 +2589,6 @@
               "addressOfAttackGif": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars_attack.gif",
               "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars_breathing.gif",
               "addressOfDeathGif": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars_death.gif"
-            }
-          },
-          {
-            "@type": "Duelyst.Model.Items.GhosleTaemid",
-            "@val": {
-              "isUsable": true,
-              "applyFirst": false,
-              "cardId": "rez_GhosleTaemid_1",
-              "manaCost": 0,
-              "darikCost": 20000,
-              "account": "@root.8",
-              "cardDescription": "Har Minion Hengame Spawn Shodan Ta 2 Nobat HolyBuff Migirad",
-              "cardName": "GhosleTaemid",
-              "isAbleToMove": true,
-              "isInGame": false,
-              "addressOfImage": "res/Items/GhosleTaemid/GhosleTaemid.png",
-              "addressOfIdleGif": "res/Items/CollectibleItem.gif",
-              "addressOfRunGif": "",
-              "addressOfAttackGif": "",
-              "addressOfGetDamageGif": "",
-              "addressOfDeathGif": ""
             }
           }
         ],
@@ -3252,13 +3230,12 @@
           }
         ],
         "mainDeck": "@root.8.cardCollection.decks.0",
-        "customCards": [],
-        "selectedCard": "@root.8.cardCollection.cards.1"
+        "customCards": []
       },
       "username": "rez",
       "password": "rez",
       "countOfWins": 0,
-      "darick": 58950
+      "darick": 78950
     }
   }
 ]

@@ -542,6 +542,8 @@ public class BattleController {
 
         cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders(getBattle().getSelectedCell().getWarrior().getAddressOfRunGif())));
 
+        getBattle().getSelectedCell().setWarrior(null);
+
         anchorPane.getChildren().add(cardOnField.getImageView());
         TranslateTransition tt = new TranslateTransition(Duration.millis(500), cardOnField.getImageView());
         tt.setFromX(srcx);
@@ -549,10 +551,13 @@ public class BattleController {
         tt.setToX(x);
         tt.setToY(y);
         tt.setOnFinished(event1 -> {
+            getBattle().setSelectedCell(getBattle().getGrid()[coordinate[0]][coordinate[1]]);
+            getBattle().getGrid()[coordinate[0]][coordinate[1]].setWarrior(((Warrior) cardOnField.getCard()));
             getBattle().move(coordinate[0], coordinate[1]);
+
             cardOnField.getImageView().setImage(new Image(cardOnField.getCard().getAddressOfIdleGif()));
-//            getBattle().getGrid()[coordinate[0]][coordinate[1]].setWarrior(((Warrior) cardOnField.getCard()));
-            getBattle().setSelectedCell(null);
+            System.out.println("-0-0-0-0-0-00-0-0--0-0-0-0-0-0-0-0-");
+//            getBattle().setSelectedCell(null);
         });
         tt.play();
         return;

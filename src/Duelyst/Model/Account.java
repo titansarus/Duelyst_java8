@@ -31,7 +31,8 @@ public class Account implements Cloneable {
         this.password = password;
 
         darick = INITIAL_DARICK;
-        accounts.add(this);
+        if (!(this instanceof Ai))
+            accounts.add(this);
         cardCollection = new CardCollection(this);
     }
 

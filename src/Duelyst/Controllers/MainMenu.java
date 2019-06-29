@@ -392,7 +392,6 @@ public class MainMenu {
             setMultiplayerModeGoal(KILL_HERO_INT);
             System.out.println(getMultiplayerModeGoal());
             Account account = chooseYourOpponent();
-            System.out.println(selectedAccoutForMultiPlayer.getUsername());
             if (selectedAccoutForMultiPlayer != null) {
                 System.out.println(account.getUsername() + "<<--------------------------------------------");
                 createBattle(account, GameMode.MULTI_PLAYER, GameGoal.KILL_HERO);
