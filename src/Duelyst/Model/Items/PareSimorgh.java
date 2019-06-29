@@ -9,7 +9,7 @@ public class PareSimorgh extends Item {
 
     public PareSimorgh() {
         super("PareSimorgh" ,"Baraye Hybrid Va Ranged: Az Heroe Harif 2 Vahed Ghodrate Zarbe Kam Mikonad (Yani Agar Ghahremane Harfi Hybrid Ya Ranged Bood In Ettefagh Mioftad)",
-                3500, true, true,"res/Items/PareSimorgh/PareSimorgh.png");
+                3500, true, true,"res/Items/PareSimorgh/PareSimorgh_actionbar.gif");
     }
 
     @Override
