@@ -302,6 +302,8 @@ public class BattleController {
         getBattle().setAttackedCard(getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior());
         CardOnField cardOnFieldAttacker = CardOnField.findCardOnFieldFromArrayList(cardsOnField, getBattle().getSelectedCell().getWarrior());
         CardOnField cardOnFieldAttacked = CardOnField.findCardOnFieldFromArrayList(cardsOnField, getBattle().getAttackedCard());
+        Cell targetCell = getBattle().getSelectedCell();
+        Cell sourceCell = getBattle().getGrid()[coordinate[0]][coordinate[1]];
         int resultOfattack = getBattle().attack(((Warrior) cardOnFieldAttacker.getCard()), ((Warrior) cardOnFieldAttacked.getCard()), false);
         boolean animationEnded = false;
 
@@ -331,7 +333,7 @@ public class BattleController {
         }
         parallelTransition.setOnFinished(event1 -> {
             if (resultOfattack == Battle.VALID_COUNTER_WITH_BUFF || resultOfattack == Battle.VALID_COUNTER_WITHOUT_BUFF) {
-                if (isValidAttack(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]])) {
+                if (isValidAttack(targetCell, sourceCell)) {
                     int newResultOfAttack = getBattle().attack(((Warrior) cardOnFieldAttacked.getCard()), ((Warrior) cardOnFieldAttacker.getCard()), true);
                     cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfAttackGif()));
                     TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
@@ -484,8 +486,8 @@ public class BattleController {
         int[] battleCoordinate = getBattle().findCellCoordinate(cell);
         battle.findValidCell(KindOfActionForValidCells.INSERT);
         ArrayList<Cell> cells = battle.getValidCells();
-        if (!cells.contains(battle.getGrid()[battleCoordinate[0]][battleCoordinate[1]])) {
-            //TODO throw exception
+        if (!cells.contains(battle.getGrid()[battleCoordinate[0]][battleCoordinate[1]]) && getBattle().getSelectedCard() instanceof Warrior) {
+            System.out.println("gi tot");
             return;
         }
         CardForBattle cardForBattle = CardForBattleController.findCardForBattleWithCard(getHand(), getBattle().getSelectedCard());
