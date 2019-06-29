@@ -341,8 +341,10 @@ public class Battle implements Cloneable {
 
         applyBuffOnAttackAndOnDefend(attacker, onAttackBuffs);
         applyBuffOnAttackAndOnDefend(attackedCard, onDefendBuffs);
-        attacker.setValidToMove(false);
-        attacker.setValidToAttack(false);
+        if (!isFromCounterAttack) {
+            attacker.setValidToMove(false);
+            attacker.setValidToAttack(false);
+        }
 
         if (isFromCounterAttack || (!attackedCard.isValidCounterAttack())) {
             deleteDeathCardsFromMap(); // Check For Death Cards
@@ -744,10 +746,8 @@ public class Battle implements Cloneable {
                     player2.getAccount().setCountOfWins(player2.getAccount().getCountOfWins() + 1);
                 }
             }
-            System.out.println("***************************************************************************************************  "+numberOfWin+" - "+player1.getAccount().getUsername());
             battleController.backToMenuInEndOfGame(numberOfWin);
             System.out.println("Game End");
-//            throw new MyException("Game End", "GameOver");
         }
 
     }
@@ -757,14 +757,12 @@ public class Battle implements Cloneable {
         if (player1.getDeck().getHero().getHealthPoint() <= 0) {
             canDraw = true;
             this.setEndGame(true);
-            setWinner(player1.getAccount());
-            System.out.println("Hero Killed");
+            setWinner(player2.getAccount());
 
         }
         if (player2.getDeck().getHero().getHealthPoint() <= 0) {
             this.setEndGame(true);
-            setWinner(player2.getAccount());
-            System.out.println("Hero Killed");
+            setWinner(player1.getAccount());
 
             if (canDraw) {
                 draw = true;

@@ -2559,7 +2559,9 @@
   {
     "@type": "Duelyst.Model.Account",
     "@val": {
-      "battleHistory": [],
+      "battleHistory": [
+        "-lose- vs AI:)"
+      ],
       "cardCollection": {
         "cards": [
           {
@@ -3226,7 +3228,7 @@
             },
             "account": "@root.8",
             "deckName": "rez",
-            "isValid": false
+            "isValid": true
           }
         ],
         "mainDeck": "@root.8.cardCollection.decks.0",

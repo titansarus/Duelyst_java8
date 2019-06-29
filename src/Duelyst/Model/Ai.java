@@ -43,16 +43,12 @@ public class Ai extends Account {
         try {
             Player player = battle.getPlayer2();
             ArrayList<Card> cards = player.getHand();
-            //
-            System.out.println("insert==---------------------------------------------------=>> : " + cards.size());
-            //
             Random random = new Random();
             Card card = cards.get(random.nextInt(cards.size()));
             battle.setSelectedCard(card);
             battle.findValidCell(KindOfActionForValidCells.INSERT);
             Cell cell = battle.getValidCells().get(random.nextInt(battle.getValidCells().size()));
             getBattleController().handleInsertCardClickAi(cell, card);
-//             battle.insertSelectedCard(cell.getColumn(), cell.getRow());
         } catch (Exception e) {
             System.out.println("Ai can not insert");
         }
@@ -62,28 +58,18 @@ public class Ai extends Account {
         try {
             Player player = battle.getPlayer2();
             ArrayList<Card> cards = player.getInGameCards();
-            //
-            System.out.println("move==---------------------------------------------------=>> : " + cards.size());
-            //
             Random random = new Random();
             Card card = cards.get(random.nextInt(cards.size()));
-//            for (Card card:
-//                 cards) {
             try {
-                System.out.println("================================><><> " + card.getCardName());
                 battle.setSelectedCell(battle.getCellOfWarrior((Warrior) card));
 
                 battle.findValidCell(KindOfActionForValidCells.MOVE);
                 Cell cell = battle.getValidCells().get(random.nextInt(battle.getValidCells().size()));
                 getBattleController().moveAnimationRunAi(new int[]{cell.getRow(), cell.getColumn()}, (Warrior) card); //CHECK THAT CARD IS WARRIOR
-//                    battle.move(cell.getColumn(), cell.getRow());
             } catch (Exception e) {
-//                    e.printStackTrace();
                 System.out.println("Ai can not move");
             }
-//            }
         } catch (Exception e) {
-//            e.printStackTrace();
             System.out.println("Ai can not move");
         }
     }
@@ -93,11 +79,9 @@ public class Ai extends Account {
             Player player = battle.getPlayer2();
             ArrayList<Card> cards = player.getInGameCards();
             Random random = new Random();
-            System.out.println("attack==---------------------------------------------------=>> : " + cards.size());
             for (Card card :
                     cards) {
                 try {
-                    System.out.println("================================><><> " + card.getCardName());
                     battle.setSelectedCell(battle.getCellOfWarrior((Warrior) card));
                     battle.findValidCell(KindOfActionForValidCells.ATTACK);
                     Cell cell = battle.getValidCells().get(random.nextInt(battle.getValidCells().size()));
@@ -105,13 +89,10 @@ public class Ai extends Account {
                     Warrior attackedWarrior = cell.getWarrior();
                     getBattleController().handleAttackFromAi(attacker, attackedWarrior);
                 } catch (Exception e) {
-//                    e.printStackTrace();
                     System.out.println("Ai can not attack");
                 }
             }
-            //battle.attack(attacker, attackedWarrior, false);
         } catch (Exception e) {
-//            e.printStackTrace();
             System.out.println("Ai can not attack");
         }
     }
