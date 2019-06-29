@@ -3,6 +3,7 @@ package Duelyst.Model.Battle;
 import Duelyst.Controllers.BattleController;
 import Duelyst.Exceptions.CellFilledBeforeException;
 import Duelyst.Exceptions.NotEnoughManaException;
+import Duelyst.Exceptions.NotValidCellForSpellException;
 import Duelyst.Model.*;
 import Duelyst.Model.Buffs.ApplyBuff;
 import Duelyst.Model.Buffs.Buff;
@@ -76,6 +77,7 @@ public class Battle implements Cloneable {
         if (account2 instanceof Ai) {
             ((Ai) account2).setBattle(this);
         }
+        initValidCounter(account1, account2);
         setPlayer1(new Player(account1, account1.getCardCollection().getMainDeck()));
         setPlayer2(new Player(account2, account2.getCardCollection().getMainDeck()));
 
@@ -98,6 +100,19 @@ public class Battle implements Cloneable {
         }
 
         nextTurn();
+    }
+
+    private void initValidCounter(Account account1, Account account2) {
+        account1.getCardCollection().getMainDeck().getHero().setValidCounterAttack(true);
+        account2.getCardCollection().getMainDeck().getHero().setValidCounterAttack(true);
+        for (Minion m:
+             account1.getCardCollection().getMainDeck().getMinions()) {
+            m.setValidCounterAttack(true);
+        }
+        for (Minion m:
+                account2.getCardCollection().getMainDeck().getMinions()) {
+            m.setValidCounterAttack(true);
+        }
     }
 
     private void setPlayerOfItem(Player player1) {
@@ -273,14 +288,14 @@ public class Battle implements Cloneable {
         } else if (getSelectedCard() instanceof Spell) {
             System.out.println("spell !! ");
             findValidCell(KindOfActionForValidCells.SPELL);
-            //
+
             for (Cell c:
                  validCells) {
                 System.out.println(c.getRow()+ "  -  " + c.getColumn());
             }
-            //reza
+
             if (!validCells.contains(getGrid()[i][j])){
-                throw new CellFilledBeforeException();
+                throw new NotValidCellForSpellException();
             }
             Spell spell = (Spell) getSelectedCard();
             ArrayList<Buff> buffs = spell.getBuffs();
@@ -316,9 +331,7 @@ public class Battle implements Cloneable {
     }
 
     public int attack(Warrior attacker, Warrior attackedCard, boolean isFromCounterAttack) {
-        if (isFromCounterAttack && !attacker.isValidCounterAttack()){
-            return -1;
-        }
+
         attackedCard.decreaseHealthPoint(attacker.getActionPower() - attackedCard.getShield());//TODO CHECK FOR BUFF
         this.attackedCard = attackedCard;
         //KamaneDamol Item Apply
@@ -351,6 +364,9 @@ public class Battle implements Cloneable {
         setSelectedCell(null);
 
         //TODO CHECK FOR COUNTER ATTACK AND BUFF AND A LOT OF THINGS
+        if (!isFromCounterAttack && !attackedCard.isValidCounterAttack()){
+            return INVALID_COUNTER_WITH_BUFF;
+        }
         if (!isFromCounterAttack) {
             return VALID_COUNTER_WITH_BUFF; //RETURN DETERMINES THE CONTROLLER TO SHOW BUFF ANIMATION OR NOT? DO COUNTER ATTACK OR NOT?
         } else {
@@ -639,6 +655,7 @@ public class Battle implements Cloneable {
     }
 
     private void findValidCellForSpell(ArrayList<Cell> cells, Player player) {
+        System.out.println("shiiiiiiiiiiiiiiiiiiiiiit");
         for (Cell[] cells1 :
                 getGrid()) {
             for (Cell cell :

@@ -240,8 +240,10 @@ public class BattleController {
                     getBattle().setSelectedCell(null);
                     getBattle().setSelectedCard(null);
                 } else if (getBattle().getSelectedCell().getWarrior().isValidToAttack()) {
-                    if (!isValidAttack(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]]))
+                    if (!isValidAttack(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]])) {
+                        System.out.println("natoonne bazene!!!");
                         return;
+                    }
                     System.out.println("Attack");
                     handleAttackAnimation(coordinate);
                     getBattle().setSelectedCell(null);
