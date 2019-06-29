@@ -271,7 +271,11 @@ public class Battle implements Cloneable {
                 throw new CellFilledBeforeException();
             }
         } else if (getSelectedCard() instanceof Spell) {
-
+            System.out.println("spell !! ");
+            findValidCell(KindOfActionForValidCells.SPELL);
+            if (!validCells.contains(getGrid()[i][j])){
+                throw new CellFilledBeforeException();
+            }
             Spell spell = (Spell) getSelectedCard();
             ArrayList<Buff> buffs = spell.getBuffs();
             getPlayingPlayer().getHand().remove(getSelectedCard());
@@ -417,7 +421,7 @@ public class Battle implements Cloneable {
         ArrayList<Card> deathCards = new ArrayList<>();
         for (Card playerInGameCard : playerInGameCards) {
             if (playerInGameCard.isInGame() && (playerInGameCard instanceof Warrior)) {
-                System.out.println(((Warrior) playerInGameCard).getHealthPoint() + " <====================================]]");
+//                System.out.println(((Warrior) playerInGameCard).getHealthPoint() + " <====================================]]");
                 if (((Warrior) playerInGameCard).getHealthPoint() <= 0) {
                     if (getPlayingPlayer().getInGameCards().contains(playerInGameCard) && getPlayingPlayer().getDeck().getItem() instanceof SoulEater) {
                         getPlayingPlayer().getDeck().getItem().applyItem();
