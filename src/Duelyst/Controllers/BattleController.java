@@ -18,12 +18,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -235,6 +237,7 @@ public class BattleController {
                     System.out.println("YOUR CARD!!!");
                     getBattle().setSelectedCell(null);
                     getBattle().setSelectedCard(null);
+                    return;
                 } else if (getBattle().getSelectedCell().getWarrior().isValidToAttack()) {
                     if (!isValidAttack(getBattle().getGrid()[coordinate[0]][coordinate[1]], getBattle().getSelectedCell())) {
                         System.out.println("natoonne bazene!!!");
@@ -242,6 +245,7 @@ public class BattleController {
                     }
                     System.out.println("Attack");
                     handleAttackAnimation(coordinate);
+
                     getBattle().setSelectedCell(null);
                     getBattle().setSelectedCard(null);
 
@@ -259,6 +263,12 @@ public class BattleController {
 
             return;
         }
+    }
+
+    private void attackSound() {
+        File file = new File(ATTACK_SOUND);
+        Media media = new Media(file.toURI().toString());
+        Container.runMediaPlayer(Container.soundPlayer, media, 1, true, 1, SOUND_PLAYER);
     }
 
     private boolean isValidAttack(Cell targetCell, Cell sourceCell) {
@@ -307,7 +317,7 @@ public class BattleController {
         Cell sourceCell = getBattle().getGrid()[coordinate[0]][coordinate[1]];
         int resultOfattack = getBattle().attack(((Warrior) cardOnFieldAttacker.getCard()), ((Warrior) cardOnFieldAttacked.getCard()), false);
         boolean animationEnded = false;
-
+        attackSound();
         cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfAttackGif()));
 
         TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
@@ -336,6 +346,7 @@ public class BattleController {
             if (resultOfattack == Battle.VALID_COUNTER_WITH_BUFF || resultOfattack == Battle.VALID_COUNTER_WITHOUT_BUFF) {
                 if (isValidAttack(targetCell, sourceCell)) {
                     int newResultOfAttack = getBattle().attack(((Warrior) cardOnFieldAttacked.getCard()), ((Warrior) cardOnFieldAttacker.getCard()), true);
+                    attackSound();
                     cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfAttackGif()));
                     TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
                     tt3.setOnFinished(event2 -> {
@@ -374,6 +385,7 @@ public class BattleController {
         CardOnField cardOnFieldAttacker = CardOnField.findCardOnFieldFromArrayList(cardsOnField, attacker);
         CardOnField cardOnFieldAttacked = CardOnField.findCardOnFieldFromArrayList(cardsOnField, attacked);
         int resultOfattack = getBattle().attack(((Warrior) cardOnFieldAttacker.getCard()), ((Warrior) cardOnFieldAttacked.getCard()), false);
+        attackSound();
         boolean animationEnded = false;
 
         cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfAttackGif()));
@@ -403,6 +415,7 @@ public class BattleController {
         parallelTransition.setOnFinished(event1 -> {
             if (resultOfattack == Battle.VALID_COUNTER_WITH_BUFF || resultOfattack == Battle.VALID_COUNTER_WITHOUT_BUFF) {
                 int newResultOfAttack = getBattle().attack(((Warrior) cardOnFieldAttacked.getCard()), ((Warrior) cardOnFieldAttacker.getCard()), true);
+                attackSound();
                 cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfAttackGif()));
                 TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
                 tt3.setOnFinished(event2 -> {
@@ -503,7 +516,7 @@ public class BattleController {
             if (!(cardOnField.getCard() instanceof Spell)) {
                 sendIdleImageViewToCenterOfCell(cardOnField, polygon);
             } else {
-                showSpellOnFiled(cardOnField,polygon);
+                showSpellOnFiled(cardOnField, polygon);
             }
             //   getHand().remove(cardForBattle);
             getBattle().setSelectedCard(null);
@@ -515,12 +528,18 @@ public class BattleController {
         battle.deleteDeathCardsFromMap(); // Check For Death Cards
     }
 
+    public void moveSound() {
+        File file = new File(MOVE_SOUND);
+        Media media = new Media(file.toURI().toString());
+        Container.runMediaPlayer(Container.soundPlayer, media, 1, true, 1, SOUND_PLAYER);
+    }
+
 
     public void showSpellOnFiled(CardOnField cardOnField, Polygon polygon) {
         ObservableList<Double> points = polygon.getPoints();
         double x = calculateMidXFromPoint(points);
         double y = calculateMidYFromPoint(points);
-       final ImageView imageView2 = new ImageView(ImageHolder.findImageInImageHolders(cardOnField.getCard().getAddressOfIdleGif()));
+        final ImageView imageView2 = new ImageView(ImageHolder.findImageInImageHolders(cardOnField.getCard().getAddressOfIdleGif()));
         anchorPane.getChildren().add(imageView2);
         imageView2.relocate(x, y);
         TranslateTransition tt = new TranslateTransition(Duration.millis(2000), imageView2);
@@ -555,7 +574,7 @@ public class BattleController {
 
     public void moveAnimationRunAi(int[] coordinate, Warrior warrior) {
         CardOnField cardOnField = CardOnField.findCardOnFieldFromArrayList(cardsOnField, warrior);
-
+        moveSound();
         Integer srcRow = getBattle().getSelectedCell().getRow();
         Integer srcCol = getBattle().getSelectedCell().getColumn();
         Polygon srcPolygon = rectangles[srcRow][srcCol];
@@ -576,7 +595,7 @@ public class BattleController {
         getBattle().getSelectedCell().setWarrior(null);
 
         anchorPane.getChildren().add(cardOnField.getImageView());
-        TranslateTransition tt = new TranslateTransition(Duration.millis(500), cardOnField.getImageView());
+        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), cardOnField.getImageView());
         tt.setFromX(srcx);
         tt.setFromY(srcy);
         tt.setToX(x);
@@ -596,7 +615,7 @@ public class BattleController {
 
     public void moveAnimationRun(int[] coordinate) {
         CardOnField cardOnField = CardOnField.findCardOnFieldFromArrayList(cardsOnField, getBattle().getSelectedCell().getWarrior());
-
+        moveSound();
         Integer srcRow = getBattle().getSelectedCell().getRow();
         Integer srcCol = getBattle().getSelectedCell().getColumn();
         Polygon srcPolygon = rectangles[srcRow][srcCol];
@@ -615,7 +634,7 @@ public class BattleController {
         cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders(getBattle().getSelectedCell().getWarrior().getAddressOfRunGif())));
 
         anchorPane.getChildren().add(cardOnField.getImageView());
-        TranslateTransition tt = new TranslateTransition(Duration.millis(500), cardOnField.getImageView());
+        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), cardOnField.getImageView());
         tt.setFromX(srcx);
         tt.setFromY(srcy);
         tt.setToX(x);
