@@ -16,7 +16,7 @@ public class Spell extends Card {
 
 
     public Spell(String cardName, String cardDescription, int manaCost, int darikCost, TargetCommunity targetCommunity) {
-        super(cardName, cardDescription, manaCost, darikCost);
+        super(cardName, cardDescription, manaCost, darikCost,  "res/Spells/Test.png");
         this.targetCommunity = targetCommunity;
     }
 
