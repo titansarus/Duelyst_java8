@@ -18,6 +18,8 @@ public class Account implements Cloneable {
     private static ArrayList<Account> accounts = new ArrayList<>();
     private ArrayList<String> battleHistory = new ArrayList<>();
 
+    private int darickBeforeCheat = 0;
+    private boolean isCheatModeEnable = false;
 
     //THIS IS NOT USED. WILL USE CARD_COLLECTION
     private CardCollection cardCollection;
@@ -35,6 +37,27 @@ public class Account implements Cloneable {
         if (!(this instanceof Ai))
             accounts.add(this);
         cardCollection = new CardCollection(this);
+    }
+
+    public int toggleCheatMode() {
+        if (isCheatModeEnable()) {
+            disableCheatMode();
+            return CHEAT_MODE_DEACTIVATED;
+        } else {
+            enableCheatMode();
+            return CHEAT_MODE_ACTIVATED;
+        }
+    }
+
+    public void enableCheatMode() {
+        setCheatModeEnable(true);
+        setDarickBeforeCheat(getDarick());
+        setDarick(Integer.MAX_VALUE);
+    }
+
+    public void disableCheatMode() {
+        setCheatModeEnable(false);
+        setDarick(getDarickBeforeCheat());
     }
 
     public void decreaseDarick(int amount) {
@@ -150,6 +173,20 @@ public class Account implements Cloneable {
         this.darick = darick;
     }
 
+    public int getDarickBeforeCheat() {
+        return darickBeforeCheat;
+    }
 
+    public void setDarickBeforeCheat(int darickBeforeCheat) {
+        this.darickBeforeCheat = darickBeforeCheat;
+    }
+
+    public boolean isCheatModeEnable() {
+        return isCheatModeEnable;
+    }
+
+    public void setCheatModeEnable(boolean cheatModeEnable) {
+        isCheatModeEnable = cheatModeEnable;
+    }
 }
 

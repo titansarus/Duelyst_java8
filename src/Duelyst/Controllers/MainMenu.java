@@ -3,16 +3,14 @@ package Duelyst.Controllers;
 import Duelyst.Exceptions.NotValidDeckException;
 import Duelyst.Model.*;
 import Duelyst.Model.Battle.Battle;
+import Duelyst.Utility.ImageHolder;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import javafx.animation.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -80,6 +78,9 @@ public class MainMenu {
     @FXML
     ImageView save_img;
 
+    @FXML
+    ImageView cheat_img;
+
     private Timeline timeline = new Timeline();
 
     @FXML
@@ -96,69 +97,90 @@ public class MainMenu {
         timeline.play();
     }
 
+    public void cheatButtonGlow() {
+        cheat_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
+    }
+
+    public void cheatButtonGlowDisapear() {
+        cheat_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
+    }
+
+    public void handleActivateCheatMode() {
+        int result = Account.getLoggedAccount().toggleCheatMode();
+        if (result==CHEAT_MODE_ACTIVATED)
+        {
+            Container.notificationShower(CHEAT_MODE_ACTIVE_CONTENT,CHEAT_MODE_ACTIVE_TITLE,stackPane);
+        }
+        else if (result==CHEAT_MODE_DEACTIVATED)
+        {
+            Container.notificationShower(CHEAT_MODE_DEACTIVATED_CONTENT, CHEAT_MODE_DEACTIVATED_TITLE,stackPane);
+        }
+        updateDarick();
+    }
+
     public void playButtonGlow() {
-        play_img.setImage(new Image("res/ui/button_secondary_glow@2x.png"));
+        play_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
     }
 
     public void playButtonGlowDisapear() {
-        play_img.setImage(new Image("res/ui/button_secondary@2x.png"));
+        play_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
     }
 
     public void shopButtonGlow() {
-        shop_img.setImage(new Image("res/ui/button_secondary_glow@2x.png"));
+        shop_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
     }
 
     public void shopButtonGlowDisapear() {
-        shop_img.setImage(new Image("res/ui/button_secondary@2x.png"));
+        shop_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
     }
 
     public void collectionsButtonGlow() {
-        collections_img.setImage(new Image("res/ui/button_secondary_glow@2x.png"));
+        collections_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
     }
 
     public void collectionsButtonGlowDisapear() {
-        collections_img.setImage(new Image("res/ui/button_secondary@2x.png"));
+        collections_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
     }
 
     public void leaderBordsButtonGlow() {
-        leaderbords_img.setImage(new Image("res/ui/button_secondary_glow@2x.png"));
+        leaderbords_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
     }
 
     public void leaderBordsButtonGlowDisapear() {
-        leaderbords_img.setImage(new Image("res/ui/button_secondary@2x.png"));
+        leaderbords_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
     }
 
     public void cardCreatorButtonGlow() {
-        cardCreator_img.setImage(new Image("res/ui/button_secondary_glow@2x.png"));
+        cardCreator_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
     }
 
     public void cardCreatorButtonGlowDisapear() {
-        cardCreator_img.setImage(new Image("res/ui/button_secondary@2x.png"));
+        cardCreator_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
     }
 
     public void saveButtonGlow() {
-        save_img.setImage(new Image("res/ui/button_secondary_glow@2x.png"));
+        save_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
     }
 
     public void saveButtonGlowDisapear() {
-        save_img.setImage(new Image("res/ui/button_secondary@2x.png"));
+        save_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
     }
 
     public void quitButtonGlow() {
-        quit_img.setImage(new Image("res/ui/button_secondary_glow@2x.png"));
+        quit_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
     }
 
     public void quitButtonGlowDisapear() {
-        quit_img.setImage(new Image("res/ui/button_secondary@2x.png"));
+        quit_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
     }
 
     public void logoutButtonGlow() {
-        logout_img.setImage(new Image("res/ui/button_secondary_glow@2x.png"));
+        logout_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
 
     }
 
     public void logoutButtonGlowDisapear() {
-        logout_img.setImage(new Image("res/ui/button_secondary@2x.png"));
+        logout_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
     }
 
 
@@ -393,8 +415,8 @@ public class MainMenu {
             System.out.println(getMultiplayerModeGoal());
             Account account = chooseYourOpponent();
 //            if (selectedAccoutForMultiPlayer != null) {
-                System.out.println(account.getUsername() + "<<--------------------------------------------");
-                createBattle(Account.getLoggedAccount(), GameMode.MULTI_PLAYER, GameGoal.KILL_HERO);
+            System.out.println(account.getUsername() + "<<--------------------------------------------");
+            createBattle(Account.getLoggedAccount(), GameMode.MULTI_PLAYER, GameGoal.KILL_HERO);
 //            }
             jfxDialog.close();
 
@@ -405,7 +427,7 @@ public class MainMenu {
             System.out.println(getMultiplayerModeGoal());
             Account account = chooseYourOpponent();
 //            if (selectedAccoutForMultiPlayer != null) {
-                createBattle(Account.getLoggedAccount(), GameMode.MULTI_PLAYER, GameGoal.COLLECT_FLAG);
+            createBattle(Account.getLoggedAccount(), GameMode.MULTI_PLAYER, GameGoal.COLLECT_FLAG);
 //            }
             jfxDialog.close();
 
@@ -416,7 +438,7 @@ public class MainMenu {
             System.out.println(getMultiplayerModeGoal());
             Account account = chooseYourOpponent();
 //            if (selectedAccoutForMultiPlayer != null) {
-                createBattle(Account.getLoggedAccount(), GameMode.MULTI_PLAYER, GameGoal.HOLD_FLAG);
+            createBattle(Account.getLoggedAccount(), GameMode.MULTI_PLAYER, GameGoal.HOLD_FLAG);
 //            }
             jfxDialog.close();
         });

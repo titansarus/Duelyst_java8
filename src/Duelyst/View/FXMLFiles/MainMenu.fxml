@@ -120,6 +120,16 @@
                   <Image url="@../../../res/ui/armory_glow_outline@2x.png" />
                </image>
             </ImageView>
+            <ImageView fx:id="cheat_img" fitHeight="30.0" fitWidth="155.0" layoutX="871.0" layoutY="630.0" onMouseClicked="#handleActivateCheatMode" onMouseEntered="#cheatButtonGlow" onMouseExited="#cheatButtonGlowDisapear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_secondary@2x.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="cheatMode_lbl" layoutX="892.0" layoutY="633.0" onMouseClicked="#handleActivateCheatMode" onMouseEntered="#cheatButtonGlow" onMouseExited="#cheatButtonGlowDisapear" prefHeight="25.0" prefWidth="48.0" text="Cheat" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <Pane fx:id="battleHistory_pane" maxHeight="524.0" maxWidth="300.0" minHeight="300.0" minWidth="150.0" opacity="0.0" prefHeight="507.0" prefWidth="287.0" translateY="-650.0">

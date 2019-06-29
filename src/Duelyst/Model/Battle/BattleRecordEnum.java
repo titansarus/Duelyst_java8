@@ -1,0 +1,7 @@
+package Duelyst.Model.Battle;
+
+public enum BattleRecordEnum { //NOT USED IN PHASE 2
+    MOVE,END_TURN , ATTACK_WITHOUT_BUFF, ATTACK_WITH_BUFF , COUNTER_ATTACK , COUNTER_ATTACK_WITH_BUFF , HERO_USE_SP
+
+
+}
