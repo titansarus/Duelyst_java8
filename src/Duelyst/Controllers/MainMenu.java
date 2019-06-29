@@ -105,6 +105,8 @@ public class MainMenu {
 
 
     public void handleActivateCheatMode() {
+        setCanPlayButtonSound(true);
+        runButtonClickSound();
         int result = Account.getLoggedAccount().toggleCheatMode();
         if (result == CHEAT_MODE_ACTIVATED) {
             Container.notificationShower(CHEAT_MODE_ACTIVE_CONTENT, CHEAT_MODE_ACTIVE_TITLE, stackPane);
@@ -115,13 +117,22 @@ public class MainMenu {
     }
 
     public void runButtonHoverSound() {
+       runSoundMediaPlayer(BUTTON_HOVER_SOUND);
+    }
+
+    public void runButtonClickSound()
+    {
+        runSoundMediaPlayer(CLICK_SOUND);
+    }
+
+    public void runSoundMediaPlayer(String address)
+    {
         if (isCanPlayButtonSound()) {
-            File file = new File("src/res/Music/button_hover.m4a");
+            File file = new File(address);
             Media media = new Media(file.toURI().toString());
             Container.runMediaPlayer(Container.soundPlayer, media, 1, true, 1, SOUND_PLAYER);
             setCanPlayButtonSound(false);
         }
-
     }
 
     public void playButtonGlowWithSound() {
@@ -331,6 +342,8 @@ public class MainMenu {
     }
 
     public void handleLeaderboardBtn() {
+        setCanPlayButtonSound(true);
+        runButtonClickSound();
         Pane root = null;
         FXMLLoader fxmlLoader = null;
         try {
@@ -347,6 +360,8 @@ public class MainMenu {
 
 
     public void handleBackBtn() {
+        setCanPlayButtonSound(true);
+        runButtonClickSound();
         if (Container.scenes.size() > 0) {
             stopTimeline(); //TODO In ba'ad az hazf slowTimeline hazf shavad
             //TODO TEST
@@ -357,6 +372,8 @@ public class MainMenu {
     }
 
     public void handleSave() {
+        setCanPlayButtonSound(true);
+        runButtonClickSound();
         Account.saveAccount();
         TranslateTransition tt = new TranslateTransition(Duration.millis(3000), saveNotification_pane);
         tt.setFromX(610);
@@ -367,6 +384,8 @@ public class MainMenu {
     }
 
     public void handleCardCreator() {
+        setCanPlayButtonSound(true);
+        runButtonClickSound();
         Pane root = null;
         FXMLLoader fxmlLoader = null;
         try {
@@ -382,6 +401,8 @@ public class MainMenu {
     }
 
     public void handlePlayBtn() {
+        setCanPlayButtonSound(true);
+        runButtonClickSound();
         setSingleOrMulti(0);
         setStoryModeLevel(0);
         setMultiplayerModeGoal(0);
@@ -439,10 +460,14 @@ public class MainMenu {
 
 
     public void handleQuitBtn() {
+        setCanPlayButtonSound(true);
+        runButtonClickSound();
         System.exit(0);
     }
 
     public void handleShopBtn() {
+        setCanPlayButtonSound(true);
+        runButtonClickSound();
 
         Pane root = null;
         FXMLLoader fxmlLoader = null;
@@ -460,6 +485,8 @@ public class MainMenu {
     }
 
     public void handleCollectionBtn() {
+        setCanPlayButtonSound(true);
+        runButtonClickSound();
         Pane root = null;
         FXMLLoader fxmlLoader = null;
         try {

@@ -65,7 +65,8 @@ public class Constants {
     public static final Image buffEffect = new Image(Constants.class.getResourceAsStream("../../res/effects/explosion.gif"));
 
 
-    public static final String PATH_OF_MAIN_THEME = "src/res/Music/main_theme.mp3" , MAIN_THEME = "MAIN_THEME" , SOUND_PLAYER = "SOUND_PLAYER";
+    public static final String PATH_OF_MAIN_THEME = "src/res/Music/main_theme.mp3" , BUTTON_HOVER_SOUND = "src/res/Music/button_hover.m4a" , CLICK_SOUND = "src/res/Music/onclick.m4a";
+    public static final String MAIN_THEME = "MAIN_THEME" , SOUND_PLAYER = "SOUND_PLAYER";
 
 
     //OTHER CONSTANTS
