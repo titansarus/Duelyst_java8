@@ -16,7 +16,7 @@ public class Spell extends Card {
     }
 
     public Spell(String cardName, String cardDescription, int manaCost, int darikCost, TargetCommunity targetCommunity) {
-        super(cardName, cardDescription, manaCost, darikCost, "res/Spells/Test.png", "res/Spells/fx_f2_spiraltechnique02_effect.gif");
+        super(cardName, cardDescription, manaCost, darikCost, "res/Spells/Test.png", "res/Spells/Test.gif");
         this.targetCommunity = targetCommunity;
     }
 
