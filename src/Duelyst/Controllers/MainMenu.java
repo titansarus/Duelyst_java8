@@ -392,10 +392,10 @@ public class MainMenu {
             setMultiplayerModeGoal(KILL_HERO_INT);
             System.out.println(getMultiplayerModeGoal());
             Account account = chooseYourOpponent();
-            if (selectedAccoutForMultiPlayer != null) {
+//            if (selectedAccoutForMultiPlayer != null) {
                 System.out.println(account.getUsername() + "<<--------------------------------------------");
-                createBattle(account, GameMode.MULTI_PLAYER, GameGoal.KILL_HERO);
-            }
+                createBattle(Account.getLoggedAccount(), GameMode.MULTI_PLAYER, GameGoal.KILL_HERO);
+//            }
             jfxDialog.close();
 
         });
@@ -404,9 +404,9 @@ public class MainMenu {
             setMultiplayerModeGoal(CAPTURE_FLAG_INT);
             System.out.println(getMultiplayerModeGoal());
             Account account = chooseYourOpponent();
-            if (selectedAccoutForMultiPlayer != null) {
-                createBattle(account, GameMode.MULTI_PLAYER, GameGoal.COLLECT_FLAG);
-            }
+//            if (selectedAccoutForMultiPlayer != null) {
+                createBattle(Account.getLoggedAccount(), GameMode.MULTI_PLAYER, GameGoal.COLLECT_FLAG);
+//            }
             jfxDialog.close();
 
 
@@ -415,9 +415,9 @@ public class MainMenu {
             setMultiplayerModeGoal(HOLD_FLAG_INT);
             System.out.println(getMultiplayerModeGoal());
             Account account = chooseYourOpponent();
-            if (selectedAccoutForMultiPlayer != null) {
-                createBattle(account, GameMode.MULTI_PLAYER, GameGoal.HOLD_FLAG);
-            }
+//            if (selectedAccoutForMultiPlayer != null) {
+                createBattle(Account.getLoggedAccount(), GameMode.MULTI_PLAYER, GameGoal.HOLD_FLAG);
+//            }
             jfxDialog.close();
         });
 

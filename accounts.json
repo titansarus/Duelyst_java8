@@ -2435,7 +2435,6 @@
               {
                 "@type": "Duelyst.Model.Spell.Spell",
                 "@val": {
-                  "spells": [],
                   "buffs": [
                     {
                       "@type": "Duelyst.Model.Buffs.FlameBuff",
@@ -2592,6 +2591,35 @@
               "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars_breathing.gif",
               "addressOfDeathGif": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars_death.gif"
             }
+          },
+          {
+            "@type": "Duelyst.Model.Minion",
+            "@val": {
+              "healthPoint": 6,
+              "actionPower": 4,
+              "attackRange": 7,
+              "attackKind": "RANGED",
+              "validCounterAttack": false,
+              "isDeath": false,
+              "shield": 0,
+              "isValidToAttack": true,
+              "IsValidToMove": true,
+              "isStun": false,
+              "cardId": "rez_Kamandare_Fars_1",
+              "manaCost": 2,
+              "darikCost": 300,
+              "account": "@root.8",
+              "cardDescription": "Normal",
+              "cardName": "Kamandare_Fars",
+              "isAbleToMove": true,
+              "isInGame": false,
+              "addressOfImage": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars.png",
+              "addressOfIdleGif": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars_idle.gif",
+              "addressOfRunGif": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars_run.gif",
+              "addressOfAttackGif": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars_attack.gif",
+              "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars_breathing.gif",
+              "addressOfDeathGif": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars_death.gif"
+            }
           }
         ],
         "account": "@root.8",
@@ -2626,35 +2654,6 @@
                   "addressOfAttackGif": "./res/Characters/General/Afsaneh/Afsaneh_attack.gif",
                   "addressOfGetDamageGif": "./res/Characters/General/Afsaneh/Afsaneh_breathing.gif",
                   "addressOfDeathGif": "./res/Characters/General/Afsaneh/Afsaneh_death.gif"
-                }
-              },
-              {
-                "@type": "Duelyst.Model.Minion",
-                "@val": {
-                  "healthPoint": 6,
-                  "actionPower": 4,
-                  "attackRange": 7,
-                  "attackKind": "RANGED",
-                  "validCounterAttack": false,
-                  "isDeath": false,
-                  "shield": 0,
-                  "isValidToAttack": true,
-                  "IsValidToMove": true,
-                  "isStun": false,
-                  "cardId": "rez_Kamandare_Fars_1",
-                  "manaCost": 2,
-                  "darikCost": 300,
-                  "account": "@root.8",
-                  "cardDescription": "Normal",
-                  "cardName": "Kamandare_Fars",
-                  "isAbleToMove": true,
-                  "isInGame": false,
-                  "addressOfImage": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars.png",
-                  "addressOfIdleGif": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars_idle.gif",
-                  "addressOfRunGif": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars_run.gif",
-                  "addressOfAttackGif": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars_attack.gif",
-                  "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars_breathing.gif",
-                  "addressOfDeathGif": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars_death.gif"
                 }
               },
               {
@@ -3178,11 +3177,43 @@
                   "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars_breathing.gif",
                   "addressOfDeathGif": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars_death.gif"
                 }
+              },
+              {
+                "@type": "Duelyst.Model.Spell.Spell",
+                "@val": {
+                  "buffs": [
+                    {
+                      "@type": "Duelyst.Model.Buffs.DisarmBuff",
+                      "@val": {
+                        "buffName": "DISARM_BUFF",
+                        "isPositive": false,
+                        "numberOfTurn": 100,
+                        "isFirst": true
+                      }
+                    }
+                  ],
+                  "targetCommunity": "ENEMY_WARRIOR",
+                  "cardId": "rez_Total Disarm_1",
+                  "manaCost": 0,
+                  "darikCost": 1000,
+                  "account": "@root.8",
+                  "cardDescription": "",
+                  "cardName": "Total Disarm",
+                  "isAbleToMove": true,
+                  "isInGame": false,
+                  "addressOfImage": "res/Spells/Test.png",
+                  "addressOfIdleGif": "",
+                  "addressOfRunGif": "",
+                  "addressOfAttackGif": "",
+                  "addressOfGetDamageGif": "",
+                  "addressOfDeathGif": ""
+                }
               }
             ],
             "minions": [
-              "@root.8.cardCollection.decks.0.cards.1",
+              "@root.8.cardCollection.cards.1",
               "@root.8.cardCollection.cards.0",
+              "@root.8.cardCollection.decks.0.cards.1",
               "@root.8.cardCollection.decks.0.cards.2",
               "@root.8.cardCollection.decks.0.cards.3",
               "@root.8.cardCollection.decks.0.cards.4",
@@ -3199,8 +3230,7 @@
               "@root.8.cardCollection.decks.0.cards.15",
               "@root.8.cardCollection.decks.0.cards.16",
               "@root.8.cardCollection.decks.0.cards.17",
-              "@root.8.cardCollection.decks.0.cards.18",
-              "@root.8.cardCollection.decks.0.cards.19"
+              "@root.8.cardCollection.decks.0.cards.18"
             ],
             "hero": "@root.8.cardCollection.decks.0.cards.0",
             "item": {
@@ -3232,12 +3262,13 @@
           }
         ],
         "mainDeck": "@root.8.cardCollection.decks.0",
-        "customCards": []
+        "customCards": [],
+        "selectedCard": "@root.8.cardCollection.decks.0.cards.19"
       },
       "username": "rez",
       "password": "rez",
       "countOfWins": 0,
-      "darick": 78950
+      "darick": 77950
     }
   }
 ]
