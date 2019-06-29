@@ -13,6 +13,7 @@ import Duelyst.Model.Spell.Spell;
 import com.rits.cloning.Cloner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import static Duelyst.View.Constants.*;
@@ -335,6 +336,7 @@ public class Battle implements Cloneable {
         attackedCard.decreaseHealthPoint(attacker.getActionPower() - attackedCard.getShield());//TODO CHECK FOR BUFF
         this.attackedCard = attackedCard;
         //KamaneDamol Item Apply
+
         if (getPlayingPlayer().getDeck().getItem() instanceof KamaneDamol && attacker.equals(getPlayingPlayer().getDeck().getHero())) {
             getPlayingPlayer().getDeck().getItem().applyItem();
         } else if (attacker.equals(getPlayingPlayer().getDeck().getHero()) && getPlayingPlayer().getDeck().getItem() instanceof ShockHammer) {
@@ -647,10 +649,7 @@ public class Battle implements Cloneable {
     private void getAllCells(ArrayList<Cell> cells) {
         for (Cell[] cells1 :
                 getGrid()) {
-            for (Cell cell :
-                    cells1) {
-                cells.add(cell);
-            }
+            cells.addAll(Arrays.asList(cells1));
         }
     }
 

@@ -220,11 +220,6 @@ public class BattleController {
                 for (int i = 0; i < cells.size(); i++) {
                     System.out.println(cells.get(i).getRow() + " <======> " + cells.get(i).getColumn());
                 }
-//                if (!cells.contains(battle.getGrid()[coordinate[0]][coordinate[1]])) {
-//                    //TODO throw exception
-//
-//                    return;
-//                }
 
                 if (Cell.calculateManhattanDistance(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]]) <= 2) {
                     if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getSelectedCell().getWarrior()) && getBattle().getSelectedCell().getWarrior().isValidToMove()) {
@@ -240,7 +235,7 @@ public class BattleController {
                     getBattle().setSelectedCell(null);
                     getBattle().setSelectedCard(null);
                 } else if (getBattle().getSelectedCell().getWarrior().isValidToAttack()) {
-                    if (!isValidAttack(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]])) {
+                    if (!isValidAttack(getBattle().getGrid()[coordinate[0]][coordinate[1]], getBattle().getSelectedCell())) {
                         System.out.println("natoonne bazene!!!");
                         return;
                     }
@@ -269,10 +264,13 @@ public class BattleController {
 
         switch (sourceCell.getWarrior().getAttackKind()) {
             case MELEE:
+                System.out.println("Meleeeee");
                 return isValidMeleeAttack(targetCell, sourceCell);
             case RANGED:
+                System.out.println("Rangedddddddd");
                 return isValidRangedAttack(sourceCell, targetCell, sourceCell.getWarrior());
             case HYBRID:
+                System.out.println("Hybridddddddddd");
                 boolean flag1 = isValidMeleeAttack(targetCell, sourceCell);
                 boolean flag2 = isValidRangedAttack(sourceCell, targetCell, sourceCell.getWarrior());
                 return (flag1 || flag2);
@@ -282,7 +280,12 @@ public class BattleController {
 
     private boolean isValidRangedAttack(Cell sourceCell, Cell targetCell, Warrior warrior) {
 
+        System.out.println(sourceCell.getRow() + "    " + sourceCell.getColumn());
+        System.out.println(targetCell.getRow() + "    " + targetCell.getColumn());
+        System.out.println();
         if (Cell.calculateManhattanDistance(targetCell, sourceCell) <= 1) {
+
+            System.out.println(":DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
             return false;
         } else {
             System.out.println("==>> " + warrior.getCardName() + " - " + warrior.getAttackRange() + " " + (Cell.calculateManhattanDistance(targetCell, targetCell) <= warrior.getAttackRange()));
@@ -328,31 +331,33 @@ public class BattleController {
         }
         parallelTransition.setOnFinished(event1 -> {
             if (resultOfattack == Battle.VALID_COUNTER_WITH_BUFF || resultOfattack == Battle.VALID_COUNTER_WITHOUT_BUFF) {
-                int newResultOfAttack = getBattle().attack(((Warrior) cardOnFieldAttacked.getCard()), ((Warrior) cardOnFieldAttacker.getCard()), true);
-                cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfAttackGif()));
-                TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
-                tt3.setOnFinished(event2 -> {
-                    cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
-                });
-                cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfGetDamageGif()));
-                TranslateTransition tt4 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
-                tt4.setOnFinished(event2 -> {
-                    cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
-
-                });
-                ParallelTransition parallelTransition2 = new ParallelTransition(tt3, tt4);
-                if (newResultOfAttack == Battle.VALID_COUNTER_WITH_BUFF || newResultOfAttack == Battle.INVALID_COUNTER_WITH_BUFF) {
-                    ImageView imageView = new ImageView(buffEffect);
-                    anchorPane.getChildren().add(imageView);
-                    imageView.relocate(cardOnFieldAttacker.getImageView().getLayoutX(), cardOnFieldAttacker.getImageView().getLayoutY());
-                    TranslateTransition effectTransition2 = new TranslateTransition(Duration.millis(500), imageView);
-                    effectTransition2.setOnFinished(event2 -> {
-                        anchorPane.getChildren().remove(imageView);
+                if (isValidAttack(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]])) {
+                    int newResultOfAttack = getBattle().attack(((Warrior) cardOnFieldAttacked.getCard()), ((Warrior) cardOnFieldAttacker.getCard()), true);
+                    cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfAttackGif()));
+                    TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
+                    tt3.setOnFinished(event2 -> {
+                        cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
                     });
-                    parallelTransition2.getChildren().add(effectTransition2);
-                }
+                    cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfGetDamageGif()));
+                    TranslateTransition tt4 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
+                    tt4.setOnFinished(event2 -> {
+                        cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
 
-                parallelTransition2.play();
+                    });
+                    ParallelTransition parallelTransition2 = new ParallelTransition(tt3, tt4);
+                    if (newResultOfAttack == Battle.VALID_COUNTER_WITH_BUFF || newResultOfAttack == Battle.INVALID_COUNTER_WITH_BUFF) {
+                        ImageView imageView = new ImageView(buffEffect);
+                        anchorPane.getChildren().add(imageView);
+                        imageView.relocate(cardOnFieldAttacker.getImageView().getLayoutX(), cardOnFieldAttacker.getImageView().getLayoutY());
+                        TranslateTransition effectTransition2 = new TranslateTransition(Duration.millis(500), imageView);
+                        effectTransition2.setOnFinished(event2 -> {
+                            anchorPane.getChildren().remove(imageView);
+                        });
+                        parallelTransition2.getChildren().add(effectTransition2);
+                    }
+
+                    parallelTransition2.play();
+                }
             }
         });
 
@@ -477,12 +482,12 @@ public class BattleController {
     public void handleInsertCardClick(Cell cell) {
 
         int[] battleCoordinate = getBattle().findCellCoordinate(cell);
-//        battle.findValidCell(KindOfActionForValidCells.INSERT);
-//        ArrayList<Cell> cells = battle.getValidCells();
-//        if (!cells.contains(battle.getGrid()[battleCoordinate[0]][battleCoordinate[1]])) {
-//            //TODO throw exception
-//            return;
-//        }
+        battle.findValidCell(KindOfActionForValidCells.INSERT);
+        ArrayList<Cell> cells = battle.getValidCells();
+        if (!cells.contains(battle.getGrid()[battleCoordinate[0]][battleCoordinate[1]])) {
+            //TODO throw exception
+            return;
+        }
         CardForBattle cardForBattle = CardForBattleController.findCardForBattleWithCard(getHand(), getBattle().getSelectedCard());
         try {
             getBattle().insertSelectedCard(battleCoordinate[0], battleCoordinate[1]);
