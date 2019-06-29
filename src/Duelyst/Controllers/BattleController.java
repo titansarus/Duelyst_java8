@@ -346,12 +346,19 @@ public class BattleController {
                     TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
                     tt3.setOnFinished(event2 -> {
                         cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
+                        if (((Warrior) cardOnFieldAttacked.getCard()).isDeath())
+                        {
+                            animationOfDeath(((Warrior) cardOnFieldAttacked.getCard()));
+                        }
                     });
                     cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfGetDamageGif()));
                     TranslateTransition tt4 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
                     tt4.setOnFinished(event2 -> {
                         cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
-
+                        if (((Warrior) cardOnFieldAttacker.getCard()).isDeath())
+                        {
+                            animationOfDeath(((Warrior) cardOnFieldAttacker.getCard()));
+                        }
                     });
                     ParallelTransition parallelTransition2 = new ParallelTransition(tt3, tt4);
                     if (newResultOfAttack == Battle.VALID_COUNTER_WITH_BUFF || newResultOfAttack == Battle.INVALID_COUNTER_WITH_BUFF) {
@@ -366,6 +373,12 @@ public class BattleController {
                     }
 
                     parallelTransition2.play();
+                }
+            }
+            else{
+                if (((Warrior) cardOnFieldAttacked.getCard()).isDeath())
+                {
+                    animationOfDeath(((Warrior) cardOnFieldAttacked.getCard()));
                 }
             }
         });
@@ -415,11 +428,19 @@ public class BattleController {
                 TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
                 tt3.setOnFinished(event2 -> {
                     cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
+                    if (((Warrior) cardOnFieldAttacker.getCard()).isDeath())
+                    {
+                        animationOfDeath(((Warrior) cardOnFieldAttacked.getCard()));
+                    }
                 });
                 cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfGetDamageGif()));
                 TranslateTransition tt4 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
                 tt4.setOnFinished(event2 -> {
                     cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
+                    if (((Warrior) cardOnFieldAttacked.getCard()).isDeath())
+                    {
+                        animationOfDeath(((Warrior) cardOnFieldAttacked.getCard()));
+                    }
 
                 });
                 ParallelTransition parallelTransition2 = new ParallelTransition(tt3, tt4);
@@ -429,6 +450,7 @@ public class BattleController {
                     imageView.relocate(cardOnFieldAttacker.getImageView().getLayoutX(), cardOnFieldAttacker.getImageView().getLayoutY());
                     TranslateTransition effectTransition2 = new TranslateTransition(Duration.millis(500), imageView);
                     effectTransition2.setOnFinished(event2 -> {
+
                         anchorPane.getChildren().remove(imageView);
                     });
                     parallelTransition2.getChildren().add(effectTransition2);
@@ -438,6 +460,12 @@ public class BattleController {
                 }
 
                 parallelTransition2.play();
+            }
+            else{
+                if (((Warrior) cardOnFieldAttacked.getCard()).isDeath())
+                {
+                    animationOfDeath(((Warrior) cardOnFieldAttacked.getCard()));
+                }
             }
         });
         parallelTransition.play();
@@ -703,7 +731,7 @@ public class BattleController {
             cardOnField.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnField.getCard().getAddressOfDeathGif()));
 
             TranslateTransition tt = new TranslateTransition(Duration.millis(2000), cardOnField.getImageView());
-//            tt.setOnFinished(event -> anchorPane.getChildren().remove(cardOnField.getImageView()));
+            tt.setOnFinished(event -> anchorPane.getChildren().remove(cardOnField.getImageView()));
             tt.play();
 
 

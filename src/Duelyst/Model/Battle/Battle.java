@@ -436,8 +436,8 @@ public class Battle implements Cloneable {
                 holdFlag.setNumberOfTurn(0);
                 battleController.initFlagImages();
             }
-            battleController.animationOfDeath((Warrior) card);
-            battleController.removeImageViewFromCell(card);
+//            battleController.animationOfDeath((Warrior) card);
+//            battleController.removeImageViewFromCell(card);
             getCellOfWarrior((Warrior) card).setWarrior(null);
         }
     }
