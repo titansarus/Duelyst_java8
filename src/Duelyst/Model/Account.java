@@ -13,10 +13,11 @@ import java.util.Comparator;
 import static Duelyst.View.Constants.*;
 
 public class Account implements Cloneable {
+
     private static Account loggedAccount = null;
     private static ArrayList<Account> accounts = new ArrayList<>();
     private ArrayList<String> battleHistory = new ArrayList<>();
-    private ArrayList<Battle> battles = new ArrayList<>();
+
 
     //THIS IS NOT USED. WILL USE CARD_COLLECTION
     private CardCollection cardCollection;
@@ -149,9 +150,6 @@ public class Account implements Cloneable {
         this.darick = darick;
     }
 
-    public ArrayList<Battle> getBattles() {
-        return battles;
-    }
 
 }
 
