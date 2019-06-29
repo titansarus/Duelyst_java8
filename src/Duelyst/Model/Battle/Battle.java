@@ -644,6 +644,7 @@ public class Battle implements Cloneable {
             case ALL_OF_FRIEND:
                 getAllCells(cells);
         }
+        setValidCells(cells);
     }
 
     private void getAllCells(ArrayList<Cell> cells) {
