@@ -4,6 +4,7 @@ import Duelyst.Exceptions.MyException;
 import Duelyst.Model.Battle.*;
 import Duelyst.Model.Card;
 import Duelyst.Model.Items.*;
+import Duelyst.Model.Spell.Spell;
 import Duelyst.Model.Warrior;
 import Duelyst.Utility.ImageHolder;
 import Duelyst.View.ViewClasses.CardForBattle;
@@ -499,7 +500,8 @@ public class BattleController {
             CardOnField cardOnField = new CardOnField();
             cardOnField.setCard(getBattle().getSelectedCard());
             cardsOnField.add(cardOnField);
-            sendIdleImageViewToCenterOfCell(cardOnField, polygon);
+            if (!(cardOnField.getCard() instanceof Spell))
+                sendIdleImageViewToCenterOfCell(cardOnField, polygon);
 
             //   getHand().remove(cardForBattle);
             getBattle().setSelectedCard(null);

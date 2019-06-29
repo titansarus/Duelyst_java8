@@ -3,8 +3,8 @@
     "@type": "Duelyst.Model.Account",
     "@val": {
       "battleHistory": [],
-      "isCheatModeEnable": false,
       "darickBeforeCheat": 0,
+      "isCheatModeEnable": false,
       "cardCollection": {
         "cards": [],
         "account": "@root.0",
@@ -270,8 +270,8 @@
     "@type": "Duelyst.Model.Account",
     "@val": {
       "battleHistory": [],
-      "isCheatModeEnable": false,
       "darickBeforeCheat": 0,
+      "isCheatModeEnable": false,
       "cardCollection": {
         "cards": [],
         "account": "@root.1",
@@ -288,8 +288,8 @@
     "@type": "Duelyst.Model.Account",
     "@val": {
       "battleHistory": [],
-      "isCheatModeEnable": false,
       "darickBeforeCheat": 0,
+      "isCheatModeEnable": false,
       "cardCollection": {
         "cards": [],
         "account": "@root.1",
@@ -305,8 +305,8 @@
     "@type": "Duelyst.Model.Account",
     "@val": {
       "battleHistory": [],
-      "isCheatModeEnable": false,
       "darickBeforeCheat": 0,
+      "isCheatModeEnable": false,
       "cardCollection": {
         "cards": [],
         "account": "@root.3",
@@ -323,8 +323,8 @@
     "@type": "Duelyst.Model.Account",
     "@val": {
       "battleHistory": [],
-      "isCheatModeEnable": false,
       "darickBeforeCheat": 0,
+      "isCheatModeEnable": false,
       "cardCollection": {
         "cards": [
           {
@@ -922,8 +922,8 @@
     "@type": "Duelyst.Model.Account",
     "@val": {
       "battleHistory": [],
-      "isCheatModeEnable": false,
       "darickBeforeCheat": 0,
+      "isCheatModeEnable": false,
       "cardCollection": {
         "cards": [],
         "account": "@root.5",
@@ -1582,8 +1582,8 @@
     "@type": "Duelyst.Model.Account",
     "@val": {
       "battleHistory": [],
-      "isCheatModeEnable": false,
       "darickBeforeCheat": 0,
+      "isCheatModeEnable": false,
       "cardCollection": {
         "cards": [
           {
@@ -2527,8 +2527,8 @@
     "@type": "Duelyst.Model.Account",
     "@val": {
       "battleHistory": [],
-      "isCheatModeEnable": false,
       "darickBeforeCheat": 0,
+      "isCheatModeEnable": false,
       "cardCollection": {
         "cards": [
           {
@@ -2577,8 +2577,8 @@
       "battleHistory": [
         "-lose- vs AI:)"
       ],
-      "isCheatModeEnable": false,
       "darickBeforeCheat": 0,
+      "isCheatModeEnable": false,
       "cardCollection": {
         "cards": [
           {
@@ -2588,7 +2588,7 @@
               "actionPower": 4,
               "attackRange": 0,
               "attackKind": "MELEE",
-              "validCounterAttack": false,
+              "validCounterAttack": true,
               "isDeath": false,
               "shield": 0,
               "isValidToAttack": true,
@@ -2617,7 +2617,7 @@
               "actionPower": 4,
               "attackRange": 7,
               "attackKind": "RANGED",
-              "validCounterAttack": false,
+              "validCounterAttack": true,
               "isDeath": false,
               "shield": 0,
               "isValidToAttack": true,
@@ -2652,7 +2652,7 @@
                   "actionPower": 3,
                   "attackRange": 3,
                   "attackKind": "RANGED",
-                  "validCounterAttack": false,
+                  "validCounterAttack": true,
                   "isDeath": false,
                   "shield": 0,
                   "isValidToAttack": true,
@@ -2681,7 +2681,7 @@
                   "actionPower": 3,
                   "attackRange": 3,
                   "attackKind": "HYBRID",
-                  "validCounterAttack": false,
+                  "validCounterAttack": true,
                   "isDeath": false,
                   "shield": 0,
                   "isValidToAttack": true,
@@ -2710,7 +2710,7 @@
                   "actionPower": 4,
                   "attackRange": 3,
                   "attackKind": "HYBRID",
-                  "validCounterAttack": false,
+                  "validCounterAttack": true,
                   "isDeath": false,
                   "shield": 0,
                   "isValidToAttack": true,
@@ -2739,7 +2739,7 @@
                   "actionPower": 6,
                   "attackRange": 0,
                   "attackKind": "MELEE",
-                  "validCounterAttack": false,
+                  "validCounterAttack": true,
                   "isDeath": false,
                   "shield": 0,
                   "isValidToAttack": true,
@@ -2768,7 +2768,7 @@
                   "actionPower": 10,
                   "attackRange": 0,
                   "attackKind": "MELEE",
-                  "validCounterAttack": false,
+                  "validCounterAttack": true,
                   "isDeath": false,
                   "shield": 0,
                   "isValidToAttack": true,
@@ -2797,7 +2797,7 @@
                   "actionPower": 10,
                   "attackRange": 0,
                   "attackKind": "MELEE",
-                  "validCounterAttack": false,
+                  "validCounterAttack": true,
                   "isDeath": false,
                   "shield": 0,
                   "isValidToAttack": true,
@@ -2826,7 +2826,7 @@
                   "actionPower": 8,
                   "attackRange": 0,
                   "attackKind": "MELEE",
-                  "validCounterAttack": false,
+                  "validCounterAttack": true,
                   "isDeath": false,
                   "shield": 0,
                   "isValidToAttack": true,
@@ -2855,7 +2855,7 @@
                   "actionPower": 5,
                   "attackRange": 4,
                   "attackKind": "RANGED",
-                  "validCounterAttack": false,
+                  "validCounterAttack": true,
                   "isDeath": false,
                   "shield": 0,
                   "isValidToAttack": true,
@@ -2884,7 +2884,7 @@
                   "actionPower": 2,
                   "attackRange": 0,
                   "attackKind": "MELEE",
-                  "validCounterAttack": false,
+                  "validCounterAttack": true,
                   "isDeath": false,
                   "shield": 0,
                   "isValidToAttack": true,
@@ -2913,7 +2913,7 @@
                   "actionPower": 1,
                   "attackRange": 0,
                   "attackKind": "MELEE",
-                  "validCounterAttack": false,
+                  "validCounterAttack": true,
                   "isDeath": false,
                   "shield": 0,
                   "isValidToAttack": true,
@@ -2942,7 +2942,7 @@
                   "actionPower": 1,
                   "attackRange": 0,
                   "attackKind": "MELEE",
-                  "validCounterAttack": false,
+                  "validCounterAttack": true,
                   "isDeath": false,
                   "shield": 0,
                   "isValidToAttack": true,
@@ -2971,7 +2971,7 @@
                   "actionPower": 7,
                   "attackRange": 5,
                   "attackKind": "RANGED",
-                  "validCounterAttack": false,
+                  "validCounterAttack": true,
                   "isDeath": false,
                   "shield": 0,
                   "isValidToAttack": true,
@@ -3000,7 +3000,7 @@
                   "actionPower": 4,
                   "attackRange": 0,
                   "attackKind": "MELEE",
-                  "validCounterAttack": false,
+                  "validCounterAttack": true,
                   "isDeath": false,
                   "shield": 0,
                   "isValidToAttack": true,
@@ -3029,7 +3029,7 @@
                   "actionPower": 1,
                   "attackRange": 0,
                   "attackKind": "MELEE",
-                  "validCounterAttack": false,
+                  "validCounterAttack": true,
                   "isDeath": false,
                   "shield": 0,
                   "isValidToAttack": true,
@@ -3058,7 +3058,7 @@
                   "actionPower": 5,
                   "attackRange": 0,
                   "attackKind": "MELEE",
-                  "validCounterAttack": false,
+                  "validCounterAttack": true,
                   "isDeath": false,
                   "shield": 0,
                   "isValidToAttack": true,
@@ -3087,7 +3087,7 @@
                   "actionPower": 4,
                   "attackRange": 7,
                   "attackKind": "RANGED",
-                  "validCounterAttack": false,
+                  "validCounterAttack": true,
                   "isDeath": false,
                   "shield": 0,
                   "isValidToAttack": true,
@@ -3116,7 +3116,7 @@
                   "actionPower": 4,
                   "attackRange": 0,
                   "attackKind": "MELEE",
-                  "validCounterAttack": false,
+                  "validCounterAttack": true,
                   "isDeath": false,
                   "shield": 0,
                   "isValidToAttack": true,
@@ -3145,7 +3145,7 @@
                   "actionPower": 3,
                   "attackRange": 3,
                   "attackKind": "HYBRID",
-                  "validCounterAttack": false,
+                  "validCounterAttack": true,
                   "isDeath": false,
                   "shield": 0,
                   "isValidToAttack": true,
@@ -3174,7 +3174,7 @@
                   "actionPower": 4,
                   "attackRange": 0,
                   "attackKind": "MELEE",
-                  "validCounterAttack": false,
+                  "validCounterAttack": true,
                   "isDeath": false,
                   "shield": 0,
                   "isValidToAttack": true,
@@ -3281,7 +3281,7 @@
         ],
         "mainDeck": "@root.8.cardCollection.decks.0",
         "customCards": [],
-        "selectedCard": "@root.8.cardCollection.decks.0.cards.19"
+        "selectedCard": "@root.8.cardCollection.decks.0.cards.0"
       },
       "username": "rez",
       "password": "rez",

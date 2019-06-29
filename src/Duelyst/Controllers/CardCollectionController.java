@@ -4,7 +4,6 @@ import Duelyst.Exceptions.*;
 import Duelyst.Model.Account;
 import Duelyst.Model.Card;
 import Duelyst.Model.Deck;
-import Duelyst.View.Constants;
 import Duelyst.View.ViewClasses.CardView;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
@@ -15,6 +14,7 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -187,7 +187,7 @@ public class CardCollectionController {
     }
 
 
-    public void importDeckfromAddress(String address) {
+    public void importDeckFromAddress(String address) {
 
         Reader reader = null;
         try {
@@ -247,7 +247,7 @@ public class CardCollectionController {
                 setImportDeckName(textField.getText());
                 if (getImportDeckName().length() > 0) {
                     String adderss = "./saved/Accounts/" + Account.getLoggedAccount().getUsername() + "/Decks/" + getImportDeckName() + ".json";
-                    importDeckfromAddress(adderss);
+                    importDeckFromAddress(adderss);
                 }
                 jfxDialog.close();
 
@@ -507,6 +507,7 @@ public class CardCollectionController {
                     CardView cardView = new CardView(cards.get(i));
                     cardViews.add(cardView);
                     vBox.getChildren().add(cardView);
+                    vBox.setAlignment(Pos.CENTER);
                     hBox.getChildren().add(vBox);
                     hBox.setPrefWidth(hBox.getPrefWidth() + 268);
                 }

@@ -284,6 +284,7 @@ public class Battle implements Cloneable {
                     throw new NotEnoughManaException();
                 }
             } else {
+
                 throw new CellFilledBeforeException();
             }
         } else if (getSelectedCard() instanceof Spell) {
