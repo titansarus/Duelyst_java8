@@ -84,6 +84,8 @@ public class MainMenu {
     @FXML
     ImageView cheat_img;
 
+    private boolean canPlayButtonSound = true;
+
     private Timeline timeline = new Timeline();
 
 
@@ -101,94 +103,208 @@ public class MainMenu {
         timeline.play();
     }
 
+
+    public void handleActivateCheatMode() {
+        int result = Account.getLoggedAccount().toggleCheatMode();
+        if (result == CHEAT_MODE_ACTIVATED) {
+            Container.notificationShower(CHEAT_MODE_ACTIVE_CONTENT, CHEAT_MODE_ACTIVE_TITLE, stackPane);
+        } else if (result == CHEAT_MODE_DEACTIVATED) {
+            Container.notificationShower(CHEAT_MODE_DEACTIVATED_CONTENT, CHEAT_MODE_DEACTIVATED_TITLE, stackPane);
+        }
+        updateDarick();
+    }
+
+    public void runButtonHoverSound() {
+        if (isCanPlayButtonSound()) {
+            File file = new File("src/res/Music/button_hover.m4a");
+            Media media = new Media(file.toURI().toString());
+            Container.runMediaPlayer(Container.soundPlayer, media, 1, true, 1, SOUND_PLAYER);
+            setCanPlayButtonSound(false);
+        }
+
+    }
+
+    public void playButtonGlowWithSound() {
+        runButtonHoverSound();
+        playButtonGlow();
+    }
+
+    public void playButtonGlowDisapearWithSound() {
+        playButtonGlowDisapear();
+        setCanPlayButtonSound(true);
+    }
+
+    public void playButtonGlow() {
+
+        setCanPlayButtonSound(false);
+        play_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
+    }
+
+    public void playButtonGlowDisapear() {
+        setCanPlayButtonSound(false);
+        play_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
+    }
+
+    public void shopButtonGlowWithSound() {
+        runButtonHoverSound();
+        shopButtonGlow();
+    }
+
+    public void shopButtonGlowDisapearWithSound() {
+        shopButtonGlowDisapear();
+        setCanPlayButtonSound(true);
+    }
+
+    public void shopButtonGlow() {
+        setCanPlayButtonSound(false);
+        shop_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
+    }
+
+    public void shopButtonGlowDisapear() {
+        setCanPlayButtonSound(false);
+        shop_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
+    }
+
+    public void collectionsButtonGlowWithSound() {
+        runButtonHoverSound();
+        collectionsButtonGlow();
+    }
+
+    public void collectionsButtonGlowDisapearWithSound() {
+        collectionsButtonGlowDisapear();
+        setCanPlayButtonSound(true);
+    }
+
+    public void collectionsButtonGlow() {
+        setCanPlayButtonSound(false);
+        collections_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
+    }
+
+    public void collectionsButtonGlowDisapear() {
+        setCanPlayButtonSound(false);
+        collections_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
+    }
+
+    public void leaderBordsButtonGlowWithSound() {
+        runButtonHoverSound();
+        leaderBordsButtonGlow();
+    }
+
+    public void leaderBordsButtonGlowDisapearWithSound() {
+        leaderBordsButtonGlowDisapear();
+        setCanPlayButtonSound(true);
+    }
+
+    public void leaderBordsButtonGlow() {
+        setCanPlayButtonSound(false);
+        leaderbords_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
+    }
+
+    public void leaderBordsButtonGlowDisapear() {
+        setCanPlayButtonSound(false);
+        leaderbords_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
+    }
+
+
+    public void cardCreatorButtonGlowWithSound() {
+        runButtonHoverSound();
+        cardCreatorButtonGlow();
+    }
+
+    public void cardCreatorButtonGlowDisapearWithSound() {
+        cardCreatorButtonGlowDisapear();
+        setCanPlayButtonSound(true);
+    }
+
+
+    public void cardCreatorButtonGlow() {
+        setCanPlayButtonSound(false);
+        cardCreator_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
+    }
+
+    public void cardCreatorButtonGlowDisapear() {
+        setCanPlayButtonSound(false);
+        cardCreator_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
+    }
+
+    public void saveButtonGlowWithSound() {
+        runButtonHoverSound();
+        saveButtonGlow();
+    }
+
+    public void saveButtonGlowDisapearWithSound() {
+        saveButtonGlowDisapear();
+        setCanPlayButtonSound(true);
+    }
+
+    public void saveButtonGlow() {
+        setCanPlayButtonSound(false);
+        save_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
+    }
+
+    public void saveButtonGlowDisapear() {
+        setCanPlayButtonSound(false);
+        save_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
+    }
+
+    public void quitButtonGlowWithSound() {
+        runButtonHoverSound();
+        quitButtonGlow();
+    }
+
+    public void quitButtonGlowDisapearWithSound() {
+        quitButtonGlowDisapear();
+        setCanPlayButtonSound(true);
+    }
+
+    public void quitButtonGlow() {
+        setCanPlayButtonSound(false);
+        quit_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
+    }
+
+    public void quitButtonGlowDisapear() {
+        setCanPlayButtonSound(false);
+        quit_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
+    }
+
+
+    public void logoutButtonGlowWithSound() {
+        runButtonHoverSound();
+        logoutButtonGlow();
+    }
+
+    public void logoutButtonGlowDisapearWithSound() {
+        logoutButtonGlowDisapear();
+        setCanPlayButtonSound(true);
+    }
+
+    public void logoutButtonGlow() {
+        setCanPlayButtonSound(false);
+        logout_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
+
+    }
+
+    public void logoutButtonGlowDisapear() {
+        setCanPlayButtonSound(false);
+        logout_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
+    }
+
+    public void cheatButtonGlowWithSound() {
+        runButtonHoverSound();
+        cheatButtonGlow();
+    }
+
+    public void cheatButtonGlowDisapearWithSound() {
+        cheatButtonGlowDisapear();
+        setCanPlayButtonSound(true);
+    }
+
     public void cheatButtonGlow() {
         cheat_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
     }
 
     public void cheatButtonGlowDisapear() {
         cheat_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
-    }
-
-    public void handleActivateCheatMode() {
-        int result = Account.getLoggedAccount().toggleCheatMode();
-        if (result==CHEAT_MODE_ACTIVATED)
-        {
-            Container.notificationShower(CHEAT_MODE_ACTIVE_CONTENT,CHEAT_MODE_ACTIVE_TITLE,stackPane);
-        }
-        else if (result==CHEAT_MODE_DEACTIVATED)
-        {
-            Container.notificationShower(CHEAT_MODE_DEACTIVATED_CONTENT, CHEAT_MODE_DEACTIVATED_TITLE,stackPane);
-        }
-        updateDarick();
-    }
-
-    public void playButtonGlow() {
-//        File file = new File("src/res/Music/button_hover.m4a");
-//        Media media = new Media(file.toURI().toString());
-//        Container.runMediaPlayer(Container.soundPlayer ,media,100,true,1,SOUND_PLAYER );
-
-        play_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
-    }
-
-    public void playButtonGlowDisapear() {
-        play_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
-    }
-
-    public void shopButtonGlow() {
-        shop_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
-    }
-
-    public void shopButtonGlowDisapear() {
-        shop_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
-    }
-
-    public void collectionsButtonGlow() {
-        collections_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
-    }
-
-    public void collectionsButtonGlowDisapear() {
-        collections_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
-    }
-
-    public void leaderBordsButtonGlow() {
-        leaderbords_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
-    }
-
-    public void leaderBordsButtonGlowDisapear() {
-        leaderbords_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
-    }
-
-    public void cardCreatorButtonGlow() {
-        cardCreator_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
-    }
-
-    public void cardCreatorButtonGlowDisapear() {
-        cardCreator_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
-    }
-
-    public void saveButtonGlow() {
-        save_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
-    }
-
-    public void saveButtonGlowDisapear() {
-        save_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
-    }
-
-    public void quitButtonGlow() {
-        quit_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
-    }
-
-    public void quitButtonGlowDisapear() {
-        quit_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
-    }
-
-    public void logoutButtonGlow() {
-        logout_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
-
-    }
-
-    public void logoutButtonGlowDisapear() {
-        logout_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
     }
 
 
@@ -751,4 +867,11 @@ public class MainMenu {
         }
     }
 
+    public boolean isCanPlayButtonSound() {
+        return canPlayButtonSound;
+    }
+
+    public void setCanPlayButtonSound(boolean canPlayButtonSound) {
+        this.canPlayButtonSound = canPlayButtonSound;
+    }
 }
