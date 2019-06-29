@@ -2435,7 +2435,6 @@
               {
                 "@type": "Duelyst.Model.Spell.Spell",
                 "@val": {
-                  "spells": [],
                   "buffs": [
                     {
                       "@type": "Duelyst.Model.Buffs.FlameBuff",
@@ -2591,6 +2590,68 @@
               "addressOfAttackGif": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars_attack.gif",
               "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars_breathing.gif",
               "addressOfDeathGif": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars_death.gif"
+            }
+          },
+          {
+            "@type": "Duelyst.Model.Spell.Spell",
+            "@val": {
+              "buffs": [
+                {
+                  "@type": "Duelyst.Model.Buffs.DisarmBuff",
+                  "@val": {
+                    "buffName": "DISARM_BUFF",
+                    "isPositive": false,
+                    "numberOfTurn": 100,
+                    "isFirst": true
+                  }
+                }
+              ],
+              "targetCommunity": "ENEMY_WARRIOR",
+              "cardId": "rez_Total Disarm_1",
+              "manaCost": 0,
+              "darikCost": 1000,
+              "account": "@root.8",
+              "cardDescription": "",
+              "cardName": "Total Disarm",
+              "isAbleToMove": true,
+              "isInGame": false,
+              "addressOfImage": "",
+              "addressOfIdleGif": "",
+              "addressOfRunGif": "",
+              "addressOfAttackGif": "",
+              "addressOfGetDamageGif": "",
+              "addressOfDeathGif": ""
+            }
+          },
+          {
+            "@type": "Duelyst.Model.Spell.Spell",
+            "@val": {
+              "buffs": [
+                {
+                  "@type": "Duelyst.Model.Buffs.StunBuff",
+                  "@val": {
+                    "buffName": "STUN_BUFF",
+                    "isPositive": false,
+                    "numberOfTurn": 2,
+                    "isFirst": true
+                  }
+                }
+              ],
+              "targetCommunity": "ENEMY_WARRIOR",
+              "cardId": "rez_Shock_1",
+              "manaCost": 1,
+              "darikCost": 1200,
+              "account": "@root.8",
+              "cardDescription": "",
+              "cardName": "Shock",
+              "isAbleToMove": true,
+              "isInGame": false,
+              "addressOfImage": "",
+              "addressOfIdleGif": "",
+              "addressOfRunGif": "",
+              "addressOfAttackGif": "",
+              "addressOfGetDamageGif": "",
+              "addressOfDeathGif": ""
             }
           }
         ],
@@ -3237,7 +3298,7 @@
       "username": "rez",
       "password": "rez",
       "countOfWins": 0,
-      "darick": 78950
+      "darick": 76750
     }
   }
 ]
