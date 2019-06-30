@@ -20,8 +20,8 @@
                </effect>
                 </Polygon>
             <Label fx:id="manaCost_lbl" contentDisplay="CENTER" layoutX="13.0" layoutY="4.0" />
-            <Label fx:id="attack_lbl" layoutX="31.0" layoutY="230.0" />
-            <Label fx:id="health_lbl" layoutX="164.0" layoutY="230.0" />
+            <Label fx:id="attack_lbl" layoutX="37.0" layoutY="171.0" prefHeight="17.0" prefWidth="20.0" textFill="WHITE" />
+            <Label fx:id="health_lbl" layoutX="160.0" layoutY="171.0" prefHeight="17.0" prefWidth="20.0" textFill="WHITE" />
             </children>
         </AnchorPane>
     </children>

@@ -12,6 +12,33 @@
 
 <StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.MainMenu">
    <children>
+      <Pane fx:id="battleHistory_pane" maxHeight="524.0" maxWidth="300.0" minHeight="300.0" minWidth="150.0" opacity="0.0" prefHeight="507.0" prefWidth="287.0" translateY="-650.0">
+         <children>
+            <ScrollPane fx:id="battleHistoryScrollPane_spane" hbarPolicy="NEVER" prefHeight="524.0" prefWidth="300.0">
+              <content>
+                <AnchorPane fx:id="battleHistoryAnchorePane_apane" minHeight="0.0" minWidth="0.0" prefHeight="447.0" prefWidth="301.0" />
+              </content>
+            </ScrollPane>
+            <ImageView fx:id="battleHistoryClose_btn" fitHeight="77.0" fitWidth="48.0" layoutX="252.0" onMouseClicked="#handleBattleHistoryCloseButton" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_close@2x.png" />
+               </image>
+            </ImageView>
+         </children>
+         <stylesheets>
+            <URL value="@../../../css/battleHistory.css" />
+            <URL value="@../../../css/scroll-bar.css" />
+         </stylesheets>
+      </Pane>
+      <Pane fx:id="saveNotification_pane" maxHeight="54.0" maxWidth="180.0" minHeight="54.0" minWidth="180.0" prefHeight="54.0" prefWidth="180.0" stylesheets="@../../../css/saveGameNotification.css" translateX="615.0" translateY="-290.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="32.0" layoutY="20.0" text="Game Saved Successfully" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="10.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
       <AnchorPane fx:id="anchorPane" maxHeight="768.0" maxWidth="1024.0" minHeight="768.0" minWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: BLACk; -fx-background-image: url('/res/Backgrounds/main-menu-back.jpg'); -fx-background-size: cover;">
          <children>
             <ImageView fx:id="play_img" fitHeight="87.0" fitWidth="256.0" layoutX="392.0" layoutY="123.0" onMouseClicked="#handlePlayBtn" onMouseEntered="#playButtonGlowWithSound" onMouseExited="#playButtonGlowDisapearWithSound" pickOnBounds="true" preserveRatio="true">
@@ -54,13 +81,13 @@
                   <Font size="33.0" />
                </font>
             </Label>
-            <Label fx:id="loginedAccount_lbl" layoutX="14.0" layoutY="65.0" prefHeight="17.0" prefWidth="168.0" textAlignment="CENTER" textFill="#f8f3f3">
+            <Label fx:id="loginedAccount_lbl" layoutX="14.0" layoutY="51.0" prefHeight="17.0" prefWidth="168.0" textAlignment="CENTER" textFill="#f8f3f3">
                <font>
                   <Font name="System Italic" size="20.0" />
                </font>
             </Label>
             <Label fx:id="accountDarick_lbl" layoutX="14.0" layoutY="141.0" prefHeight="21.0" prefWidth="114.0" textFill="#f2f204" />
-            <Label layoutX="14.0" layoutY="21.0" prefHeight="30.0" prefWidth="168.0" text="Logined Account" textFill="#f9fcfc">
+            <Label layoutX="14.0" layoutY="12.0" prefHeight="30.0" prefWidth="168.0" text="Logined Account" textFill="#f9fcfc">
                <font>
                   <Font name="System Italic" size="20.0" />
                </font>
@@ -132,33 +159,6 @@
             </Label>
          </children>
       </AnchorPane>
-      <Pane fx:id="battleHistory_pane" maxHeight="524.0" maxWidth="300.0" minHeight="300.0" minWidth="150.0" opacity="0.0" prefHeight="507.0" prefWidth="287.0" translateY="-650.0">
-         <children>
-            <ScrollPane fx:id="battleHistoryScrollPane_spane" hbarPolicy="NEVER" prefHeight="524.0" prefWidth="300.0">
-              <content>
-                <AnchorPane fx:id="battleHistoryAnchorePane_apane" minHeight="0.0" minWidth="0.0" prefHeight="447.0" prefWidth="301.0" />
-              </content>
-            </ScrollPane>
-            <ImageView fx:id="battleHistoryClose_btn" fitHeight="77.0" fitWidth="48.0" layoutX="252.0" onMouseClicked="#handleBattleHistoryCloseButton" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../res/ui/button_close@2x.png" />
-               </image>
-            </ImageView>
-         </children>
-         <stylesheets>
-            <URL value="@../../../css/battleHistory.css" />
-            <URL value="@../../../css/scroll-bar.css" />
-         </stylesheets>
-      </Pane>
-      <Pane fx:id="saveNotification_pane" maxHeight="54.0" maxWidth="180.0" minHeight="54.0" minWidth="180.0" prefHeight="54.0" prefWidth="180.0" stylesheets="@../../../css/saveGameNotification.css" translateX="615.0" translateY="-290.0">
-         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="32.0" layoutY="20.0" text="Game Saved Successfully" textFill="WHITE">
-               <font>
-                  <Font name="System Bold Italic" size="10.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
    </children>
 
 </StackPane>

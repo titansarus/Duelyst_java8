@@ -28,6 +28,7 @@ public class CardController {
     @FXML
     private ImageView card_img;
 
+
     @FXML
     AnchorPane anchorPaneHolder;
 
@@ -44,6 +45,16 @@ public class CardController {
 //        attack_lbl.setText(attackPower + "");//TODO AttackPower And HealthPoint Should Be Added
 //        health_lbl.setText(healthPoint + "");
         card_img.setImage(img);
+    }
+    public void setNameAndDscAndImgAndAttackAndHealt(String name, String dsc, Image img, int manaCost,int attack , int health) {
+        name_lbl.setText(name);
+        dsc_lbl.setText(dsc);
+        manaCost_lbl.setText(manaCost + "");
+//        attack_lbl.setText(attackPower + "");//TODO AttackPower And HealthPoint Should Be Added
+//        health_lbl.setText(healthPoint + "");
+        card_img.setImage(img);
+        attack_lbl.setText("" +attack);
+        health_lbl.setText("" +health);
     }
 
     public void setName_lbl(Label name_lbl) {

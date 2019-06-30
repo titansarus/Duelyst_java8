@@ -3221,7 +3221,7 @@
                   "isAbleToMove": true,
                   "isInGame": false,
                   "addressOfImage": "res/Spells/Test.png",
-                  "addressOfIdleGif": "",
+                  "addressOfIdleGif": "res/Spells/Test.gif",
                   "addressOfRunGif": "",
                   "addressOfAttackGif": "",
                   "addressOfGetDamageGif": "",

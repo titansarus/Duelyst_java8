@@ -14,7 +14,7 @@ public class Constants {
             NOT_ENOUGH_CARD_TO_IMPORT_CONTENT = "Not Enough Cards to Import!", INVALID_IMPORT_FILE_CONTENT = "Invalid File to Import",
             EMPTY_FIELD_EXCEPTION_CONTENT = "Please fill in all required fields!", CELL_FILLED_BEFORE_CONTENT = "Cell has a Card on it!", NOT_ENOUGHT_MANA_CONTENT = "You don't have enough mana for this action!",
             CREATE_CARD_FIELD_NOT_COMPLETE_CONTENT = "Please fill all fields that are required for card creation", DECK_IS_INVALID_TITLE = "Invalid Deck!", DECK_IS_VALID_TITLE = "Valid Deck",
-    CHEAT_MODE_ACTIVE_CONTENT ="Don't cheat!" , CHEAT_MODE_DEACTIVATED_CONTENT ="Thank you for not cheating!";
+            CHEAT_MODE_ACTIVE_CONTENT = "Don't cheat!", CHEAT_MODE_DEACTIVATED_CONTENT = "Thank you for not cheating!";
 
     //ERROR TITLE
     public static final String USER_EXIST_TITLE = "User Exist", USER_NOT_EXIST_TITLE = "User Not Exist", NOT_EXIST_LOGIN_USER_TITLE = "First Login!",
@@ -23,7 +23,7 @@ public class Constants {
             NO_CARD_SELECTED_FROM_COLLECTION_TITLE = "No Card Selected", NO_MAIN_DECK_TITLE = "Main Deck is Not Selected", NO_DECK_SELECTED_TITLE = "No Deck is Selected",
             NOT_ENOUGH_CARD_TO_IMPORT_TITLE = "Not Enough Cards to Import!", INVALID_IMPORT_FILE_TITLE = "Invalid File", EMPTY_FIELD_EXCEPTION_TITLE = "Empty Fields!", CELL_FILLED_BEFORE_TITLE = "Cell is not Empty!",
             NOT_ENOUGHT_MANA_TITLE = "Not Enough Mana!", CREATE_CARD_FIELD_NOT_COMPLETE_TITLE = "Some fields don't have valid input", DECK_IS_INVALID_CONTENT = "Current main deck combination of cards is invalid!",
-            DECK_IS_VALID_CONTENT = "Selected Main Deck is Valid" , CHEAT_MODE_ACTIVE_TITLE = "Cheat Mode Activated!" , CHEAT_MODE_DEACTIVATED_TITLE = "Cheat Mode Deactivated!";
+            DECK_IS_VALID_CONTENT = "Selected Main Deck is Valid", CHEAT_MODE_ACTIVE_TITLE = "Cheat Mode Activated!", CHEAT_MODE_DEACTIVATED_TITLE = "Cheat Mode Deactivated!";
 
     //NOTIFICATION
     public static final String USER_CREATED_CONTENT = "User Created Successfully", USER_LOGINED_CONTENT = "User Logined Successfully", BUY_CONTENT = "Buy was Successful!",
@@ -65,7 +65,9 @@ public class Constants {
     public static final Image buffEffect = new Image(Constants.class.getResourceAsStream("../../res/effects/explosion.gif"));
 
 
-    public static final String PATH_OF_MAIN_THEME = "src/res/Music/main_theme.mp3" , MAIN_THEME = "MAIN_THEME" , SOUND_PLAYER = "SOUND_PLAYER";
+    public static final String PATH_OF_MAIN_THEME = "src/res/Music/main_theme.mp3", BUTTON_HOVER_SOUND = "src/res/Music/button_hover.m4a", CLICK_SOUND = "src/res/Music/onclick.m4a",
+            ATTACK_SOUND = "src/res/Music/attack.m4a" , MOVE_SOUND = "src/res/Music/walk.mp3" , LOSE_SOUND = "src/res/Music/lose_sound.mp3" , VICTORY_SOUND = "src/res/Music/victory.m4a";
+    public static final String MAIN_THEME = "MAIN_THEME", SOUND_PLAYER = "SOUND_PLAYER";
 
 
     //OTHER CONSTANTS
@@ -83,7 +85,7 @@ public class Constants {
     public static final String DEFAULT_BUTTON_CSS = "-fx-background-color: #00bfff;-fx-border-radius: 10pt ; -fx-background-radius: 10pt", MODE_SELECTION_BUTTON_CSS = "-fx-background-color: #A2EF00 ; -fx-background-radius: 10pt ; -fx-border-radius: 10pt";
 
     //NUMERIC CONSTANTS
-    public static final int BATTLE_ROWS = 5, BATTLE_COLUMNS = 9, SIZE_OF_HAND = 5 , CHEAT_MODE_ACTIVATED = 1 , CHEAT_MODE_DEACTIVATED = 0;
-    public static final double HEIGHT_PADDING_Y = 6.0, HEIGHT_PADDING_X = 1.0, WIDTH_PADDING = 6.0 , STD_CARD_WIDTH = 100.0 , STD_CARD_HEIGHT = 100.0;
+    public static final int BATTLE_ROWS = 5, BATTLE_COLUMNS = 9, SIZE_OF_HAND = 5, CHEAT_MODE_ACTIVATED = 1, CHEAT_MODE_DEACTIVATED = 0;
+    public static final double HEIGHT_PADDING_Y = 6.0, HEIGHT_PADDING_X = 1.0, WIDTH_PADDING = 6.0, STD_CARD_WIDTH = 100.0, STD_CARD_HEIGHT = 100.0;
 
 }
