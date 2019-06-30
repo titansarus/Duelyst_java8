@@ -820,6 +820,7 @@ public class Battle implements Cloneable {
                     player2.getAccount().setCountOfWins(player2.getAccount().getCountOfWins() + 1);
                 }
             }
+            System.out.println("======================>>>> "+numberOfWin);
             battleController.backToMenuInEndOfGame(numberOfWin);
             System.out.println("Game End");
         }
@@ -832,12 +833,12 @@ public class Battle implements Cloneable {
             canDraw = true;
             this.setEndGame(true);
             setWinner(player2.getAccount());
-
+            System.out.println("hero 1 killed");
         }
         if (player2.getDeck().getHero().getHealthPoint() <= 0) {
             this.setEndGame(true);
             setWinner(player1.getAccount());
-
+            System.out.println("hero 2 killed");
             if (canDraw) {
                 draw = true;
             }
@@ -848,6 +849,7 @@ public class Battle implements Cloneable {
         if (holdFlag.getNumberOfTurn() == 6) {
             setWinner(holdFlag.getWarrior().getAccount());
             setEndGame(true);
+            System.out.println("you hold 6 turn hold flag");
         }
     }
 
@@ -855,11 +857,11 @@ public class Battle implements Cloneable {
         if (player1.getNumberOfFlag() >= 3) {
             setWinner(player1.getAccount());
             setEndGame(true);
-            System.out.println("collect 3 flag");
+            System.out.println("player1 collect 3 flag");
         } else if (player2.getNumberOfFlag() >= 3) {
             setWinner(player2.getAccount());
             setEndGame(true);
-            System.out.println("collect 3 flag");
+            System.out.println("player2 collect 3 flag");
         }
     }
 

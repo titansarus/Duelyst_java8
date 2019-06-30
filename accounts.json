@@ -2575,7 +2575,8 @@
     "@type": "Duelyst.Model.Account",
     "@val": {
       "battleHistory": [
-        "-lose- vs AI:)"
+        "-lose- vs AI:)",
+        "*win* vs AI:)"
       ],
       "darickBeforeCheat": 0,
       "isCheatModeEnable": false,
@@ -3285,7 +3286,7 @@
       },
       "username": "rez",
       "password": "rez",
-      "countOfWins": 0,
+      "countOfWins": 1,
       "darick": 77950
     }
   }

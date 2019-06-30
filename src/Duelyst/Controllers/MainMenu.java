@@ -16,7 +16,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -25,6 +24,7 @@ import static Duelyst.View.Constants.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 import static Duelyst.View.Constants.NO_USER_LOGINED;
@@ -693,7 +693,9 @@ public class MainMenu {
                 }
                 Deck aiDeck = Deck.deepClone(deck);
                 ai.setMainDeck(aiDeck);
-                createBattle(ai, GameMode.SINGLE_PLAYER, GameGoal.KILL_HERO);
+                customGameMode(ai);
+
+
                 jfxDialog.close();
             });
         }
@@ -701,6 +703,51 @@ public class MainMenu {
         cancel.setOnAction(event -> jfxDialog.close());
 
         jfxDialog.show();
+    }
+
+    public int customGameMode(Ai ai) {
+        JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
+        jfxDialogLayout.setHeading(new Text("choose game mode"));
+        jfxDialogLayout.setBody(new Text("please select game mode of custom game"));
+        JFXButton cancel = new JFXButton();
+        JFXButton story_level_1 = new JFXButton();
+        JFXButton story_level_2 = new JFXButton();
+        JFXButton story_level_3 = new JFXButton();
+
+        cancel.setText(CANCEL);
+        story_level_1.setText("Kill Hero");
+        story_level_2.setText("Collect Flag");
+        story_level_3.setText("Hold Flag");
+        jfxDialogLayout.setActions(cancel, story_level_1, story_level_2, story_level_3);
+        cancel.setStyle(DEFAULT_BUTTON_CSS);
+        story_level_2.setStyle(MODE_SELECTION_BUTTON_CSS);
+        story_level_1.setStyle(MODE_SELECTION_BUTTON_CSS);
+        story_level_3.setStyle(MODE_SELECTION_BUTTON_CSS);
+
+        JFXDialog jfxDialog = new JFXDialog(stackPane, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
+        int[] mode = new int[1];
+        story_level_1.setOnAction(event -> {
+            mode[0] = 1;
+            createBattle(ai, GameMode.SINGLE_PLAYER, GameGoal.KILL_HERO);
+            jfxDialog.close();
+
+        });
+
+        story_level_2.setOnAction(event -> {
+            mode[0] = 2;
+            createBattle(ai, GameMode.SINGLE_PLAYER, GameGoal.COLLECT_FLAG);
+            jfxDialog.close();
+        });
+        story_level_3.setOnAction(event -> {
+            mode[0] = 3;
+            createBattle(ai, GameMode.SINGLE_PLAYER, GameGoal.HOLD_FLAG);
+            jfxDialog.close();
+        });
+        cancel.setOnAction(event -> jfxDialog.close());
+
+
+        jfxDialog.show();
+        return mode[0];
     }
 
     private void storyModeSelection() {
