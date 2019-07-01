@@ -2640,6 +2640,64 @@
               "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars_breathing.gif",
               "addressOfDeathGif": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars_death.gif"
             }
+          },
+          {
+            "@type": "Duelyst.Model.Minion",
+            "@val": {
+              "healthPoint": 5,
+              "actionPower": 3,
+              "attackRange": 3,
+              "attackKind": "HYBRID",
+              "validCounterAttack": true,
+              "isDeath": false,
+              "shield": 0,
+              "isValidToAttack": true,
+              "IsValidToMove": true,
+              "isStun": false,
+              "cardId": "rez_NeyzeDare_Fars_1",
+              "manaCost": 1,
+              "darikCost": 500,
+              "account": "@root.8",
+              "cardDescription": "Normal",
+              "cardName": "NeyzeDare_Fars",
+              "isAbleToMove": true,
+              "isInGame": false,
+              "addressOfImage": "./res/Characters/UnitsCreated/Fars/NeyzeDareFars/NeyzeDare_Fars.png",
+              "addressOfIdleGif": "./res/Characters/UnitsCreated/Fars/NeyzeDareFars/NeyzeDare_Fars_idle.gif",
+              "addressOfRunGif": "./res/Characters/UnitsCreated/Fars/NeyzeDareFars/NeyzeDare_Fars_run.gif",
+              "addressOfAttackGif": "./res/Characters/UnitsCreated/Fars/NeyzeDareFars/NeyzeDare_Fars_attack.gif",
+              "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Fars/NeyzeDareFars/NeyzeDare_Fars_breathing.gif",
+              "addressOfDeathGif": "./res/Characters/UnitsCreated/Fars/NeyzeDareFars/NeyzeDare_Fars_death.gif"
+            }
+          },
+          {
+            "@type": "Duelyst.Model.Minion",
+            "@val": {
+              "healthPoint": 5,
+              "actionPower": 3,
+              "attackRange": 3,
+              "attackKind": "HYBRID",
+              "validCounterAttack": true,
+              "isDeath": false,
+              "shield": 0,
+              "isValidToAttack": true,
+              "IsValidToMove": true,
+              "isStun": false,
+              "cardId": "rez_NeyzeDare_Fars_2",
+              "manaCost": 1,
+              "darikCost": 500,
+              "account": "@root.8",
+              "cardDescription": "Normal",
+              "cardName": "NeyzeDare_Fars",
+              "isAbleToMove": true,
+              "isInGame": false,
+              "addressOfImage": "./res/Characters/UnitsCreated/Fars/NeyzeDareFars/NeyzeDare_Fars.png",
+              "addressOfIdleGif": "./res/Characters/UnitsCreated/Fars/NeyzeDareFars/NeyzeDare_Fars_idle.gif",
+              "addressOfRunGif": "./res/Characters/UnitsCreated/Fars/NeyzeDareFars/NeyzeDare_Fars_run.gif",
+              "addressOfAttackGif": "./res/Characters/UnitsCreated/Fars/NeyzeDareFars/NeyzeDare_Fars_attack.gif",
+              "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Fars/NeyzeDareFars/NeyzeDare_Fars_breathing.gif",
+              "addressOfDeathGif": "./res/Characters/UnitsCreated/Fars/NeyzeDareFars/NeyzeDare_Fars_death.gif"
+            }
           }
         ],
         "account": "@root.8",
@@ -3282,12 +3340,13 @@
           }
         ],
         "mainDeck": "@root.8.cardCollection.decks.0",
-        "customCards": []
+        "customCards": [],
+        "selectedCard": "@root.8.cardCollection.cards.2"
       },
       "username": "rez",
       "password": "rez",
       "countOfWins": 2,
-      "darick": 77950
+      "darick": 76950
     }
   }
 ]

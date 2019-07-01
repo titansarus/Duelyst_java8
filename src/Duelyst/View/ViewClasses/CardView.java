@@ -82,7 +82,7 @@ public class CardView extends Pane {
                 Image image = ImageHolder.findImageInImageHolders(card.getAddressOfImage());
                 cardController.setNameAndDscAndImg(card.getCardName(), card.getCardDescription(), image, card.getManaCost());
                 if (card instanceof Warrior) {
-                    cardController.setNameAndDscAndImgAndAttackAndHealt(card.getCardName(), card.getCardDescription(), image, card.getManaCost(), ((Warrior) card).getActionPower(), ((Warrior) card).getHealthPoint());
+                    cardController.setNameAndDscAndImgAndAttackAndHealth(card.getCardName(), card.getCardDescription(), image, card.getManaCost(), ((Warrior) card).getActionPower(), ((Warrior) card).getHealthPoint());
                 }
                 //System.out.println(card.getAddressOfImage());
             } else {

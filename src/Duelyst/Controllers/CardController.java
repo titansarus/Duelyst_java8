@@ -46,7 +46,7 @@ public class CardController {
 //        health_lbl.setText(healthPoint + "");
         card_img.setImage(img);
     }
-    public void setNameAndDscAndImgAndAttackAndHealt(String name, String dsc, Image img, int manaCost,int attack , int health) {
+    public void setNameAndDscAndImgAndAttackAndHealth(String name, String dsc, Image img, int manaCost, int attack , int health) {
         name_lbl.setText(name);
         dsc_lbl.setText(dsc);
         manaCost_lbl.setText(manaCost + "");

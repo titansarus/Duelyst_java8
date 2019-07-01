@@ -11,12 +11,10 @@ public class Card implements Cloneable {
     private String cardId;
     private int manaCost;
     private int darikCost;
-    // private Cell currentCell;
     private CardKind cardKind;
     private Account account;
     private String cardDescription;
     private String cardName;
-    //private ArrayList<ABuff> buffs = new ArrayList<>();
     private boolean isAbleToMove = true;
     private boolean isInGame;
     private String addressOfImage = "";

@@ -7,10 +7,7 @@ import Duelyst.Model.Shop;
 import Duelyst.Model.ShopMode;
 import Duelyst.View.ViewClasses.CardView;
 import com.jfoenix.controls.*;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -20,10 +17,12 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import javax.swing.*;
@@ -38,6 +37,11 @@ public class ShopController {
     public ImageView previous_img;
     public AnchorPane anchorPane;
     public ImageView back_img;
+    public ImageView cardInformation_img;
+    public Pane cardInformation_pane;
+    public Label cardName_lbl;
+    public Label cardKind_lbl;
+    public Text cardDescription_text;
     @FXML
     ScrollPane buyScrollPane;
 
@@ -112,11 +116,22 @@ public class ShopController {
     }
 
     public void updateColor() {
-        for (int i = 0; i < cardViews.size(); i++) {
-            if (cardViews.get(i).getCard().equals(Shop.getSelectedCard())) {
-                cardViews.get(i).getCardController().changeToSelected();
+        if (Shop.getSelectedCard() == null) {
+            cardInformation_img.setOpacity(0.7);
+            cardInformation_img.setDisable(true);
+            cardInformation_img.setEffect(null);
+        } else {
+            cardInformation_img.setOpacity(1);
+            cardInformation_img.setDisable(false);
+            cardInformation_img.setEffect(new DropShadow(10, Color.GOLD));
+        }
+        for (CardView cardView : cardViews) {
+            if (cardView.getCard().equals(Shop.getSelectedCard())) {
+                cardView.getCardController().changeToSelected();
+
             } else {
-                cardViews.get(i).getCardController().changeToNotSelected();
+                cardView.getCardController().changeToNotSelected();
+
             }
         }
     }
@@ -161,27 +176,6 @@ public class ShopController {
             makeCardListOfBuy();
         } else if (sell_tab.isSelected())
             makeCardListOfSell();
-
-//        if (buySell_tgb.isSelected()) {
-//            makeCardListOfSell();
-//        } else {
-//            makeCardListOfBuy();
-//        }
-
-//        listOfCards_HBox.getChildren().clear();
-//        listOfCards_HBox.setPrefWidth(629);
-//        cardViewsOfCollection.clear();
-//        for (int i = 0; i < Shop.getInstance().getCards().size(); i++) {
-//            if (search_txtf.getText().length() == 0 || Shop.getInstance().getCards().get(i).getCardName().contains(search_txtf.getText())) {
-//                VBox vBox = new VBox();
-//                vBox.setPrefWidth(275);
-//                CardView cardView = new CardView(Shop.getInstance().getCards().get(i));
-//                getCardViewsOfCollection().add(cardView);
-//                vBox.getChildren().add(cardView);
-//                listOfCards_HBox.getChildren().add(vBox);
-//                listOfCards_HBox.setPrefWidth(listOfCards_HBox.getPrefWidth() + 275);
-//            }
-//        }
     }
 
     private void makeCardListOfBuy() {
@@ -296,13 +290,58 @@ public class ShopController {
                 Container.handleBack();
             }
         });
-
     }
 
     public void handleSearchInputChanged() {
         System.out.println("Search");
         makeCardList();
 
+    }
+
+    public void handleCardInformationButton() {
+
+        anchorPane.setOpacity(0.7);
+
+        cardName_lbl.setText(Shop.getSelectedCard().getCardName());
+//        cardKind_lbl.setText(Shop.getSelectedCard().getCardKind().toString());
+        cardDescription_text.setText(Shop.getSelectedCard().getCardDescription());
+
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), cardInformation_pane);
+        ft.setFromValue(0);
+        ft.setToValue(1);
+
+        TranslateTransition tt = new TranslateTransition(Duration.millis(100), cardInformation_pane);
+        tt.setFromY(-700);
+        tt.setToY(100);
+        tt.setOnFinished(event -> ft.play());
+        tt.play();
+
+
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.setPrefWidth(275);
+        CardView cardView = new CardView(Shop.getSelectedCard());
+        cardView.setCache(true);
+        getCardViews().add(cardView);
+        anchorPane.getChildren().add(cardView);
+        anchorPane.setLayoutX(20);
+        anchorPane.setLayoutY(50);
+        anchorPane.setEffect(new DropShadow(40, Color.BLACK));
+
+        cardInformation_pane.getChildren().add(anchorPane);
+    }
+
+    public void handleCardInformationPane() {
+        FadeTransition ft = new FadeTransition(Duration.millis(500), cardInformation_pane);
+        ft.setFromValue(1);
+        ft.setToValue(0);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(100), cardInformation_pane);
+        tt.setFromY(150);
+        tt.setToY(-700);
+        ft.setOnFinished(event -> {
+            anchorPane.setOpacity(1);
+            tt.play();
+        });
+        ft.play();
     }
 
     public void handleTabSelectionChanged() {
