@@ -1,0 +1,18 @@
+#hero_vb {
+    -fx-background-image: url('/res/Backgrounds/cardCreatorHeroBackground.png');
+    -fx-background-position: center center;
+    -fx-background-size: 450 450;
+}
+
+#minion_vb {
+    -fx-background-image: url('/res/Backgrounds/cardCreatorMinionBackground.png');
+    -fx-background-position: center center;
+    -fx-background-size: 320 445;
+    -fx-background-reapeat: no-repeat;
+}
+
+#spell_vb {
+    -fx-background-image: url('/res/Backgrounds/cardCreatorSpellBackground.png');
+    -fx-background-position: center center;
+    -fx-background-size: 450 400;
+}

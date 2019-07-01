@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.CardCreatorController">
+<StackPane fx:id="stackPane" stylesheets="@../../../css/cardCreator.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.CardCreatorController">
    <children>
       <AnchorPane prefHeight="846.0" prefWidth="1213.0" style="-fx-background-image: url('res/Backgrounds/cardCreatorBackGround.jpg');">
          <children>
@@ -27,7 +27,7 @@
             </JFXRadioButton>
             <JFXRadioButton fx:id="minion_rb" layoutX="391.0" layoutY="27.0" onAction="#handleMinionRb" text="Minion" toggleGroup="$CardType" />
             <JFXRadioButton fx:id="spell_rb" layoutX="735.0" layoutY="27.0" onAction="#handleSpellRb" text="Spell" toggleGroup="$CardType" />
-            <VBox fx:id="hero_vb" layoutX="26.0" layoutY="56.0" opacity="0.3" prefHeight="450.0" prefWidth="217.0" style="-fx-background-color: Grey;">
+            <VBox fx:id="hero_vb" layoutX="26.0" layoutY="56.0" opacity="0.3" prefHeight="450.0" prefWidth="217.0">
                <children>
                   <HBox prefHeight="27.0" prefWidth="188.0">
                      <children>
@@ -85,7 +85,7 @@
                   </VBox>
                </children>
             </VBox>
-            <VBox fx:id="minion_vb" layoutX="317.0" layoutY="56.0" opacity="0.3" prefHeight="450.0" prefWidth="217.0" style="-fx-background-color: Grey;">
+            <VBox fx:id="minion_vb" layoutX="317.0" layoutY="56.0" opacity="0.3" prefHeight="450.0" prefWidth="217.0">
                <children>
                   <HBox prefHeight="27.0" prefWidth="188.0">
                      <children>
@@ -132,12 +132,12 @@
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <Label prefHeight="17.0" prefWidth="246.0" text="Description" />
-                        <JFXTextArea fx:id="minionDesc_ta" />
+                        <JFXTextArea fx:id="minionDesc_ta" maxHeight="210.0" minHeight="210.0" prefHeight="210.0" prefWidth="226.0" />
                      </children>
                   </VBox>
                </children>
             </VBox>
-            <VBox fx:id="spell_vb" layoutX="639.0" layoutY="56.0" opacity="0.3" prefHeight="450.0" prefWidth="217.0" style="-fx-background-color: Grey;">
+            <VBox fx:id="spell_vb" layoutX="639.0" layoutY="56.0" opacity="0.3" prefHeight="450.0" prefWidth="217.0">
                <children>
                   <HBox prefHeight="27.0" prefWidth="188.0">
                      <children>
