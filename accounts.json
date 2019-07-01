@@ -3341,7 +3341,7 @@
         ],
         "mainDeck": "@root.8.cardCollection.decks.0",
         "customCards": [],
-        "selectedCard": "@root.8.cardCollection.cards.3"
+        "selectedCard": "@root.8.cardCollection.decks.0.cards.2"
       },
       "username": "rez",
       "password": "rez",

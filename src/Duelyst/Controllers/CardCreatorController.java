@@ -10,6 +10,7 @@ import Duelyst.View.Constants;
 import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -28,6 +29,12 @@ public class CardCreatorController {
             HOLY_BUFF = "Holy Buff", POISON_BUFF = "Poison Buff", POWER_BUFF = "Power Buff", STUN_BUFF = "Stun Buff",
             DISARM_BUFF = "Disarm Buff", FLAME_BUFF = "Flame Buff", WEAKNESS_BUFF = "Weakness Buff",
             FRIENDLY = "Friendly", ENEMY = "Enemy";
+    public ImageView selectImage_img;
+    public ImageView selectIdleGif_img;
+    public ImageView selectRunGif_img;
+    public ImageView selectAttackGif_img;
+    public ImageView selectDeathGif_img;
+    public ImageView selectHitGif_img;
 
     @FXML
     StackPane stackPane;
@@ -480,6 +487,57 @@ public class CardCreatorController {
     public void handleBackBtn() {
         Container.handleBack();
     }
+
+    public void selectImageGlow() {
+        selectImage_img.setImage(new Image("res/ui/button_primary_glow.png"));
+    }
+
+    public void selectImageGlowDisappear() {
+        selectImage_img.setImage(new Image("res/ui/button_primary.png"));
+    }
+
+    public void selectIdleGifGlow() {
+        selectIdleGif_img.setImage(new Image("res/ui/button_primary_glow.png"));
+    }
+
+    public void selectIdleGifGlowDisappear() {
+        selectIdleGif_img.setImage(new Image("res/ui/button_primary.png"));
+    }
+
+    public void selectRunGifGlow() {
+        selectRunGif_img.setImage(new Image("res/ui/button_primary_glow.png"));
+
+    }
+
+    public void selectRunGifGlowDisappear() {
+        selectRunGif_img.setImage(new Image("res/ui/button_primary.png"));
+
+    }
+
+    public void selectAttackGifGlow() {
+        selectAttackGif_img.setImage(new Image("res/ui/button_primary_glow.png"));
+    }
+
+    public void selectAttackGifGlowDisappear() {
+        selectAttackGif_img.setImage(new Image("res/ui/button_primary.png"));
+    }
+
+    public void selectDeathGifGlow() {
+        selectDeathGif_img.setImage(new Image("res/ui/button_primary_glow.png"));
+    }
+
+    public void selectDeathGifGlowDisappear() {
+        selectDeathGif_img.setImage(new Image("res/ui/button_primary.png"));
+    }
+
+    public void selectHitGifGlow() {
+        selectHitGif_img.setImage(new Image("res/ui/button_primary_glow.png"));
+    }
+
+    public void selectHitGifGlowDisappear() {
+        selectHitGif_img.setImage(new Image("res/ui/button_primary.png"));
+    }
+
 
     public String getImageAddress() {
         return imageAddress;

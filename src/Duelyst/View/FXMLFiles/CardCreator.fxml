@@ -8,11 +8,13 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.CardCreatorController">
    <children>
@@ -159,17 +161,71 @@
             </VBox>
             <JFXButton layoutX="919.0" layoutY="778.0" onAction="#handleCreateCardBtn" prefHeight="54.0" prefWidth="280.0" style="-fx-background-color: #6200EE;" text="CREATE CARD" textFill="WHITE" />
             <JFXButton fx:id="back_btn" layoutX="41.0" layoutY="770.0" onAction="#handleBackBtn" prefHeight="54.0" prefWidth="148.0" style="-fx-background-color: #f44336;" text="Back" textFill="WHITE" />
-            <JFXButton fx:id="image_btn" layoutX="45.0" layoutY="717.0" onAction="#handleSelectImage" prefHeight="31.0" prefWidth="123.0" style="-fx-background-color: #67daff;" text="Select Image" />
-            <JFXButton layoutX="225.0" layoutY="717.0" onAction="#handleSelectIdleGif" prefHeight="31.0" prefWidth="115.0" style="-fx-background-color: #67daff;" text="Select Idle GIF" />
-            <JFXButton layoutX="640.0" layoutY="717.0" onAction="#handleSelectAttackGif" prefHeight="31.0" prefWidth="140.0" style="-fx-background-color: #67daff;" text="Select Attack GIF" />
-            <JFXButton layoutX="856.0" layoutY="717.0" onAction="#handleSelectDeathGif" prefHeight="31.0" prefWidth="140.0" style="-fx-background-color: #67daff;" text="Select Death Gif" />
-            <JFXButton layoutX="1059.0" layoutY="717.0" onAction="#handleSelectHitGif" prefHeight="31.0" prefWidth="115.0" style="-fx-background-color: #67daff;" text="Select Hit Gif" />
+            <ImageView fx:id="selectImage_img" fitHeight="38.0" fitWidth="140.0" layoutX="53.0" layoutY="714.0" onMouseClicked="#handleSelectImage" onMouseEntered="#selectImageGlow" onMouseExited="#selectImageGlowDisappear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_primary.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="79.0" layoutY="724.0" onMouseClicked="#handleSelectImage" onMouseEntered="#selectImageGlow" text="Select Image" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="selectIdleGif_img" fitHeight="38.0" fitWidth="153.0" layoutX="222.0" layoutY="714.0" onMouseClicked="#handleSelectIdleGif" onMouseEntered="#selectIdleGifGlow" onMouseExited="#selectIdleGifGlowDisappear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_primary.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="244.0" layoutY="725.0" onMouseClicked="#handleSelectIdleGif" onMouseEntered="#selectIdleGifGlow" text="Select Idle Gif" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="selectRunGif_img" fitHeight="38.0" fitWidth="153.0" layoutX="415.0" layoutY="714.0" onMouseClicked="#handleSelectRunGif" onMouseEntered="#selectRunGifGlow" onMouseExited="#selectRunGifGlowDisappear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_primary.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="437.0" layoutY="725.0" onMouseClicked="#handleSelectRunGif" onMouseEntered="#selectRunGifGlow" text="Select Run Gif" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="selectAttackGif_img" fitHeight="38.0" fitWidth="153.0" layoutX="636.0" layoutY="714.0" onMouseClicked="#handleSelectAttackGif" onMouseEntered="#selectAttackGifGlow" onMouseExited="#selectAttackGifGlowDisappear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_primary.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="650.0" layoutY="725.0" onMouseClicked="#handleSelectAttackGif" onMouseEntered="#selectAttackGifGlow" text="Select Attack Gif" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="selectDeathGif_img" fitHeight="38.0" fitWidth="153.0" layoutX="833.0" layoutY="715.0" onMouseClicked="#handleSelectDeathGif" onMouseEntered="#selectDeathGifGlow" onMouseExited="#selectDeathGifGlowDisappear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_primary.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="849.0" layoutY="726.0" onMouseClicked="#handleSelectDeathGif" onMouseEntered="#selectDeathGifGlow" text="Select Death Gif" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="selectHitGif_img" fitHeight="38.0" fitWidth="153.0" layoutX="1021.0" layoutY="714.0" onMouseClicked="#handleSelectHitGif" onMouseEntered="#selectHitGifGlow" onMouseExited="#selectHitGifGlowDisappear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_primary.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1045.0" layoutY="725.0" onMouseClicked="#handleSelectHitGif" onMouseEntered="#selectHitGifGlow" text="Select Hit Gif" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
             <ImageView fx:id="cardImage_iv" fitHeight="164.0" fitWidth="102.0" layoutX="45.0" layoutY="546.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="idleGif_iv" fitHeight="164.0" fitWidth="102.0" layoutX="166.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="attackGif_iv" fitHeight="164.0" fitWidth="102.0" layoutX="425.0" layoutY="546.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="deathGif_iv" fitHeight="164.0" fitWidth="102.0" layoutX="554.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="hitGif_iv" fitHeight="164.0" fitWidth="102.0" layoutX="697.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" />
-            <JFXButton layoutX="425.0" layoutY="717.0" onAction="#handleSelectRunGif" prefHeight="31.0" prefWidth="115.0" style="-fx-background-color: #67daff;" text="Select Run Gif" />
             <ImageView fx:id="runGif_iv" fitHeight="164.0" fitWidth="102.0" layoutX="294.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" />
             <VBox fx:id="buff_vb" layoutX="950.0" layoutY="56.0" opacity="0.3" prefHeight="450.0" prefWidth="217.0" style="-fx-background-color: Grey;">
                <children>
