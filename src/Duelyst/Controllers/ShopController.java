@@ -98,6 +98,7 @@ public class ShopController {
         fastTimeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
             updateColor();
             updateButton();
+            updateInformationButton();
         }), new KeyFrame(Duration.millis(100)));
         fastTimeline.setCycleCount(Animation.INDEFINITE);
         fastTimeline.play();
@@ -110,21 +111,14 @@ public class ShopController {
             updateButton();
             updateLoginedUser();
             updateDarick();
+            updateInformationButton();
         }), new KeyFrame(Duration.millis(500)));
         slowTimeline.setCycleCount(Animation.INDEFINITE);
         slowTimeline.play();
     }
 
     public void updateColor() {
-        if (Shop.getSelectedCard() == null) {
-            cardInformation_img.setOpacity(0.7);
-            cardInformation_img.setDisable(true);
-            cardInformation_img.setEffect(null);
-        } else {
-            cardInformation_img.setOpacity(1);
-            cardInformation_img.setDisable(false);
-            cardInformation_img.setEffect(new DropShadow(10, Color.GOLD));
-        }
+
         for (CardView cardView : cardViews) {
             if (cardView.getCard().equals(Shop.getSelectedCard())) {
                 cardView.getCardController().changeToSelected();
@@ -133,6 +127,18 @@ public class ShopController {
                 cardView.getCardController().changeToNotSelected();
 
             }
+        }
+    }
+
+    private void updateInformationButton() {
+        if (Shop.getSelectedCard() == null) {
+            cardInformation_img.setOpacity(0.7);
+            cardInformation_img.setDisable(true);
+            cardInformation_img.setEffect(null);
+        } else {
+            cardInformation_img.setOpacity(1);
+            cardInformation_img.setDisable(false);
+            cardInformation_img.setEffect(new DropShadow(10, Color.GOLD));
         }
     }
 
@@ -321,7 +327,6 @@ public class ShopController {
         anchorPane.setPrefWidth(275);
         CardView cardView = new CardView(Shop.getSelectedCard());
         cardView.setCache(true);
-        getCardViews().add(cardView);
         anchorPane.getChildren().add(cardView);
         anchorPane.setLayoutX(20);
         anchorPane.setLayoutY(50);

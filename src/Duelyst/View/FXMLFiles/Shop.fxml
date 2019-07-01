@@ -95,9 +95,9 @@
         </AnchorPane>
       <Pane fx:id="cardInformation_pane" maxHeight="650.0" maxWidth="750.0" minHeight="650.0" minWidth="750.0" onMouseClicked="#handleCardInformationPane" opacity="0.0" prefHeight="650.0" prefWidth="750.0" style="-fx-background-radius: 40; -fx-border-radius: 40;" translateY="-700.0">
          <children>
-            <Pane layoutX="316.0" layoutY="54.0" prefHeight="457.0" prefWidth="357.0" style="-fx-background-color: black; -fx-background-radius: 40; -fx-border-radius: 40;">
+            <Pane layoutX="356.0" layoutY="51.0" prefHeight="457.0" prefWidth="357.0" style="-fx-background-color: black; -fx-background-radius: 40; -fx-border-radius: 40;">
                <children>
-                  <Label fx:id="cardName_lbl" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="36.0" prefWidth="254.0" textFill="WHITE">
+                  <Label fx:id="cardName_lbl" contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="36.0" prefWidth="254.0" textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="25.0" />
                      </font>

@@ -12,9 +12,11 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <StackPane fx:id="stackePane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.CardCollectionController">
    <children>
@@ -157,8 +159,35 @@
                   <Font name="System Bold Italic" size="12.0" />
                </font>
             </Label>
+            <ImageView fx:id="cardInformation_img" fitHeight="53.0" fitWidth="55.0" layoutX="20.0" layoutY="745.0" onMouseClicked="#handleCardInformationButton" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/cardInformation.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
+      <Pane fx:id="cardInformation_pane" maxHeight="650.0" maxWidth="750.0" minHeight="650.0" minWidth="750.0" onMouseClicked="#handleCardInformationPane" opacity="0.0" prefHeight="650.0" prefWidth="750.0" style="-fx-background-radius: 40; -fx-border-radius: 40;" translateY="-730.0">
+         <children>
+            <Pane layoutX="316.0" layoutY="54.0" prefHeight="457.0" prefWidth="357.0" style="-fx-background-color: black; -fx-background-radius: 40; -fx-border-radius: 40;">
+               <children>
+                  <Label fx:id="cardName_lbl" contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="36.0" prefWidth="254.0" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold Italic" size="25.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="cardKind_lbl" layoutX="22.0" layoutY="50.0" textFill="#d3d1d1">
+                     <font>
+                        <Font name="System Italic" size="20.0" />
+                     </font>
+                  </Label>
+                  <Text fx:id="cardDescription_text" fill="#cdc7c7" layoutX="14.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="156.6708984375" />
+               </children>
+               <effect>
+                  <DropShadow blurType="TWO_PASS_BOX" height="60.0" radius="29.5" spread="0.48" width="60.0" />
+               </effect>
+            </Pane>
+         </children>
+      </Pane>
    </children>
 
 </StackPane>

@@ -4,14 +4,12 @@ import Duelyst.Exceptions.*;
 import Duelyst.Model.Account;
 import Duelyst.Model.Card;
 import Duelyst.Model.Deck;
+import Duelyst.Model.Shop;
 import Duelyst.View.ViewClasses.CardView;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import com.jfoenix.controls.*;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,17 +21,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static Duelyst.View.Constants.*;
@@ -53,6 +50,11 @@ public class CardCollectionController {
     public ImageView back_img;
     public ImageView Previous_img;
     public ImageView next_img;
+    public Pane cardInformation_pane;
+    public Label cardName_lbl;
+    public Label cardKind_lbl;
+    public Text cardDescription_text;
+    public ImageView cardInformation_img;
 
     @FXML
     Label MainDeck;
@@ -124,6 +126,7 @@ public class CardCollectionController {
     public void runFastTimeLine() {
         fastTimeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
             updateColor();
+            updateInformationButton();
         }), new KeyFrame(Duration.millis(100)));
         fastTimeline.setCycleCount(Animation.INDEFINITE);
         fastTimeline.play();
@@ -547,6 +550,18 @@ public class CardCollectionController {
 
     }
 
+    private void updateInformationButton() {
+        if (Account.getLoggedAccount().getCardCollection().getSelectedCard() == null) {
+            cardInformation_img.setOpacity(0.7);
+            cardInformation_img.setDisable(true);
+            cardInformation_img.setEffect(null);
+        } else {
+            cardInformation_img.setOpacity(1);
+            cardInformation_img.setDisable(false);
+            cardInformation_img.setEffect(new DropShadow(10, Color.GOLD));
+        }
+    }
+
     public void handleItemImage() {
         if (Account.getLoggedAccount().getCardCollection().getMainDeck().getItem() != null) {
             Account.getLoggedAccount().getCardCollection().getCards().add(Account.getLoggedAccount().getCardCollection().getMainDeck().getItem());
@@ -595,11 +610,57 @@ public class CardCollectionController {
         buttonClickEffect(circle, 70, event -> {
             anchorPane.getChildren().remove(circle);
             if (Container.scenes.size() > 0) {
-                stopTimeline(); //Necessary for Optimization. Don't Delete This.
                 Container.handleBack();
+                stopTimeline(); //Necessary for Optimization. Don't Delete This.
             }
         });
     }
+
+    public void handleCardInformationButton() {
+
+        anchorPane.setOpacity(0.7);
+
+        cardName_lbl.setText(Account.getLoggedAccount().getCardCollection().getSelectedCard().getCardName());
+//        cardKind_lbl.setText(Account.getLoggedAccount().getCardCollection..getSelectedCard().getCardKind().toString());
+        cardDescription_text.setText(Account.getLoggedAccount().getCardCollection().getSelectedCard().getCardDescription());
+
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), cardInformation_pane);
+        ft.setToValue(1);
+        ft.setFromValue(0);
+
+        TranslateTransition tt = new TranslateTransition(Duration.millis(100), cardInformation_pane);
+        tt.setToY(100);
+        tt.setFromY(-700);
+        tt.play();
+        tt.setOnFinished(event -> ft.play());
+
+
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.setPrefWidth(275);
+        CardView cardView = new CardView(Account.getLoggedAccount().getCardCollection().getSelectedCard());
+        cardView.setCache(true);
+        anchorPane.getChildren().add(cardView);
+        anchorPane.setLayoutY(50);
+        anchorPane.setLayoutX(20);
+        anchorPane.setEffect(new DropShadow(40, Color.BLACK));
+
+        cardInformation_pane.getChildren().add(anchorPane);
+    }
+
+    public void handleCardInformationPane() {
+        FadeTransition ft = new FadeTransition(Duration.millis(500), cardInformation_pane);
+        ft.setToValue(0);
+        ft.setFromValue(1);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(100), cardInformation_pane);
+        tt.setToY(-700);
+        tt.setFromY(150);
+        ft.setOnFinished(event -> {
+            anchorPane.setOpacity(1);
+            tt.play();
+        });
+        ft.play();
+    }
+
 
     public void setAsMainDeckButtonGlow() {
         selectAsMainDeck_img.setImage(new Image("res/ui/button_confirm_glow@2x.png"));
