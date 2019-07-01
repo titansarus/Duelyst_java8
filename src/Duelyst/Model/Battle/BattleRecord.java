@@ -13,7 +13,7 @@ public class BattleRecord {
     private BattleRecordEnum typeOfRecord;
 
     //FOR INITIALIZE
-    private String firstPlayerUsername , secondPlayerUsername;
+    private String firstPlayerUsername, secondPlayerUsername;
     private GameGoal gameGoal;
     private GameMode gameMode;
     private Deck firstPlayerDeck;
@@ -27,7 +27,10 @@ public class BattleRecord {
 
     //FOR MOVE
     private String moveCardId;
-    private int moveRow,moveColumn;
+    private int moveRow, moveColumn;
+    private boolean isMoveHoldFlag = false;
+    private boolean isMoveCollectibleFlag = false;
+    private boolean isMoveCollectibleItem = false;
 
     //FOR DEATH
     private String deathCardId;
@@ -164,6 +167,30 @@ public class BattleRecord {
 
     public void setDeathCardId(String deathCardId) {
         this.deathCardId = deathCardId;
+    }
+
+    public boolean isMoveHoldFlag() {
+        return isMoveHoldFlag;
+    }
+
+    public void setMoveHoldFlag(boolean moveHoldFlag) {
+        isMoveHoldFlag = moveHoldFlag;
+    }
+
+    public boolean isMoveCollectibleFlag() {
+        return isMoveCollectibleFlag;
+    }
+
+    public void setMoveCollectibleFlag(boolean moveCollectibleFlag) {
+        isMoveCollectibleFlag = moveCollectibleFlag;
+    }
+
+    public boolean isMoveCollectibleItem() {
+        return isMoveCollectibleItem;
+    }
+
+    public void setMoveCollectibleItem(boolean moveCollectibleItem) {
+        isMoveCollectibleItem = moveCollectibleItem;
     }
 }
 

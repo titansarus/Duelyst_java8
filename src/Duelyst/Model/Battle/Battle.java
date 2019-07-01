@@ -206,6 +206,8 @@ public class Battle implements Cloneable {
 
     public void move(int destX, int destY) {
 
+        boolean isHoldFlag = false, isCollectibleFlag = false, isCollectibleItem = false;
+
         if (getSelectedCell().getWarrior() != null) {
             if (getSelectedCell().getColumn() != destX || getSelectedCell().getRow() != destY) {
                 Cell cell = getGrid()[destX][destY];
@@ -214,12 +216,14 @@ public class Battle implements Cloneable {
                         getPlayingPlayer().setCollectibleItem(getGrid()[destX][destY].getCollectibleItem());
                         getGrid()[destX][destY].getCollectibleItem().setPlayer(getPlayingPlayer());
                         battleController.deleteItemImage(getGrid()[destX][destY].getCollectibleItem());
+                        isCollectibleItem = true;//FOR BATTLE RECORD
                     }
                     if (gameGoal == GameGoal.HOLD_FLAG) {
                         if (holdFlag.getX() == destX && holdFlag.getY() == destY) {
                             holdFlag.setWarrior(getSelectedCell().getWarrior());
                             getGrid()[destX][destY].setFlag(null);
                             battleController.removeFlagImage(holdFlag);
+                            isHoldFlag = true; //FOR BATTLE RECORD
                         }
                     }
                     if (gameGoal == GameGoal.COLLECT_FLAG) {
@@ -229,9 +233,11 @@ public class Battle implements Cloneable {
                                 playingPlayer.setNumberOfFlag(playingPlayer.getNumberOfFlag() + 1);
                                 getGrid()[destX][destY].setFlag(null);
                                 battleController.removeFlagImage(f);
+                                isCollectibleFlag = true; //FOR BATTLE RECORD
                             }
                         }
                     }
+                    makeBattleRecordOfMove(getSelectedCell().getWarrior(), destX, destY, isHoldFlag, isCollectibleFlag, isCollectibleItem); //BATTLE RECORD
                     getSelectedCell().getWarrior().setValidToMove(false);
                     cell.setWarrior(getSelectedCell().getWarrior());
                     getSelectedCell().setWarrior(null);
@@ -241,6 +247,25 @@ public class Battle implements Cloneable {
             }
         }
 
+    }
+
+    public void makeBattleRecordOfMove(Warrior warrior, int row, int column, boolean isHoldFlag, boolean isCollectibleFlag, boolean isCollectibleItem) {
+        BattleRecord battleRecord = new BattleRecord(BattleRecordEnum.MOVE);
+
+        battleRecord.setMoveCardId(warrior.getCardId());
+        battleRecord.setMoveRow(row);
+        battleRecord.setMoveColumn(column);
+
+        if (isHoldFlag) {
+            battleRecord.setMoveHoldFlag(true);
+        }
+        if (isCollectibleFlag) {
+            battleRecord.setMoveCollectibleFlag(true);
+        }
+        if (isCollectibleItem) {
+            battleRecord.setMoveCollectibleItem(true);
+        }
+        getBattleRecords().add(battleRecord);
     }
 
     public void insertSelectedCard(int i, int j) {
