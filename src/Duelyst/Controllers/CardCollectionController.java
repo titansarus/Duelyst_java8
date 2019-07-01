@@ -10,6 +10,7 @@ import com.gilecode.yagson.YaGsonBuilder;
 import com.jfoenix.controls.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,13 +18,17 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
 
@@ -44,15 +49,13 @@ public class CardCollectionController {
     public ImageView validateDeck_img;
     public ImageView sendToCollection_img;
     public ImageView sendToDeck_img;
+    public AnchorPane anchorPane;
+    public ImageView back_img;
+    public ImageView Previous_img;
+    public ImageView next_img;
 
     @FXML
     Label MainDeck;
-
-    @FXML
-    JFXButton Previous;
-
-    @FXML
-    JFXButton next;
 
     @FXML
     Label loginedAccount_lbl;
@@ -111,8 +114,6 @@ public class CardCollectionController {
 
 
         createDeck_btn.setGraphic(new ImageView(createDeckImg));
-        next.setGraphic(new ImageView(nextImg));
-        Previous.setGraphic(new ImageView(previousImg));
         MainDeck.setGraphic(new ImageView(MainDeckImg));
 
 
@@ -266,6 +267,8 @@ public class CardCollectionController {
     }
 
     public void handelPreviousBtn() {
+        Circle circle = new Circle(Previous_img.getLayoutX() + Previous_img.getFitWidth() / 2, Previous_img.getLayoutY() + Previous_img.getFitHeight() / 2, 0, Color.TRANSPARENT);
+        buttonClickEffect(circle, 40, event -> anchorPane.getChildren().remove(circle));
 
         if (Toggle.isSelected()) {
             if (deckScroll != 0) {
@@ -283,6 +286,10 @@ public class CardCollectionController {
     }
 
     public void handelNextBtn() {
+
+        Circle circle = new Circle(next_img.getLayoutX() + next_img.getFitWidth() / 2, next_img.getLayoutY() + next_img.getFitHeight() / 2, 0, Color.TRANSPARENT);
+        buttonClickEffect(circle, 40, event -> anchorPane.getChildren().remove(circle));
+
         if (Toggle.isSelected()) {
             if (scrollPane_2.getHvalue() < 0.95 || true) { //TODO CHECK THIS 0.95 ? Another Number??
                 deckScroll++;
@@ -295,6 +302,19 @@ public class CardCollectionController {
             scrollPane.setHvalue(collectionScroll * (4.0 / cardCollectionCards_HB.getChildren().size()));
         }
         System.out.println(deckScroll * (4.0 / cardCollectionCards_HB.getChildren().size()));
+    }
+
+    private void buttonClickEffect(Circle circle, int endValue, EventHandler eventHandler) {
+        circle.setStroke(Color.WHITE);
+        circle.setEffect(new DropShadow(50, 0, 0, Color.WHITE));//TODO Nemidoonam Chera Neshoon Nemide In Effecto!
+        KeyValue keyValue = new KeyValue(circle.radiusProperty(), endValue);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(700), keyValue);
+        Timeline timeLine = new Timeline(keyFrame);
+        anchorPane.getChildren().add(circle);
+        timeLine.setOnFinished(eventHandler);
+
+        timeLine.play();
+
     }
 
     public void handleExportDeckBtn() {
@@ -570,11 +590,15 @@ public class CardCollectionController {
 
     public void handleBackBtn() {
         Account.saveAccount();
-        if (Container.scenes.size() > 0) {
-            stopTimeline();
-            Container.handleBack();
+        Circle circle = new Circle(back_img.getLayoutX(), back_img.getLayoutY(), 0, Color.TRANSPARENT);
 
-        }
+        buttonClickEffect(circle, 70, event -> {
+            anchorPane.getChildren().remove(circle);
+            if (Container.scenes.size() > 0) {
+                stopTimeline(); //Necessary for Optimization. Don't Delete This.
+                Container.handleBack();
+            }
+        });
     }
 
     public void setAsMainDeckButtonGlow() {

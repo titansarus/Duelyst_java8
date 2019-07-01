@@ -2576,6 +2576,7 @@
     "@val": {
       "battleHistory": [
         "-lose- vs AI:)",
+        "*win* vs AI:)",
         "*win* vs AI:)"
       ],
       "darickBeforeCheat": 0,
@@ -3281,12 +3282,11 @@
           }
         ],
         "mainDeck": "@root.8.cardCollection.decks.0",
-        "customCards": [],
-        "selectedCard": "@root.8.cardCollection.decks.0.cards.0"
+        "customCards": []
       },
       "username": "rez",
       "password": "rez",
-      "countOfWins": 1,
+      "countOfWins": 2,
       "darick": 77950
     }
   }

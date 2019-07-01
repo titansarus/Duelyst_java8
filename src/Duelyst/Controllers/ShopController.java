@@ -9,9 +9,12 @@ import Duelyst.View.ViewClasses.CardView;
 import com.jfoenix.controls.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
@@ -19,20 +22,22 @@ import javafx.scene.control.TabPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 import static Duelyst.View.Constants.*;
 
 public class ShopController {
 
-    @FXML
-    JFXButton next_btn;
 
-    @FXML
-    JFXButton previous_btn;
-
+    public ImageView next_img;
+    public ImageView previous_img;
+    public AnchorPane anchorPane;
+    public ImageView back_img;
     @FXML
     ScrollPane buyScrollPane;
 
@@ -79,8 +84,6 @@ public class ShopController {
 
     @FXML
     public void initialize() {
-        next_btn.setGraphic(new ImageView(nextImg));
-        previous_btn.setGraphic(new ImageView(previousImg));
         runFastTimeLine();
         runSlowTimeline();
         makeCardList();
@@ -119,6 +122,9 @@ public class ShopController {
     }
 
     public void handleNextButton() {
+        Circle circle = new Circle(next_img.getLayoutX() + next_img.getFitWidth() / 2, next_img.getLayoutY() + next_img.getFitHeight() / 2, 0, Color.TRANSPARENT);
+        buttonClickEffect(circle, 40, event -> anchorPane.getChildren().remove(circle));
+
         if (buy_tab.isSelected()) {
             buyScrollPane.setHvalue(buyScrollPane.getHvalue() + 0.02);//TODO andazeye GhadamHa bayad daghighTar Tanzim Shan
         } else {
@@ -127,11 +133,27 @@ public class ShopController {
     }
 
     public void handlePreviousButton() {
+        Circle circle = new Circle(previous_img.getLayoutX() + previous_img.getFitWidth() / 2, previous_img.getLayoutY() + previous_img.getFitHeight() / 2, 0, Color.TRANSPARENT);
+        buttonClickEffect(circle, 40, event -> anchorPane.getChildren().remove(circle));
+
         if (buy_tab.isSelected()) {
             buyScrollPane.setHvalue(buyScrollPane.getHvalue() - 0.02);
         } else {
             sellScrollPane.setHvalue(sellScrollPane.getHvalue() - 0.02);
         }
+    }
+
+    private void buttonClickEffect(Circle circle, int endValue, EventHandler eventHandler) {
+        circle.setStroke(Color.WHITE);
+        circle.setEffect(new DropShadow(50, 0, 0, Color.WHITE));//TODO Nemidoonam Chera Neshoon Nemide In Effecto!
+        KeyValue keyValue = new KeyValue(circle.radiusProperty(), endValue);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(700), keyValue);
+        Timeline timeLine = new Timeline(keyFrame);
+        anchorPane.getChildren().add(circle);
+        timeLine.setOnFinished(eventHandler);
+
+        timeLine.play();
+
     }
 
     private void makeCardList() {
@@ -186,6 +208,7 @@ public class ShopController {
 
                 Hbox.getChildren().add(anchorPane);
                 anchorPane.setLayoutX(280 * i);
+                anchorPane.setTranslateY(75);
                 Hbox.setPrefWidth(Hbox.getPrefWidth() + 275);
             }
         }
@@ -264,11 +287,16 @@ public class ShopController {
 
 
     public void handleBackBtn() {
-        if (Container.scenes.size() > 0) {
-            stopTimeline(); //Necessary for Optimization. Don't Delete This.
-            Container.handleBack();
+        Circle circle = new Circle(back_img.getLayoutX(), back_img.getLayoutY(), 0, Color.TRANSPARENT);
 
-        }
+        buttonClickEffect(circle, 70, event -> {
+            anchorPane.getChildren().remove(circle);
+            if (Container.scenes.size() > 0) {
+                stopTimeline(); //Necessary for Optimization. Don't Delete This.
+                Container.handleBack();
+            }
+        });
+
     }
 
     public void handleSearchInputChanged() {

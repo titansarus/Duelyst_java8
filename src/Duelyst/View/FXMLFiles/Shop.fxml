@@ -17,7 +17,7 @@
 
 <StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.ShopController">
     <children>
-        <AnchorPane maxHeight="750.0" maxWidth="1024.0" minHeight="750.0" minWidth="1024.0" prefHeight="750.0" prefWidth="1024.0" style="-fx-background-image: url('/res/Backgrounds/shopBackground.png')">
+        <AnchorPane fx:id="anchorPane" maxHeight="750.0" maxWidth="1024.0" minHeight="750.0" minWidth="1024.0" prefHeight="750.0" prefWidth="1024.0" style="-fx-background-image: url('/res/Backgrounds/shopBackground.png')">
             <children>
             <TabPane fx:id="shopList_tabPane" layoutY="105.0" maxHeight="650.0" maxWidth="1024.0" minHeight="650.0" minWidth="1024.0" prefHeight="650.0" prefWidth="1024.0" style="-fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10; -fx-background-color: transparent;" tabClosingPolicy="UNAVAILABLE">
               <tabs>
@@ -55,15 +55,33 @@
                 <Label fx:id="accountDarick_lbl" layoutX="307.0" layoutY="35.0" prefHeight="21.0" prefWidth="114.0" textFill="#171717" />
                 <Label layoutX="118.0" layoutY="14.0" prefHeight="21.0" prefWidth="114.0" text="Logined Account" />
                 <Label layoutX="118.0" layoutY="35.0" text="Darick" />
-            <JFXButton fx:id="next_btn" layoutX="600.0" layoutY="628.0" onAction="#handleNextButton" />
-            <JFXButton fx:id="previous_btn" layoutX="320.0" layoutY="628.0" onAction="#handlePreviousButton" />
-            <ImageView fitHeight="93.0" fitWidth="93.0" layoutY="-1.0" onMouseClicked="#handleBackBtn" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="back_img" fitHeight="93.0" fitWidth="93.0" layoutY="-1.0" onMouseClicked="#handleBackBtn" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../res/ui/button_back_corner@2x.png" />
                </image>
                <effect>
                   <DropShadow color="#403535" height="30.33" offsetX="5.0" offsetY="5.0" radius="13.11" width="24.11" />
                </effect>
+            </ImageView>
+            <ImageView fx:id="next_img" fitHeight="98.0" fitWidth="103.0" layoutX="600.0" layoutY="580.0" onMouseClicked="#handleNextButton" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/sliding_panel_paging_button.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="54.0" fitWidth="55.0" layoutX="622.0" layoutY="602.0" onMouseClicked="#handleNextButton" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/sliding_panel_paging_button_text_right.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="previous_img" fitHeight="98.0" fitWidth="103.0" layoutX="310.0" layoutY="580.0" onMouseClicked="#handlePreviousButton" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/sliding_panel_paging_button.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="54.0" fitWidth="55.0" layoutX="330.0" layoutY="605.0" onMouseClicked="#handlePreviousButton" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/sliding_panel_paging_button_text.png" />
+               </image>
             </ImageView>
             </children>
         </AnchorPane>

@@ -829,6 +829,10 @@ public class MainMenu {
         jfxDialog.show();
     }
 
+    public void singleOrMultiPrompt(int a){
+        //TODO Bejaye DialogLayout Pane Gozashte Shavad
+    }
+
 
     public void singleOrMultiPrompt() {
         JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
