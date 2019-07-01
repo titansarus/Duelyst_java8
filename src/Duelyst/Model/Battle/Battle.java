@@ -45,6 +45,8 @@ public class Battle implements Cloneable {
     private boolean endGame;
     private Flag holdFlag;
     private ArrayList<Flag> collectableFlags;
+    private ArrayList<BattleRecord> battleRecords;
+    private int lastBattleRecordPlayed = -1;
 
 
     public static final int VALID_COUNTER_WITH_BUFF = 1, VALID_COUNTER_WITHOUT_BUFF = 2, INVALID_COUNTER_WITH_BUFF = 3, INVALID_COUNTER_WITHOUT_BUFF = 4;
@@ -100,8 +102,22 @@ public class Battle implements Cloneable {
             battleController.initFlagImages();
         }
 
+        battleRecords = new ArrayList<>();
+        BattleRecord.getBattleRecords().add(battleRecords);
+
+        makeInitializeBattleRecord(account1, account2);
+
         nextTurn();
     }
+
+    private void makeInitializeBattleRecord(Account account1, Account account2) {
+        BattleRecord battleRecord = new BattleRecord(BattleRecordEnum.INITIALIZE);
+        battleRecord.setFirstPlayerUsername(account1.getUsername());
+        battleRecord.setSecondPlayerUsername(account2.getUsername());
+
+        getBattleRecords().add(battleRecord);
+    }
+
 
     private void initValidCounter(Account account1, Account account2) {
         account1.getCardCollection().getMainDeck().getHero().setValidCounterAttack(true);
@@ -311,10 +327,10 @@ public class Battle implements Cloneable {
                         ApplyBuff.getInstance().applyBuff(b);
                         break;
                     case ALL_OF_FRIEND:
-                        applyAllTargetBuffs(b,playingPlayer);
+                        applyAllTargetBuffs(b, playingPlayer);
                         break;
                     case ALL_OF_ENEMY:
-                       applyAllTargetBuffs(b,(player1.equals(playingPlayer))?player2:player1);
+                        applyAllTargetBuffs(b, (player1.equals(playingPlayer)) ? player2 : player1);
                         break;
                     case CELLS:
                         b.setCell(getGrid()[i][j]);
@@ -328,10 +344,10 @@ public class Battle implements Cloneable {
         }
     }
 
-    private void applyAllTargetBuffs(Buff b , Player player) {
-        for (Card card:
-             player.getInGameCards()) {
-            if (card instanceof Warrior){
+    private void applyAllTargetBuffs(Buff b, Player player) {
+        for (Card card :
+                player.getInGameCards()) {
+            if (card instanceof Warrior) {
                 b.setWarrior((Warrior) card);
                 ApplyBuff.getInstance().applyBuff(b);
             }
@@ -820,7 +836,7 @@ public class Battle implements Cloneable {
                     player2.getAccount().setCountOfWins(player2.getAccount().getCountOfWins() + 1);
                 }
             }
-            System.out.println("======================>>>> "+numberOfWin);
+            System.out.println("======================>>>> " + numberOfWin);
             battleController.backToMenuInEndOfGame(numberOfWin);
             System.out.println("Game End");
         }
@@ -926,5 +942,13 @@ public class Battle implements Cloneable {
 
     public boolean isEndGame() {
         return endGame;
+    }
+
+    public ArrayList<BattleRecord> getBattleRecords() {
+        return battleRecords;
+    }
+
+    public int getLastBattleRecordPlayed() {
+        return lastBattleRecordPlayed;
     }
 }
