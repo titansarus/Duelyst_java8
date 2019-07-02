@@ -176,6 +176,8 @@ public class Battle implements Cloneable {
         setSelectedCell(null);
         setSelectedCard(null);
         getPlayingPlayer().getNextHand();
+
+
         if (getPlayingPlayer().getAccount() instanceof Ai) {
             System.out.println("AI");
             ((Ai) getPlayingPlayer().getAccount()).playGame();
@@ -189,6 +191,12 @@ public class Battle implements Cloneable {
                 onSpawnBuffs) {
             ApplyBuff.getInstance().applyBuff(b1);
         }
+    }
+
+    private void makeBattleRecordOfEndTurn() {
+        BattleRecord battleRecord = new BattleRecord(BattleRecordEnum.END_TURN);
+
+        getBattleRecords().add(battleRecord);
     }
 
     private void setTrueOfValidAttackAndMove() {
@@ -435,13 +443,27 @@ public class Battle implements Cloneable {
 
         //TODO CHECK FOR COUNTER ATTACK AND BUFF AND A LOT OF THINGS
         if (!isFromCounterAttack && !attackedCard.isValidCounterAttack()) {
+            makeBattleRecordOfAttack(attacker, attackedCard, true, false);
             return INVALID_COUNTER_WITH_BUFF;
         }
         if (!isFromCounterAttack) {
+            makeBattleRecordOfAttack(attacker, attackedCard, true, true);
             return VALID_COUNTER_WITH_BUFF; //RETURN DETERMINES THE CONTROLLER TO SHOW BUFF ANIMATION OR NOT? DO COUNTER ATTACK OR NOT?
         } else {
+            makeBattleRecordOfAttack(attacker, attackedCard, true, false);
             return INVALID_COUNTER_WITH_BUFF;
         }
+
+    }
+
+    private void makeBattleRecordOfAttack(Warrior attacker, Warrior attacked, boolean isBuff, boolean isValidCounter) {
+        BattleRecord battleRecord = new BattleRecord(BattleRecordEnum.ATTACK);
+        battleRecord.setHasBuff(isBuff);
+        battleRecord.setHasCounterAttack(isValidCounter);
+        battleRecord.setAttackerCardId(attacker.getCardId());
+        battleRecord.setAttackedCardId(attacked.getCardId());
+
+        getBattleRecords().add(battleRecord);
 
     }
 
@@ -468,7 +490,7 @@ public class Battle implements Cloneable {
 
     private void deleteFromMap(ArrayList<Card> cards) {
         for (Card card : cards) {
-
+            boolean isHaveFlag = false;
             applyDeathBuff(card);
 
             if (gameGoal == GameGoal.HOLD_FLAG && holdFlag.getWarrior().equals(card)) {
@@ -476,11 +498,22 @@ public class Battle implements Cloneable {
                 holdFlag.setWarrior(null);
                 holdFlag.setNumberOfTurn(0);
                 battleController.initFlagImages();
+                isHaveFlag = true;
             }
 //            battleController.animationOfDeath((Warrior) card);
 //            battleController.removeImageViewFromCell(card);
+            makeBattleRecordOfDeath(card, isHaveFlag); //FOR BATTLE RECORD
             getCellOfWarrior((Warrior) card).setWarrior(null);
+
         }
+    }
+
+    private void makeBattleRecordOfDeath(Card card, boolean isHaveFlag) {
+        BattleRecord battleRecord = new BattleRecord(BattleRecordEnum.DEATH);
+        battleRecord.setDeathCardId(card.getCardId());
+        battleRecord.setHaveFlag(isHaveFlag);
+
+        getBattleRecords().add(battleRecord);
     }
 
     private void applyDeathBuff(Card card) {
@@ -837,6 +870,7 @@ public class Battle implements Cloneable {
         }
         endOfKillHeroGameMode();
         if (isEndGame()) {
+
             int numberOfWin;
             if (draw) {
                 numberOfWin = 3;
@@ -844,6 +878,9 @@ public class Battle implements Cloneable {
                 player1.getAccount().getBattleHistory().add(h1);
                 String h2 = "-draw- vs " + player1.getAccount().getUsername();
                 player2.getAccount().getBattleHistory().add(h2);
+
+                makeBattleRecordOfEndGame(true, player1, player2);
+
             } else {
                 if (player1.getAccount().getUsername().equals(getWinner().getUsername())) {
                     numberOfWin = 2;
@@ -852,6 +889,8 @@ public class Battle implements Cloneable {
                     player1.getAccount().setCountOfWins(player1.getAccount().getCountOfWins() + 1);
                     String h2 = "-lose- vs " + player1.getAccount().getUsername();
                     player2.getAccount().getBattleHistory().add(h2);
+
+                    makeBattleRecordOfEndGame(false, player1, player2);
                 } else {
                     numberOfWin = 1;
                     String h1 = "-lose- vs " + player2.getAccount().getUsername();
@@ -859,6 +898,8 @@ public class Battle implements Cloneable {
                     String h2 = "*win* vs " + player1.getAccount().getUsername();
                     player2.getAccount().getBattleHistory().add(h2);
                     player2.getAccount().setCountOfWins(player2.getAccount().getCountOfWins() + 1);
+
+                    makeBattleRecordOfEndGame(false, player2, player1);
                 }
             }
             System.out.println("======================>>>> " + numberOfWin);
@@ -866,6 +907,15 @@ public class Battle implements Cloneable {
             System.out.println("Game End");
         }
 
+    }
+
+    private void makeBattleRecordOfEndGame(boolean isDraw, Player winner, Player loser) {
+        BattleRecord battleRecord = new BattleRecord(BattleRecordEnum.END_GAME);
+        battleRecord.setDraw(isDraw);
+        battleRecord.setWinnerUsername(winner.getAccount().getUsername());
+        battleRecord.setLoserUsername(loser.getAccount().getUsername());
+
+        getBattleRecords().add(battleRecord);
     }
 
     private void endOfKillHeroGameMode() {

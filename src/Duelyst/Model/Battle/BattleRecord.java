@@ -24,6 +24,8 @@ public class BattleRecord {
 
     //FOR ATTACK
     private String attackerCardId, attackedCardId;
+    private boolean hasBuff = false;
+    private boolean hasCounterAttack = false;
 
     //FOR MOVE
     private String moveCardId;
@@ -34,6 +36,12 @@ public class BattleRecord {
 
     //FOR DEATH
     private String deathCardId;
+    private boolean isHaveFlag = false;
+
+    //FOR END GAME
+    private boolean isDraw;
+    private String winnerUsername , loserUsername;
+
 
 
     public BattleRecord(BattleRecordEnum typeOfRecord) {
@@ -191,6 +199,54 @@ public class BattleRecord {
 
     public void setMoveCollectibleItem(boolean moveCollectibleItem) {
         isMoveCollectibleItem = moveCollectibleItem;
+    }
+
+    public boolean isHasBuff() {
+        return hasBuff;
+    }
+
+    public void setHasBuff(boolean hasBuff) {
+        this.hasBuff = hasBuff;
+    }
+
+    public boolean isHasCounterAttack() {
+        return hasCounterAttack;
+    }
+
+    public void setHasCounterAttack(boolean hasCounterAttack) {
+        this.hasCounterAttack = hasCounterAttack;
+    }
+
+    public boolean isHaveFlag() {
+        return isHaveFlag;
+    }
+
+    public void setHaveFlag(boolean haveFlag) {
+        isHaveFlag = haveFlag;
+    }
+
+    public boolean isDraw() {
+        return isDraw;
+    }
+
+    public void setDraw(boolean draw) {
+        isDraw = draw;
+    }
+
+    public String getWinnerUsername() {
+        return winnerUsername;
+    }
+
+    public void setWinnerUsername(String winnerUsername) {
+        this.winnerUsername = winnerUsername;
+    }
+
+    public String getLoserUsername() {
+        return loserUsername;
+    }
+
+    public void setLoserUsername(String loserUsername) {
+        this.loserUsername = loserUsername;
     }
 }
 
