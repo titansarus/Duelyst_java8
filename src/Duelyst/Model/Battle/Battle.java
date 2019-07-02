@@ -362,7 +362,6 @@ public class Battle implements Cloneable {
 
         attackedCard.decreaseHealthPoint(attacker.getActionPower() - attackedCard.getShield());//TODO CHECK FOR BUFF
         this.attackedCard = attackedCard;
-        //KamaneDamol Item Apply
 
         if (getPlayingPlayer().getDeck().getItem() instanceof KamaneDamol && attacker.equals(getPlayingPlayer().getDeck().getHero())) {
             getPlayingPlayer().getDeck().getItem().applyItem();
