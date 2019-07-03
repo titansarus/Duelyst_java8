@@ -476,8 +476,13 @@ public class MainMenu {
         System.exit(0);
     }
 
-    public void handleShopBtn() {
+    public void handleShopBtn()  {
         setCardsOfShop();
+        try {
+            Thread.sleep(100);
+        }catch (Exception e){
+            System.out.println("can not sleep :/");
+        }
         setCanPlayButtonSound(true);
         runButtonClickSound();
 
