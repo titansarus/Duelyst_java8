@@ -1,6 +1,7 @@
 package Duelyst.Controllers;
 
 import Duelyst.Client.SendMessage;
+import Duelyst.Exceptions.CardOutOfStock;
 import Duelyst.Exceptions.MyException;
 import Duelyst.Model.Account;
 import Duelyst.Model.Card;
@@ -87,6 +88,16 @@ public class ShopController {
 
     Timeline slowTimeline;
     Timeline fastTimeline;
+
+    private static MyException myException;
+
+    public static MyException getMyException() {
+        return myException;
+    }
+
+    public static void setMyException(MyException myException) {
+        ShopController.myException = myException;
+    }
 
     @FXML
     public void initialize() {
@@ -259,6 +270,10 @@ public class ShopController {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            if (myException instanceof CardOutOfStock) {
+                Container.exceptionGenerator(myException, stackPane);
+                return;
+            }
             buy();
         } else {
             sell();
@@ -386,7 +401,7 @@ public class ShopController {
         tt.setFromY(800);
         tt.setToY(0);
         tt.play();
-        ShopCommand shopCommand =new ShopCommand(ShopCommandsKind.AUCTION_CARD);
+        ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.AUCTION_CARD);
         makeCardList(null, AuctionPaneHBox_hbox);//TODO Bejaye Null Bayad ArrayListe Cardaye Dar Mozayede Bashad
     }
 

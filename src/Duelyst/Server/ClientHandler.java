@@ -1,10 +1,7 @@
 package Duelyst.Server;
 
 import Duelyst.Controllers.Container;
-import Duelyst.Exceptions.InvalidPasswordException;
-import Duelyst.Exceptions.MyException;
-import Duelyst.Exceptions.UserExistException;
-import Duelyst.Exceptions.UserNotExistException;
+import Duelyst.Exceptions.*;
 import Duelyst.Model.Account;
 import Duelyst.Model.CommandClasses.*;
 import Duelyst.Model.Shop;
@@ -145,15 +142,17 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    private void getAuctionCards(){
+    private void getAuctionCards() {
         ShopCommand command = new ShopCommand(ShopCommandsKind.GET_AUCTION_CARDS);
         command.setAuctionCards(ServerShop.getInstance().getAuctionCards());
         formatter.format("%s\n", CommandClass.makeJson(command));
         formatter.flush();
     }
-    private void addCardToAuctionCards(ShopCommand shopCommand){
+
+    private void addCardToAuctionCards(ShopCommand shopCommand) {
         ServerShop.getInstance().addAuctionCards(shopCommand.getAuctionCard());
     }
+
     public void getCards() {
         ShopCommand command = new ShopCommand(ShopCommandsKind.GET_CARDS);
         command.setCards(ServerShop.getInstance().getCards());
@@ -162,21 +161,23 @@ public class ClientHandler implements Runnable {
     }
 
     private void buy(ShopCommand shopCommand) {
-        String cardName = shopCommand.getBuyCard().getCardName();
-        ServerShop.getInstance().decreaseNumberOfCard(cardName);
+        if (ServerShop.getInstance().isFinished(shopCommand.getBuyCard())) {
+            shopCommand.setMyException(new CardOutOfStock());
+            formatter.format("%s\n", CommandClass.makeJson(shopCommand));
+            formatter.flush();
+        }else {
+            String cardName = shopCommand.getBuyCard().getCardName();
+            ServerShop.getInstance().decreaseNumberOfCard(cardName);
+            shopCommand.setMyException(new CardBoughtSuccessfully());
+            formatter.format("%s\n",CommandClass.makeJson(shopCommand));
+            formatter.flush();
+        }
     }
 
     private void sell(ShopCommand shopCommand) {
         String cardName = shopCommand.getBuyCard().getCardName();
         ServerShop.getInstance().increaseNumberOfCard(cardName);
     }
-//    public void getFinishedCard(){
-//        System.out.println("eee chera???");
-//        ShopCommand command = new ShopCommand(ShopCommandsKind.GET_FINISHED_CARD);
-//        command.setFinishedCard(Shop.getInstance().getFinishedCards());
-//        formatter.format("%s\n", CommandClass.makeJson(command));
-//        formatter.flush();
-//    }
 
 
     public Scanner getNetIn() {

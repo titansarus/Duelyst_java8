@@ -2,6 +2,8 @@ package Duelyst.Client;
 
 import Duelyst.Controllers.Container;
 import Duelyst.Controllers.LoginController;
+import Duelyst.Controllers.ShopController;
+import Duelyst.Exceptions.CardOutOfStock;
 import Duelyst.Exceptions.UserNotExistException;
 import Duelyst.Model.Account;
 import Duelyst.Model.Card;
@@ -75,6 +77,7 @@ public class ReadMessage extends Thread {
                 handleGetCards(shopCommand);
                 break;
             case BUY:
+                handleBuyCard(shopCommand);
                 break;
             case SELL:
                 break;
@@ -91,6 +94,12 @@ public class ReadMessage extends Thread {
     private void handleGetCards(ShopCommand shopCommand) {
         ArrayList<Card> cards = shopCommand.getCards();
         Shop.getInstance().getCards().addAll(cards);
+    }
+
+    private void handleBuyCard(ShopCommand shopCommand) {
+        if (shopCommand.getMyException() instanceof CardOutOfStock) {
+            ShopController.setMyException(shopCommand.getMyException());
+        }
     }
 
 }

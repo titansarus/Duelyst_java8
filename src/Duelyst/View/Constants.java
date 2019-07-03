@@ -14,7 +14,7 @@ public class Constants {
             NOT_ENOUGH_CARD_TO_IMPORT_CONTENT = "Not Enough Cards to Import!", INVALID_IMPORT_FILE_CONTENT = "Invalid File to Import",
             EMPTY_FIELD_EXCEPTION_CONTENT = "Please fill in all required fields!", CELL_FILLED_BEFORE_CONTENT = "Cell has a Card on it!", NOT_ENOUGHT_MANA_CONTENT = "You don't have enough mana for this action!",
             CREATE_CARD_FIELD_NOT_COMPLETE_CONTENT = "Please fill all fields that are required for card creation", DECK_IS_INVALID_TITLE = "Invalid Deck!", DECK_IS_VALID_TITLE = "Valid Deck",
-            CHEAT_MODE_ACTIVE_CONTENT = "Don't cheat!", CHEAT_MODE_DEACTIVATED_CONTENT = "Thank you for not cheating!";
+            CHEAT_MODE_ACTIVE_CONTENT = "Don't cheat!", CHEAT_MODE_DEACTIVATED_CONTENT = "Thank you for not cheating!",CARD_OUT_OF_STOCK_CONTENT = "Sorry!We Don't Have This Card Any More",CARD_BOUGHT_SUCCESSFULLY_CONTENT = "You Bought Card Successfully";
 
     //ERROR TITLE
     public static final String USER_EXIST_TITLE = "User Exist", USER_NOT_EXIST_TITLE = "User Not Exist", NOT_EXIST_LOGIN_USER_TITLE = "First Login!",
@@ -23,7 +23,7 @@ public class Constants {
             NO_CARD_SELECTED_FROM_COLLECTION_TITLE = "No Card Selected", NO_MAIN_DECK_TITLE = "Main Deck is Not Selected", NO_DECK_SELECTED_TITLE = "No Deck is Selected",
             NOT_ENOUGH_CARD_TO_IMPORT_TITLE = "Not Enough Cards to Import!", INVALID_IMPORT_FILE_TITLE = "Invalid File", EMPTY_FIELD_EXCEPTION_TITLE = "Empty Fields!", CELL_FILLED_BEFORE_TITLE = "Cell is not Empty!",
             NOT_ENOUGHT_MANA_TITLE = "Not Enough Mana!", CREATE_CARD_FIELD_NOT_COMPLETE_TITLE = "Some fields don't have valid input", DECK_IS_INVALID_CONTENT = "Current main deck combination of cards is invalid!",
-            DECK_IS_VALID_CONTENT = "Selected Main Deck is Valid", CHEAT_MODE_ACTIVE_TITLE = "Cheat Mode Activated!", CHEAT_MODE_DEACTIVATED_TITLE = "Cheat Mode Deactivated!";
+            DECK_IS_VALID_CONTENT = "Selected Main Deck is Valid", CHEAT_MODE_ACTIVE_TITLE = "Cheat Mode Activated!", CHEAT_MODE_DEACTIVATED_TITLE = "Cheat Mode Deactivated!",CARD_OUT_OF_STOCK_TITLE = "Card Out Of Stock",CARD_BOUGHT_SUCCESSFULLY_TITLE = "Buy Card";
 
     //NOTIFICATION
     public static final String USER_CREATED_CONTENT = "User Created Successfully", USER_LOGINED_CONTENT = "User Logined Successfully", BUY_CONTENT = "Buy was Successful!",
