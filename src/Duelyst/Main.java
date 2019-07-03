@@ -61,11 +61,9 @@ public class Main extends Application {
             initAccounts();//TODO Initialize Server Account ArrayList
             Thread thread = new Thread(new Server());
             thread.start();
-        }else {
-
-
             DatabaseCollectioner.DatabaseGenerator();
             Shop.getInstance().getCards().addAll(CreateCardFromDatabaseCard.createCards(DatabaseCard.getDatabaseCards()));
+        }else {
 
             initItems();
             initSpells();

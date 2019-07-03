@@ -1,5 +1,9 @@
 package Duelyst.Client;
 
+import Duelyst.Model.CommandClasses.CommandClass;
+import Duelyst.Model.CommandClasses.ShopCommand;
+import Duelyst.Model.CommandClasses.ShopCommandsKind;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Objects;
@@ -21,7 +25,12 @@ public class Client {
             e.printStackTrace();
         }
         reader = new ReadMessage(Objects.requireNonNull(socket));
+        setCardsOfShop();
         currentClient = this;
+    }
+    private void setCardsOfShop(){
+        ShopCommand command = new ShopCommand(ShopCommandsKind.GET_CARDS);
+        SendMessage.getSendMessage().sendMessage(command);
     }
 
     public static Client getCurrentClient() {
