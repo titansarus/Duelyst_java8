@@ -1,13 +1,7 @@
 package Duelyst.Server;
 
 
-import Duelyst.Client.SendMessage;
-import Duelyst.Exceptions.MyException;
-import Duelyst.Exceptions.NoCardSelectedInShopException;
-import Duelyst.Exceptions.NotEnoughDarickException;
 import Duelyst.Model.*;
-import Duelyst.Model.CommandClasses.ShopCommand;
-import Duelyst.Model.CommandClasses.ShopCommandsKind;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 
@@ -58,10 +52,11 @@ public class ServerShop {
         this.numberOfCards = numberOfCards;
     }
 
-    public void saveTheUpdateOfNumerOfCards() {//TODO send to server
+    public void saveTheUpdateOfNumberOfCards() {//TODO send to server
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
         try {
             Writer writer = new FileWriter("numberOfCards.json");
+
             String s = yaGson.toJson(numberOfCards);
             writer.write(s);
             writer.close();
@@ -75,6 +70,7 @@ public class ServerShop {
         for (String s :
                 numberOfCards) {
             if (s.split(" ")[0].equals(cardName)) {
+                System.out.println(Integer.parseInt(s.split(" ")[1]));
                 return Integer.parseInt(s.split(" ")[1]) < 1;
             }
         }
@@ -86,35 +82,60 @@ public class ServerShop {
         String newNumber = "";
         for (String s :
                 numberOfCards) {
-            if (s.equals(cardName)) {
+            if (s.split(" ")[0].equals(cardName)) {
+                System.out.println("--> "+s+ "    --    "+cardName+"\n");
                 oldNumber = s;
                 int number = Integer.parseInt(s.split(" ")[1]);
+                System.out.println("====>>> number: "+number);
                 number++;
                 newNumber = s.split(" ")[0] + " " + number;
+                break;
             }
         }
+
+        System.out.println(oldNumber);
+        System.out.println(newNumber);
+
+        System.out.println("1-1-1-1-1-1-1-1-1-1-1-1-1---------->>> "+ numberOfCards.size());
+
         numberOfCards.remove(oldNumber);
         numberOfCards.add(newNumber);
-        saveTheUpdateOfNumerOfCards();
+
+        System.out.println("2-2-2-2-2-2-2-2-2-2-2-2-2---------->>> "+ numberOfCards.size());
+
+        saveTheUpdateOfNumberOfCards();
     }
 
 
     public void decreaseNumberOfCard(String cardName) {//TODO send to server
+        System.out.println("in Server shop -> decrease");
         String oldNumber = "";
         String newNumber = "";
         for (String s :
                 numberOfCards) {
-            if (s.equals(cardName)) {
-
+            if (s.split(" ")[0].equals(cardName)) {
+                System.out.println("--> "+s+ "    --    "+cardName+"\n");
                 oldNumber = s;
                 int number = Integer.parseInt(s.split(" ")[1]);
+                System.out.println("====>>> number: "+number);
                 number--;
                 newNumber = s.split(" ")[0] + " " + number;
+                break;
             }
         }
+        System.out.println(oldNumber);
+        System.out.println(newNumber);
+
+        System.out.println("1-1-1-1-1-1-1-1-1-1-1-1-1---------->>> "+ numberOfCards.size());
+
+
         numberOfCards.remove(oldNumber);
         numberOfCards.add(newNumber);
-        saveTheUpdateOfNumerOfCards();
+
+        System.out.println("2-2-2-2-2-2-2-2-2-2-2-2-2---------->>> "+ numberOfCards.size());
+
+
+        saveTheUpdateOfNumberOfCards();
     }
 //    public ArrayList<Card> getFinishedCards(){
 //

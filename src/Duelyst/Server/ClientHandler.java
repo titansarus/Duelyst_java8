@@ -37,6 +37,9 @@ public class ClientHandler implements Runnable {
                 case LOGIN:
                     LoginCommand loginCommand = (LoginCommand) command;
                     switch (loginCommand.getLoginCommandsKind()) {
+                        case SAVE_ACCOUNTS:
+                            Server.saveAccount();
+                            break;
                         case LOGIN:
                             handleLoginAccount(loginCommand);
                             break;
@@ -72,7 +75,7 @@ public class ClientHandler implements Runnable {
     private void handleLoginAccount(LoginCommand loginCommand) {
         String username = loginCommand.getUserName();
         String password = loginCommand.getPassWord();
-        Account account = Server.findAccountInArrayList(username, Account.getAccounts());
+        Account account = Server.findAccountInArrayList(username, Server.getAllAccounts());
         if (!Server.accountExistInArrayList(username, Server.getAllAccounts())) {
             LoginCommand temp = new LoginCommand(LoginCommandsKind.LOGIN, userName, password);
             temp.setMyException(new UserNotExistException());
@@ -100,7 +103,7 @@ public class ClientHandler implements Runnable {
         String password = loginCommand.getPassWord();
         String username = loginCommand.getUserName();
 
-        if (Server.accountExistInArrayList(username, Account.getAccounts())) {
+        if (Server.accountExistInArrayList(username, Server.getAllAccounts())) {
             LoginCommand temp = new LoginCommand(LoginCommandsKind.LOGIN);
             temp.setMyException(new UserNotExistException());
             formatter.format("%s\n", CommandClass.makeJson(temp));
@@ -175,7 +178,7 @@ public class ClientHandler implements Runnable {
     }
 
     private void sell(ShopCommand shopCommand) {
-        String cardName = shopCommand.getBuyCard().getCardName();
+        String cardName = shopCommand.getSellCard().getCardName();
         ServerShop.getInstance().increaseNumberOfCard(cardName);
     }
 

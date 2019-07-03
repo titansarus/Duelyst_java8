@@ -64,10 +64,6 @@ public class Main extends Application {
             DatabaseCollectioner.DatabaseGenerator();
             ServerShop.getInstance().getCards().addAll(CreateCardFromDatabaseCard.createCards(DatabaseCard.getDatabaseCards()));
             ArrayList<String> numberOfCards = new ArrayList<>();
-            for (Card c :
-                    CreateCardFromDatabaseCard.createCards(DatabaseCard.getDatabaseCards())) {
-                numberOfCards.add(c.getCardName()+" 10");
-            }
 
             YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
             Reader reader = new FileReader("numberOfCards.json");

@@ -1,7 +1,10 @@
 package Duelyst.Model;
 
 import Duelyst.Client.Client;
+import Duelyst.Client.SendMessage;
 import Duelyst.Model.Battle.Battle;
+import Duelyst.Model.CommandClasses.LoginCommand;
+import Duelyst.Model.CommandClasses.LoginCommandsKind;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 
@@ -14,9 +17,8 @@ import java.util.Comparator;
 import static Duelyst.View.Constants.*;
 
 public class Account implements Cloneable {
-
-    private static Account loggedAccount = null;
     private static ArrayList<Account> accounts = new ArrayList<>();
+    private static Account loggedAccount = null;
     private ArrayList<String> battleHistory = new ArrayList<>();
 
     private int darickBeforeCheat = 0;
@@ -35,9 +37,15 @@ public class Account implements Cloneable {
         this.password = password;
 
         darick = INITIAL_DARICK;
-        if (!(this instanceof Ai))
-            accounts.add(this);
         cardCollection = new CardCollection(this);
+    }
+
+    public static ArrayList<Account> getAccounts() {
+        return accounts;
+    }
+
+    public static void setAccounts(ArrayList<Account> accounts) {
+        Account.accounts = accounts;
     }
 
     public int toggleCheatMode() {
@@ -75,15 +83,8 @@ public class Account implements Cloneable {
     }
 
     public static void saveAccount() {
-        YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
-        try {
-            Writer writer = new FileWriter("accounts.json");
-            String s = yaGson.toJson(accounts);
-            writer.write(s);
-            writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        LoginCommand loginCommand = new LoginCommand(LoginCommandsKind.SAVE_ACCOUNTS);
+        SendMessage.getSendMessage().sendMessage(loginCommand);
     }
 
     public void enableCheatMode() {
@@ -114,13 +115,7 @@ public class Account implements Cloneable {
         Account.loggedAccount = loggedAccount;
     }
 
-    public static ArrayList<Account> getAccounts() {
-        return accounts;
-    }
 
-    public static void setAccounts(ArrayList<Account> accounts) {
-        Account.accounts = accounts;
-    }
 
     public ArrayList<String> getBattleHistory() {
         return battleHistory;

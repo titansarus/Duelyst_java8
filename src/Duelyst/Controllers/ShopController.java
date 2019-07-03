@@ -401,8 +401,14 @@ public class ShopController {
         tt.setFromY(800);
         tt.setToY(0);
         tt.play();
-        ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.AUCTION_CARD);
-        makeCardList(null, AuctionPaneHBox_hbox);//TODO Bejaye Null Bayad ArrayListe Cardaye Dar Mozayede Bashad
+        ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.GET_AUCTION_CARDS);
+        SendMessage.getSendMessage().sendMessage(shopCommand);
+        try {
+            Thread.sleep(100);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        makeCardList(Shop.getInstance().getAuctionCards(), AuctionPaneHBox_hbox);//TODO Bejaye Null Bayad ArrayListe Cardaye Dar Mozayede Bashad
     }
 
     public void handleAuctionPaneCloseButton() {
