@@ -5,8 +5,8 @@ public class BattleCommand extends CommandClass {
     private BattleCommandsKind battleCommandsKind;
     private int srcRow, srcCol;
     private int desRow, desCol;
-    private int attackerCardId, defenderCardId;
-    private int insertSelectedCardId;
+    private String attackerCardId, defenderCardId;
+    private String insertSelectedCardId;
     private int insertRow, insertCol;
 
 
@@ -22,13 +22,13 @@ public class BattleCommand extends CommandClass {
         setDesCol(desCol);
     }
 
-    public void attack(int attackerCardId, int defenderCardId) {
+    public void attack(String attackerCardId, String defenderCardId) {
         battleCommandsKind = BattleCommandsKind.ATTACK;
         setAttackerCardId(attackerCardId);
         setDefenderCardId(defenderCardId);
     }
 
-    public void insert(int insertSelectedCardId, int insertRow, int insertCol) {
+    public void insert(String insertSelectedCardId, int insertRow, int insertCol) {
         battleCommandsKind = BattleCommandsKind.INSERT;
         setInsertSelectedCardId(insertSelectedCardId);
         setInsertRow(insertRow);
@@ -51,11 +51,11 @@ public class BattleCommand extends CommandClass {
         return desCol;
     }
 
-    public int getAttackerCardId() {
+    public String getAttackerCardId() {
         return attackerCardId;
     }
 
-    public int getDefenderCardId() {
+    public String getDefenderCardId() {
         return defenderCardId;
     }
 
@@ -75,11 +75,11 @@ public class BattleCommand extends CommandClass {
         this.desCol = desCol;
     }
 
-    public void setAttackerCardId(int attackerCardId) {
+    public void setAttackerCardId(String attackerCardId) {
         this.attackerCardId = attackerCardId;
     }
 
-    public void setDefenderCardId(int defenderCardId) {
+    public void setDefenderCardId(String defenderCardId) {
         this.defenderCardId = defenderCardId;
     }
 
@@ -87,11 +87,11 @@ public class BattleCommand extends CommandClass {
         return battleCommandsKind;
     }
 
-    public int getInsertSelectedCardId() {
+    public String getInsertSelectedCardId() {
         return insertSelectedCardId;
     }
 
-    public void setInsertSelectedCardId(int insertSelectedCardId) {
+    public void setInsertSelectedCardId(String insertSelectedCardId) {
         this.insertSelectedCardId = insertSelectedCardId;
     }
 

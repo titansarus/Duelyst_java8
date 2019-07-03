@@ -42,6 +42,8 @@ public class ShopController {
     public Label cardName_lbl;
     public Label cardKind_lbl;
     public Text cardDescription_text;
+    public Pane Auction_pane;
+    public HBox AuctionPaneHBox_hbox;
     @FXML
     ScrollPane buyScrollPane;
 
@@ -347,6 +349,21 @@ public class ShopController {
             tt.play();
         });
         ft.play();
+    }
+
+    public void handleAuctionButton() {
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1500), Auction_pane);
+        tt.setFromY(800);
+        tt.setToY(0);
+        tt.play();
+        makeCardList(null, AuctionPaneHBox_hbox);//TODO Bejaye Null Bayad ArrayListe Cardaye Dar Mozayede Bashad
+    }
+
+    public void handleAuctionPaneCloseButton() {
+        TranslateTransition tt = new TranslateTransition(Duration.millis(750), Auction_pane);
+        tt.setFromY(0);
+        tt.setToY(800);
+        tt.play();
     }
 
     public void handleTabSelectionChanged() {
