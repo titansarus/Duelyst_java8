@@ -147,5 +147,12 @@ public class ServerShop {
     public void setFinishedCard(ArrayList<Card> finishedCard) {
         this.finishedCard = finishedCard;
     }
+    public void addAuctionCards(Card auctionCard) {
+        auctionCards.add(auctionCard);
+    }
+    public void removeAuctionCards(Card auctionCard) {
+        auctionCards.remove(auctionCard);
+    }
+
 
 }

@@ -147,12 +147,12 @@ public class ClientHandler implements Runnable {
 
     private void getAuctionCards(){
         ShopCommand command = new ShopCommand(ShopCommandsKind.GET_AUCTION_CARDS);
-        command.setAuctionCards(Shop.getInstance().getAuctionCards());
+        command.setAuctionCards(ServerShop.getInstance().getAuctionCards());
         formatter.format("%s\n", CommandClass.makeJson(command));
         formatter.flush();
     }
     private void addCardToAuctionCards(ShopCommand shopCommand){
-        Shop.getInstance().addAuctionCards(shopCommand.getAuctionCard());
+        ServerShop.getInstance().addAuctionCards(shopCommand.getAuctionCard());
     }
     public void getCards() {
         ShopCommand command = new ShopCommand(ShopCommandsKind.GET_CARDS);
