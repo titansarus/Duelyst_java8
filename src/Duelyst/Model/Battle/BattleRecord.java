@@ -43,6 +43,13 @@ public class BattleRecord {
     private boolean isDraw;
     private String winnerUsername, loserUsername;
 
+    //FOR INSERT
+    private Card insertCard;
+    private boolean isSpellInsert = false;
+    private int insertRow, insertColumn;
+    private Flag insertFlag;
+    private boolean isFlag = false;
+
 
     public BattleRecord(BattleRecordEnum typeOfRecord) {
         this.typeOfRecord = typeOfRecord;
@@ -295,6 +302,54 @@ public class BattleRecord {
 
     public void setDeathWarrior(Warrior deathWarrior) {
         this.deathWarrior = deathWarrior;
+    }
+
+    public Card getInsertCard() {
+        return insertCard;
+    }
+
+    public void setInsertCard(Card insertCard) {
+        this.insertCard = insertCard;
+    }
+
+    public boolean isSpellInsert() {
+        return isSpellInsert;
+    }
+
+    public void setSpellInsert(boolean spellInsert) {
+        isSpellInsert = spellInsert;
+    }
+
+    public int getInsertRow() {
+        return insertRow;
+    }
+
+    public void setInsertRow(int insertRow) {
+        this.insertRow = insertRow;
+    }
+
+    public int getInsertColumn() {
+        return insertColumn;
+    }
+
+    public void setInsertColumn(int insertColumn) {
+        this.insertColumn = insertColumn;
+    }
+
+    public Flag getInsertFlag() {
+        return insertFlag;
+    }
+
+    public void setInsertFlag(Flag insertFlag) {
+        this.insertFlag = insertFlag;
+    }
+
+    public boolean isFlag() {
+        return isFlag;
+    }
+
+    public void setFlag(boolean flag) {
+        isFlag = flag;
     }
 }
 

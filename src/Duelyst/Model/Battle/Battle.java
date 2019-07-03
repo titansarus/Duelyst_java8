@@ -353,6 +353,11 @@ public class Battle implements Cloneable {
 
     public void insertSelectedCard(int i, int j) {
 
+        boolean doesHaveFlag = false;
+        Flag flag = null;
+        Card card = getSelectedCard();
+
+
         if (getSelectedCard() instanceof Warrior) {
             if (getGrid()[i][j].isEmpty()) {
                 if (getPlayingPlayer().getMana() >= getSelectedCard().getManaCost()) {
@@ -372,6 +377,8 @@ public class Battle implements Cloneable {
                     if (gameGoal == GameGoal.HOLD_FLAG) {
                         if (holdFlag.getX() == i && holdFlag.getY() == j) {
                             holdFlag.setWarrior(getSelectedCell().getWarrior());
+                            flag = holdFlag;
+                            doesHaveFlag = true;
                             battleController.removeFlagImage(holdFlag);
                             getGrid()[i][j].setFlag(null);
                         }
@@ -381,6 +388,8 @@ public class Battle implements Cloneable {
                                 collectableFlags) {
                             if (f.getX() == i && f.getY() == j) {
                                 playingPlayer.setNumberOfFlag(playingPlayer.getNumberOfFlag() + 1);
+                                flag = f;
+                                doesHaveFlag = true;
                                 battleController.removeFlagImage(f);
                                 getGrid()[i][j].setFlag(null);
                             }
@@ -403,7 +412,7 @@ public class Battle implements Cloneable {
                         getPassiveBuffs().add(buff);
                     }
 
-
+                    makeBattleRecordOfInsert(card, i, j, doesHaveFlag, flag, false);
                 } else {
                     throw new NotEnoughManaException();
                 }
@@ -425,6 +434,7 @@ public class Battle implements Cloneable {
             }
             Spell spell = (Spell) getSelectedCard();
             ArrayList<Buff> buffs = spell.getBuffs();
+            makeBattleRecordOfInsert(card, i, j, false, null, true);
             getPlayingPlayer().getHand().remove(getSelectedCard());
             for (Buff b :
                     buffs) {
@@ -451,6 +461,131 @@ public class Battle implements Cloneable {
             endGame();
         }
     }
+    public void insertSelectedCardWithCard(int i, int j , Card selectedCard) {
+
+        boolean doesHaveFlag = false;
+        Flag flag = null;
+        Card card = selectedCard;
+
+
+        if (selectedCard instanceof Warrior) {
+            if (getGrid()[i][j].isEmpty()) {
+                if (getPlayingPlayer().getMana() >= selectedCard.getManaCost()) {
+                    getGrid()[i][j].setWarrior((Warrior) selectedCard);
+                    Warrior warrior = getGrid()[i][j].getWarrior();
+
+                    if (getGrid()[i][j].getCollectibleItem() != null) {
+                        getPlayingPlayer().setCollectibleItem(getGrid()[i][j].getCollectibleItem());
+                        battleController.deleteItemImage(getGrid()[i][j].getCollectibleItem());
+                        getGrid()[i][j].getCollectibleItem().setPlayer(getPlayingPlayer());
+                    }
+
+                    deleteDeathCardsFromMap(); // Check For Death Cards
+
+                    warrior.setInGame(true);
+
+                    if (gameGoal == GameGoal.HOLD_FLAG) {
+                        if (holdFlag.getX() == i && holdFlag.getY() == j) {
+                            holdFlag.setWarrior(getSelectedCell().getWarrior());
+                            flag = holdFlag;
+                            doesHaveFlag = true;
+                            battleController.removeFlagImage(holdFlag);
+                            getGrid()[i][j].setFlag(null);
+                        }
+                    }
+                    if (gameGoal == GameGoal.COLLECT_FLAG) {
+                        for (Flag f :
+                                collectableFlags) {
+                            if (f.getX() == i && f.getY() == j) {
+                                playingPlayer.setNumberOfFlag(playingPlayer.getNumberOfFlag() + 1);
+                                flag = f;
+                                doesHaveFlag = true;
+                                battleController.removeFlagImage(f);
+                                getGrid()[i][j].setFlag(null);
+                            }
+                        }
+                    }
+
+
+                    warrior.setValidToMove(false);
+                    warrior.setValidToAttack(false);
+                    getPlayingPlayer().getHand().remove(warrior);
+
+                    getPlayingPlayer().changeMana(-warrior.getManaCost());
+                    playingPlayer.getInGameCards().add(selectedCard);
+
+                    if (getPlayingPlayer().getDeck().getItem() instanceof AssassinationDagger) {//AssassinationDagger Item Apply
+                        getPlayingPlayer().getDeck().getItem().applyItem();
+                    } else if (getPlayingPlayer().getDeck().getItem() instanceof GhosleTaemid) {//GhosleTaemid Item Apply
+                        Buff buff = new HolyBuff(2, 1);
+                        buff.setWarrior(warrior);
+                        getPassiveBuffs().add(buff);
+                    }
+
+                    makeBattleRecordOfInsert(card, i, j, doesHaveFlag, flag, false);
+                } else {
+                    throw new NotEnoughManaException();
+                }
+            } else {
+
+                throw new CellFilledBeforeException();
+            }
+        } else if (selectedCard instanceof Spell) {
+            System.out.println("spell !! ");
+            findValidCell(KindOfActionForValidCells.SPELL);
+
+            for (Cell c :
+                    validCells) {
+                System.out.println(c.getRow() + "  -  " + c.getColumn());
+            }
+
+            if (!validCells.contains(getGrid()[i][j])) {
+                throw new NotValidCellForSpellException();
+            }
+            Spell spell = (Spell)selectedCard;
+            ArrayList<Buff> buffs = spell.getBuffs();
+            makeBattleRecordOfInsert(card, i, j, false, null, true);
+            getPlayingPlayer().getHand().remove(selectedCard);
+            for (Buff b :
+                    buffs) {
+                switch (spell.getTargetCommunity()) {
+                    case ENEMY_WARRIOR:
+                    case FRIENDLY_WARRIOR:
+                        b.setWarrior(getGrid()[i][j].getWarrior());
+                        ApplyBuff.getInstance().applyBuff(b);
+                        break;
+                    case ALL_OF_FRIEND:
+                        applyAllTargetBuffs(b, playingPlayer);
+                        break;
+                    case ALL_OF_ENEMY:
+                        applyAllTargetBuffs(b, (player1.equals(playingPlayer)) ? player2 : player1);
+                        break;
+                    case CELLS:
+                        b.setCell(getGrid()[i][j]);
+
+                }
+                ApplyBuff.getInstance().applyBuff(b);
+            }
+        }
+        if (!endGame) {
+            endGame();
+        }
+    }
+
+    private void makeBattleRecordOfInsert(Card card, int row, int column, boolean doesHaveFlag, Flag flag, boolean isSpell) {
+        BattleRecord battleRecord = new BattleRecord(BattleRecordEnum.INSERT);
+
+        battleRecord.setInsertCard(card);
+        battleRecord.setInsertRow(row);
+        battleRecord.setInsertColumn(column);
+        battleRecord.setFlag(doesHaveFlag);
+        battleRecord.setFlag(flag);
+        battleRecord.setSpellInsert(isSpell);
+
+        getBattleRecords().add(battleRecord);
+
+    }
+
 
     private void applyAllTargetBuffs(Buff b, Player player) {
         for (Card card :
