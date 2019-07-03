@@ -1,6 +1,7 @@
 package Duelyst.Controllers;
 
 import Duelyst.Exceptions.MyException;
+import Duelyst.Model.Account;
 import Duelyst.Model.Battle.*;
 import Duelyst.Model.Card;
 import Duelyst.Model.Items.*;
@@ -137,8 +138,6 @@ public class BattleController {
                 case MOVE: {
 
                     moveAnimationFromRecord(battleRecord);
-
-
                 }
                 break;
                 case END_TURN: {
@@ -165,6 +164,11 @@ public class BattleController {
                     System.out.println("DEATH RECORD");
                     deathAnimationFromRecord(battleRecord);
                 }
+                break;
+                case END_GAME: {
+                    gameResultAnimationFromRecord(battleRecord);
+                }
+                break;
             }
         }
 
@@ -406,7 +410,7 @@ public class BattleController {
                     System.out.println("Attack");
                     Warrior attacker = getBattle().getSelectedCell().getWarrior();
                     Warrior attacked = getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior();
-                    getBattle().handleAttackCounterDeath(attacker,attacked);
+                    getBattle().handleAttackCounterDeath(attacker, attacked);
                     //handleAttackAnimation(coordinate);
 
                     getBattle().setSelectedCell(null);
@@ -1108,6 +1112,48 @@ public class BattleController {
 
     public void backToMenuInEndOfGame(int loseOrWinOrDraw) {//lose 1 , //win 2 , //draw 3
         gameResultAnimation(loseOrWinOrDraw);
+    }
+
+    private void gameResultAnimationFromRecord(BattleRecord battleRecord) {
+
+        if (!battleRecord.isDraw()) {
+            if (!battleRecord.getWinnerUsername().equals(Account.getLoggedAccount().getUsername())) {
+                gameResult_img.setImage(new Image("res/ui/notification_enemy_turn@2x.png"));
+                gameResult_lbl.setText("You Loose");
+                loseSound();
+            } else if (battleRecord.getWinnerUsername().equals(Account.getLoggedAccount().getUsername())) {
+                gameResult_img.setImage(new Image("res/ui/notification_go@2x.png"));
+                gameResult_lbl.setText("You Win");
+                victorySound();
+            }
+        } else {
+            gameResult_img.setImage(new Image("res/ui/notification_go@2x.png"));
+            gameResult_lbl.setText("Draw!");
+            loseSound();
+        }
+        anchorPane.getChildren().remove(gameResult_img);
+        anchorPane.getChildren().remove(gameResult_lbl);
+        anchorPane.getChildren().add(gameResult_img);
+        anchorPane.getChildren().add(gameResult_lbl);
+        FadeTransition ft = new FadeTransition(Duration.millis(5000), gameResult_img);
+        FadeTransition ft2 = new FadeTransition(Duration.millis(5000), gameResult_lbl);
+        ft.setOnFinished(event -> {
+            if (Container.scenes.size() > 0) {
+                isAnimationRunning = false;
+                Container.handleBack();
+            }
+        });
+        ft.setFromValue(0);
+        ft.setToValue(100);
+        ft2.setFromValue(0);
+        ft2.setToValue(100);
+        ft.setCycleCount(2);
+        ft2.setCycleCount(2);
+        ft.setAutoReverse(true);
+        ft2.setAutoReverse(true);
+
+        ft.play();
+        ft2.play();
     }
 
     private void gameResultAnimation(int kind) {

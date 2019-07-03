@@ -532,13 +532,13 @@ public class Battle implements Cloneable {
 
     }
 
-    public void handleAttackCounterDeath(Warrior attacker, Warrior attacked)
-    {
-        int result = attack(attacker,attacked, false);
+    public void handleAttackCounterDeath(Warrior attacker, Warrior attacked) {
+        int result = attack(attacker, attacked, false);
         if (result == Battle.VALID_COUNTER_WITH_BUFF || result == Battle.VALID_COUNTER_WITHOUT_BUFF) {
-           attack(attacked, attacker, true);
+            attack(attacked, attacker, true);
         }
         deleteDeathCardsFromMap();
+        endGame();
 
     }
 
@@ -570,7 +570,7 @@ public class Battle implements Cloneable {
         System.out.println("==============================> Check Death Cards " + firstDeathCards.size());
         System.out.println(getPlayer1().getInGameCards().size());
 
-        if (firstDeathCards.size()!=0 || secondDeathCards.size()!=0) {
+        if (firstDeathCards.size() != 0 || secondDeathCards.size() != 0) {
             deleteFromMap(firstDeathCards);
             deleteFromMap(secondDeathCards);
             addUsedCardsToGraveYard(firstDeathCards, secondDeathCards);
@@ -993,7 +993,7 @@ public class Battle implements Cloneable {
                 }
             }
             System.out.println("======================>>>> " + numberOfWin);
-            battleController.backToMenuInEndOfGame(numberOfWin);
+            //  battleController.backToMenuInEndOfGame(numberOfWin); //TODO END GAME :::
             System.out.println("Game End");
         }
 
