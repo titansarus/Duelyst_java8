@@ -79,6 +79,7 @@ public class ClientHandler implements Runnable {
             LoginCommand temp = new LoginCommand(LoginCommandsKind.LOGIN, username, password);
             temp.setAccount(account);
             System.out.println("Account sent Successfully!");
+            setLoggedIn(true);
             formatter.format("%s\n", yaGson.toJson(temp));
             formatter.flush();
         }
@@ -100,6 +101,7 @@ public class ClientHandler implements Runnable {
             LoginCommand temp = new LoginCommand(LoginCommandsKind.LOGIN, username, password);
             Server.addAccount(account);
             temp.setAccount(account);
+            setLoggedIn(true);
             Server.saveAccount();
             formatter.format("%s\n", yaGson.toJson(temp));
             formatter.flush();
@@ -123,5 +125,13 @@ public class ClientHandler implements Runnable {
 
     public Formatter getFormatter() {
         return formatter;
+    }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
     }
 }
