@@ -74,6 +74,7 @@ public class ReadMessage extends Thread {
             case GET_CARDS:
                 handleGetCards(shopCommand);
             case GET_FINISHED_CARD:
+                System.out.println("chera vaqean??");
                 handleGetFinishedCards(shopCommand);
                 break;
             case BUY:
@@ -88,7 +89,8 @@ public class ReadMessage extends Thread {
         Shop.getInstance().getCards().addAll(cards);
     }
     private void handleGetFinishedCards(ShopCommand shopCommand) {
-        ArrayList<Card> cards = shopCommand.getFinishedCard();
-        Shop.getInstance().getFinishedCard().addAll(cards);
+        System.out.println("chera vaqean 2??");
+//        ArrayList<Card> cards = shopCommand.getFinishedCard();
+//        Shop.getInstance().getFinishedCard().addAll(cards);
     }
 }

@@ -140,7 +140,6 @@ public class ClientHandler implements Runnable {
                 break;
             case GET_FINISHED_CARD:
                 getFinishedCard();
-
         }
     }
 
@@ -161,8 +160,9 @@ public class ClientHandler implements Runnable {
         Shop.getInstance().increaseNumberOfCard(cardName);
     }
     public void getFinishedCard(){
+        System.out.println("eee chera???");
         ShopCommand command = new ShopCommand(ShopCommandsKind.GET_FINISHED_CARD);
-        command.setFinishedCard(Shop.getInstance().getFinishedCard());
+        command.setFinishedCard(Shop.getInstance().getFinishedCards());
         formatter.format("%s\n", CommandClass.makeJson(command));
         formatter.flush();
     }
