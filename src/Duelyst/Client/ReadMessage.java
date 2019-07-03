@@ -73,6 +73,12 @@ public class ReadMessage extends Thread {
                 break;
             case GET_CARDS:
                 handleGetCards(shopCommand);
+            case GET_FINISHED_CARD:
+                handleGetFinishedCards(shopCommand);
+                break;
+            case BUY:
+                break;
+            case SELL:
 
         }
     }
@@ -80,5 +86,9 @@ public class ReadMessage extends Thread {
     private void handleGetCards(ShopCommand shopCommand) {
         ArrayList<Card> cards = shopCommand.getCards();
         Shop.getInstance().getCards().addAll(cards);
+    }
+    private void handleGetFinishedCards(ShopCommand shopCommand) {
+        ArrayList<Card> cards = shopCommand.getFinishedCard();
+        Shop.getInstance().getFinishedCard().addAll(cards);
     }
 }
