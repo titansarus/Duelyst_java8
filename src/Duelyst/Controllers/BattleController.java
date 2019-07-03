@@ -143,8 +143,8 @@ public class BattleController {
                 break;
                 case END_TURN: {
 
-                            System.out.println("endTurn");
-                            isAnimationRunning = false;
+                    System.out.println("endTurn");
+                    isAnimationRunning = false;
 
 
                 }
@@ -152,8 +152,8 @@ public class BattleController {
                 case INITIALIZE: {
 
 
-                            System.out.println("initialize");
-                            isAnimationRunning = false;
+                    System.out.println("initialize");
+                    isAnimationRunning = false;
 
                 }
                 break;
@@ -404,8 +404,9 @@ public class BattleController {
                         return;
                     }
                     System.out.println("Attack");
-                    getBattle().attack(getBattle().getSelectedCell().getWarrior(), getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior(), false);
-                    getBattle().deleteDeathCardsFromMap();
+                    Warrior attacker = getBattle().getSelectedCell().getWarrior();
+                    Warrior attacked = getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior();
+                    getBattle().handleAttackCounterDeath(attacker,attacked);
                     //handleAttackAnimation(coordinate);
 
                     getBattle().setSelectedCell(null);
@@ -466,7 +467,7 @@ public class BattleController {
     }
 
     public void handleAttackAnimationOfRecord(BattleRecord battleRecord) {
-        isAnimationRunning=true;
+        isAnimationRunning = true;
         Warrior attacker = battleRecord.getAttacker();
         Warrior attacked = battleRecord.getAttacked();
 
@@ -490,7 +491,7 @@ public class BattleController {
         ParallelTransition parallelTransition = new ParallelTransition(tt1, tt2);
 
         if (battleRecord.isHasBuff()) {
-            isAnimationRunning=true;
+            isAnimationRunning = true;
             ImageView imageViewOfBuff = new ImageView(buffEffect);
             anchorPane.getChildren().add(imageViewOfBuff);
             imageViewOfBuff.relocate(cardOnFieldAttacked.getImageView().getLayoutX(), cardOnFieldAttacked.getImageView().getLayoutY());
@@ -509,165 +510,165 @@ public class BattleController {
 
     }
 
-    public void handleAttackAnimation(int[] coordinate) {
-        getBattle().setAttackedCard(getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior());
-        CardOnField cardOnFieldAttacker = CardOnField.findCardOnFieldFromArrayList(cardsOnField, getBattle().getSelectedCell().getWarrior());
-        CardOnField cardOnFieldAttacked = CardOnField.findCardOnFieldFromArrayList(cardsOnField, getBattle().getAttackedCard());
-        Cell targetCell = getBattle().getSelectedCell();
-        Cell sourceCell = getBattle().getGrid()[coordinate[0]][coordinate[1]];
-        int resultOfattack = getBattle().attack(((Warrior) cardOnFieldAttacker.getCard()), ((Warrior) cardOnFieldAttacked.getCard()), false);
-        boolean animationEnded = false;
-        attackSound();
-        cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfAttackGif()));
-
-        TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
-        tt1.setOnFinished(event1 -> {
-            cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
-        });
-        cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfGetDamageGif()));
-        TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
-        tt2.setOnFinished(event1 -> {
-            cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
-
-        });
-
-        ParallelTransition parallelTransition = new ParallelTransition(tt1, tt2);
-        if (resultOfattack == Battle.VALID_COUNTER_WITH_BUFF || resultOfattack == Battle.INVALID_COUNTER_WITH_BUFF) {
-            ImageView imageView = new ImageView(buffEffect);
-            anchorPane.getChildren().add(imageView);
-            imageView.relocate(cardOnFieldAttacked.getImageView().getLayoutX(), cardOnFieldAttacked.getImageView().getLayoutY());
-            TranslateTransition effectTransition = new TranslateTransition(Duration.millis(500), imageView);
-            effectTransition.setOnFinished(event2 -> {
-                anchorPane.getChildren().remove(imageView);
-            });
-            parallelTransition.getChildren().add(effectTransition);
-        }
-        parallelTransition.setOnFinished(event1 -> {
-            if (resultOfattack == Battle.VALID_COUNTER_WITH_BUFF || resultOfattack == Battle.VALID_COUNTER_WITHOUT_BUFF) {
-                if (isValidAttack(targetCell, sourceCell)) {
-                    int newResultOfAttack = getBattle().attack(((Warrior) cardOnFieldAttacked.getCard()), ((Warrior) cardOnFieldAttacker.getCard()), true);
-                    attackSound();
-                    cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfAttackGif()));
-                    TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
-                    tt3.setOnFinished(event2 -> {
-                        cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
-                        if (((Warrior) cardOnFieldAttacked.getCard()).isDeath()) {
-                            animationOfDeath(((Warrior) cardOnFieldAttacked.getCard()));
-                        }
-                    });
-                    cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfGetDamageGif()));
-                    TranslateTransition tt4 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
-                    tt4.setOnFinished(event2 -> {
-                        cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
-                        if (((Warrior) cardOnFieldAttacker.getCard()).isDeath()) {
-                            animationOfDeath(((Warrior) cardOnFieldAttacker.getCard()));
-                        }
-                    });
-                    ParallelTransition parallelTransition2 = new ParallelTransition(tt3, tt4);
-                    if (newResultOfAttack == Battle.VALID_COUNTER_WITH_BUFF || newResultOfAttack == Battle.INVALID_COUNTER_WITH_BUFF) {
-                        ImageView imageView = new ImageView(buffEffect);
-                        anchorPane.getChildren().add(imageView);
-                        imageView.relocate(cardOnFieldAttacker.getImageView().getLayoutX(), cardOnFieldAttacker.getImageView().getLayoutY());
-                        TranslateTransition effectTransition2 = new TranslateTransition(Duration.millis(500), imageView);
-                        effectTransition2.setOnFinished(event2 -> {
-                            anchorPane.getChildren().remove(imageView);
-                        });
-                        parallelTransition2.getChildren().add(effectTransition2);
-                    }
-
-                    parallelTransition2.play();
-                }
-            } else {
-                if (((Warrior) cardOnFieldAttacked.getCard()).isDeath()) {
-                    animationOfDeath(((Warrior) cardOnFieldAttacked.getCard()));
-                }
-            }
-        });
-
-        battle.deleteDeathCardsFromMap(); // Check For Death Cards
-
-        parallelTransition.play();
-
-    }
-
-    public void handleAttackFromAi(Warrior attacker, Warrior attacked) {
-        CardOnField cardOnFieldAttacker = CardOnField.findCardOnFieldFromArrayList(cardsOnField, attacker);
-        CardOnField cardOnFieldAttacked = CardOnField.findCardOnFieldFromArrayList(cardsOnField, attacked);
-        int resultOfattack = getBattle().attack(((Warrior) cardOnFieldAttacker.getCard()), ((Warrior) cardOnFieldAttacked.getCard()), false);
-        attackSound();
-        boolean animationEnded = false;
-
-        cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfAttackGif()));
-
-        TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
-        tt1.setOnFinished(event1 -> {
-            cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
-        });
-        cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfGetDamageGif()));
-        TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
-        tt2.setOnFinished(event1 -> {
-            cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
-
-        });
-
-        ParallelTransition parallelTransition = new ParallelTransition(tt1, tt2);
-        if (resultOfattack == Battle.VALID_COUNTER_WITH_BUFF || resultOfattack == Battle.INVALID_COUNTER_WITH_BUFF) {
-            ImageView imageView = new ImageView(buffEffect);
-            anchorPane.getChildren().add(imageView);
-            imageView.relocate(cardOnFieldAttacked.getImageView().getLayoutX(), cardOnFieldAttacked.getImageView().getLayoutY());
-            TranslateTransition effectTransition = new TranslateTransition(Duration.millis(500), imageView);
-            effectTransition.setOnFinished(event2 -> {
-                anchorPane.getChildren().remove(imageView);
-            });
-            parallelTransition.getChildren().add(effectTransition);
-        }
-        parallelTransition.setOnFinished(event1 -> {
-            if (resultOfattack == Battle.VALID_COUNTER_WITH_BUFF || resultOfattack == Battle.VALID_COUNTER_WITHOUT_BUFF) {
-                int newResultOfAttack = getBattle().attack(((Warrior) cardOnFieldAttacked.getCard()), ((Warrior) cardOnFieldAttacker.getCard()), true);
-                attackSound();
-                cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfAttackGif()));
-                TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
-                tt3.setOnFinished(event2 -> {
-                    cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
-                    if (((Warrior) cardOnFieldAttacker.getCard()).isDeath()) {
-                        animationOfDeath(((Warrior) cardOnFieldAttacked.getCard()));
-                    }
-                });
-                cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfGetDamageGif()));
-                TranslateTransition tt4 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
-                tt4.setOnFinished(event2 -> {
-                    cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
-                    if (((Warrior) cardOnFieldAttacked.getCard()).isDeath()) {
-                        animationOfDeath(((Warrior) cardOnFieldAttacked.getCard()));
-                    }
-
-                });
-                ParallelTransition parallelTransition2 = new ParallelTransition(tt3, tt4);
-                if (newResultOfAttack == Battle.VALID_COUNTER_WITH_BUFF || newResultOfAttack == Battle.INVALID_COUNTER_WITH_BUFF) {
-                    ImageView imageView = new ImageView(buffEffect);
-                    anchorPane.getChildren().add(imageView);
-                    imageView.relocate(cardOnFieldAttacker.getImageView().getLayoutX(), cardOnFieldAttacker.getImageView().getLayoutY());
-                    TranslateTransition effectTransition2 = new TranslateTransition(Duration.millis(500), imageView);
-                    effectTransition2.setOnFinished(event2 -> {
-
-                        anchorPane.getChildren().remove(imageView);
-                    });
-                    parallelTransition2.getChildren().add(effectTransition2);
-                } else {
-
-                    battle.deleteDeathCardsFromMap();
-                }
-
-                parallelTransition2.play();
-            } else {
-                if (((Warrior) cardOnFieldAttacked.getCard()).isDeath()) {
-                    animationOfDeath(((Warrior) cardOnFieldAttacked.getCard()));
-                }
-            }
-        });
-        parallelTransition.play();
-
-    }
+//    public void handleAttackAnimation(int[] coordinate) {
+//        getBattle().setAttackedCard(getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior());
+//        CardOnField cardOnFieldAttacker = CardOnField.findCardOnFieldFromArrayList(cardsOnField, getBattle().getSelectedCell().getWarrior());
+//        CardOnField cardOnFieldAttacked = CardOnField.findCardOnFieldFromArrayList(cardsOnField, getBattle().getAttackedCard());
+//        Cell targetCell = getBattle().getSelectedCell();
+//        Cell sourceCell = getBattle().getGrid()[coordinate[0]][coordinate[1]];
+//        int resultOfattack = getBattle().attack(((Warrior) cardOnFieldAttacker.getCard()), ((Warrior) cardOnFieldAttacked.getCard()), false);
+//        boolean animationEnded = false;
+//        attackSound();
+//        cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfAttackGif()));
+//
+//        TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
+//        tt1.setOnFinished(event1 -> {
+//            cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
+//        });
+//        cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfGetDamageGif()));
+//        TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
+//        tt2.setOnFinished(event1 -> {
+//            cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
+//
+//        });
+//
+//        ParallelTransition parallelTransition = new ParallelTransition(tt1, tt2);
+//        if (resultOfattack == Battle.VALID_COUNTER_WITH_BUFF || resultOfattack == Battle.INVALID_COUNTER_WITH_BUFF) {
+//            ImageView imageView = new ImageView(buffEffect);
+//            anchorPane.getChildren().add(imageView);
+//            imageView.relocate(cardOnFieldAttacked.getImageView().getLayoutX(), cardOnFieldAttacked.getImageView().getLayoutY());
+//            TranslateTransition effectTransition = new TranslateTransition(Duration.millis(500), imageView);
+//            effectTransition.setOnFinished(event2 -> {
+//                anchorPane.getChildren().remove(imageView);
+//            });
+//            parallelTransition.getChildren().add(effectTransition);
+//        }
+//        parallelTransition.setOnFinished(event1 -> {
+//            if (resultOfattack == Battle.VALID_COUNTER_WITH_BUFF || resultOfattack == Battle.VALID_COUNTER_WITHOUT_BUFF) {
+//                if (isValidAttack(targetCell, sourceCell)) {
+//                    int newResultOfAttack = getBattle().attack(((Warrior) cardOnFieldAttacked.getCard()), ((Warrior) cardOnFieldAttacker.getCard()), true);
+//                    attackSound();
+//                    cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfAttackGif()));
+//                    TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
+//                    tt3.setOnFinished(event2 -> {
+//                        cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
+//                        if (((Warrior) cardOnFieldAttacked.getCard()).isDeath()) {
+//                            animationOfDeath(((Warrior) cardOnFieldAttacked.getCard()));
+//                        }
+//                    });
+//                    cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfGetDamageGif()));
+//                    TranslateTransition tt4 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
+//                    tt4.setOnFinished(event2 -> {
+//                        cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
+//                        if (((Warrior) cardOnFieldAttacker.getCard()).isDeath()) {
+//                            animationOfDeath(((Warrior) cardOnFieldAttacker.getCard()));
+//                        }
+//                    });
+//                    ParallelTransition parallelTransition2 = new ParallelTransition(tt3, tt4);
+//                    if (newResultOfAttack == Battle.VALID_COUNTER_WITH_BUFF || newResultOfAttack == Battle.INVALID_COUNTER_WITH_BUFF) {
+//                        ImageView imageView = new ImageView(buffEffect);
+//                        anchorPane.getChildren().add(imageView);
+//                        imageView.relocate(cardOnFieldAttacker.getImageView().getLayoutX(), cardOnFieldAttacker.getImageView().getLayoutY());
+//                        TranslateTransition effectTransition2 = new TranslateTransition(Duration.millis(500), imageView);
+//                        effectTransition2.setOnFinished(event2 -> {
+//                            anchorPane.getChildren().remove(imageView);
+//                        });
+//                        parallelTransition2.getChildren().add(effectTransition2);
+//                    }
+//
+//                    parallelTransition2.play();
+//                }
+//            } else {
+//                if (((Warrior) cardOnFieldAttacked.getCard()).isDeath()) {
+//                    animationOfDeath(((Warrior) cardOnFieldAttacked.getCard()));
+//                }
+//            }
+//        });
+//
+//        battle.deleteDeathCardsFromMap(); // Check For Death Cards
+//
+//        parallelTransition.play();
+//
+//    }
+//
+//    public void handleAttackFromAi(Warrior attacker, Warrior attacked) {
+//        CardOnField cardOnFieldAttacker = CardOnField.findCardOnFieldFromArrayList(cardsOnField, attacker);
+//        CardOnField cardOnFieldAttacked = CardOnField.findCardOnFieldFromArrayList(cardsOnField, attacked);
+//        int resultOfattack = getBattle().attack(((Warrior) cardOnFieldAttacker.getCard()), ((Warrior) cardOnFieldAttacked.getCard()), false);
+//        attackSound();
+//        boolean animationEnded = false;
+//
+//        cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfAttackGif()));
+//
+//        TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
+//        tt1.setOnFinished(event1 -> {
+//            cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
+//        });
+//        cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfGetDamageGif()));
+//        TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
+//        tt2.setOnFinished(event1 -> {
+//            cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
+//
+//        });
+//
+//        ParallelTransition parallelTransition = new ParallelTransition(tt1, tt2);
+//        if (resultOfattack == Battle.VALID_COUNTER_WITH_BUFF || resultOfattack == Battle.INVALID_COUNTER_WITH_BUFF) {
+//            ImageView imageView = new ImageView(buffEffect);
+//            anchorPane.getChildren().add(imageView);
+//            imageView.relocate(cardOnFieldAttacked.getImageView().getLayoutX(), cardOnFieldAttacked.getImageView().getLayoutY());
+//            TranslateTransition effectTransition = new TranslateTransition(Duration.millis(500), imageView);
+//            effectTransition.setOnFinished(event2 -> {
+//                anchorPane.getChildren().remove(imageView);
+//            });
+//            parallelTransition.getChildren().add(effectTransition);
+//        }
+//        parallelTransition.setOnFinished(event1 -> {
+//            if (resultOfattack == Battle.VALID_COUNTER_WITH_BUFF || resultOfattack == Battle.VALID_COUNTER_WITHOUT_BUFF) {
+//                int newResultOfAttack = getBattle().attack(((Warrior) cardOnFieldAttacked.getCard()), ((Warrior) cardOnFieldAttacker.getCard()), true);
+//                attackSound();
+//                cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfAttackGif()));
+//                TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
+//                tt3.setOnFinished(event2 -> {
+//                    cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
+//                    if (((Warrior) cardOnFieldAttacker.getCard()).isDeath()) {
+//                        animationOfDeath(((Warrior) cardOnFieldAttacked.getCard()));
+//                    }
+//                });
+//                cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfGetDamageGif()));
+//                TranslateTransition tt4 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
+//                tt4.setOnFinished(event2 -> {
+//                    cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
+//                    if (((Warrior) cardOnFieldAttacked.getCard()).isDeath()) {
+//                        animationOfDeath(((Warrior) cardOnFieldAttacked.getCard()));
+//                    }
+//
+//                });
+//                ParallelTransition parallelTransition2 = new ParallelTransition(tt3, tt4);
+//                if (newResultOfAttack == Battle.VALID_COUNTER_WITH_BUFF || newResultOfAttack == Battle.INVALID_COUNTER_WITH_BUFF) {
+//                    ImageView imageView = new ImageView(buffEffect);
+//                    anchorPane.getChildren().add(imageView);
+//                    imageView.relocate(cardOnFieldAttacker.getImageView().getLayoutX(), cardOnFieldAttacker.getImageView().getLayoutY());
+//                    TranslateTransition effectTransition2 = new TranslateTransition(Duration.millis(500), imageView);
+//                    effectTransition2.setOnFinished(event2 -> {
+//
+//                        anchorPane.getChildren().remove(imageView);
+//                    });
+//                    parallelTransition2.getChildren().add(effectTransition2);
+//                } else {
+//
+//                    battle.deleteDeathCardsFromMap();
+//                }
+//
+//                parallelTransition2.play();
+//            } else {
+//                if (((Warrior) cardOnFieldAttacked.getCard()).isDeath()) {
+//                    animationOfDeath(((Warrior) cardOnFieldAttacked.getCard()));
+//                }
+//            }
+//        });
+//        parallelTransition.play();
+//
+//    }
 
     public void insertPlayerHeroes() {
         getBattle().setPlayingPlayer(getBattle().getPlayer1());

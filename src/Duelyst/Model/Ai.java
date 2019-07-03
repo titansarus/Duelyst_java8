@@ -65,8 +65,8 @@ public class Ai extends Account {
 
                 battle.findValidCell(KindOfActionForValidCells.MOVE);
                 Cell cell = battle.getValidCells().get(random.nextInt(battle.getValidCells().size()));
-                battle.move(cell.getRow(),cell.getColumn() , ((Warrior) card));
-               // getBattleController().moveAnimationRunAi(new int[]{cell.getRow(), cell.getColumn()}, (Warrior) card); //CHECK THAT CARD IS WARRIOR
+                battle.move(cell.getRow(), cell.getColumn(), ((Warrior) card));
+                // getBattleController().moveAnimationRunAi(new int[]{cell.getRow(), cell.getColumn()}, (Warrior) card); //CHECK THAT CARD IS WARRIOR
             } catch (Exception e) {
                 System.out.println("Ai can not move");
             }
@@ -88,8 +88,8 @@ public class Ai extends Account {
                     Cell cell = battle.getValidCells().get(random.nextInt(battle.getValidCells().size()));
                     Warrior attacker = (Warrior) card;
                     Warrior attackedWarrior = cell.getWarrior();
-                    battle.attack(attacker,attackedWarrior,false);
-                   // getBattleController().handleAttackFromAi(attacker, attackedWarrior);
+                    battle.handleAttackCounterDeath(attacker, attackedWarrior);
+                    // getBattleController().handleAttackFromAi(attacker, attackedWarrior);
                 } catch (Exception e) {
                     System.out.println("Ai can not attack");
                 }

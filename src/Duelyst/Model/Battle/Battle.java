@@ -507,11 +507,12 @@ public class Battle implements Cloneable {
             attacker.setValidToAttack(false);
         }
 
-        if (isFromCounterAttack || (!attackedCard.isValidCounterAttack())) {
-            deleteDeathCardsFromMap(); // Check For Death Cards
-            if (!endGame) {
-                endGame();
-            }
+//        if (isFromCounterAttack || (!attackedCard.isValidCounterAttack())) {
+//            deleteDeathCardsFromMap(); // Check For Death Cards
+//
+//        }
+        if (!endGame) {
+            endGame();
         }
 
         setSelectedCell(null);
@@ -528,6 +529,16 @@ public class Battle implements Cloneable {
             makeBattleRecordOfAttack(attacker, attackedCard, true, false);
             return INVALID_COUNTER_WITH_BUFF;
         }
+
+    }
+
+    public void handleAttackCounterDeath(Warrior attacker, Warrior attacked)
+    {
+        int result = attack(attacker,attacked, false);
+        if (result == Battle.VALID_COUNTER_WITH_BUFF || result == Battle.VALID_COUNTER_WITHOUT_BUFF) {
+           attack(attacked, attacker, true);
+        }
+        deleteDeathCardsFromMap();
 
     }
 
