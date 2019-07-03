@@ -132,6 +132,12 @@ public class ClientHandler implements Runnable {
             case SEND_CARD:
                 break;
             case AUCTION_CARD:
+                break;
+            case SELL:
+                sell(shopCommand);
+                break;
+            case BUY:
+                buy(shopCommand);
         }
     }
 
@@ -140,6 +146,16 @@ public class ClientHandler implements Runnable {
         command.setCards(Shop.getInstance().getCards());
         formatter.format("%s\n", CommandClass.makeJson(command));
         formatter.flush();
+    }
+
+    private void buy(ShopCommand shopCommand){
+        String cardName = shopCommand.getBuyCard().getCardName();
+        Shop.getInstance().decreaseNumberOfCard(cardName);
+    }
+
+    private void sell(ShopCommand shopCommand){
+        String cardName = shopCommand.getBuyCard().getCardName();
+        Shop.getInstance().increaseNumberOfCard(cardName);
     }
 
 

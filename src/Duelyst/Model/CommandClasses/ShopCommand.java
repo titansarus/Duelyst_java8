@@ -9,6 +9,8 @@ public class ShopCommand extends CommandClass {
     private ArrayList<Card> cards;
     private Card newCard;
     private Card auctionCard;
+    private Card buyCard;
+    private Card sellCard;
 
     public ShopCommand(ShopCommandsKind shopCommandsKind) {
         super(CommandKind.SHOP);
@@ -45,5 +47,21 @@ public class ShopCommand extends CommandClass {
 
     public void setShopCommandsKind(ShopCommandsKind shopCommandsKind) {
         this.shopCommandsKind = shopCommandsKind;
+    }
+
+    public Card getSellCard() {
+        return sellCard;
+    }
+
+    public void setSellCard(Card sellCard) {
+        this.sellCard = sellCard;
+    }
+
+    public Card getBuyCard() {
+        return buyCard;
+    }
+
+    public void setBuyCard(Card buyCard) {
+        this.buyCard = buyCard;
     }
 }
