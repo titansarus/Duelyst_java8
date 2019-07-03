@@ -50,6 +50,7 @@ public class LoginController {
 
 
     Timeline timeline = new Timeline();
+    private static MyException myException;
 
     @FXML
     public void initialize() {
@@ -100,20 +101,20 @@ public class LoginController {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        //TODO These Checks Should Be Removed And Moved To Server Side
-        Account account = Server.findAccountInArrayList(username, Account.getAccounts());
-        if (!Server.accountExistInArrayList(username, Account.getAccounts())) {
-            Container.exceptionGenerator(new UserNotExistException(), stackPane);
-            return;
-        }
-
-        if (!account.getPassword().equals(password)) {
-            Container.exceptionGenerator(new InvalidPasswordException(), stackPane);
-            return;
-        }
-        //TODO =======================================================
-        Account.setLoggedAccount(account);
-        Shop.getInstance().getCards().addAll(account.getCardCollection().getCustomCards());
+//        //TODO These Checks Should Be Removed And Moved To Server Side
+//        Account account = Server.findAccountInArrayList(username, Account.getAccounts());
+//        if (!Server.accountExistInArrayList(username, Account.getAccounts())) {
+//            Container.exceptionGenerator(new UserNotExistException(), stackPane);
+//            return;
+//        }
+//
+//        if (!account.getPassword().equals(password)) {
+//            Container.exceptionGenerator(new InvalidPasswordException(), stackPane);
+//            return;
+//        }
+//        //TODO =======================================================
+//        Account.setLoggedAccount(account);
+//        Shop.getInstance().getCards().addAll(account.getCardCollection().getCustomCards());
         handleProgressBar();
     }
 
@@ -131,13 +132,13 @@ public class LoginController {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        if (Server.accountExistInArrayList(username, Account.getAccounts())) {
-            Container.exceptionGenerator(new UserExistException(), stackPane);
-            return;
-        }
-        new Account(username, password);
-        Server.saveAccount();
+//
+//        if (Server.accountExistInArrayList(username, Account.getAccounts())) {
+//            Container.exceptionGenerator(new UserExistException(), stackPane);
+//            return;
+//        }
+//        new Account(username, password);
+//        Server.saveAccount();
         handleLoginBtn();
     }
 
@@ -175,4 +176,11 @@ public class LoginController {
     }
 
 
+    public static MyException getMyException() {
+        return myException;
+    }
+
+    public static void setMyException(MyException e) {
+      myException = e;
+    }
 }

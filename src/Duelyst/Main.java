@@ -10,6 +10,7 @@ import Duelyst.Model.Items.*;
 import Duelyst.Model.Shop;
 import Duelyst.Model.Spell.Spell;
 import Duelyst.Model.Spell.TargetCommunity;
+import Duelyst.Server.Server;
 import Duelyst.Utility.CreateCardFromDatabaseCard;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
@@ -93,6 +94,7 @@ public class Main extends Application {
             if (accounts != null) {
                 for (Account account : accounts) {
                     Account.getAccounts().add(account);
+                    Server.addAccount(account);//TODO Temporary Adding Should be Removed In Final Version
                 }
             }
 

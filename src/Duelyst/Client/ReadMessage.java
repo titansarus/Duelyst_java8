@@ -1,6 +1,11 @@
 package Duelyst.Client;
 
+import Duelyst.Controllers.Container;
+import Duelyst.Controllers.LoginController;
+import Duelyst.Exceptions.UserNotExistException;
+import Duelyst.Model.Account;
 import Duelyst.Model.CommandClasses.CommandClass;
+import Duelyst.Model.CommandClasses.LoginCommand;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 
@@ -32,7 +37,12 @@ public class ReadMessage extends Thread {
             this.commandClass = yaGson.fromJson(command, CommandClass.class);
             switch (commandClass.getCommandKind()) {
                 case LOGIN:
-                    //TODO Bayad Accounte Khod Ra az Server Daryaft konad
+                    LoginCommand loginCommand = (LoginCommand)commandClass;
+                    if(loginCommand.getMyException() != null)
+                        LoginController.setMyException(loginCommand.getMyException());
+                    else {
+                        Account.setLoggedAccount(loginCommand.getAccount());
+                    }
                     break;
                 case SHOP:
                     //TODO Bayad liste card haye shope server ra begirad

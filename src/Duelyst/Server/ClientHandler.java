@@ -94,9 +94,11 @@ public class ClientHandler implements Runnable {
             LoginCommand temp = new LoginCommand(LoginCommandsKind.LOGIN, username, password);
             Server.addAccount(account);
             temp.setAccount(account);
+            Server.saveAccount();
             formatter.format("%s\n", yaGson.toJson(account));
             formatter.flush();
         }
+
 
     }
 
