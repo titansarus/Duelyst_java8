@@ -114,6 +114,10 @@ public class LoginController {
 //        //TODO =======================================================
 //        Account.setLoggedAccount(account);
 //        Shop.getInstance().getCards().addAll(account.getCardCollection().getCustomCards());
+        if (getMyException() != null) {
+            Container.exceptionGenerator(getMyException(), stackPane);
+            return;
+        }
         handleProgressBar();
     }
 
@@ -137,6 +141,10 @@ public class LoginController {
 //        }
 //        new Account(username, password);
 //        Server.saveAccount();
+        if (getMyException() != null) {
+            Container.exceptionGenerator(getMyException(), stackPane);
+            return;
+        }
         handleLoginBtn();
     }
 
