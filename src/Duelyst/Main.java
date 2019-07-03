@@ -63,11 +63,12 @@ public class Main extends Application {
             thread.start();
             DatabaseCollectioner.DatabaseGenerator();
             Shop.getInstance().getCards().addAll(CreateCardFromDatabaseCard.createCards(DatabaseCard.getDatabaseCards()));
-        }else {
 
             initItems();
             initSpells();
             initAccounts();
+        }else {
+
 
             //TODO Run Client And Make Connection To The Server
             Client client = new Client();
