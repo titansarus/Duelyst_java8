@@ -74,7 +74,7 @@ public class ServerShop {
         String cardName = card.getCardName();
         for (String s :
                 numberOfCards) {
-            if (s.equals(cardName)) {
+            if (s.split(" ")[0].equals(cardName)) {
                 return Integer.parseInt(s.split(" ")[1]) < 1;
             }
         }
