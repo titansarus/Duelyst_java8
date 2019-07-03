@@ -43,6 +43,7 @@ public class ShopController {
     public Label cardKind_lbl;
     public Text cardDescription_text;
     public Pane Auction_pane;
+    public HBox AuctionPaneHBox_hbox;
     @FXML
     ScrollPane buyScrollPane;
 
@@ -355,6 +356,7 @@ public class ShopController {
         tt.setFromY(800);
         tt.setToY(0);
         tt.play();
+        makeCardList(null, AuctionPaneHBox_hbox);//TODO Bejaye Null Bayad ArrayListe Cardaye Dar Mozayede Bashad
     }
 
     public void handleAuctionPaneCloseButton() {

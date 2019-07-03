@@ -127,6 +127,11 @@
                   <Image url="@../../../res/ui/button_close@2x.png" />
                </image>
             </ImageView>
+            <ScrollPane layoutY="72.0" prefHeight="678.0" prefWidth="1024.0">
+               <content>
+                  <HBox fx:id="AuctionPaneHBox_hbox" prefHeight="676.0" prefWidth="1021.0" />
+               </content>
+            </ScrollPane>
          </children>
       </Pane>
     </children>
