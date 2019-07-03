@@ -94,8 +94,7 @@ public class LoginController {
             Container.exceptionGenerator(new EmptyFieldsException(), stackPane);
             return;
         }
-
-        new SendMessage(Client.getCurrentClient().getSocket(), new LoginCommand(LoginCommandsKind.LOGIN, username, password));
+        SendMessage.getSendMessage().sendMessage(new LoginCommand(LoginCommandsKind.LOGIN, username, password));
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -125,8 +124,7 @@ public class LoginController {
             Container.exceptionGenerator(new EmptyFieldsException(), stackPane);
             return;
         }
-
-        new SendMessage(Client.getCurrentClient().getSocket(), new LoginCommand(LoginCommandsKind.SIGN_UP, username, password));
+        SendMessage.getSendMessage().sendMessage(new LoginCommand(LoginCommandsKind.SIGN_UP, username, password));
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -181,6 +179,6 @@ public class LoginController {
     }
 
     public static void setMyException(MyException e) {
-      myException = e;
+        myException = e;
     }
 }

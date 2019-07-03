@@ -7,26 +7,26 @@ import java.net.Socket;
 import java.util.Formatter;
 
 public class SendMessage {
-
+    private static SendMessage sendMessage = new SendMessage();
     private Formatter formatter;
-    private CommandClass commandClass;
-
-    public SendMessage(Socket socket, CommandClass commandClass)  {
+    private  Socket socket = Client.getCurrentClient().getSocket();
+    public SendMessage()  {
         try {
             formatter = new Formatter(socket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.commandClass = commandClass;
-        sendMessage();
     }
 
-    private void sendMessage() {
-        String message = CommandClass.makeJson(this.commandClass);
+    public void sendMessage(CommandClass commandClass) {
+        String message = CommandClass.makeJson(commandClass);
         formatter.format("%s\n", message);
         formatter.flush();
         System.out.println("Message Sent!");
     }
 
 
+    public static SendMessage getSendMessage() {
+        return sendMessage;
+    }
 }
