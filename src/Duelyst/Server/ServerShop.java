@@ -70,6 +70,17 @@ public class ServerShop {
         }
     }
 
+    public boolean isFinished(Card card) {
+        String cardName = card.getCardName();
+        for (String s :
+                numberOfCards) {
+            if (s.equals(cardName)) {
+                return Integer.parseInt(s.split(" ")[1]) < 1;
+            }
+        }
+        return true;
+    }
+
     public void increaseNumberOfCard(String cardName) {//TODO send to server
         String oldNumber = "";
         String newNumber = "";
@@ -86,6 +97,7 @@ public class ServerShop {
         numberOfCards.add(newNumber);
         saveTheUpdateOfNumerOfCards();
     }
+
 
     public void decreaseNumberOfCard(String cardName) {//TODO send to server
         String oldNumber = "";
@@ -147,9 +159,11 @@ public class ServerShop {
     public void setFinishedCard(ArrayList<Card> finishedCard) {
         this.finishedCard = finishedCard;
     }
+
     public void addAuctionCards(Card auctionCard) {
         auctionCards.add(auctionCard);
     }
+
     public void removeAuctionCards(Card auctionCard) {
         auctionCards.remove(auctionCard);
     }
