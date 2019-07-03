@@ -375,7 +375,10 @@ public class ShopController {
     }
 
     public void handleAddToAuctionButton() {
-        //TODO Kamel She
+        Card card = Shop.getSelectedCard();
+        ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.AUCTION_CARD);
+        shopCommand.setAuctionCard(card);
+        SendMessage.getSendMessage().sendMessage(shopCommand);
     }
 
     public void handleAuctionButton() {
@@ -383,6 +386,7 @@ public class ShopController {
         tt.setFromY(800);
         tt.setToY(0);
         tt.play();
+        ShopCommand shopCommand =new ShopCommand(ShopCommandsKind.AUCTION_CARD);
         makeCardList(null, AuctionPaneHBox_hbox);//TODO Bejaye Null Bayad ArrayListe Cardaye Dar Mozayede Bashad
     }
 

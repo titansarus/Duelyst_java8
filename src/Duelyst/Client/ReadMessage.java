@@ -80,14 +80,22 @@ public class ReadMessage extends Thread {
             case BUY:
                 break;
             case SELL:
-
+                break;
+            case GET_AUCTION_CARDS:
+                setAuctionCards(shopCommand);
+                break;
         }
+    }
+
+    private void setAuctionCards(ShopCommand shopCommand) {
+        Shop.getInstance().setAuctionCards(shopCommand.getAuctionCards());
     }
 
     private void handleGetCards(ShopCommand shopCommand) {
         ArrayList<Card> cards = shopCommand.getCards();
         Shop.getInstance().getCards().addAll(cards);
     }
+
     private void handleGetFinishedCards(ShopCommand shopCommand) {
         System.out.println("chera vaqean 2??");
 //        ArrayList<Card> cards = shopCommand.getFinishedCard();
