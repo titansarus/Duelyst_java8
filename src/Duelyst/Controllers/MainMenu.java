@@ -122,16 +122,14 @@ public class MainMenu {
     }
 
     public void runButtonHoverSound() {
-       runSoundMediaPlayer(BUTTON_HOVER_SOUND);
+        runSoundMediaPlayer(BUTTON_HOVER_SOUND);
     }
 
-    public void runButtonClickSound()
-    {
+    public void runButtonClickSound() {
         runSoundMediaPlayer(CLICK_SOUND);
     }
 
-    public void runSoundMediaPlayer(String address)
-    {
+    public void runSoundMediaPlayer(String address) {
         if (isCanPlayButtonSound()) {
             File file = new File(address);
             Media media = new Media(file.toURI().toString());
@@ -476,13 +474,9 @@ public class MainMenu {
         System.exit(0);
     }
 
-    public void handleShopBtn()  {
-        Shop.getInstance().setCardsOfShop();
-        try {
-            Thread.sleep(100);
-        }catch (Exception e){
-            System.out.println("can not sleep :/");
-        }
+    public void handleShopBtn() {
+        setCardsOfShop();
+
         setCanPlayButtonSound(true);
         runButtonClickSound();
 
@@ -499,6 +493,16 @@ public class MainMenu {
         stopTimeline();
         Container.runNextScene(root, SHOP);
 
+    }
+
+    public void setCardsOfShop() {
+        ShopCommand command = new ShopCommand(ShopCommandsKind.GET_CARDS);
+        SendMessage.getSendMessage().sendMessage(command);
+        try {
+            Thread.sleep(100);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void handleCollectionBtn() {
@@ -846,7 +850,7 @@ public class MainMenu {
         jfxDialog.show();
     }
 
-    public void singleOrMultiPrompt(int a){
+    public void singleOrMultiPrompt(int a) {
         //TODO Bejaye DialogLayout Pane Gozashte Shavad
     }
 

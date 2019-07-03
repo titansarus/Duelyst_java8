@@ -56,3 +56,7 @@
 #sellScrollPane .viewport {
     -fx-background-color: transparent;
 }
+
+#auctionScrollPane .viewport {
+    -fx-background-color: transparent;
+}

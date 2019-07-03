@@ -138,34 +138,34 @@ public class ClientHandler implements Runnable {
             case BUY:
                 buy(shopCommand);
                 break;
-            case GET_FINISHED_CARD:
-                getFinishedCard();
+//            case GET_FINISHED_CARD:
+//                getFinishedCard();
         }
     }
 
     public void getCards() {
         ShopCommand command = new ShopCommand(ShopCommandsKind.GET_CARDS);
-        command.setCards(Shop.getInstance().getCards());
+        command.setCards(ServerShop.getInstance().getCards());
         formatter.format("%s\n", CommandClass.makeJson(command));
         formatter.flush();
     }
 
     private void buy(ShopCommand shopCommand) {
         String cardName = shopCommand.getBuyCard().getCardName();
-        Shop.getInstance().decreaseNumberOfCard(cardName);
+        ServerShop.getInstance().decreaseNumberOfCard(cardName);
     }
 
     private void sell(ShopCommand shopCommand) {
         String cardName = shopCommand.getBuyCard().getCardName();
-        Shop.getInstance().increaseNumberOfCard(cardName);
+        ServerShop.getInstance().increaseNumberOfCard(cardName);
     }
-    public void getFinishedCard(){
-        System.out.println("eee chera???");
-        ShopCommand command = new ShopCommand(ShopCommandsKind.GET_FINISHED_CARD);
-        command.setFinishedCard(Shop.getInstance().getFinishedCards());
-        formatter.format("%s\n", CommandClass.makeJson(command));
-        formatter.flush();
-    }
+//    public void getFinishedCard(){
+//        System.out.println("eee chera???");
+//        ShopCommand command = new ShopCommand(ShopCommandsKind.GET_FINISHED_CARD);
+//        command.setFinishedCard(Shop.getInstance().getFinishedCards());
+//        formatter.format("%s\n", CommandClass.makeJson(command));
+//        formatter.flush();
+//    }
 
 
     public Scanner getNetIn() {

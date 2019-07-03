@@ -1,15 +1,16 @@
 package Duelyst.Controllers;
 
+import Duelyst.Client.SendMessage;
 import Duelyst.Exceptions.MyException;
 import Duelyst.Model.Account;
 import Duelyst.Model.Card;
+import Duelyst.Model.CommandClasses.ShopCommand;
+import Duelyst.Model.CommandClasses.ShopCommandsKind;
 import Duelyst.Model.Shop;
 import Duelyst.Model.ShopMode;
 import Duelyst.View.ViewClasses.CardView;
 import com.jfoenix.controls.*;
 import javafx.animation.*;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -17,7 +18,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -25,7 +25,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 import static Duelyst.View.Constants.*;
@@ -113,7 +112,7 @@ public class ShopController {
         slowTimeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
             updateColor();
             updateButton();
-            updateLoginedUser();
+            updateLoggedInUser();
             updateDarick();
             updateInformationButton();
             updateAddToAuctionButton();
@@ -252,12 +251,21 @@ public class ShopController {
 
     public void handleActionBtn() {
         if (!sell_tab.isSelected()) {
+            ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.BUY);
+            shopCommand.setBuyCard(Shop.getSelectedCard());
+            SendMessage.getSendMessage().sendMessage(shopCommand);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             buy();
         } else {
             sell();
         }
         Account.saveAccount();
     }
+
 
     public void buy() {
         try {
@@ -289,7 +297,7 @@ public class ShopController {
         }
     }
 
-    private void updateLoginedUser() {
+    private void updateLoggedInUser() {
         if (Account.getLoggedAccount() == null) {
             getLoginedAccount_lbl().setText(NO_USER_LOGINED);
             return;

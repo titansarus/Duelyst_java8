@@ -59,9 +59,6 @@ public class Shop {
     }
 
     public void buy() {
-        if (!isFinished(selectedCard)){
-            throw new MyException("this car is finished","can not buy");
-        }
 
         if (selectedCard == null) {
             throw new NoCardSelectedInShopException();
@@ -77,18 +74,6 @@ public class Shop {
         Account.getLoggedAccount().getCardCollection().addCard(getSelectedCard());
     }
 
-    private boolean isFinished(Card card){
-        ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.GET_FINISHED_CARD);
-        SendMessage.getSendMessage().sendMessage(shopCommand);
-        try {
-            Thread.sleep(100);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        if (finishedCard.contains(card))
-            return true;
-        return false;
-    }
 
     public static Card getSelectedCard() {
         return getInstance().selectedCard;
@@ -122,74 +107,8 @@ public class Shop {
         return numberOfCards;
     }
 
-    public void setNumberOfCards(ArrayList<String> numberOfCards) {
-        this.numberOfCards = numberOfCards;
-    }
-    public void saveTheUpdateOfNumerOfCards(){//TODO send to server
-        YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
-        try {
-            Writer writer = new FileWriter("numberOfCards.json");
-            String s = yaGson.toJson(numberOfCards);
-            writer.write(s);
-            writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
-    public void increaseNumberOfCard(String cardName) {//TODO send to server
-        String oldNumber = "";
-        String newNumber = "";
-        for (String s :
-                numberOfCards) {
-            if (s.equals(cardName)) {
-                oldNumber = s;
-                int number = Integer.parseInt(s.split(" ")[1]);
-                number++;
-                newNumber = s.split(" ")[0] + " " + number;
-            }
-        }
-        numberOfCards.remove(oldNumber);
-        numberOfCards.add(newNumber);
-        saveTheUpdateOfNumerOfCards();
-    }
-    public void decreaseNumberOfCard(String cardName) {//TODO send to server
-        String oldNumber = "";
-        String newNumber = "";
-        for (String s :
-                numberOfCards) {
-            if (s.equals(cardName)) {
 
-                oldNumber = s;
-                int number = Integer.parseInt(s.split(" ")[1]);
-                number--;
-                newNumber = s.split(" ")[0] + " " + number;
-            }
-        }
-        numberOfCards.remove(oldNumber);
-        numberOfCards.add(newNumber);
-        saveTheUpdateOfNumerOfCards();
-    }
-    public ArrayList<Card> getFinishedCards(){//TODO send to Server
-        ArrayList<Card> cards = new ArrayList<>();
-        for (String s:
-             numberOfCards) {
-            if (Integer.parseInt(s.split(" ")[0])<1){
-                for (Card c:
-                     this.cards) {
-                    if (c.getCardName().equals(s)){
-                        cards.add(c);
-                    }
-                }
-            }
-        }
-        return cards;
-    }
-
-    public void setCardsOfShop(){
-        ShopCommand command = new ShopCommand(ShopCommandsKind.GET_CARDS);
-        SendMessage.getSendMessage().sendMessage(command);
-    }
     public ArrayList<Card> getAuctionCards() {
         return auctionCards;
     }

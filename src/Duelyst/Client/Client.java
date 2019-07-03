@@ -19,7 +19,7 @@ public class Client {
     private ReadMessage reader;
     private Socket socket;
 
-    public Client(){
+    public Client() {
         try {
             socket = new Socket(IP_ADDRESS, SERVER_PORT);
         } catch (IOException e) {
@@ -27,7 +27,6 @@ public class Client {
         }
         reader = new ReadMessage(Objects.requireNonNull(socket));
         currentClient = this;
-        Shop.getInstance().setCardsOfShop();
     }
 
     public static Client getCurrentClient() {
