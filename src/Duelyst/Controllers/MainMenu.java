@@ -6,6 +6,8 @@ import Duelyst.Model.*;
 import Duelyst.Model.Battle.Battle;
 import Duelyst.Model.CommandClasses.LoginCommand;
 import Duelyst.Model.CommandClasses.LoginCommandsKind;
+import Duelyst.Model.CommandClasses.ShopCommand;
+import Duelyst.Model.CommandClasses.ShopCommandsKind;
 import Duelyst.Utility.ImageHolder;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
@@ -475,6 +477,7 @@ public class MainMenu {
     }
 
     public void handleShopBtn() {
+        setCardsOfShop();
         setCanPlayButtonSound(true);
         runButtonClickSound();
 
@@ -491,6 +494,11 @@ public class MainMenu {
         stopTimeline();
         Container.runNextScene(root, SHOP);
 
+    }
+
+    private void setCardsOfShop(){
+        ShopCommand command = new ShopCommand(ShopCommandsKind.GET_CARDS);
+        SendMessage.getSendMessage().sendMessage(command);
     }
 
     public void handleCollectionBtn() {
