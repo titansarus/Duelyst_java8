@@ -1,5 +1,6 @@
 package Duelyst.Model;
 
+import Duelyst.Client.Client;
 import Duelyst.Model.Battle.Battle;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
@@ -49,28 +50,7 @@ public class Account implements Cloneable {
         }
     }
 
-    public void enableCheatMode() {
-        setCheatModeEnable(true);
-        setDarickBeforeCheat(getDarick());
-        setDarick(Integer.MAX_VALUE);
-    }
-
-    public void disableCheatMode() {
-        setCheatModeEnable(false);
-        setDarick(getDarickBeforeCheat());
-    }
-
-    public void decreaseDarick(int amount) {
-        setDarick(getDarick() - amount);
-    }
-
-    public void increaseDarick(int amount) {
-        setDarick(getDarick() + amount);
-    }
-
     public static ArrayList<Account> accountsSorter(ArrayList<Account> accounts) {
-
-
         ArrayList<Account> accountsCopy = new ArrayList<>(accounts);
         accountsCopy.sort(((Comparator<Account>) (o1, o2) -> o2.getCountOfWins() - o1.getCountOfWins()).thenComparing((o1, o2) -> o1.getUsername().compareTo(o2.getUsername())));
         return accountsCopy;
@@ -104,6 +84,25 @@ public class Account implements Cloneable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void enableCheatMode() {
+        setCheatModeEnable(true);
+        setDarickBeforeCheat(getDarick());
+        setDarick(Integer.MAX_VALUE);
+    }
+
+    public void disableCheatMode() {
+        setCheatModeEnable(false);
+        setDarick(getDarickBeforeCheat());
+    }
+
+    public void decreaseDarick(int amount) {
+        setDarick(getDarick() - amount);
+    }
+
+    public void increaseDarick(int amount) {
+        setDarick(getDarick() + amount);
     }
 
 
@@ -188,5 +187,6 @@ public class Account implements Cloneable {
     public void setCheatModeEnable(boolean cheatModeEnable) {
         isCheatModeEnable = cheatModeEnable;
     }
+
 }
 

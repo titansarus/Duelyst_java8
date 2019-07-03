@@ -1,14 +1,13 @@
 package Duelyst.Model.CommandClasses;
 
-enum LoginCommandsKind {
-    LOGIN, SIGN_UP;
-}
+import Duelyst.Model.Account;
 
 public class LoginCommand extends CommandClass {
 
     private LoginCommandsKind loginCommandsKind;
     private String userName;
     private String passWord;
+    private Account account;
 
     public LoginCommand(LoginCommandsKind loginCommandsKind, String userName, String passWord) {
         super(CommandKind.LOGIN);
@@ -27,5 +26,13 @@ public class LoginCommand extends CommandClass {
 
     public LoginCommandsKind getLoginCommandsKind() {
         return loginCommandsKind;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

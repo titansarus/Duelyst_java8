@@ -11,8 +11,12 @@ public class SendMessage {
     private Formatter formatter;
     private CommandClass commandClass;
 
-    public SendMessage(Socket socket, CommandClass commandClass) throws IOException {
-        formatter = new Formatter(socket.getOutputStream());
+    public SendMessage(Socket socket, CommandClass commandClass)  {
+        try {
+            formatter = new Formatter(socket.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         this.commandClass = commandClass;
         sendMessage();
     }

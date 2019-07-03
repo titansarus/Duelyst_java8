@@ -1,11 +1,11 @@
 package Duelyst;
 
+import Duelyst.Client.Client;
 import Duelyst.Controllers.Container;
 import Duelyst.Database.DatabaseCard;
 import Duelyst.Database.DatabaseCollectioner;
 import Duelyst.Model.Account;
 import Duelyst.Model.Buffs.*;
-import Duelyst.Model.Card;
 import Duelyst.Model.Items.*;
 import Duelyst.Model.Shop;
 import Duelyst.Model.Spell.Spell;
@@ -20,17 +20,14 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.apache.commons.math3.analysis.function.Power;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Collections;
 
 import static Duelyst.View.Constants.*;
@@ -58,20 +55,17 @@ public class Main extends Application {
     public static void main(String[] args) {
         DatabaseCollectioner.DatabaseGenerator();
         Shop.getInstance().getCards().addAll(CreateCardFromDatabaseCard.createCards(DatabaseCard.getDatabaseCards()));
+
         initItems();
-
-        makeSpell();
-
-
+        initSpells();
         initAccounts();
+
+        //TODO Run Client And Make Connection To The Server
+        Client client = new Client();
+        client.getReader().start();
+
         launch(args);
     }
-
-    public static void initItems() {
-        Collections.addAll(Shop.getInstance().getCards(), new TajeDanaei(), new NamooseSepar(), new KamaneDamol(), new PareSimorgh(),
-                new TerrorHood(), new KingWisdom(), new AssassinationDagger(), new PoisonousDagger(), new ShockHammer(), new SoulEater(), new GhosleTaemid());
-    }
-
     @Override
     public void start(Stage primaryStage) throws Exception {
 
@@ -106,8 +100,13 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
+    private static void initItems() {
+        Collections.addAll(Shop.getInstance().getCards(), new TajeDanaei(), new NamooseSepar(), new KamaneDamol(), new PareSimorgh(),
+                new TerrorHood(), new KingWisdom(), new AssassinationDagger(), new PoisonousDagger(), new ShockHammer(), new SoulEater(), new GhosleTaemid());
+    }
 
-    public static void makeSpell() {
+
+    private static void initSpells() {
         Spell spell = new Spell("Total Disarm", "", 0, 1000, TargetCommunity.ENEMY_WARRIOR);
         spell.getBuffs().add(new DisarmBuff(100));
         Shop.getInstance().getCards().add(spell);

@@ -1,9 +1,5 @@
 package Duelyst.Model.CommandClasses;
 
-enum BattleCommandsKind {
-    INSERT, ATTACK, MOVE;
-}
-
 public class BattleCommand extends CommandClass {
 
     private BattleCommandsKind battleCommandsKind;

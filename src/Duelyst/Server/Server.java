@@ -1,12 +1,17 @@
 package Duelyst.Server;
 
 import Duelyst.Model.Account;
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class Server implements Runnable {
 
@@ -61,4 +66,41 @@ public class Server implements Runnable {
     public static ArrayList<ClientHandler> getAllClientHandlers() {
         return (ArrayList<ClientHandler>) Collections.unmodifiableList(allClientHandlers);
     }
+
+    public static ArrayList<Account> accountsSorter(ArrayList<Account> accounts) {
+        ArrayList<Account> accountsCopy = new ArrayList<>(accounts);
+        accountsCopy.sort(((Comparator<Account>) (o1, o2) -> o2.getCountOfWins() - o1.getCountOfWins()).thenComparing((o1, o2) -> o1.getUsername().compareTo(o2.getUsername())));
+        return accountsCopy;
+    }
+
+
+    public static boolean accountExistInArrayList(String username, ArrayList<Account> accounts) {
+        return findAccountInArrayList(username, accounts) != null;
+    }
+
+
+    public static Account findAccountInArrayList(String username, ArrayList<Account> accounts) {
+        if (username.length() > 0 && accounts != null) {
+            for (int i = 0; i < accounts.size(); i++) {
+                Account account = accounts.get(i);
+                if (account != null && account.getUsername().equals(username)) {
+                    return account;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static void saveAccount() {
+        YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+        try {
+            Writer writer = new FileWriter("accounts.json");
+            String s = yaGson.toJson(allAccounts);
+            writer.write(s);
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

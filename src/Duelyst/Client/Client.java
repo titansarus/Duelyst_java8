@@ -21,9 +21,18 @@ public class Client {
             e.printStackTrace();
         }
         reader = new ReadMessage(Objects.requireNonNull(socket));
+        currentClient = this;
+    }
+
+    public static Client getCurrentClient() {
+        return currentClient;
     }
 
     public ReadMessage getReader() {
         return reader;
+    }
+
+    public Socket getSocket() {
+        return socket;
     }
 }

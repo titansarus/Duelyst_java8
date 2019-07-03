@@ -1,9 +1,14 @@
 package Duelyst.Controllers;
 
+import Duelyst.Client.Client;
+import Duelyst.Client.SendMessage;
 import Duelyst.Exceptions.*;
 import Duelyst.Main;
 import Duelyst.Model.Account;
+import Duelyst.Model.CommandClasses.LoginCommand;
+import Duelyst.Model.CommandClasses.LoginCommandsKind;
 import Duelyst.Model.Shop;
+import Duelyst.Server.Server;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.controls.JFXTextField;
@@ -81,30 +86,60 @@ public class LoginController {
 
     public void handleLoginBtn() {
 
-        String username = getUsername_tf().getText();
         String password = getPassword_tf().getText();
+        String username = getUsername_tf().getText();
 
         if (username.length() == 0 || password.length() == 0) {
             Container.exceptionGenerator(new EmptyFieldsException(), stackPane);
             return;
         }
 
-        Account account = Account.findAccountInArrayList(username, Account.getAccounts());
-        if (!Account.accountExistInArrayList(username, Account.getAccounts())) {
+        new SendMessage(Client.getCurrentClient().getSocket(), new LoginCommand(LoginCommandsKind.LOGIN, username, password));
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //TODO These Checks Should Be Removed And Moved To Server Side
+        Account account = Server.findAccountInArrayList(username, Account.getAccounts());
+        if (!Server.accountExistInArrayList(username, Account.getAccounts())) {
             Container.exceptionGenerator(new UserNotExistException(), stackPane);
-            //Container.exceptionGenerator(new UserNotExistException());
             return;
         }
+
         if (!account.getPassword().equals(password)) {
             Container.exceptionGenerator(new InvalidPasswordException(), stackPane);
-            //Container.exceptionGenerator(new InvalidPasswordException());
             return;
         }
+        //TODO =======================================================
         Account.setLoggedAccount(account);
         Shop.getInstance().getCards().addAll(account.getCardCollection().getCustomCards());
         handleProgressBar();
     }
 
+    public void handleSignUpBtn() {
+        String username = getUsername_tf().getText();
+        String password = getPassword_tf().getText();
+        if (username.length() == 0 || password.length() == 0) {
+            Container.exceptionGenerator(new EmptyFieldsException(), stackPane);
+            return;
+        }
+
+        new SendMessage(Client.getCurrentClient().getSocket(), new LoginCommand(LoginCommandsKind.SIGN_UP, username, password));
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (Server.accountExistInArrayList(username, Account.getAccounts())) {
+            Container.exceptionGenerator(new UserExistException(), stackPane);
+            return;
+        }
+        new Account(username, password);
+        Server.saveAccount();
+        handleLoginBtn();
+    }
 
     private void handleProgressBar() {
         login_pb.setOpacity(1);
@@ -125,23 +160,6 @@ public class LoginController {
         thread.start();
     }
 
-    public void handleSignUpBtn() {
-        String username = getUsername_tf().getText();
-        String password = getPassword_tf().getText();
-        if (username.length() == 0 || password.length() == 0) {
-            Container.exceptionGenerator(new EmptyFieldsException(), stackPane);
-            return;
-        }
-
-        if (Account.accountExistInArrayList(username, Account.getAccounts())) {
-            Container.exceptionGenerator(new UserExistException(), stackPane);
-//            Container.exceptionGenerator(new UserExistException());
-            return;
-        }
-        new Account(username, password);
-        Account.saveAccount();
-        handleLoginBtn();
-    }
 
     public void handleExit() {
         System.exit(0);
