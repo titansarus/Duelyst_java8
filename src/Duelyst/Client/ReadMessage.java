@@ -42,23 +42,26 @@ public class ReadMessage extends Thread {
             System.out.println("In reader");
             switch (commandClass.getCommandKind()) {
                 case LOGIN:
-                    LoginCommand loginCommand = (LoginCommand) commandClass;
-                    if (loginCommand.getMyException() != null) {
-                        LoginController.setMyException(loginCommand.getMyException());
-                        System.out.println("Have Exception");
-                    } else {
-                        Account.setLoggedAccount(loginCommand.getAccount());
-                        System.out.println("Account LoggedIn!");
-                    }
+                    handleLoginCommand((LoginCommand) commandClass);
                     break;
                 case SHOP:
-                    handleShopCommand((ShopCommand)commandClass);
+                    handleShopCommand((ShopCommand) commandClass);
                     break;
                 case BATTLE:
                     //TODO Bayad Command Haye Marboot be battle ra begirad
                     break;
             }
 
+        }
+    }
+
+    private void handleLoginCommand(LoginCommand loginCommand) {
+        if (loginCommand.getMyException() != null) {
+            LoginController.setMyException(loginCommand.getMyException());
+            System.out.println("Have Exception");
+        } else {
+            Account.setLoggedAccount(loginCommand.getAccount());
+            System.out.println("Account LoggedIn!");
         }
     }
 
@@ -73,7 +76,8 @@ public class ReadMessage extends Thread {
 
         }
     }
-    private void handleGetCards(ShopCommand shopCommand){
+
+    private void handleGetCards(ShopCommand shopCommand) {
         ArrayList<Card> cards = shopCommand.getCards();
         Shop.getInstance().getCards().addAll(cards);
     }

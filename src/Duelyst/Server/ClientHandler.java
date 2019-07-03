@@ -39,16 +39,12 @@ public class ClientHandler implements Runnable {
             switch (command.getCommandKind()) {
                 case LOGIN:
                     LoginCommand loginCommand = (LoginCommand) command;
-                    if (loginCommand.getLoginCommandsKind() == LoginCommandsKind.LOGIN) {
-                        handleLoginAccount(loginCommand);
-                    } else {
-                        handleSignUpAccount(loginCommand);
                     switch (loginCommand.getLoginCommandsKind()) {
                         case LOGIN:
-                            handleLoginAccount(loginCommand, yaGson);
+                            handleLoginAccount(loginCommand);
                             break;
                         case SIGN_UP:
-                            handleSignUpAccount(loginCommand, yaGson);
+                            handleSignUpAccount(loginCommand);
                             break;
                         case EXIT:
                             setLoggedIn(false);
@@ -57,6 +53,7 @@ public class ClientHandler implements Runnable {
                             try {
                                 socket.close();
                             } catch (IOException e) {
+                                System.out.println("oomad too Catch");
                                 e.printStackTrace();
                             }
                             return;
@@ -66,7 +63,7 @@ public class ClientHandler implements Runnable {
                     }
                     break;
                 case SHOP:
-                    handleShopCommand((ShopCommand)command);
+                    handleShopCommand((ShopCommand) command);
                     break;
                 case BATTLE:
                     //TODO Dastoorat Ra Migirad Va Baraye Cliente Harif Mifrestad
@@ -119,7 +116,7 @@ public class ClientHandler implements Runnable {
             Server.addAccount(account);
             Server.saveAccount();
             setLoggedIn(true);
-            formatter.format("%s\n", yaGson.toJson(temp));
+            formatter.format("%s\n", CommandClass.makeJson(temp));
             formatter.format("%s\n", CommandClass.makeJson(temp));
             formatter.flush();
         }
@@ -127,8 +124,8 @@ public class ClientHandler implements Runnable {
 
     }
 
-    private void handleShopCommand(ShopCommand shopCommand){
-        switch (shopCommand.getShopCommandsKind()){
+    private void handleShopCommand(ShopCommand shopCommand) {
+        switch (shopCommand.getShopCommandsKind()) {
             case GET_CARDS:
 
                 break;
@@ -137,7 +134,8 @@ public class ClientHandler implements Runnable {
             case AUCTION_CARD:
         }
     }
-    public void getCards(){
+
+    public void getCards() {
         ShopCommand command = new ShopCommand(ShopCommandsKind.GET_CARDS);
         command.setCards(Shop.getInstance().getCards());
         formatter.format("%s\n", CommandClass.makeJson(command));

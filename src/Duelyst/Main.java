@@ -58,7 +58,6 @@ public class Main extends Application {
         inputStream.close();
         if (bytes[0] == 49) {
             new FileOutputStream("ClientOrServer.txt").write(48);
-            initAccounts();//TODO Initialize Server Account ArrayList
             Thread thread = new Thread(new Server());
             thread.start();
             DatabaseCollectioner.DatabaseGenerator();
@@ -66,7 +65,7 @@ public class Main extends Application {
 
             initItems();
             initSpells();
-            initAccounts();
+            initAccounts();//TODO Initialize Server Account ArrayList
         }else {
 
 

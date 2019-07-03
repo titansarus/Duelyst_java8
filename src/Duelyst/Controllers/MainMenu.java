@@ -1,8 +1,11 @@
 package Duelyst.Controllers;
 
+import Duelyst.Client.SendMessage;
 import Duelyst.Exceptions.NotValidDeckException;
 import Duelyst.Model.*;
 import Duelyst.Model.Battle.Battle;
+import Duelyst.Model.CommandClasses.LoginCommand;
+import Duelyst.Model.CommandClasses.LoginCommandsKind;
 import Duelyst.Utility.ImageHolder;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
@@ -462,6 +465,12 @@ public class MainMenu {
     public void handleQuitBtn() {
         setCanPlayButtonSound(true);
         runButtonClickSound();
+        SendMessage.getSendMessage().sendMessage(new LoginCommand(LoginCommandsKind.EXIT));
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.exit(0);
     }
 
