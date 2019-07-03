@@ -44,6 +44,7 @@ public class ShopController {
     public Text cardDescription_text;
     public Pane Auction_pane;
     public HBox AuctionPaneHBox_hbox;
+    public ImageView addToAuctionButton_img;
     @FXML
     ScrollPane buyScrollPane;
 
@@ -101,6 +102,7 @@ public class ShopController {
             updateColor();
             updateButton();
             updateInformationButton();
+            updateAddToAuctionButton();
         }), new KeyFrame(Duration.millis(100)));
         fastTimeline.setCycleCount(Animation.INDEFINITE);
         fastTimeline.play();
@@ -114,6 +116,7 @@ public class ShopController {
             updateLoginedUser();
             updateDarick();
             updateInformationButton();
+            updateAddToAuctionButton();
         }), new KeyFrame(Duration.millis(500)));
         slowTimeline.setCycleCount(Animation.INDEFINITE);
         slowTimeline.play();
@@ -221,7 +224,6 @@ public class ShopController {
             ImageView i = new ImageView(sellImg);
             Shop.getInstance().setShopMode(ShopMode.SELL);
 
-
             getAction_btn().setGraphic(i);
         } else {
             ImageView i = new ImageView(buyImg);
@@ -232,6 +234,19 @@ public class ShopController {
         if (isStanceOfTGB() != sell_tab.isSelected()) {
             setStanceOfTGB(sell_tab.isSelected());
             Shop.setSelectedCard(null);
+        }
+    }
+
+    private void updateAddToAuctionButton() {
+
+        if (sell_tab.isSelected() && Shop.getSelectedCard() != null) {
+            addToAuctionButton_img.setDisable(false);
+            addToAuctionButton_img.setOpacity(1);
+            addToAuctionButton_img.setEffect(new DropShadow(10, 0, 0, Color.GOLD));
+        } else {
+            addToAuctionButton_img.setDisable(true);
+            addToAuctionButton_img.setOpacity(0.7);
+            addToAuctionButton_img.setEffect(null);
         }
     }
 
@@ -349,6 +364,10 @@ public class ShopController {
             tt.play();
         });
         ft.play();
+    }
+
+    public void handleAddToAuctionButton() {
+        //TODO Kamel She
     }
 
     public void handleAuctionButton() {
