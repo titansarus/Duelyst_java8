@@ -63,13 +63,11 @@ public class Shop {
         if (selectedCard == null) {
             throw new NoCardSelectedInShopException();
         }
-        System.out.println("You Buyed Card");
+        System.out.println("You Bought Card");
         if (Account.getLoggedAccount().getDarick() < getSelectedCard().getDarikCost()) {
             throw new NotEnoughDarickException();
         }
-        ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.BUY);
-        shopCommand.setBuyCard(selectedCard);
-        SendMessage.getSendMessage().sendMessage(shopCommand);
+
         Account.getLoggedAccount().decreaseDarick(getSelectedCard().getDarikCost());
         Account.getLoggedAccount().getCardCollection().addCard(getSelectedCard());
     }

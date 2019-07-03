@@ -262,14 +262,7 @@ public class ShopController {
 
     public void handleActionBtn() {
         if (!sell_tab.isSelected()) {
-            ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.BUY);
-            shopCommand.setBuyCard(Shop.getSelectedCard());
-            SendMessage.getSendMessage().sendMessage(shopCommand);
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            handleServerRequestForBuy();
             if (myException instanceof CardOutOfStock) {
                 Container.exceptionGenerator(myException, stackPane);
                 return;
@@ -281,19 +274,29 @@ public class ShopController {
         Account.saveAccount();
     }
 
+    private void handleServerRequestForBuy() {
+        ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.BUY);
+        shopCommand.setBuyCard(Shop.getSelectedCard());
+        SendMessage.getSendMessage().sendMessage(shopCommand);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
-    public void buy() {
+
+    private void buy() {
         try {
             Shop.getInstance().buy();
         } catch (MyException e) {
             Container.exceptionGenerator(e, stackPane);
             return;
         }
-        System.out.println("buyed");
         Container.notificationShower(BUY_CONTENT, BUY_TITLE, stackPane);
     }
 
-    public void sell() {
+    private void sell() {
         try {
             Shop.getInstance().sell();
         } catch (MyException e) {
@@ -320,7 +323,7 @@ public class ShopController {
         getLoginedAccount_lbl().setText(Account.getLoggedAccount().getUsername());
     }
 
-    public void stopTimeline() {
+    private void stopTimeline() {
         getSlowTimeline().stop();
         getFastTimeline().stop();
     }
@@ -349,7 +352,7 @@ public class ShopController {
         anchorPane.setOpacity(0.7);
 
         cardName_lbl.setText(Shop.getSelectedCard().getCardName());
-//        cardKind_lbl.setText(Shop.getSelectedCard().getCardKind().toString());
+//        cardKind_lbl.setText(Shop.getSelectedCard().getCardKind().toString());//TODO Card Kind Ha Set Nemishan !
         cardDescription_text.setText(Shop.getSelectedCard().getCardDescription());
 
         FadeTransition ft = new FadeTransition(Duration.millis(1000), cardInformation_pane);

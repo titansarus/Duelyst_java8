@@ -38,7 +38,9 @@ public class ClientHandler implements Runnable {
                     LoginCommand loginCommand = (LoginCommand) command;
                     switch (loginCommand.getLoginCommandsKind()) {
                         case SAVE_ACCOUNTS:
-                            Server.saveAccount();
+                            System.out.println("Saving Account");
+                            System.out.println(loginCommand.getAccount().getUsername());
+                            handleSaveAccounts(loginCommand);
                             break;
                         case LOGIN:
                             handleLoginAccount(loginCommand);
@@ -70,6 +72,12 @@ public class ClientHandler implements Runnable {
 
 
         }
+    }
+
+    private void handleSaveAccounts(LoginCommand loginCommand) {
+        Server.removeAccount(Server.findAccountInArrayList(loginCommand.getAccount().getUsername(),Server.getAllAccounts()));
+        Server.addAccount(loginCommand.getAccount());
+        Server.saveAccount();
     }
 
     private void handleLoginAccount(LoginCommand loginCommand) {
@@ -168,11 +176,11 @@ public class ClientHandler implements Runnable {
             shopCommand.setMyException(new CardOutOfStock());
             formatter.format("%s\n", CommandClass.makeJson(shopCommand));
             formatter.flush();
-        }else {
+        } else {
             String cardName = shopCommand.getBuyCard().getCardName();
             ServerShop.getInstance().decreaseNumberOfCard(cardName);
             shopCommand.setMyException(new CardBoughtSuccessfully());
-            formatter.format("%s\n",CommandClass.makeJson(shopCommand));
+            formatter.format("%s\n", CommandClass.makeJson(shopCommand));
             formatter.flush();
         }
     }

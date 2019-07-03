@@ -84,6 +84,7 @@ public class Account implements Cloneable {
 
     public static void saveAccount() {
         LoginCommand loginCommand = new LoginCommand(LoginCommandsKind.SAVE_ACCOUNTS);
+        loginCommand.setAccount(Account.getLoggedAccount());
         SendMessage.getSendMessage().sendMessage(loginCommand);
     }
 
@@ -114,7 +115,6 @@ public class Account implements Cloneable {
     public static void setLoggedAccount(Account loggedAccount) {
         Account.loggedAccount = loggedAccount;
     }
-
 
 
     public ArrayList<String> getBattleHistory() {

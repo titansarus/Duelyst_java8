@@ -83,25 +83,16 @@ public class ServerShop {
         for (String s :
                 numberOfCards) {
             if (s.split(" ")[0].equals(cardName)) {
-                System.out.println("--> "+s+ "    --    "+cardName+"\n");
                 oldNumber = s;
                 int number = Integer.parseInt(s.split(" ")[1]);
-                System.out.println("====>>> number: "+number);
                 number++;
                 newNumber = s.split(" ")[0] + " " + number;
                 break;
             }
         }
 
-        System.out.println(oldNumber);
-        System.out.println(newNumber);
-
-        System.out.println("1-1-1-1-1-1-1-1-1-1-1-1-1---------->>> "+ numberOfCards.size());
-
         numberOfCards.remove(oldNumber);
         numberOfCards.add(newNumber);
-
-        System.out.println("2-2-2-2-2-2-2-2-2-2-2-2-2---------->>> "+ numberOfCards.size());
 
         saveTheUpdateOfNumberOfCards();
     }
@@ -114,26 +105,15 @@ public class ServerShop {
         for (String s :
                 numberOfCards) {
             if (s.split(" ")[0].equals(cardName)) {
-                System.out.println("--> "+s+ "    --    "+cardName+"\n");
                 oldNumber = s;
                 int number = Integer.parseInt(s.split(" ")[1]);
-                System.out.println("====>>> number: "+number);
                 number--;
                 newNumber = s.split(" ")[0] + " " + number;
                 break;
             }
         }
-        System.out.println(oldNumber);
-        System.out.println(newNumber);
-
-        System.out.println("1-1-1-1-1-1-1-1-1-1-1-1-1---------->>> "+ numberOfCards.size());
-
-
         numberOfCards.remove(oldNumber);
         numberOfCards.add(newNumber);
-
-        System.out.println("2-2-2-2-2-2-2-2-2-2-2-2-2---------->>> "+ numberOfCards.size());
-
 
         saveTheUpdateOfNumberOfCards();
     }

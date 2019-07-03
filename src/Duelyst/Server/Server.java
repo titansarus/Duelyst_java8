@@ -62,6 +62,14 @@ public class Server implements Runnable {
         return allAccounts.remove(account);
     }
 
+//    public static Account getAccount(String username) {
+//        for (int i = 0; i < allAccounts.size(); i++) {
+//            if (allAccounts.get(i).getUsername().equals(username))
+//                return allAccounts.get(i);
+//        }
+//        return null;
+//    }
+
     public static ArrayList<ClientHandler> getAllClientHandlers() {
         return allClientHandlers;
     }
