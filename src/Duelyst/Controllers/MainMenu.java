@@ -477,7 +477,7 @@ public class MainMenu {
     }
 
     public void handleShopBtn()  {
-        setCardsOfShop();
+        Shop.getInstance().setCardsOfShop();
         try {
             Thread.sleep(100);
         }catch (Exception e){
@@ -499,11 +499,6 @@ public class MainMenu {
         stopTimeline();
         Container.runNextScene(root, SHOP);
 
-    }
-
-    private void setCardsOfShop(){
-        ShopCommand command = new ShopCommand(ShopCommandsKind.GET_CARDS);
-        SendMessage.getSendMessage().sendMessage(command);
     }
 
     public void handleCollectionBtn() {

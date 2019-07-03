@@ -11,6 +11,7 @@ public class ShopCommand extends CommandClass {
     private Card auctionCard;
     private Card buyCard;
     private Card sellCard;
+    private ArrayList<Card> finishedCard;
 
     public ShopCommand(ShopCommandsKind shopCommandsKind) {
         super(CommandKind.SHOP);
@@ -63,5 +64,13 @@ public class ShopCommand extends CommandClass {
 
     public void setBuyCard(Card buyCard) {
         this.buyCard = buyCard;
+    }
+
+    public ArrayList<Card> getFinishedCard() {
+        return finishedCard;
+    }
+
+    public void setFinishedCard(ArrayList<Card> finishedCard) {
+        this.finishedCard = finishedCard;
     }
 }

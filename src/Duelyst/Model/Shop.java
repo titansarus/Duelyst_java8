@@ -2,18 +2,17 @@ package Duelyst.Model;
 
 
 import Duelyst.Client.SendMessage;
+import Duelyst.Exceptions.MyException;
 import Duelyst.Exceptions.NoCardSelectedInShopException;
 import Duelyst.Exceptions.NotEnoughDarickException;
 import Duelyst.Model.CommandClasses.ShopCommand;
 import Duelyst.Model.CommandClasses.ShopCommandsKind;
-import Duelyst.Model.Items.Item;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 
 import java.io.FileWriter;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Shop {
 
@@ -22,12 +21,11 @@ public class Shop {
     private ArrayList<Card> auctionCards = new ArrayList<>();
     private static Shop instance;
     private ShopMode shopMode = ShopMode.BUY;
+    private ArrayList<Card> finishedCard;
 
     private Card selectedCard = null;
 
-    private Shop() {
-
-    }
+    private Shop() {}
 
     public static Shop getInstance() {
         if (instance == null)
@@ -61,6 +59,10 @@ public class Shop {
     }
 
     public void buy() {
+        if (!isFinished(selectedCard)){
+            throw new MyException("this car is finished","can not buy");
+        }
+
         if (selectedCard == null) {
             throw new NoCardSelectedInShopException();
         }
@@ -73,6 +75,19 @@ public class Shop {
         SendMessage.getSendMessage().sendMessage(shopCommand);
         Account.getLoggedAccount().decreaseDarick(getSelectedCard().getDarikCost());
         Account.getLoggedAccount().getCardCollection().addCard(getSelectedCard());
+    }
+
+    private boolean isFinished(Card card){
+        ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.GET_FINISHED_CARD);
+        SendMessage.getSendMessage().sendMessage(shopCommand);
+        try {
+            Thread.sleep(100);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if (finishedCard.contains(card))
+            return true;
+        return false;
     }
 
     public static Card getSelectedCard() {
@@ -110,7 +125,7 @@ public class Shop {
     public void setNumberOfCards(ArrayList<String> numberOfCards) {
         this.numberOfCards = numberOfCards;
     }
-    public void saveTheUpdateOfNumerOfCards(){
+    public void saveTheUpdateOfNumerOfCards(){//TODO send to server
         YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
         try {
             Writer writer = new FileWriter("numberOfCards.json");
@@ -122,7 +137,7 @@ public class Shop {
         }
     }
 
-    public void increaseNumberOfCard(String cardName) {
+    public void increaseNumberOfCard(String cardName) {//TODO send to server
         String oldNumber = "";
         String newNumber = "";
         for (String s :
@@ -136,13 +151,15 @@ public class Shop {
         }
         numberOfCards.remove(oldNumber);
         numberOfCards.add(newNumber);
+        saveTheUpdateOfNumerOfCards();
     }
-    public void decreaseNumberOfCard(String cardName) {
+    public void decreaseNumberOfCard(String cardName) {//TODO send to server
         String oldNumber = "";
         String newNumber = "";
         for (String s :
                 numberOfCards) {
             if (s.equals(cardName)) {
+
                 oldNumber = s;
                 int number = Integer.parseInt(s.split(" ")[1]);
                 number--;
@@ -151,8 +168,28 @@ public class Shop {
         }
         numberOfCards.remove(oldNumber);
         numberOfCards.add(newNumber);
+        saveTheUpdateOfNumerOfCards();
+    }
+    public ArrayList<Card> getFinishedCards(){//TODO send to Server
+        ArrayList<Card> cards = new ArrayList<>();
+        for (String s:
+             numberOfCards) {
+            if (Integer.parseInt(s.split(" ")[0])<1){
+                for (Card c:
+                     this.cards) {
+                    if (c.getCardName().equals(s)){
+                        cards.add(c);
+                    }
+                }
+            }
+        }
+        return cards;
     }
 
+    public void setCardsOfShop(){
+        ShopCommand command = new ShopCommand(ShopCommandsKind.GET_CARDS);
+        SendMessage.getSendMessage().sendMessage(command);
+    }
     public ArrayList<Card> getAuctionCards() {
         return auctionCards;
     }
@@ -160,4 +197,13 @@ public class Shop {
     public void setAuctionCards(ArrayList<Card> auctionCards) {
         this.auctionCards = auctionCards;
     }
+
+    public ArrayList<Card> getFinishedCard() {
+        return finishedCard;
+    }
+
+    public void setFinishedCard(ArrayList<Card> finishedCard) {
+        this.finishedCard = finishedCard;
+    }
+
 }
