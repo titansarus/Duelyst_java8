@@ -10,6 +10,7 @@ import Duelyst.Model.Items.*;
 import Duelyst.Model.Shop;
 import Duelyst.Model.Spell.Spell;
 import Duelyst.Model.Spell.TargetCommunity;
+import Duelyst.Server.Server;
 import Duelyst.Utility.CreateCardFromDatabaseCard;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
@@ -22,11 +23,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.apache.poi.ss.formula.ThreeDEval;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.util.Collections;
 
@@ -52,19 +51,31 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) {
-        DatabaseCollectioner.DatabaseGenerator();
-        Shop.getInstance().getCards().addAll(CreateCardFromDatabaseCard.createCards(DatabaseCard.getDatabaseCards()));
+    public static void main(String[] args) throws IOException {
+        InputStream inputStream = new FileInputStream("ClientOrServer.txt");
+        byte[] bytes = new byte[100];
+        inputStream.read(bytes);
+        inputStream.close();
+        if (bytes[0] == 49) {
+            new FileOutputStream("ClientOrServer.txt").write(48);
+            Thread thread = new Thread(new Server());
+            thread.start();
+        }else {
 
-        initItems();
-        initSpells();
-        initAccounts();
 
-        //TODO Run Client And Make Connection To The Server
-        Client client = new Client();
-        client.getReader().start();
+            DatabaseCollectioner.DatabaseGenerator();
+            Shop.getInstance().getCards().addAll(CreateCardFromDatabaseCard.createCards(DatabaseCard.getDatabaseCards()));
 
-        launch(args);
+            initItems();
+            initSpells();
+            initAccounts();
+
+            //TODO Run Client And Make Connection To The Server
+            Client client = new Client();
+            client.getReader().start();
+
+            launch(args);
+        }
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
