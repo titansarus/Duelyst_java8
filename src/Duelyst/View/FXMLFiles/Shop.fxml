@@ -96,6 +96,11 @@
                   <Image url="@../../../res/ui/Auction.png" />
                </image>
             </ImageView>
+            <ImageView fx:id="addToAuctionButton_img" fitHeight="48.0" fitWidth="48.0" layoutX="890.0" layoutY="680.0" onMouseClicked="#handleAddToAuctionButton" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/addToAuctionButton.png" />
+               </image>
+            </ImageView>
             </children>
         </AnchorPane>
       <Pane fx:id="cardInformation_pane" maxHeight="650.0" maxWidth="750.0" minHeight="650.0" minWidth="750.0" onMouseClicked="#handleCardInformationPane" opacity="0.0" prefHeight="650.0" prefWidth="750.0" style="-fx-background-radius: 40; -fx-border-radius: 40;" translateY="-700.0">
@@ -127,9 +132,9 @@
                   <Image url="@../../../res/ui/button_close@2x.png" />
                </image>
             </ImageView>
-            <ScrollPane layoutY="72.0" prefHeight="678.0" prefWidth="1024.0">
+            <ScrollPane layoutY="72.0" prefHeight="678.0" prefWidth="1024.0" style="-fx-background-color: transparent;" stylesheets="@../../../css/scroll-bar.css">
                <content>
-                  <HBox fx:id="AuctionPaneHBox_hbox" prefHeight="676.0" prefWidth="1021.0" />
+                  <HBox fx:id="AuctionPaneHBox_hbox" prefHeight="676.0" prefWidth="1021.0" style="-fx-background-color: transparent;" />
                </content>
             </ScrollPane>
          </children>
