@@ -29,6 +29,7 @@ public class BattleRecord {
 
     //FOR MOVE
     private String moveCardId;
+    private int fromRow , fromColumn;
     private int moveRow, moveColumn;
     private boolean isMoveHoldFlag = false;
     private boolean isMoveCollectibleFlag = false;
@@ -247,6 +248,22 @@ public class BattleRecord {
 
     public void setLoserUsername(String loserUsername) {
         this.loserUsername = loserUsername;
+    }
+
+    public void setFromRow(int fromRow) {
+        this.fromRow = fromRow;
+    }
+
+    public void setFromColumn(int fromColumn) {
+        this.fromColumn = fromColumn;
+    }
+
+    public int getFromRow() {
+        return fromRow;
+    }
+
+    public int getFromColumn() {
+        return fromColumn;
     }
 }
 

@@ -83,6 +83,8 @@ public class BattleController {
     private double heightOfPoly_X;
     private double width;
 
+    private boolean isAnimationRunning = false;
+
     private ArrayList<CardForBattle> hand = new ArrayList<>();
     private ArrayList<CardOnField> cardsOnField = new ArrayList<>();
 
@@ -97,11 +99,142 @@ public class BattleController {
     private Battle battle;
     private Timeline slowTimeline = new Timeline();
     private Timeline fastTimeLine = new Timeline();
+    private Timeline animationTimeLine = new Timeline();
 
     void runTimelines() {
         runSlowTimeline();
         runVeryFastTimeLine();
+        runAnimationTimeline();
     }
+
+
+    private void runAnimationTimeline() {
+        animationTimeLine = new Timeline(new KeyFrame(Duration.ZERO, event ->
+        {
+            if (!isAnimationRunning) {
+                checkBattleRecord();
+            }
+
+        }), new KeyFrame(Duration.millis(300)));
+        animationTimeLine.setCycleCount(Animation.INDEFINITE);
+        animationTimeLine.play();
+    }
+
+    private void checkBattleRecord() {
+        isAnimationRunning = true;
+
+        if (getBattle().getLastBattleRecordPlayed() >= getBattle().getBattleRecords().size() ||  getBattle().getLastBattleRecordPlayed()==-1) {
+            isAnimationRunning = false;
+            return;
+        } else {
+            ArrayList<BattleRecord> battleRecords = getBattle().getBattleRecords();
+            int i = getBattle().getLastBattleRecordPlayed();
+            BattleRecord battleRecord = battleRecords.get(i);
+            getBattle().incrementBattleRecord();
+
+            switch (battleRecord.getTypeOfRecord()) {
+                case MOVE: {
+
+                            moveAnimationFromRecord(battleRecord);
+                            isAnimationRunning = false;
+
+
+
+                }
+                break;
+                case END_TURN: {
+                    Thread thread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println("endTurn");
+                            isAnimationRunning = false;
+
+
+                        }
+                    });
+                    thread.start();
+                }break;
+                case INITIALIZE:
+                {
+                    Thread thread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println("initialize");
+                            isAnimationRunning = false;
+
+
+                        }
+                    });
+                    thread.start();
+                }
+            }
+        }
+
+    }
+
+    private void moveAnimationFromRecord(BattleRecord battleRecord)
+    {
+        String moveCardId = battleRecord.getMoveCardId();
+
+        Warrior warrior = null;
+        warrior= (Warrior) Card.findCardInArrayList(moveCardId,getBattle().getPlayer1().getInGameCards());
+        if (warrior == null)
+        {
+            warrior = (Warrior) Card.findCardInArrayList(moveCardId,getBattle().getPlayer2().getInGameCards());
+        }
+        if (warrior ==null)
+        {
+            return;
+        }
+        int[] coordinate = new int[2];
+        coordinate[0] = battleRecord.getMoveRow();
+        coordinate[1] = battleRecord.getMoveColumn();
+
+        CardOnField cardOnField = CardOnField.findCardOnFieldFromArrayList(cardsOnField, warrior);
+        moveSound();
+        Integer srcRow = battleRecord.getFromRow();
+        Integer srcCol = battleRecord.getFromColumn();
+        Polygon srcPolygon = rectangles[srcRow][srcCol];
+        ObservableList<Double> srcPoints = srcPolygon.getPoints();
+        double srcx = calculateMidXFromPoint(srcPoints);
+        double srcy = calculateMidYFromPoint(srcPoints);
+
+        Polygon destPolygon = rectangles[coordinate[0]][coordinate[1]];
+        ObservableList<Double> destPoints = destPolygon.getPoints();
+        double x = calculateMidXFromPoint(destPoints);
+        double y = calculateMidYFromPoint(destPoints);
+
+
+        anchorPane.getChildren().remove(cardOnField.getImageView());
+
+        cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders(warrior.getAddressOfRunGif())));
+
+        anchorPane.getChildren().add(cardOnField.getImageView());
+        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), cardOnField.getImageView());
+        tt.setFromX(srcx);
+        tt.setFromY(srcy);
+        tt.setToX(x);
+        tt.setToY(y);
+        tt.setOnFinished(event1 -> {
+            cardOnField.getImageView().setImage(new Image(cardOnField.getCard().getAddressOfIdleGif()));
+//            getBattle().getGrid()[coordinate[0]][coordinate[1]].setWarrior(((Warrior) cardOnField.getCard()));
+            getBattle().setSelectedCell(null);
+            isAnimationRunning =true;
+
+        });
+        tt.play();
+    }
+
 
     private void runSlowTimeline() {
         slowTimeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
@@ -226,7 +359,8 @@ public class BattleController {
 
                 if (Cell.calculateManhattanDistance(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]]) <= 2) {
                     if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getSelectedCell().getWarrior()) && getBattle().getSelectedCell().getWarrior().isValidToMove()) {
-                        moveAnimationRun(coordinate);
+                      //  moveAnimationRun(coordinate);
+                        getBattle().move(coordinate[0],coordinate[1]);
                     }
                 }
                 return;
@@ -346,8 +480,7 @@ public class BattleController {
                     TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
                     tt3.setOnFinished(event2 -> {
                         cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
-                        if (((Warrior) cardOnFieldAttacked.getCard()).isDeath())
-                        {
+                        if (((Warrior) cardOnFieldAttacked.getCard()).isDeath()) {
                             animationOfDeath(((Warrior) cardOnFieldAttacked.getCard()));
                         }
                     });
@@ -355,8 +488,7 @@ public class BattleController {
                     TranslateTransition tt4 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
                     tt4.setOnFinished(event2 -> {
                         cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
-                        if (((Warrior) cardOnFieldAttacker.getCard()).isDeath())
-                        {
+                        if (((Warrior) cardOnFieldAttacker.getCard()).isDeath()) {
                             animationOfDeath(((Warrior) cardOnFieldAttacker.getCard()));
                         }
                     });
@@ -374,10 +506,8 @@ public class BattleController {
 
                     parallelTransition2.play();
                 }
-            }
-            else{
-                if (((Warrior) cardOnFieldAttacked.getCard()).isDeath())
-                {
+            } else {
+                if (((Warrior) cardOnFieldAttacked.getCard()).isDeath()) {
                     animationOfDeath(((Warrior) cardOnFieldAttacked.getCard()));
                 }
             }
@@ -428,8 +558,7 @@ public class BattleController {
                 TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
                 tt3.setOnFinished(event2 -> {
                     cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
-                    if (((Warrior) cardOnFieldAttacker.getCard()).isDeath())
-                    {
+                    if (((Warrior) cardOnFieldAttacker.getCard()).isDeath()) {
                         animationOfDeath(((Warrior) cardOnFieldAttacked.getCard()));
                     }
                 });
@@ -437,8 +566,7 @@ public class BattleController {
                 TranslateTransition tt4 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
                 tt4.setOnFinished(event2 -> {
                     cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
-                    if (((Warrior) cardOnFieldAttacked.getCard()).isDeath())
-                    {
+                    if (((Warrior) cardOnFieldAttacked.getCard()).isDeath()) {
                         animationOfDeath(((Warrior) cardOnFieldAttacked.getCard()));
                     }
 
@@ -460,10 +588,8 @@ public class BattleController {
                 }
 
                 parallelTransition2.play();
-            }
-            else{
-                if (((Warrior) cardOnFieldAttacked.getCard()).isDeath())
-                {
+            } else {
+                if (((Warrior) cardOnFieldAttacked.getCard()).isDeath()) {
                     animationOfDeath(((Warrior) cardOnFieldAttacked.getCard()));
                 }
             }

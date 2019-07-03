@@ -46,7 +46,7 @@ public class Battle implements Cloneable {
     private Flag holdFlag;
     private ArrayList<Flag> collectableFlags;
     private ArrayList<BattleRecord> battleRecords;
-    private int lastBattleRecordPlayed = -1;
+    private int lastBattleRecordPlayed = 0;
 
 
     public static final int VALID_COUNTER_WITH_BUFF = 1, VALID_COUNTER_WITHOUT_BUFF = 2, INVALID_COUNTER_WITH_BUFF = 3, INVALID_COUNTER_WITHOUT_BUFF = 4;
@@ -68,6 +68,17 @@ public class Battle implements Cloneable {
                 getGrid()[i][j] = new Cell(i, j);
             }
         }
+    }
+
+    public Cell findCellOfWarrior(Warrior warrior) {
+        for (int i = 0; i < BATTLE_ROWS; i++) {
+            for (int j = 0; j < BATTLE_COLUMNS; j++) {
+                if (grid[i][j] != null && grid[i][j].getWarrior() != null && grid[i][j].getWarrior().equals(warrior)) {
+                    return grid[i][j];
+                }
+            }
+        }
+        return null;
     }
 
     public Battle(Account account1, Account account2, GameMode gameMode, GameGoal gameGoal, BattleController battleController) {
@@ -184,6 +195,7 @@ public class Battle implements Cloneable {
 
             ((Ai) getPlayingPlayer().getAccount()).getBattleController().handleEndTurnBtn();
         }
+        makeBattleRecordOfEndTurn();
     }
 
     private void applyPassiveAndSpawnBuffs(ArrayList<Buff> onSpawnBuffs) {
@@ -215,11 +227,15 @@ public class Battle implements Cloneable {
     public void move(int destX, int destY) {
 
         boolean isHoldFlag = false, isCollectibleFlag = false, isCollectibleItem = false;
+        int fromRow = -1, fromColumn = -1;
 
         if (getSelectedCell().getWarrior() != null) {
             if (getSelectedCell().getColumn() != destX || getSelectedCell().getRow() != destY) {
-                Cell cell = getGrid()[destX][destY];
-                if (cell.getWarrior() == null) {
+                Cell destCell = getGrid()[destX][destY];
+                Cell srcCell = findCellOfWarrior(getSelectedCell().getWarrior());
+                fromRow = srcCell.getRow();
+                fromColumn = srcCell.getColumn();
+                if (destCell.getWarrior() == null) {
                     if (getGrid()[destX][destY].getCollectibleItem() != null) {
                         getPlayingPlayer().setCollectibleItem(getGrid()[destX][destY].getCollectibleItem());
                         getGrid()[destX][destY].getCollectibleItem().setPlayer(getPlayingPlayer());
@@ -245,9 +261,9 @@ public class Battle implements Cloneable {
                             }
                         }
                     }
-                    makeBattleRecordOfMove(getSelectedCell().getWarrior(), destX, destY, isHoldFlag, isCollectibleFlag, isCollectibleItem); //BATTLE RECORD
+                    makeBattleRecordOfMove(getSelectedCell().getWarrior(), destX, destY, isHoldFlag, isCollectibleFlag, isCollectibleItem,fromRow,fromColumn); //BATTLE RECORD
                     getSelectedCell().getWarrior().setValidToMove(false);
-                    cell.setWarrior(getSelectedCell().getWarrior());
+                    destCell.setWarrior(getSelectedCell().getWarrior());
                     getSelectedCell().setWarrior(null);
                     setSelectedCell(null);
 
@@ -257,12 +273,14 @@ public class Battle implements Cloneable {
 
     }
 
-    public void makeBattleRecordOfMove(Warrior warrior, int row, int column, boolean isHoldFlag, boolean isCollectibleFlag, boolean isCollectibleItem) {
+    public void makeBattleRecordOfMove(Warrior warrior, int row, int column, boolean isHoldFlag, boolean isCollectibleFlag, boolean isCollectibleItem, int fromRow, int fromColumn) {
         BattleRecord battleRecord = new BattleRecord(BattleRecordEnum.MOVE);
 
         battleRecord.setMoveCardId(warrior.getCardId());
         battleRecord.setMoveRow(row);
         battleRecord.setMoveColumn(column);
+        battleRecord.setFromColumn(fromColumn);
+        battleRecord.setFromRow(fromRow);
 
         if (isHoldFlag) {
             battleRecord.setMoveHoldFlag(true);
@@ -1025,5 +1043,9 @@ public class Battle implements Cloneable {
 
     public int getLastBattleRecordPlayed() {
         return lastBattleRecordPlayed;
+    }
+
+    public void incrementBattleRecord() {
+        lastBattleRecordPlayed++;
     }
 }
