@@ -169,6 +169,12 @@ public class LoginController {
 
 
     public void handleExit() {
+        SendMessage.getSendMessage().sendMessage(new LoginCommand(LoginCommandsKind.EXIT));
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.exit(0);
     }
 

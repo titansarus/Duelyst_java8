@@ -41,10 +41,26 @@ public class ClientHandler implements Runnable {
             switch (command.getCommandKind()) {
                 case LOGIN:
                     LoginCommand loginCommand = (LoginCommand) command;
-                    if (loginCommand.getLoginCommandsKind() == LoginCommandsKind.LOGIN) {
-                        handleLoginAccount(loginCommand, yaGson);
-                    } else {
-                        handleSignUpAccount(loginCommand, yaGson);
+                    switch (loginCommand.getLoginCommandsKind()) {
+                        case LOGIN:
+                            handleLoginAccount(loginCommand, yaGson);
+                            break;
+                        case SIGN_UP:
+                            handleSignUpAccount(loginCommand, yaGson);
+                            break;
+                        case EXIT:
+                            setLoggedIn(false);
+                            Server.saveAccount();
+                            formatter.close();
+                            try {
+                                socket.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            return;
+                        case LOGOUT:
+
+                            break;
                     }
                     break;
                 case SHOP:
@@ -76,8 +92,7 @@ public class ClientHandler implements Runnable {
             formatter.flush();
         } else {
             userName = username;
-            LoginCommand temp = new LoginCommand(LoginCommandsKind.LOGIN, username, password);
-            temp.setAccount(account);
+            LoginCommand temp = new LoginCommand(account);
             System.out.println("Account sent Successfully!");
             setLoggedIn(true);
             formatter.format("%s\n", yaGson.toJson(temp));
@@ -91,18 +106,17 @@ public class ClientHandler implements Runnable {
         String username = loginCommand.getUserName();
 
         if (Server.accountExistInArrayList(username, Account.getAccounts())) {
-            LoginCommand temp = new LoginCommand(LoginCommandsKind.LOGIN, userName, password);
+            LoginCommand temp = new LoginCommand(LoginCommandsKind.LOGIN);
             temp.setMyException(new UserNotExistException());
             formatter.format("%s\n", yaGson.toJson(temp));
             formatter.flush();
         } else {
             userName = username;
             Account account = new Account(username, password);
-            LoginCommand temp = new LoginCommand(LoginCommandsKind.LOGIN, username, password);
+            LoginCommand temp = new LoginCommand(account);
             Server.addAccount(account);
-            temp.setAccount(account);
-            setLoggedIn(true);
             Server.saveAccount();
+            setLoggedIn(true);
             formatter.format("%s\n", yaGson.toJson(temp));
             formatter.flush();
         }

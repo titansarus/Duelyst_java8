@@ -16,6 +16,16 @@ public class LoginCommand extends CommandClass {
         this.passWord = passWord;
     }
 
+    public LoginCommand(LoginCommandsKind loginCommandsKind) {
+        super(CommandKind.LOGIN);
+        this.loginCommandsKind = loginCommandsKind;
+    }
+
+    public LoginCommand(Account account) {
+        super(CommandKind.LOGIN);
+        this.account = account;
+    }
+
     public String getUserName() {
         return userName;
     }
