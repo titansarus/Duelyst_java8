@@ -25,8 +25,8 @@ public class Client {
             e.printStackTrace();
         }
         reader = new ReadMessage(Objects.requireNonNull(socket));
-        setCardsOfShop();
         currentClient = this;
+        setCardsOfShop();
     }
     private void setCardsOfShop(){
         ShopCommand command = new ShopCommand(ShopCommandsKind.GET_CARDS);
