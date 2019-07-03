@@ -26,6 +26,46 @@ public class Deck implements Cloneable {
         decks.add(this);
     }
 
+    public void changeIDOfAllCardsOfDeck(String newUsername) //USED FOR AI
+    {
+        for (int i = 0; i < getCards().size(); i++) {
+            Card card = getCards().get(i);
+            if (card != null) {
+                card.setCardId(newIdFromUsername(newUsername, card));
+            }
+        }
+        for (int i = 0; i < getMinions().size(); i++) {
+            Card card = getMinions().get(i);
+            if (card != null) {
+                card.setCardId(newIdFromUsername(newUsername, card));
+            }
+        }
+        if (getHero() != null) {
+            Hero hero = getHero();
+            hero.setCardId(newIdFromUsername(newUsername, hero));
+        }
+        if (getItem() != null) {
+            getItem().setCardId(newIdFromUsername(newUsername, getItem()));
+        }
+    }
+
+    public String newIdFromUsername(String newUsername, Card card) {
+        if (card != null) {
+            String[] parts = card.getCardId().split("_");
+            parts[0] = newUsername;
+            StringBuilder newID = new StringBuilder();
+            for (int j = 0; j < parts.length; j++) {
+                newID.append(parts[j]);
+                if (j != parts.length - 1) {
+                    newID.append("_");
+                }
+            }
+            return newID.toString();
+
+        }
+        return "NULL";
+    }
+
     public static Deck deepClone(Deck deck) {
         Cloner cloner = new Cloner();
         cloner.dontClone(Account.class);
@@ -303,7 +343,8 @@ public class Deck implements Cloneable {
     }
 
 
-    public static Deck AiDeckBuilderUtility(int heroNumber, int[] spellNumbers, int[] minionNumbers, int itemNumber, Ai ai) {
+    public static Deck AiDeckBuilderUtility(int heroNumber, int[] spellNumbers, int[] minionNumbers,
+                                            int itemNumber, Ai ai) {
         Deck deck = new Deck("AiDeck", ai);
         Hero hero = (Hero) Card.findCardInArrayList("Hero_" + heroNumber, Shop.getInstance().getCards());
         deck.addCard(hero);

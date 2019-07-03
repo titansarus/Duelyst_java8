@@ -273,6 +273,56 @@ public class Battle implements Cloneable {
 
     }
 
+    public void moveFromWarrior(int destX , int destY , Warrior warrior)
+    {
+        boolean isHoldFlag = false, isCollectibleFlag = false, isCollectibleItem = false;
+        int fromRow = -1, fromColumn = -1;
+
+        Cell getSelectedCell = findCellOfWarrior(warrior);
+
+        if (getSelectedCell.getWarrior() != null) {
+            if (getSelectedCell.getColumn() != destX || getSelectedCell.getRow() != destY) {
+                Cell destCell = getGrid()[destX][destY];
+                Cell srcCell = findCellOfWarrior(getSelectedCell.getWarrior());
+                fromRow = srcCell.getRow();
+                fromColumn = srcCell.getColumn();
+                if (destCell.getWarrior() == null) {
+                    if (getGrid()[destX][destY].getCollectibleItem() != null) {
+                        getPlayingPlayer().setCollectibleItem(getGrid()[destX][destY].getCollectibleItem());
+                        getGrid()[destX][destY].getCollectibleItem().setPlayer(getPlayingPlayer());
+                        battleController.deleteItemImage(getGrid()[destX][destY].getCollectibleItem());
+                        isCollectibleItem = true;//FOR BATTLE RECORD
+                    }
+                    if (gameGoal == GameGoal.HOLD_FLAG) {
+                        if (holdFlag.getX() == destX && holdFlag.getY() == destY) {
+                            holdFlag.setWarrior(getSelectedCell.getWarrior());
+                            getGrid()[destX][destY].setFlag(null);
+                            battleController.removeFlagImage(holdFlag);
+                            isHoldFlag = true; //FOR BATTLE RECORD
+                        }
+                    }
+                    if (gameGoal == GameGoal.COLLECT_FLAG) {
+                        for (Flag f :
+                                collectableFlags) {
+                            if (f.getX() == destX && f.getY() == destY) {
+                                playingPlayer.setNumberOfFlag(playingPlayer.getNumberOfFlag() + 1);
+                                getGrid()[destX][destY].setFlag(null);
+                                battleController.removeFlagImage(f);
+                                isCollectibleFlag = true; //FOR BATTLE RECORD
+                            }
+                        }
+                    }
+                    makeBattleRecordOfMove(getSelectedCell.getWarrior(), destX, destY, isHoldFlag, isCollectibleFlag, isCollectibleItem,fromRow,fromColumn); //BATTLE RECORD
+                    getSelectedCell.getWarrior().setValidToMove(false);
+                    destCell.setWarrior(getSelectedCell.getWarrior());
+                    getSelectedCell.setWarrior(null);
+                    setSelectedCell(null);
+
+                }
+            }
+        }
+    }
+
     public void makeBattleRecordOfMove(Warrior warrior, int row, int column, boolean isHoldFlag, boolean isCollectibleFlag, boolean isCollectibleItem, int fromRow, int fromColumn) {
         BattleRecord battleRecord = new BattleRecord(BattleRecordEnum.MOVE);
 

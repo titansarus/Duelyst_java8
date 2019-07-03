@@ -229,7 +229,7 @@ public class BattleController {
             cardOnField.getImageView().setImage(new Image(cardOnField.getCard().getAddressOfIdleGif()));
 //            getBattle().getGrid()[coordinate[0]][coordinate[1]].setWarrior(((Warrior) cardOnField.getCard()));
             getBattle().setSelectedCell(null);
-            isAnimationRunning =true;
+            isAnimationRunning =false;
 
         });
         tt.play();
