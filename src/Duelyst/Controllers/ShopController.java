@@ -1,8 +1,11 @@
 package Duelyst.Controllers;
 
+import Duelyst.Client.SendMessage;
 import Duelyst.Exceptions.MyException;
 import Duelyst.Model.Account;
 import Duelyst.Model.Card;
+import Duelyst.Model.CommandClasses.ShopCommand;
+import Duelyst.Model.CommandClasses.ShopCommandsKind;
 import Duelyst.Model.Shop;
 import Duelyst.Model.ShopMode;
 import Duelyst.View.ViewClasses.CardView;
@@ -367,7 +370,10 @@ public class ShopController {
     }
 
     public void handleAddToAuctionButton() {
-        //TODO Kamel She
+        Card card = Shop.getSelectedCard();
+        ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.AUCTION_CARD);
+        shopCommand.setAuctionCard(card);
+        SendMessage.getSendMessage().sendMessage(shopCommand);
     }
 
     public void handleAuctionButton() {
@@ -375,6 +381,7 @@ public class ShopController {
         tt.setFromY(800);
         tt.setToY(0);
         tt.play();
+        ShopCommand shopCommand =new ShopCommand(ShopCommandsKind.AUCTION_CARD);
         makeCardList(null, AuctionPaneHBox_hbox);//TODO Bejaye Null Bayad ArrayListe Cardaye Dar Mozayede Bashad
     }
 

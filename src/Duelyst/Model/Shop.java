@@ -194,8 +194,11 @@ public class Shop {
         return auctionCards;
     }
 
-    public void setAuctionCards(ArrayList<Card> auctionCards) {
-        this.auctionCards = auctionCards;
+    public void addAuctionCards(Card auctionCard) {
+        auctionCards.add(auctionCard);
+    }
+    public void removeAuctionCards(Card auctionCard) {
+        auctionCards.remove(auctionCard);
     }
 
     public ArrayList<Card> getFinishedCard() {
@@ -206,4 +209,7 @@ public class Shop {
         this.finishedCard = finishedCard;
     }
 
+    public void setAuctionCards(ArrayList<Card> auctionCards) {
+        this.auctionCards = auctionCards;
+    }
 }
