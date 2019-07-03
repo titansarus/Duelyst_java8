@@ -127,7 +127,7 @@ public class ClientHandler implements Runnable {
     private void handleShopCommand(ShopCommand shopCommand) {
         switch (shopCommand.getShopCommandsKind()) {
             case GET_CARDS:
-
+                getCards();
                 break;
             case SEND_CARD:
                 break;
