@@ -6,10 +6,8 @@ import Duelyst.Exceptions.MyException;
 import Duelyst.Exceptions.UserExistException;
 import Duelyst.Exceptions.UserNotExistException;
 import Duelyst.Model.Account;
-import Duelyst.Model.CommandClasses.CommandClass;
-import Duelyst.Model.CommandClasses.CommandKind;
-import Duelyst.Model.CommandClasses.LoginCommand;
-import Duelyst.Model.CommandClasses.LoginCommandsKind;
+import Duelyst.Model.CommandClasses.*;
+import Duelyst.Model.Shop;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 
@@ -42,13 +40,13 @@ public class ClientHandler implements Runnable {
                 case LOGIN:
                     LoginCommand loginCommand = (LoginCommand) command;
                     if (loginCommand.getLoginCommandsKind() == LoginCommandsKind.LOGIN) {
-                        handleLoginAccount(loginCommand, yaGson);
+                        handleLoginAccount(loginCommand);
                     } else {
-                        handleSignUpAccount(loginCommand, yaGson);
+                        handleSignUpAccount(loginCommand);
                     }
                     break;
                 case SHOP:
-                    //TODO Bayad liste Card Ha Ra Baraye Client Befrestad
+                    handleShopCommand((ShopCommand)command);
                     break;
                 case BATTLE:
                     //TODO Dastoorat Ra Migirad Va Baraye Cliente Harif Mifrestad
@@ -58,7 +56,7 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    private void handleLoginAccount(LoginCommand loginCommand, YaGson yaGson) {
+    private void handleLoginAccount(LoginCommand loginCommand) {
         String username = loginCommand.getUserName();
         String password = loginCommand.getPassWord();
         Account account = Server.findAccountInArrayList(username, Account.getAccounts());
@@ -66,25 +64,25 @@ public class ClientHandler implements Runnable {
             LoginCommand temp = new LoginCommand(LoginCommandsKind.LOGIN, userName, password);
             temp.setMyException(new UserNotExistException());
             System.out.println("Account not Found");
-            formatter.format("%s\n", yaGson.toJson(temp));
+            formatter.format("%s\n", CommandClass.makeJson(temp));
             formatter.flush();
         } else if (!account.getPassword().equals(password)) {
             LoginCommand temp = new LoginCommand(LoginCommandsKind.LOGIN, userName, password);
             temp.setMyException(new InvalidPasswordException());
             System.out.println("Wrong Password");
-            formatter.format("%s\n", yaGson.toJson(temp));
+            formatter.format("%s\n", CommandClass.makeJson(temp));
             formatter.flush();
         } else {
             userName = username;
             LoginCommand temp = new LoginCommand(LoginCommandsKind.LOGIN, username, password);
             temp.setAccount(account);
             System.out.println("Account sent Successfully!");
-            formatter.format("%s\n", yaGson.toJson(temp));
+            formatter.format("%s\n", CommandClass.makeJson(temp));
             formatter.flush();
         }
     }
 
-    private void handleSignUpAccount(LoginCommand loginCommand, YaGson yaGson) {
+    private void handleSignUpAccount(LoginCommand loginCommand) {
 
         String password = loginCommand.getPassWord();
         String username = loginCommand.getUserName();
@@ -92,7 +90,7 @@ public class ClientHandler implements Runnable {
         if (Server.accountExistInArrayList(username, Account.getAccounts())) {
             LoginCommand temp = new LoginCommand(LoginCommandsKind.LOGIN, userName, password);
             temp.setMyException(new UserNotExistException());
-            formatter.format("%s\n", yaGson.toJson(temp));
+            formatter.format("%s\n", CommandClass.makeJson(temp));
             formatter.flush();
         } else {
             userName = username;
@@ -101,11 +99,28 @@ public class ClientHandler implements Runnable {
             Server.addAccount(account);
             temp.setAccount(account);
             Server.saveAccount();
-            formatter.format("%s\n", yaGson.toJson(temp));
+            formatter.format("%s\n", CommandClass.makeJson(temp));
             formatter.flush();
         }
 
 
+    }
+
+    private void handleShopCommand(ShopCommand shopCommand){
+        switch (shopCommand.getShopCommandsKind()){
+            case GET_CARDS:
+
+                break;
+            case SEND_CARD:
+                break;
+            case AUCTION_CARD:
+        }
+    }
+    public void getCards(){
+        ShopCommand command = new ShopCommand(ShopCommandsKind.GET_CARDS);
+        command.setCards(Shop.getInstance().getCards());
+        formatter.format("%s\n", CommandClass.makeJson(command));
+        formatter.flush();
     }
 
 
