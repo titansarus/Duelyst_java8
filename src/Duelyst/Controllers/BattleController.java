@@ -115,7 +115,7 @@ public class BattleController {
                 checkBattleRecord();
             }
 
-        }), new KeyFrame(Duration.millis(300)));
+        }), new KeyFrame(Duration.millis(50)));
         animationTimeLine.setCycleCount(Animation.INDEFINITE);
         animationTimeLine.play();
     }
