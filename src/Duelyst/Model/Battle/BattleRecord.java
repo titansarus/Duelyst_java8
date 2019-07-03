@@ -34,6 +34,7 @@ public class BattleRecord {
     private boolean isMoveHoldFlag = false;
     private boolean isMoveCollectibleFlag = false;
     private boolean isMoveCollectibleItem = false;
+    private Flag flag;
 
     //FOR DEATH
     private String deathCardId;
@@ -264,6 +265,14 @@ public class BattleRecord {
 
     public int getFromColumn() {
         return fromColumn;
+    }
+
+    public Flag getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Flag flag) {
+        this.flag = flag;
     }
 }
 

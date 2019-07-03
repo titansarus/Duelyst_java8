@@ -123,7 +123,7 @@ public class BattleController {
     private void checkBattleRecord() {
         isAnimationRunning = true;
 
-        if (getBattle().getLastBattleRecordPlayed() >= getBattle().getBattleRecords().size() ||  getBattle().getLastBattleRecordPlayed()==-1) {
+        if (getBattle().getLastBattleRecordPlayed() >= getBattle().getBattleRecords().size() || getBattle().getLastBattleRecordPlayed() == -1) {
             isAnimationRunning = false;
             return;
         } else {
@@ -135,9 +135,8 @@ public class BattleController {
             switch (battleRecord.getTypeOfRecord()) {
                 case MOVE: {
 
-                            moveAnimationFromRecord(battleRecord);
-                            isAnimationRunning = false;
-
+                    moveAnimationFromRecord(battleRecord);
+                    isAnimationRunning = false;
 
 
                 }
@@ -158,9 +157,9 @@ public class BattleController {
                         }
                     });
                     thread.start();
-                }break;
-                case INITIALIZE:
-                {
+                }
+                break;
+                case INITIALIZE: {
                     Thread thread = new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -182,18 +181,15 @@ public class BattleController {
 
     }
 
-    private void moveAnimationFromRecord(BattleRecord battleRecord)
-    {
+    private void moveAnimationFromRecord(BattleRecord battleRecord) {
         String moveCardId = battleRecord.getMoveCardId();
 
         Warrior warrior = null;
-        warrior= (Warrior) Card.findCardInArrayList(moveCardId,getBattle().getPlayer1().getInGameCards());
-        if (warrior == null)
-        {
-            warrior = (Warrior) Card.findCardInArrayList(moveCardId,getBattle().getPlayer2().getInGameCards());
+        warrior = (Warrior) Card.findCardInArrayList(moveCardId, getBattle().getPlayer1().getInGameCards());
+        if (warrior == null) {
+            warrior = (Warrior) Card.findCardInArrayList(moveCardId, getBattle().getPlayer2().getInGameCards());
         }
-        if (warrior ==null)
-        {
+        if (warrior == null) {
             return;
         }
         int[] coordinate = new int[2];
@@ -227,9 +223,15 @@ public class BattleController {
         tt.setToY(y);
         tt.setOnFinished(event1 -> {
             cardOnField.getImageView().setImage(new Image(cardOnField.getCard().getAddressOfIdleGif()));
+            if (battleRecord.isMoveCollectibleFlag() || battleRecord.isMoveHoldFlag()) {
+                removeFlagImage(battleRecord.getFlag());
+            }
+            if (battleRecord.isMoveCollectibleItem()) {
+                deleteItemImage(getBattle().getGrid()[coordinate[0]][coordinate[1]].getCollectibleItem());
+            }
 //            getBattle().getGrid()[coordinate[0]][coordinate[1]].setWarrior(((Warrior) cardOnField.getCard()));
             getBattle().setSelectedCell(null);
-            isAnimationRunning =false;
+            isAnimationRunning = false;
 
         });
         tt.play();
@@ -359,8 +361,8 @@ public class BattleController {
 
                 if (Cell.calculateManhattanDistance(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]]) <= 2) {
                     if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getSelectedCell().getWarrior()) && getBattle().getSelectedCell().getWarrior().isValidToMove()) {
-                      //  moveAnimationRun(coordinate);
-                        getBattle().move(coordinate[0],coordinate[1]);
+                        //  moveAnimationRun(coordinate);
+                        getBattle().move(coordinate[0], coordinate[1] , getBattle().getSelectedCell().getWarrior());
                     }
                 }
                 return;
@@ -714,82 +716,82 @@ public class BattleController {
         }
         battle.deleteDeathCardsFromMap(); // Check For Death Cards
     }
-
-    public void moveAnimationRunAi(int[] coordinate, Warrior warrior) {
-        CardOnField cardOnField = CardOnField.findCardOnFieldFromArrayList(cardsOnField, warrior);
-        moveSound();
-        Integer srcRow = getBattle().getSelectedCell().getRow();
-        Integer srcCol = getBattle().getSelectedCell().getColumn();
-        Polygon srcPolygon = rectangles[srcRow][srcCol];
-        ObservableList<Double> srcPoints = srcPolygon.getPoints();
-        double srcx = calculateMidXFromPoint(srcPoints);
-        double srcy = calculateMidYFromPoint(srcPoints);
-
-        Polygon destPolygon = rectangles[coordinate[0]][coordinate[1]];
-        ObservableList<Double> destPoints = destPolygon.getPoints();
-        double x = calculateMidXFromPoint(destPoints);
-        double y = calculateMidYFromPoint(destPoints);
-
-
-        anchorPane.getChildren().remove(cardOnField.getImageView());
-
-        cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders(getBattle().getSelectedCell().getWarrior().getAddressOfRunGif())));
-
-        getBattle().getSelectedCell().setWarrior(null);
-
-        anchorPane.getChildren().add(cardOnField.getImageView());
-        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), cardOnField.getImageView());
-        tt.setFromX(srcx);
-        tt.setFromY(srcy);
-        tt.setToX(x);
-        tt.setToY(y);
-        tt.setOnFinished(event1 -> {
-            getBattle().setSelectedCell(getBattle().getGrid()[coordinate[0]][coordinate[1]]);
-            getBattle().getGrid()[coordinate[0]][coordinate[1]].setWarrior(((Warrior) cardOnField.getCard()));
-            getBattle().move(coordinate[0], coordinate[1]);
-
-            cardOnField.getImageView().setImage(new Image(cardOnField.getCard().getAddressOfIdleGif()));
-            System.out.println("-0-0-0-0-0-00-0-0--0-0-0-0-0-0-0-0-");
-//            getBattle().setSelectedCell(null);
-        });
-        tt.play();
-        return;
-    }
-
-    public void moveAnimationRun(int[] coordinate) {
-        CardOnField cardOnField = CardOnField.findCardOnFieldFromArrayList(cardsOnField, getBattle().getSelectedCell().getWarrior());
-        moveSound();
-        Integer srcRow = getBattle().getSelectedCell().getRow();
-        Integer srcCol = getBattle().getSelectedCell().getColumn();
-        Polygon srcPolygon = rectangles[srcRow][srcCol];
-        ObservableList<Double> srcPoints = srcPolygon.getPoints();
-        double srcx = calculateMidXFromPoint(srcPoints);
-        double srcy = calculateMidYFromPoint(srcPoints);
-
-        Polygon destPolygon = rectangles[coordinate[0]][coordinate[1]];
-        ObservableList<Double> destPoints = destPolygon.getPoints();
-        double x = calculateMidXFromPoint(destPoints);
-        double y = calculateMidYFromPoint(destPoints);
-
-
-        anchorPane.getChildren().remove(cardOnField.getImageView());
-
-        cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders(getBattle().getSelectedCell().getWarrior().getAddressOfRunGif())));
-
-        anchorPane.getChildren().add(cardOnField.getImageView());
-        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), cardOnField.getImageView());
-        tt.setFromX(srcx);
-        tt.setFromY(srcy);
-        tt.setToX(x);
-        tt.setToY(y);
-        tt.setOnFinished(event1 -> {
-            getBattle().move(coordinate[0], coordinate[1]);
-            cardOnField.getImageView().setImage(new Image(cardOnField.getCard().getAddressOfIdleGif()));
+//
+//    public void moveAnimationRunAi(int[] coordinate, Warrior warrior) {
+//        CardOnField cardOnField = CardOnField.findCardOnFieldFromArrayList(cardsOnField, warrior);
+//        moveSound();
+//        Integer srcRow = getBattle().getSelectedCell().getRow();
+//        Integer srcCol = getBattle().getSelectedCell().getColumn();
+//        Polygon srcPolygon = rectangles[srcRow][srcCol];
+//        ObservableList<Double> srcPoints = srcPolygon.getPoints();
+//        double srcx = calculateMidXFromPoint(srcPoints);
+//        double srcy = calculateMidYFromPoint(srcPoints);
+//
+//        Polygon destPolygon = rectangles[coordinate[0]][coordinate[1]];
+//        ObservableList<Double> destPoints = destPolygon.getPoints();
+//        double x = calculateMidXFromPoint(destPoints);
+//        double y = calculateMidYFromPoint(destPoints);
+//
+//
+//        anchorPane.getChildren().remove(cardOnField.getImageView());
+//
+//        cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders(getBattle().getSelectedCell().getWarrior().getAddressOfRunGif())));
+//
+//        getBattle().getSelectedCell().setWarrior(null);
+//
+//        anchorPane.getChildren().add(cardOnField.getImageView());
+//        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), cardOnField.getImageView());
+//        tt.setFromX(srcx);
+//        tt.setFromY(srcy);
+//        tt.setToX(x);
+//        tt.setToY(y);
+//        tt.setOnFinished(event1 -> {
+//            getBattle().setSelectedCell(getBattle().getGrid()[coordinate[0]][coordinate[1]]);
 //            getBattle().getGrid()[coordinate[0]][coordinate[1]].setWarrior(((Warrior) cardOnField.getCard()));
-            getBattle().setSelectedCell(null);
-        });
-        tt.play();
-    }
+//            getBattle().move(coordinate[0], coordinate[1]);
+//
+//            cardOnField.getImageView().setImage(new Image(cardOnField.getCard().getAddressOfIdleGif()));
+//            System.out.println("-0-0-0-0-0-00-0-0--0-0-0-0-0-0-0-0-");
+////            getBattle().setSelectedCell(null);
+//        });
+//        tt.play();
+//        return;
+//    }
+//
+//    public void moveAnimationRun(int[] coordinate) {
+//        CardOnField cardOnField = CardOnField.findCardOnFieldFromArrayList(cardsOnField, getBattle().getSelectedCell().getWarrior());
+//        moveSound();
+//        Integer srcRow = getBattle().getSelectedCell().getRow();
+//        Integer srcCol = getBattle().getSelectedCell().getColumn();
+//        Polygon srcPolygon = rectangles[srcRow][srcCol];
+//        ObservableList<Double> srcPoints = srcPolygon.getPoints();
+//        double srcx = calculateMidXFromPoint(srcPoints);
+//        double srcy = calculateMidYFromPoint(srcPoints);
+//
+//        Polygon destPolygon = rectangles[coordinate[0]][coordinate[1]];
+//        ObservableList<Double> destPoints = destPolygon.getPoints();
+//        double x = calculateMidXFromPoint(destPoints);
+//        double y = calculateMidYFromPoint(destPoints);
+//
+//
+//        anchorPane.getChildren().remove(cardOnField.getImageView());
+//
+//        cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders(getBattle().getSelectedCell().getWarrior().getAddressOfRunGif())));
+//
+//        anchorPane.getChildren().add(cardOnField.getImageView());
+//        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), cardOnField.getImageView());
+//        tt.setFromX(srcx);
+//        tt.setFromY(srcy);
+//        tt.setToX(x);
+//        tt.setToY(y);
+//        tt.setOnFinished(event1 -> {
+//            getBattle().move(coordinate[0], coordinate[1]);
+//            cardOnField.getImageView().setImage(new Image(cardOnField.getCard().getAddressOfIdleGif()));
+////            getBattle().getGrid()[coordinate[0]][coordinate[1]].setWarrior(((Warrior) cardOnField.getCard()));
+//            getBattle().setSelectedCell(null);
+//        });
+//        tt.play();
+//    }
 
     public void sendIdleImageViewToCenterOfCell(CardOnField cardOnField, Polygon polygon) {
         ObservableList<Double> points = polygon.getPoints();

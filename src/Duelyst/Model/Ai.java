@@ -65,7 +65,7 @@ public class Ai extends Account {
 
                 battle.findValidCell(KindOfActionForValidCells.MOVE);
                 Cell cell = battle.getValidCells().get(random.nextInt(battle.getValidCells().size()));
-                battle.moveFromWarrior(cell.getRow(),cell.getColumn() , ((Warrior) card));
+                battle.move(cell.getRow(),cell.getColumn() , ((Warrior) card));
                // getBattleController().moveAnimationRunAi(new int[]{cell.getRow(), cell.getColumn()}, (Warrior) card); //CHECK THAT CARD IS WARRIOR
             } catch (Exception e) {
                 System.out.println("Ai can not move");
