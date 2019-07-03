@@ -205,7 +205,11 @@ public class BattleController {
             cardOnField.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnField.getCard().getAddressOfDeathGif()));
 
             TranslateTransition tt = new TranslateTransition(Duration.millis(2000), cardOnField.getImageView());
-            tt.setOnFinished(event -> anchorPane.getChildren().remove(cardOnField.getImageView()));
+            tt.setOnFinished(event -> {
+
+                anchorPane.getChildren().remove(cardOnField.getImageView());
+                isAnimationRunning = false;
+            });
             tt.play();
 
 
@@ -377,71 +381,90 @@ public class BattleController {
 
 
     public void rectangleOnMouseClicked(MouseEvent event) {
+        if (!isAnimationRunning) {
+            Polygon p = (Polygon) event.getSource();
+            int[] coordinate = findPolygonCoordinate(p);
 
-        Polygon p = (Polygon) event.getSource();
-        int[] coordinate = findPolygonCoordinate(p);
+            if (getBattle().getSelectedCell() != null && getBattle().getSelectedCell().getWarrior() != null && getBattle().getPlayingPlayer().getInGameCards().contains(getBattle().getSelectedCell().getWarrior())) {
+                if (getBattle().getSelectedCell() != getBattle().getGrid()[coordinate[0]][coordinate[1]] && getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior() == null) {
 
-        if (getBattle().getSelectedCell() != null && getBattle().getSelectedCell().getWarrior() != null && getBattle().getPlayingPlayer().getInGameCards().contains(getBattle().getSelectedCell().getWarrior())) {
-            if (getBattle().getSelectedCell() != getBattle().getGrid()[coordinate[0]][coordinate[1]] && getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior() == null) {
-
-                battle.findValidCell(KindOfActionForValidCells.MOVE);
-                ArrayList<Cell> cells = battle.getValidCells();
-                System.out.println(cells.size());
-                for (int i = 0; i < cells.size(); i++) {
-                    System.out.println(cells.get(i).getRow() + " <======> " + cells.get(i).getColumn());
-                }
-
-                if (Cell.calculateManhattanDistance(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]]) <= 2) {
-                    if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getSelectedCell().getWarrior()) && getBattle().getSelectedCell().getWarrior().isValidToMove()) {
-                        //  moveAnimationRun(coordinate);
-                        getBattle().move(coordinate[0], coordinate[1], getBattle().getSelectedCell().getWarrior());
+                    battle.findValidCell(KindOfActionForValidCells.MOVE);
+                    ArrayList<Cell> cells = battle.getValidCells();
+                    System.out.println(cells.size());
+                    for (int i = 0; i < cells.size(); i++) {
+                        System.out.println(cells.get(i).getRow() + " <======> " + cells.get(i).getColumn());
                     }
-                }
-                return;
-            } else if (getBattle().getSelectedCell() != getBattle().getGrid()[coordinate[0]][coordinate[1]] && getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior() != null) {
-                //TODO ADD CHECK OF RANGE AND MELEE OR HYBRID
 
-                if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior())) {
-                    System.out.println("YOUR CARD!!!");
-                    getBattle().setSelectedCell(null);
-                    getBattle().setSelectedCard(null);
+                    if (Cell.calculateManhattanDistance(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]]) <= 2) {
+                        if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getSelectedCell().getWarrior()) && getBattle().getSelectedCell().getWarrior().isValidToMove()) {
+                            //  moveAnimationRun(coordinate);
+                            getBattle().move(coordinate[0], coordinate[1], getBattle().getSelectedCell().getWarrior());
+                        }
+                    }
                     return;
-                } else if (getBattle().getSelectedCell().getWarrior().isValidToAttack()) {
-                    if (!isValidAttack(getBattle().getGrid()[coordinate[0]][coordinate[1]], getBattle().getSelectedCell())) {
-                        System.out.println("natoonne bazene!!!");
+                } else if (getBattle().getSelectedCell() != getBattle().getGrid()[coordinate[0]][coordinate[1]] && getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior() != null) {
+                    //TODO ADD CHECK OF RANGE AND MELEE OR HYBRID
+
+                    if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior())) {
+                        System.out.println("YOUR CARD!!!");
+                        getBattle().setSelectedCell(null);
+                        getBattle().setSelectedCard(null);
                         return;
+                    } else if (getBattle().getSelectedCell().getWarrior().isValidToAttack()) {
+                        if (!isValidAttack(getBattle().getGrid()[coordinate[0]][coordinate[1]], getBattle().getSelectedCell())) {
+                            System.out.println("natoonne bazene!!!");
+                            return;
+                        }
+                        System.out.println("Attack");
+                        Warrior attacker = getBattle().getSelectedCell().getWarrior();
+                        Warrior attacked = getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior();
+                        getBattle().handleAttackCounterDeath(attacker, attacked);
+                        //handleAttackAnimation(coordinate);
+
+                        getBattle().setSelectedCell(null);
+                        getBattle().setSelectedCard(null);
+
                     }
-                    System.out.println("Attack");
-                    Warrior attacker = getBattle().getSelectedCell().getWarrior();
-                    Warrior attacked = getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior();
-                    getBattle().handleAttackCounterDeath(attacker, attacked);
-                    //handleAttackAnimation(coordinate);
 
-                    getBattle().setSelectedCell(null);
-                    getBattle().setSelectedCard(null);
-
+                    return;
                 }
+            }
+
+
+            getBattle().setSelectedCell(getBattle().getGrid()[coordinate[0]][coordinate[1]]);
+
+            if (getBattle().getSelectedCard() != null) {//TODO SOME MORE CHECKS NEEDED
+
+                try {
+                    getBattle().insertSelectedCardWithCard(getBattle().getSelectedCell().getRow(), getBattle().getSelectedCell().getColumn(), getBattle().getSelectedCard());
+                } catch (MyException e) {
+                    Container.exceptionGenerator(e, stackPane);
+                }
+                //handleInsertCardClick(getBattle().getSelectedCell());
 
                 return;
             }
+        } else {
+            System.out.println("ANIMATION IS RUNNING");
         }
+    }
 
+    public void showSpellOnFiled(CardOnField cardOnField, Polygon polygon) {
+        ObservableList<Double> points = polygon.getPoints();
+        double x = calculateMidXFromPoint(points);
+        double y = calculateMidYFromPoint(points);
+        final ImageView imageView2 = new ImageView(ImageHolder.findImageInImageHolders(cardOnField.getCard().getAddressOfIdleGif()));
+        anchorPane.getChildren().add(imageView2);
+        imageView2.relocate(x, y);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), imageView2);
+        tt.setOnFinished(event -> {
+                    anchorPane.getChildren().remove(imageView2);
+                    isAnimationRunning = false;
+                }
 
-        getBattle().setSelectedCell(getBattle().getGrid()[coordinate[0]][coordinate[1]]);
+        );
 
-        if (getBattle().getSelectedCard() != null) {//TODO SOME MORE CHECKS NEEDED
-
-            try{
-                getBattle().insertSelectedCard(getBattle().getSelectedCell().getRow(),getBattle().getSelectedCell().getColumn());
-            }
-            catch (MyException e)
-            {
-                Container.exceptionGenerator(e,stackPane);
-            }
-            //handleInsertCardClick(getBattle().getSelectedCell());
-
-            return;
-        }
+        tt.play();
     }
 
     private void insertAnimation(BattleRecord battleRecord) {
@@ -456,8 +479,7 @@ public class BattleController {
 
         int[] battleCoordinate = getBattle().findCellCoordinate(cell);
 
-        if (!isSpell)
-        {
+        if (!isSpell) {
             Polygon polygon = rectangles[battleCoordinate[0]][battleCoordinate[1]];
             double x = calculateMidXFromPoint(polygon.getPoints());
             double y = calculateMidYFromPoint(polygon.getPoints());
@@ -465,16 +487,26 @@ public class BattleController {
             cardOnField.setCard(card);
             cardsOnField.add(cardOnField);
             getBattle().setSelectedCard(null);
-            sendIdleImageViewToCenterOfCell(cardOnField,polygon);
-            FadeTransition fadeTransition = new FadeTransition(Duration.millis(500),cardOnField.getImageView());
+            sendIdleImageViewToCenterOfCell(cardOnField, polygon);
+            if (battleRecord.isFlag()) {
+                removeFlagImage(battleRecord.getFlag());
+            }
+            FadeTransition fadeTransition = new FadeTransition(Duration.millis(500), cardOnField.getImageView());
             fadeTransition.setFromValue(0.1);
             fadeTransition.setToValue(1.0);
             fadeTransition.setOnFinished(event -> {
-                isAnimationRunning=false;
+                isAnimationRunning = false;
             });
             fadeTransition.play();
 
+        } else {
+            CardOnField cardOnField = new CardOnField();
+            cardOnField.setCard(card);
+            getBattle().setSelectedCard(null);
+            Polygon polygon = rectangles[battleCoordinate[0]][battleCoordinate[1]];
+            showSpellOnFiled(cardOnField, polygon);
         }
+        updateHand();
 //        battle.findValidCell(KindOfActionForValidCells.INSERT);
 //        ArrayList<Cell> cells = battle.getValidCells();
 //
@@ -585,7 +617,6 @@ public class BattleController {
         parallelTransition.play();
 
     }
-
 //    public void handleAttackAnimation(int[] coordinate) {
 //        getBattle().setAttackedCard(getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior());
 //        CardOnField cardOnFieldAttacker = CardOnField.findCardOnFieldFromArrayList(cardsOnField, getBattle().getSelectedCell().getWarrior());
@@ -744,6 +775,7 @@ public class BattleController {
 //        });
 //        parallelTransition.play();
 //
+
 //    }
 
     public void insertPlayerHeroes() {
@@ -793,7 +825,6 @@ public class BattleController {
 
     }
 
-
 //    public void handleInsertCardClick(Cell cell) {
 //
 //        int[] battleCoordinate = getBattle().findCellCoordinate(cell);
@@ -825,25 +856,9 @@ public class BattleController {
 //        }
 //        getBattle().setSelectedCell(null);
 //        battle.deleteDeathCardsFromMap(); // Check For Death Cards
+
 //    }
 
-
-    public void showSpellOnFiled(CardOnField cardOnField, Polygon polygon) {
-        ObservableList<Double> points = polygon.getPoints();
-        double x = calculateMidXFromPoint(points);
-        double y = calculateMidYFromPoint(points);
-        final ImageView imageView2 = new ImageView(ImageHolder.findImageInImageHolders(cardOnField.getCard().getAddressOfIdleGif()));
-        anchorPane.getChildren().add(imageView2);
-        imageView2.relocate(x, y);
-        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), imageView2);
-        tt.setOnFinished(event -> {
-                    anchorPane.getChildren().remove(imageView2);
-                }
-
-        );
-
-        tt.play();
-    }
 
     public void handleInsertCollectibleItem(Cell cell) {
 
@@ -978,6 +993,7 @@ public class BattleController {
     public void stopTimeline() {
         slowTimeline.stop();
         fastTimeLine.stop();
+        animationTimeLine.stop();
     }
 
     public void animationOfDeath(Warrior warrior) {
@@ -1214,6 +1230,7 @@ public class BattleController {
         ft.setOnFinished(event -> {
             if (Container.scenes.size() > 0) {
                 isAnimationRunning = false;
+                stopTimeline();
                 Container.handleBack();
             }
         });
@@ -1252,6 +1269,7 @@ public class BattleController {
         FadeTransition ft2 = new FadeTransition(Duration.millis(5000), gameResult_lbl);
         ft.setOnFinished(event -> {
             if (Container.scenes.size() > 0) {
+                stopTimeline();
                 Container.handleBack();
             }
         });
@@ -1312,6 +1330,7 @@ public class BattleController {
 
     public void handleQuitImg() {
         if (Container.scenes.size() > 0) {
+            stopTimeline();
             Container.handleBack();
         }
     }

@@ -126,6 +126,7 @@ public class Container {
     }
 
     static void handleBack() {
+
         Container.scenes.removeLast();
         Container.nameOfMenus.removeLast();
         Container.stage.setScene(Container.scenes.getLast());

@@ -467,6 +467,11 @@ public class Battle implements Cloneable {
         Flag flag = null;
         Card card = selectedCard;
 
+        findValidCell(KindOfActionForValidCells.INSERT);
+        Cell cell = getGrid()[i][j];
+        if (!getValidCells().contains(cell)) {
+        throw new NotValidCellForSpellException();
+        }
 
         if (selectedCard instanceof Warrior) {
             if (getGrid()[i][j].isEmpty()) {
