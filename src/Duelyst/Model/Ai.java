@@ -88,7 +88,8 @@ public class Ai extends Account {
                     Cell cell = battle.getValidCells().get(random.nextInt(battle.getValidCells().size()));
                     Warrior attacker = (Warrior) card;
                     Warrior attackedWarrior = cell.getWarrior();
-                    getBattleController().handleAttackFromAi(attacker, attackedWarrior);
+                    battle.attack(attacker,attackedWarrior,false);
+                   // getBattleController().handleAttackFromAi(attacker, attackedWarrior);
                 } catch (Exception e) {
                     System.out.println("Ai can not attack");
                 }

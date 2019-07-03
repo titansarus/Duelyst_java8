@@ -122,6 +122,7 @@ public class BattleController {
 
     private void checkBattleRecord() {
         isAnimationRunning = true;
+        int lastBattle = getBattle().getLastBattleRecordPlayed();
 
         if (getBattle().getLastBattleRecordPlayed() >= getBattle().getBattleRecords().size() || getBattle().getLastBattleRecordPlayed() == -1) {
             isAnimationRunning = false;
@@ -136,47 +137,70 @@ public class BattleController {
                 case MOVE: {
 
                     moveAnimationFromRecord(battleRecord);
-                    isAnimationRunning = false;
 
 
                 }
                 break;
                 case END_TURN: {
-                    Thread thread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+
                             System.out.println("endTurn");
                             isAnimationRunning = false;
 
 
-                        }
-                    });
-                    thread.start();
                 }
                 break;
                 case INITIALIZE: {
-                    Thread thread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+
+
                             System.out.println("initialize");
                             isAnimationRunning = false;
 
-
-                        }
-                    });
-                    thread.start();
+                }
+                break;
+                case ATTACK: {
+                    handleAttackAnimationOfRecord(battleRecord);
+                }
+                break;
+                case DEATH: {
+                    System.out.println("DEATH RECORD");
+                    deathAnimationFromRecord(battleRecord);
                 }
             }
+        }
+
+    }
+
+    private void deathAnimationFromRecord(BattleRecord battleRecord) {
+        Warrior deathWarrior = battleRecord.getDeathWarrior();
+        CardOnField cardOnField = CardOnField.getCardOnField(deathWarrior);
+        if (cardOnField != null) {
+
+//            Polygon polygon = null;
+//            Cell cell = battle.getCellOfWarrior(warrior);
+//            for (int i = 0; i < battle.getGrid().length; i++) {
+//                for (int j = 0; j < battle.getGrid().length; j++) {
+//                    if (battle.getGrid()[i][j].equals(cell)) {
+//                        System.out.println("Peida Kard :DDDDDDDDDDDDDDDDDDDDDDDDDDD");
+//                        polygon = rectangles[i][j];
+//                        break;
+//                    }
+//                }
+//            }
+//            ObservableList<Double> points = polygon.getPoints();
+//
+//
+//            double x = calculateMidXFromPoint(points);
+//            double y = calculateMidYFromPoint(points);
+//            System.out.println(x + "  ][  " + y);
+//            cardOnField.getImageView().relocate(x, y);
+
+            cardOnField.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnField.getCard().getAddressOfDeathGif()));
+
+            TranslateTransition tt = new TranslateTransition(Duration.millis(2000), cardOnField.getImageView());
+            tt.setOnFinished(event -> anchorPane.getChildren().remove(cardOnField.getImageView()));
+            tt.play();
+
+
         }
 
     }
@@ -362,7 +386,7 @@ public class BattleController {
                 if (Cell.calculateManhattanDistance(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]]) <= 2) {
                     if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getSelectedCell().getWarrior()) && getBattle().getSelectedCell().getWarrior().isValidToMove()) {
                         //  moveAnimationRun(coordinate);
-                        getBattle().move(coordinate[0], coordinate[1] , getBattle().getSelectedCell().getWarrior());
+                        getBattle().move(coordinate[0], coordinate[1], getBattle().getSelectedCell().getWarrior());
                     }
                 }
                 return;
@@ -380,7 +404,9 @@ public class BattleController {
                         return;
                     }
                     System.out.println("Attack");
-                    handleAttackAnimation(coordinate);
+                    getBattle().attack(getBattle().getSelectedCell().getWarrior(), getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior(), false);
+                    getBattle().deleteDeathCardsFromMap();
+                    //handleAttackAnimation(coordinate);
 
                     getBattle().setSelectedCell(null);
                     getBattle().setSelectedCard(null);
@@ -439,6 +465,49 @@ public class BattleController {
         return Cell.calculateManhattanDistance(targetCell, sourceCell) <= 1;
     }
 
+    public void handleAttackAnimationOfRecord(BattleRecord battleRecord) {
+        isAnimationRunning=true;
+        Warrior attacker = battleRecord.getAttacker();
+        Warrior attacked = battleRecord.getAttacked();
+
+        CardOnField cardOnFieldAttacker = CardOnField.findCardOnFieldFromArrayList(cardsOnField, attacker);
+        CardOnField cardOnFieldAttacked = CardOnField.findCardOnFieldFromArrayList(cardsOnField, attacked);
+
+        attackSound();
+        cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfAttackGif()));
+        cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfGetDamageGif()));
+
+        TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
+        tt1.setOnFinished(event -> {
+            cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
+        });
+
+        TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
+        tt2.setOnFinished(event -> {
+            cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
+        });
+
+        ParallelTransition parallelTransition = new ParallelTransition(tt1, tt2);
+
+        if (battleRecord.isHasBuff()) {
+            isAnimationRunning=true;
+            ImageView imageViewOfBuff = new ImageView(buffEffect);
+            anchorPane.getChildren().add(imageViewOfBuff);
+            imageViewOfBuff.relocate(cardOnFieldAttacked.getImageView().getLayoutX(), cardOnFieldAttacked.getImageView().getLayoutY());
+            TranslateTransition effectTransition = new TranslateTransition(Duration.millis(500), imageViewOfBuff);
+            effectTransition.setOnFinished(event2 -> {
+                anchorPane.getChildren().remove(imageViewOfBuff);
+            });
+            parallelTransition.getChildren().add(effectTransition);
+        }
+
+        parallelTransition.setOnFinished(event -> {
+            isAnimationRunning = false;
+        });
+
+        parallelTransition.play();
+
+    }
 
     public void handleAttackAnimation(int[] coordinate) {
         getBattle().setAttackedCard(getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior());

@@ -276,10 +276,9 @@ public class Battle implements Cloneable {
 //
 //    }
 
-    public void move(int destX , int destY , Warrior warrior)
-    {
+    public void move(int destX, int destY, Warrior warrior) {
         boolean isHoldFlag = false, isCollectibleFlag = false, isCollectibleItem = false;
-        Flag flag =null;
+        Flag flag = null;
         int fromRow = -1, fromColumn = -1;
 
         Cell getSelectedCell = findCellOfWarrior(warrior);
@@ -294,7 +293,7 @@ public class Battle implements Cloneable {
                     if (getGrid()[destX][destY].getCollectibleItem() != null) {
                         getPlayingPlayer().setCollectibleItem(getGrid()[destX][destY].getCollectibleItem());
                         getGrid()[destX][destY].getCollectibleItem().setPlayer(getPlayingPlayer());
-                     //   battleController.deleteItemImage(getGrid()[destX][destY].getCollectibleItem());
+                        //   battleController.deleteItemImage(getGrid()[destX][destY].getCollectibleItem());
                         isCollectibleItem = true;//FOR BATTLE RECORD
                     }
                     if (gameGoal == GameGoal.HOLD_FLAG) {
@@ -302,7 +301,7 @@ public class Battle implements Cloneable {
                             holdFlag.setWarrior(getSelectedCell.getWarrior());
                             getGrid()[destX][destY].setFlag(null);
                             flag = holdFlag;
-                      //      battleController.removeFlagImage(holdFlag);
+                            //      battleController.removeFlagImage(holdFlag);
                             isHoldFlag = true; //FOR BATTLE RECORD
                         }
                     }
@@ -313,12 +312,12 @@ public class Battle implements Cloneable {
                                 playingPlayer.setNumberOfFlag(playingPlayer.getNumberOfFlag() + 1);
                                 getGrid()[destX][destY].setFlag(null);
                                 flag = f;
-                       //        battleController.removeFlagImage(f);
+                                //        battleController.removeFlagImage(f);
                                 isCollectibleFlag = true; //FOR BATTLE RECORD
                             }
                         }
                     }
-                    makeBattleRecordOfMove(getSelectedCell.getWarrior(), destX, destY, isHoldFlag, isCollectibleFlag, isCollectibleItem,fromRow,fromColumn , flag); //BATTLE RECORD
+                    makeBattleRecordOfMove(getSelectedCell.getWarrior(), destX, destY, isHoldFlag, isCollectibleFlag, isCollectibleItem, fromRow, fromColumn, flag); //BATTLE RECORD
                     getSelectedCell.getWarrior().setValidToMove(false);
                     destCell.setWarrior(getSelectedCell.getWarrior());
                     getSelectedCell.setWarrior(null);
@@ -538,7 +537,8 @@ public class Battle implements Cloneable {
         battleRecord.setHasCounterAttack(isValidCounter);
         battleRecord.setAttackerCardId(attacker.getCardId());
         battleRecord.setAttackedCardId(attacked.getCardId());
-
+        battleRecord.setAttacked(attacked);
+        battleRecord.setAttacker(attacker);
         getBattleRecords().add(battleRecord);
 
     }
@@ -559,9 +559,11 @@ public class Battle implements Cloneable {
         System.out.println("==============================> Check Death Cards " + firstDeathCards.size());
         System.out.println(getPlayer1().getInGameCards().size());
 
-        deleteFromMap(firstDeathCards);
-        deleteFromMap(secondDeathCards);
-        addUsedCardsToGraveYard(firstDeathCards, secondDeathCards);
+        if (firstDeathCards.size()!=0 || secondDeathCards.size()!=0) {
+            deleteFromMap(firstDeathCards);
+            deleteFromMap(secondDeathCards);
+            addUsedCardsToGraveYard(firstDeathCards, secondDeathCards);
+        }
     }
 
     private void deleteFromMap(ArrayList<Card> cards) {
@@ -588,6 +590,7 @@ public class Battle implements Cloneable {
         BattleRecord battleRecord = new BattleRecord(BattleRecordEnum.DEATH);
         battleRecord.setDeathCardId(card.getCardId());
         battleRecord.setHaveFlag(isHaveFlag);
+        battleRecord.setDeathWarrior(((Warrior) card));
 
         getBattleRecords().add(battleRecord);
     }

@@ -1,9 +1,6 @@
 package Duelyst.Model.Battle;
 
-import Duelyst.Model.Card;
-import Duelyst.Model.Deck;
-import Duelyst.Model.GameGoal;
-import Duelyst.Model.GameMode;
+import Duelyst.Model.*;
 
 import java.util.ArrayList;
 
@@ -26,10 +23,11 @@ public class BattleRecord {
     private String attackerCardId, attackedCardId;
     private boolean hasBuff = false;
     private boolean hasCounterAttack = false;
+    private Warrior attacker, attacked;
 
     //FOR MOVE
     private String moveCardId;
-    private int fromRow , fromColumn;
+    private int fromRow, fromColumn;
     private int moveRow, moveColumn;
     private boolean isMoveHoldFlag = false;
     private boolean isMoveCollectibleFlag = false;
@@ -39,11 +37,11 @@ public class BattleRecord {
     //FOR DEATH
     private String deathCardId;
     private boolean isHaveFlag = false;
+    private Warrior deathWarrior;
 
     //FOR END GAME
     private boolean isDraw;
-    private String winnerUsername , loserUsername;
-
+    private String winnerUsername, loserUsername;
 
 
     public BattleRecord(BattleRecordEnum typeOfRecord) {
@@ -273,6 +271,30 @@ public class BattleRecord {
 
     public void setFlag(Flag flag) {
         this.flag = flag;
+    }
+
+    public Warrior getAttacker() {
+        return attacker;
+    }
+
+    public void setAttacker(Warrior attacker) {
+        this.attacker = attacker;
+    }
+
+    public Warrior getAttacked() {
+        return attacked;
+    }
+
+    public void setAttacked(Warrior attacked) {
+        this.attacked = attacked;
+    }
+
+    public Warrior getDeathWarrior() {
+        return deathWarrior;
+    }
+
+    public void setDeathWarrior(Warrior deathWarrior) {
+        this.deathWarrior = deathWarrior;
     }
 }
 
