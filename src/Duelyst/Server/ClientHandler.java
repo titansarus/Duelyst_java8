@@ -24,6 +24,7 @@ public class ClientHandler implements Runnable {
     private Socket socket;
     private String userName;
     private Formatter formatter;
+    private boolean loggedIn;
 
     ClientHandler(Socket socket) throws IOException {
         this.socket = socket;
@@ -64,17 +65,21 @@ public class ClientHandler implements Runnable {
         if (!Server.accountExistInArrayList(username, Server.getAllAccounts())) {
             LoginCommand temp = new LoginCommand(LoginCommandsKind.LOGIN, userName, password);
             temp.setMyException(new UserNotExistException());
+            System.out.println("Account not Found");
             formatter.format("%s\n", yaGson.toJson(temp));
             formatter.flush();
         } else if (!account.getPassword().equals(password)) {
             LoginCommand temp = new LoginCommand(LoginCommandsKind.LOGIN, userName, password);
             temp.setMyException(new InvalidPasswordException());
+            System.out.println("Wrong Password");
             formatter.format("%s\n", yaGson.toJson(temp));
             formatter.flush();
         } else {
+            userName = username;
             LoginCommand temp = new LoginCommand(LoginCommandsKind.LOGIN, username, password);
             temp.setAccount(account);
-            formatter.format("%s\n", yaGson.toJson(account));
+            System.out.println("Account sent Successfully!");
+            formatter.format("%s\n", yaGson.toJson(temp));
             formatter.flush();
         }
     }
@@ -90,12 +95,13 @@ public class ClientHandler implements Runnable {
             formatter.format("%s\n", yaGson.toJson(temp));
             formatter.flush();
         } else {
+            userName = username;
             Account account = new Account(username, password);
             LoginCommand temp = new LoginCommand(LoginCommandsKind.LOGIN, username, password);
             Server.addAccount(account);
             temp.setAccount(account);
             Server.saveAccount();
-            formatter.format("%s\n", yaGson.toJson(account));
+            formatter.format("%s\n", yaGson.toJson(temp));
             formatter.flush();
         }
 

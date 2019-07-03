@@ -35,13 +35,17 @@ public class ReadMessage extends Thread {
             String command = netIn.nextLine();
             YaGson yaGson = new YaGsonBuilder().create();
             this.commandClass = yaGson.fromJson(command, CommandClass.class);
+            System.out.println("In reader");
             switch (commandClass.getCommandKind()) {
                 case LOGIN:
                     LoginCommand loginCommand = (LoginCommand)commandClass;
-                    if(loginCommand.getMyException() != null)
+                    if(loginCommand.getMyException() != null) {
                         LoginController.setMyException(loginCommand.getMyException());
+                        System.out.println("Have Exception");
+                    }
                     else {
                         Account.setLoggedAccount(loginCommand.getAccount());
+                        System.out.println("Account LoggedIn!");
                     }
                     break;
                 case SHOP:

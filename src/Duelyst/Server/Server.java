@@ -43,7 +43,6 @@ public class Server implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            getAllClientHandlers().add(newClient);
             allClientHandlers.add(newClient);
             Thread t = new Thread(newClient);
             t.start();
@@ -52,7 +51,7 @@ public class Server implements Runnable {
     }
 
     public static ArrayList<Account> getAllAccounts() {
-        return (ArrayList<Account>) Collections.unmodifiableList(allAccounts);
+        return allAccounts;
     }
 
     public static boolean addAccount(Account account) {
@@ -64,7 +63,7 @@ public class Server implements Runnable {
     }
 
     public static ArrayList<ClientHandler> getAllClientHandlers() {
-        return (ArrayList<ClientHandler>) Collections.unmodifiableList(allClientHandlers);
+        return allClientHandlers;
     }
 
     public static ArrayList<Account> accountsSorter(ArrayList<Account> accounts) {
