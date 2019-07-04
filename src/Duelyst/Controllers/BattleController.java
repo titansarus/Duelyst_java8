@@ -849,7 +849,9 @@ public class BattleController {
     }
 
     public void handleEndTurnBtn() {
-        battle.nextTurn();
+        if (!isAnimationRunning) {
+            battle.nextTurn();
+        }
 //
     }
 
