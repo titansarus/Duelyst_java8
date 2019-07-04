@@ -173,8 +173,41 @@ public class BattleController {
                     insertAnimation(battleRecord);
                 }
                 break;
+                case INSERT_FLAG: {
+                    insertFlagAniamtion(battleRecord);
+                }
+                break;
             }
         }
+
+    }
+
+    private void insertFlagAniamtion(BattleRecord battleRecord) {
+        int row = battleRecord.getInsertFlagRow();
+        int column = battleRecord.getInsertFlagColumn();
+        Flag flag = battleRecord.getInsertFlagItself();
+
+        Polygon polygon = rectangles[row][column];
+
+        double x = calculateMidXFromPoint(polygon.getPoints());
+        double y = calculateMidYFromPoint(polygon.getPoints());
+
+        ImageView imageView = new ImageView(ImageHolder.findImageInImageHolders(Flag.getImage()));
+
+        imageView.relocate(x, y);
+
+        flag.setImageView(imageView);
+
+        anchorPane.getChildren().add(imageView);
+
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(40), imageView);
+        fadeTransition.setFromValue(0.3);
+        fadeTransition.setToValue(1.0);
+
+        fadeTransition.setOnFinished(event -> {
+            isAnimationRunning = false;
+        });
+        fadeTransition.play();
 
     }
 
@@ -782,14 +815,14 @@ public class BattleController {
         getBattle().setPlayingPlayer(getBattle().getPlayer1());
         getBattle().getPlayingPlayer().setHero(getBattle().getPlayer1().getDeck().getHero());
         //handleInsertCardClickAi(getBattle().getGrid()[2][0], getBattle().getPlayer1().getDeck().getHero());
-        getBattle().insertHero(getBattle().getPlayer1().getDeck().getHero(),getBattle().getGrid()[2][0]);
+        getBattle().insertHero(getBattle().getPlayer1().getDeck().getHero(), getBattle().getGrid()[2][0]);
         getBattle().getPlayer1().getInGameCards().add(getBattle().getPlayer1().getDeck().getHero());
 
 
         getBattle().setPlayingPlayer(getBattle().getPlayer2());
         getBattle().getPlayingPlayer().setHero(getBattle().getPlayer2().getDeck().getHero());
-        getBattle().insertHero(getBattle().getPlayer2().getDeck().getHero(),getBattle().getGrid()[2][8]);
-     //   handleInsertCardClickAi(getBattle().getGrid()[2][8], getBattle().getPlayer2().getDeck().getHero());
+        getBattle().insertHero(getBattle().getPlayer2().getDeck().getHero(), getBattle().getGrid()[2][8]);
+        //   handleInsertCardClickAi(getBattle().getGrid()[2][8], getBattle().getPlayer2().getDeck().getHero());
         getBattle().getPlayer2().getInGameCards().add(getBattle().getPlayer2().getDeck().getHero());
 
 
@@ -880,6 +913,10 @@ public class BattleController {
             Container.exceptionGenerator(e, stackPane);
         }
         battle.deleteDeathCardsFromMap(); // Check For Death Cards
+    }
+
+    public void handleInsertCollectibleItemFromRecord(BattleRecord battleRecord) {
+
     }
 //
 //    public void moveAnimationRunAi(int[] coordinate, Warrior warrior) {

@@ -47,8 +47,12 @@ public class BattleRecord {
     private Card insertCard;
     private boolean isSpellInsert = false;
     private int insertRow, insertColumn;
-    private Flag insertFlag;
+    private Flag flagForInsertCard;
     private boolean isFlag = false;
+
+    //FOR INSERT FLAG
+    int insertFlagRow , insertFlagColumn;
+    Flag insertFlagItself;
 
 
     public BattleRecord(BattleRecordEnum typeOfRecord) {
@@ -336,12 +340,12 @@ public class BattleRecord {
         this.insertColumn = insertColumn;
     }
 
-    public Flag getInsertFlag() {
-        return insertFlag;
+    public Flag getFlagForInsertCard() {
+        return flagForInsertCard;
     }
 
-    public void setInsertFlag(Flag insertFlag) {
-        this.insertFlag = insertFlag;
+    public void setFlagForInsertCard(Flag flagForInsertCard) {
+        this.flagForInsertCard = flagForInsertCard;
     }
 
     public boolean isFlag() {
@@ -350,6 +354,30 @@ public class BattleRecord {
 
     public void setFlag(boolean flag) {
         isFlag = flag;
+    }
+
+    public int getInsertFlagRow() {
+        return insertFlagRow;
+    }
+
+    public void setInsertFlagRow(int insertFlagRow) {
+        this.insertFlagRow = insertFlagRow;
+    }
+
+    public int getInsertFlagColumn() {
+        return insertFlagColumn;
+    }
+
+    public void setInsertFlagColumn(int insertFlagColumn) {
+        this.insertFlagColumn = insertFlagColumn;
+    }
+
+    public Flag getInsertFlagItself() {
+        return insertFlagItself;
+    }
+
+    public void setInsertFlagItself(Flag insertFlagItself) {
+        this.insertFlagItself = insertFlagItself;
     }
 }
 

@@ -88,6 +88,14 @@ public class Battle implements Cloneable {
         battleController.setBattle(this);
         battleController.makeGrids();
         runningBattle = this;
+
+
+        battleRecords = new ArrayList<>();
+        BattleRecord.getBattleRecords().add(battleRecords);
+        makeInitializeBattleRecord(account1, account2);
+
+
+
         if (account2 instanceof Ai) {
             ((Ai) account2).setBattle(this);
         }
@@ -110,13 +118,10 @@ public class Battle implements Cloneable {
         } else if (gameGoal == GameGoal.HOLD_FLAG) {
             holdFlag = new Flag(KindOfFlag.HOLD_FLAG, 2, 4);
             getGrid()[2][4].setFlag(holdFlag);
-            battleController.initFlagImages();
+            makeBattleRecordOfInsertFlag(2,4,holdFlag);
+            //  battleController.initFlagImages();
         }
 
-        battleRecords = new ArrayList<>();
-        BattleRecord.getBattleRecords().add(battleRecords);
-
-        makeInitializeBattleRecord(account1, account2);
 
         nextTurn();
     }
@@ -732,10 +737,13 @@ public class Battle implements Cloneable {
             applyDeathBuff(card);
 
             if (gameGoal == GameGoal.HOLD_FLAG && holdFlag.getWarrior().equals(card)) {
-                getCellOfWarrior((Warrior) card).setFlag(holdFlag);
+                Cell cellOfWarrior = getCellOfWarrior((Warrior) card);
+                cellOfWarrior.setFlag(holdFlag);
+                makeBattleRecordOfInsertFlag(cellOfWarrior.getRow(), cellOfWarrior.getColumn(), holdFlag);
                 holdFlag.setWarrior(null);
                 holdFlag.setNumberOfTurn(0);
-                battleController.initFlagImages();
+
+                //battleController.initFlagImages();
                 isHaveFlag = true;
             }
 //            battleController.animationOfDeath((Warrior) card);
@@ -1204,10 +1212,20 @@ public class Battle implements Cloneable {
         for (int i = 0; i < 6; i++) {
             Flag flag = new Flag(KindOfFlag.COLLECTABLE_FLAG, randomX[i], randomY[i]);
             getGrid()[randomX[i]][randomY[i]].setFlag(flag);
+            makeBattleRecordOfInsertFlag(randomX[i], randomY[i], flag);
             collectableFlags.add(flag);
         }
+        //battleController.initFlagImages();
+    }
 
-        battleController.initFlagImages();
+    private void makeBattleRecordOfInsertFlag(int row, int column, Flag flag) {
+        BattleRecord battleRecord = new BattleRecord(BattleRecordEnum.INSERT_FLAG);
+
+        battleRecord.setInsertFlagItself(flag);
+        battleRecord.setInsertFlagRow(row);
+        battleRecord.setInsertFlagColumn(column);
+
+        getBattleRecords().add(battleRecord);
     }
 
     private void getNRandomNumber(int[] randomX, int[] randomY, int first, int last, int extra) {
