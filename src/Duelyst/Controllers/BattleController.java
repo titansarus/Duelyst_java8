@@ -781,13 +781,15 @@ public class BattleController {
     public void insertPlayerHeroes() {
         getBattle().setPlayingPlayer(getBattle().getPlayer1());
         getBattle().getPlayingPlayer().setHero(getBattle().getPlayer1().getDeck().getHero());
-        handleInsertCardClickAi(getBattle().getGrid()[2][0], getBattle().getPlayer1().getDeck().getHero());
+        //handleInsertCardClickAi(getBattle().getGrid()[2][0], getBattle().getPlayer1().getDeck().getHero());
+        getBattle().insertHero(getBattle().getPlayer1().getDeck().getHero(),getBattle().getGrid()[2][0]);
         getBattle().getPlayer1().getInGameCards().add(getBattle().getPlayer1().getDeck().getHero());
 
 
         getBattle().setPlayingPlayer(getBattle().getPlayer2());
         getBattle().getPlayingPlayer().setHero(getBattle().getPlayer2().getDeck().getHero());
-        handleInsertCardClickAi(getBattle().getGrid()[2][8], getBattle().getPlayer2().getDeck().getHero());
+        getBattle().insertHero(getBattle().getPlayer2().getDeck().getHero(),getBattle().getGrid()[2][8]);
+     //   handleInsertCardClickAi(getBattle().getGrid()[2][8], getBattle().getPlayer2().getDeck().getHero());
         getBattle().getPlayer2().getInGameCards().add(getBattle().getPlayer2().getDeck().getHero());
 
 
@@ -795,35 +797,35 @@ public class BattleController {
     }
 
 
-    public void handleInsertCardClickAi(Cell cell, Card card) {
-
-
-        int[] battleCoordinate = getBattle().findCellCoordinate(cell);
-        CardForBattle cardForBattle = CardForBattleController.findCardForBattleWithCard(getHand(), card);
-        try {
-
-            getBattle().insertSelectedCard(battleCoordinate[0], battleCoordinate[1]);
-//            getBattle().getPlayingPlayer().getInGameCards().add(card);
-            Polygon polygon = rectangles[battleCoordinate[0]][battleCoordinate[1]];
-            ObservableList<Double> points = polygon.getPoints();
-
-
-            CardOnField cardOnField = new CardOnField();
-            cardOnField.setCard(card);
-            cardsOnField.add(cardOnField);
-            sendIdleImageViewToCenterOfCell(cardOnField, polygon);
-
-            getBattle().setSelectedCard(null);
-            //   getHand().remove(cardForBattl e);
-            //          getBattle().setSelectedCard(null);
-//            cardForBattle.setCard(null);
-        } catch (MyException e) {
-            Container.exceptionGenerator(e, stackPane);
-        }
-        getBattle().setSelectedCell(null);
-        battle.deleteDeathCardsFromMap(); // Check For Death Cards
-
-    }
+//    public void handleInsertCardClickAi(Cell cell, Card card) {
+//
+//
+//        int[] battleCoordinate = getBattle().findCellCoordinate(cell);
+//        CardForBattle cardForBattle = CardForBattleController.findCardForBattleWithCard(getHand(), card);
+//        try {
+//
+//            getBattle().insertSelectedCard(battleCoordinate[0], battleCoordinate[1]);
+////            getBattle().getPlayingPlayer().getInGameCards().add(card);
+//            Polygon polygon = rectangles[battleCoordinate[0]][battleCoordinate[1]];
+//            ObservableList<Double> points = polygon.getPoints();
+//
+//
+//            CardOnField cardOnField = new CardOnField();
+//            cardOnField.setCard(card);
+//            cardsOnField.add(cardOnField);
+//            sendIdleImageViewToCenterOfCell(cardOnField, polygon);
+//
+//            getBattle().setSelectedCard(null);
+//            //   getHand().remove(cardForBattl e);
+//            //          getBattle().setSelectedCard(null);
+////            cardForBattle.setCard(null);
+//        } catch (MyException e) {
+//            Container.exceptionGenerator(e, stackPane);
+//        }
+//        getBattle().setSelectedCell(null);
+//        battle.deleteDeathCardsFromMap(); // Check For Death Cards
+//
+//    }
 
 //    public void handleInsertCardClick(Cell cell) {
 //

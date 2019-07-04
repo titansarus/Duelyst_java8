@@ -461,7 +461,16 @@ public class Battle implements Cloneable {
             endGame();
         }
     }
-    public void insertSelectedCardWithCard(int i, int j , Card selectedCard) {
+
+    public void insertHero(Hero hero, Cell cell) {
+        if (hero != null && cell != null) {
+            cell.setWarrior(hero);
+            makeBattleRecordOfInsert(hero, cell.getRow(), cell.getColumn(), false, null, false);
+        }
+    }
+
+
+    public void insertSelectedCardWithCard(int i, int j, Card selectedCard) {
 
         boolean doesHaveFlag = false;
         Flag flag = null;
@@ -470,7 +479,7 @@ public class Battle implements Cloneable {
         findValidCell(KindOfActionForValidCells.INSERT);
         Cell cell = getGrid()[i][j];
         if (!getValidCells().contains(cell)) {
-        throw new NotValidCellForSpellException();
+            throw new NotValidCellForSpellException();
         }
 
         if (selectedCard instanceof Warrior) {
@@ -547,7 +556,7 @@ public class Battle implements Cloneable {
             if (!validCells.contains(getGrid()[i][j])) {
                 throw new NotValidCellForSpellException();
             }
-            Spell spell = (Spell)selectedCard;
+            Spell spell = (Spell) selectedCard;
             ArrayList<Buff> buffs = spell.getBuffs();
             makeBattleRecordOfInsert(card, i, j, false, null, true);
             getPlayingPlayer().getHand().remove(selectedCard);

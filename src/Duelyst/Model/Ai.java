@@ -48,7 +48,7 @@ public class Ai extends Account {
             battle.setSelectedCard(card);
             battle.findValidCell(KindOfActionForValidCells.INSERT);
             Cell cell = battle.getValidCells().get(random.nextInt(battle.getValidCells().size()));
-            battle.insertSelectedCardWithCard(cell.getRow(),cell.getColumn(),card);
+            battle.insertSelectedCardWithCard(cell.getRow(), cell.getColumn(), card);
         } catch (Exception e) {
             System.out.println("Ai can not insert");
         }
