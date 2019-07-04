@@ -117,33 +117,6 @@ public class ServerShop {
 
         saveTheUpdateOfNumberOfCards();
     }
-//    public ArrayList<Card> getFinishedCards(){
-//
-//        for (String s:
-//             numberOfCards) {
-//            if (Integer.parseInt(s.split(" ")[0])<1){
-//                for (Card c:
-//                     this.cards) {
-//                    if (c.getCardName().equals(s)){
-//                        cards.add(c);
-//                    }
-//                }
-//            }
-//        }
-//        return cards;
-//    }
-//        private boolean isFinished(Card card){
-//        ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.GET_FINISHED_CARD);
-//        SendMessage.getSendMessage().sendMessage(shopCommand);
-//        try {
-//            Thread.sleep(100);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        if (finishedCard.contains(card))
-//            return true;
-//        return false;
-//    }
 
     public ArrayList<Card> getAuctionCards() {
         return auctionCards;

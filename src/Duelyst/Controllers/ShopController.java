@@ -404,6 +404,11 @@ public class ShopController {
         tt.setFromY(800);
         tt.setToY(0);
         tt.play();
+        getAuctionCardsFromServer();
+        makeCardList(Shop.getInstance().getAuctionCards(), AuctionPaneHBox_hbox);
+    }
+
+    private void getAuctionCardsFromServer() {
         ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.GET_AUCTION_CARDS);
         SendMessage.getSendMessage().sendMessage(shopCommand);
         try {
@@ -411,7 +416,6 @@ public class ShopController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        makeCardList(Shop.getInstance().getAuctionCards(), AuctionPaneHBox_hbox);//TODO Bejaye Null Bayad ArrayListe Cardaye Dar Mozayede Bashad
     }
 
     public void handleAuctionPaneCloseButton() {

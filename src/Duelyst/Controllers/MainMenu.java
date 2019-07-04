@@ -499,7 +499,7 @@ public class MainMenu {
         ShopCommand command = new ShopCommand(ShopCommandsKind.GET_CARDS);
         SendMessage.getSendMessage().sendMessage(command);
         try {
-            Thread.sleep(100);
+            Thread.sleep(200);
         } catch (Exception e) {
             e.printStackTrace();
         }

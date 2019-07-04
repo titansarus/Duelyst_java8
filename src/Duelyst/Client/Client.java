@@ -1,9 +1,5 @@
 package Duelyst.Client;
 
-import Duelyst.Model.CommandClasses.CommandClass;
-import Duelyst.Model.CommandClasses.ShopCommand;
-import Duelyst.Model.CommandClasses.ShopCommandsKind;
-import Duelyst.Model.Shop;
 
 import java.io.IOException;
 import java.net.Socket;

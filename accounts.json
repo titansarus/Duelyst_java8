@@ -2728,6 +2728,35 @@
               "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Fars/AsbSavareFars/AsbSavare_Fars_breathing.gif",
               "addressOfDeathGif": "./res/Characters/UnitsCreated/Fars/AsbSavareFars/AsbSavare_Fars_death.gif"
             }
+          },
+          {
+            "@type": "Duelyst.Model.Minion",
+            "@val": {
+              "healthPoint": 6,
+              "actionPower": 4,
+              "attackRange": 0,
+              "attackKind": "MELEE",
+              "validCounterAttack": true,
+              "isDeath": false,
+              "shield": 0,
+              "isValidToAttack": true,
+              "IsValidToMove": true,
+              "isStun": false,
+              "cardId": "rez_ShamshirZane_Fars_2",
+              "manaCost": 2,
+              "darikCost": 400,
+              "account": "@root.8",
+              "cardDescription": "Hengame Zarbe Zadan, Niroo Ra Baraye Nobate Jari Stun Mikonad",
+              "cardName": "ShamshirZane_Fars",
+              "isAbleToMove": true,
+              "isInGame": false,
+              "addressOfImage": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars.png",
+              "addressOfIdleGif": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars_idle.gif",
+              "addressOfRunGif": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars_run.gif",
+              "addressOfAttackGif": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars_attack.gif",
+              "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars_breathing.gif",
+              "addressOfDeathGif": "./res/Characters/UnitsCreated/Fars/ShamshirZaneFars/ShamshirZane_Fars_death.gif"
+            }
           }
         ],
         "account": "@root.8",
@@ -3370,13 +3399,12 @@
           }
         ],
         "mainDeck": "@root.8.cardCollection.decks.0",
-        "customCards": [],
-        "selectedCard": "@root.8.cardCollection.cards.1"
+        "customCards": []
       },
       "username": "rez",
       "password": "rez",
       "countOfWins": 2,
-      "darick": 76750
+      "darick": 76350
     }
   }
 ]
