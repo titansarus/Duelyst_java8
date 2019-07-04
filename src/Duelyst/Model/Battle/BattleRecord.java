@@ -1,6 +1,7 @@
 package Duelyst.Model.Battle;
 
 import Duelyst.Model.*;
+import Duelyst.Model.Items.Item;
 
 import java.util.ArrayList;
 
@@ -33,6 +34,7 @@ public class BattleRecord {
     private boolean isMoveCollectibleFlag = false;
     private boolean isMoveCollectibleItem = false;
     private Flag flag;
+    private Item moveItem;
 
     //FOR DEATH
     private String deathCardId;
@@ -49,10 +51,15 @@ public class BattleRecord {
     private int insertRow, insertColumn;
     private Flag flagForInsertCard;
     private boolean isFlag = false;
+    private Item insertCardItem;
 
     //FOR INSERT FLAG
     int insertFlagRow , insertFlagColumn;
     Flag insertFlagItself;
+
+    //FOR INSERT ITEM
+    int insertItemRow, insertItemColumn;
+    Item insertItem;
 
 
     public BattleRecord(BattleRecordEnum typeOfRecord) {
@@ -378,6 +385,46 @@ public class BattleRecord {
 
     public void setInsertFlagItself(Flag insertFlagItself) {
         this.insertFlagItself = insertFlagItself;
+    }
+
+    public int getInsertItemRow() {
+        return insertItemRow;
+    }
+
+    public void setInsertItemRow(int insertItemRow) {
+        this.insertItemRow = insertItemRow;
+    }
+
+    public int getInsertItemColumn() {
+        return insertItemColumn;
+    }
+
+    public void setInsertItemColumn(int insertItemColumn) {
+        this.insertItemColumn = insertItemColumn;
+    }
+
+    public Item getInsertItem() {
+        return insertItem;
+    }
+
+    public void setInsertItem(Item insertItem) {
+        this.insertItem = insertItem;
+    }
+
+    public Item getMoveItem() {
+        return moveItem;
+    }
+
+    public void setMoveItem(Item moveItem) {
+        this.moveItem = moveItem;
+    }
+
+    public Item getInsertCardItem() {
+        return insertCardItem;
+    }
+
+    public void setInsertCardItem(Item insertCardItem) {
+        this.insertCardItem = insertCardItem;
     }
 }
 

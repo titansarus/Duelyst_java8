@@ -21,6 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
@@ -177,12 +178,42 @@ public class BattleController {
                     insertFlagAniamtion(battleRecord);
                 }
                 break;
+                case INSERT_ITEM: {
+                    insertItemFromRecordAnimation(battleRecord);
+                }
+                break;
             }
         }
 
     }
-    private void endTurnAnimation(BattleRecord battleRecord)
-    {
+
+    private void insertItemFromRecordAnimation(BattleRecord battleRecord) {
+        Item insertItem = battleRecord.getInsertItem();
+
+        int row = battleRecord.getInsertItemRow();
+        int column = battleRecord.getInsertItemColumn();
+
+        try {
+
+            Polygon polygon = rectangles[row][column];
+
+
+            CardOnField cardOnField = new CardOnField();
+            cardsOnField.add(cardOnField);
+            cardOnField.setCard(insertItem);
+            sendIdleImageViewToCenterOfCell(cardOnField, polygon);
+
+        } catch (MyException e) {
+            Container.exceptionGenerator(e, stackPane);
+        } finally {
+            isAnimationRunning = false;
+        }
+
+
+    }
+
+
+    private void endTurnAnimation(BattleRecord battleRecord) {
         updateHand();
         isAnimationRunning = false;
     }
@@ -283,6 +314,13 @@ public class BattleController {
         ObservableList<Double> destPoints = destPolygon.getPoints();
         double x = calculateMidXFromPoint(destPoints);
         double y = calculateMidYFromPoint(destPoints);
+
+        if (battleRecord.getMoveItem() != null) {
+            deleteItemImage(battleRecord.getMoveItem());
+        }
+        if (battleRecord.getFlag() != null) {
+            removeFlagImage(battleRecord.getFlag());
+        }
 
 
         anchorPane.getChildren().remove(cardOnField.getImageView());
@@ -513,6 +551,13 @@ public class BattleController {
         Cell cell = getBattle().getGrid()[row][column];
         Card card = battleRecord.getInsertCard();
         boolean isSpell = battleRecord.isSpellInsert();
+
+        if (battleRecord.getInsertCardItem() != null) {
+            deleteItemImage(battleRecord.getInsertCardItem());
+        }
+        if (battleRecord.getFlagForInsertCard() != null) {
+            removeFlagImage(battleRecord.getFlagForInsertCard());
+        }
 
 
         int[] battleCoordinate = getBattle().findCellCoordinate(cell);
