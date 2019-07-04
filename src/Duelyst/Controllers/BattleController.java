@@ -142,7 +142,7 @@ public class BattleController {
                 break;
                 case END_TURN: {
 
-                    System.out.println("endTurn");
+                    endTurnAnimation(battleRecord);
                     isAnimationRunning = false;
 
 
@@ -180,6 +180,11 @@ public class BattleController {
             }
         }
 
+    }
+    private void endTurnAnimation(BattleRecord battleRecord)
+    {
+        updateHand();
+        isAnimationRunning = false;
     }
 
     private void insertFlagAniamtion(BattleRecord battleRecord) {
@@ -1182,7 +1187,7 @@ public class BattleController {
 
     public void handleEndTurnBtn() {
         battle.nextTurn();
-        updateHand();
+//
     }
 
     public void endTurnButtonGlow() {
