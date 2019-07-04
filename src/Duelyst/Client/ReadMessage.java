@@ -2,17 +2,21 @@ package Duelyst.Client;
 
 import Duelyst.Controllers.Container;
 import Duelyst.Controllers.LoginController;
+import Duelyst.Controllers.MainMenu;
 import Duelyst.Controllers.ShopController;
 import Duelyst.Exceptions.CardOutOfStock;
 import Duelyst.Exceptions.UserNotExistException;
+import Duelyst.Main;
 import Duelyst.Model.Account;
 import Duelyst.Model.Card;
+import Duelyst.Model.CommandClasses.ChatRoomCommand;
 import Duelyst.Model.CommandClasses.CommandClass;
 import Duelyst.Model.CommandClasses.LoginCommand;
 import Duelyst.Model.CommandClasses.ShopCommand;
 import Duelyst.Model.Shop;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
+import javafx.application.Platform;
 
 
 import java.io.IOException;
@@ -52,9 +56,21 @@ public class ReadMessage extends Thread {
                 case BATTLE:
                     //TODO Bayad Command Haye Marboot be battle ra begirad
                     break;
+                case CHAT_ROOM:
+                    handleChatRoomCommand((ChatRoomCommand)commandClass);
+                    break;
             }
 
         }
+    }
+    private void handleChatRoomCommand(ChatRoomCommand chatRoomCommand){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                MainMenu mainMenu = (MainMenu) Container.controllerClass;
+                mainMenu.addToChat(chatRoomCommand);
+            }
+        });
     }
 
     private void handleLoginCommand(LoginCommand loginCommand) {

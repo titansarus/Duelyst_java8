@@ -1,5 +1,6 @@
 package Duelyst.Server;
 
+import Duelyst.Client.SendMessage;
 import Duelyst.Controllers.Container;
 import Duelyst.Exceptions.*;
 import Duelyst.Model.Account;
@@ -10,21 +11,25 @@ import com.gilecode.yagson.YaGsonBuilder;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.Scanner;
 
 public class ClientHandler implements Runnable {
 
+    private static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
     private Scanner netIn;
     private Socket socket;
     private String userName;
     private Formatter formatter;
     private boolean loggedIn;
+    private static ArrayList<ChatRoomCommand> pms = new ArrayList<>();
 
     ClientHandler(Socket socket) throws IOException {
         this.socket = socket;
         netIn = new Scanner(this.socket.getInputStream());
         formatter = new Formatter(this.socket.getOutputStream());
+        clientHandlers.add(this);
     }
 
     @Override
@@ -68,14 +73,28 @@ public class ClientHandler implements Runnable {
                     break;
                 case BATTLE:
                     //TODO Dastoorat Ra Migirad Va Baraye Cliente Harif Mifrestad
+                    break;
+                case CHAT_ROOM:
+                    handleChatRoom((ChatRoomCommand) command);
+                    break;
             }
 
 
         }
     }
 
+    private void handleChatRoom(ChatRoomCommand chatRoomCommand) {
+        pms.add(chatRoomCommand);
+        chatRoomCommand.setChatRoomCommands(pms);
+        for (ClientHandler c :
+                clientHandlers) {
+            c.getFormatter().format("%s\n", CommandClass.makeJson(chatRoomCommand));
+            c.getFormatter().flush();
+        }
+    }
+
     private void handleSaveAccounts(LoginCommand loginCommand) {
-        Server.removeAccount(Server.findAccountInArrayList(loginCommand.getAccount().getUsername(),Server.getAllAccounts()));
+        Server.removeAccount(Server.findAccountInArrayList(loginCommand.getAccount().getUsername(), Server.getAllAccounts()));
         Server.addAccount(loginCommand.getAccount());
         Server.saveAccount();
     }
@@ -150,6 +169,7 @@ public class ClientHandler implements Runnable {
             case GET_AUCTION_CARDS:
                 getAuctionCards();
                 break;
+
         }
     }
 

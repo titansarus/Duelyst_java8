@@ -4,18 +4,15 @@ import Duelyst.Client.SendMessage;
 import Duelyst.Exceptions.NotValidDeckException;
 import Duelyst.Model.*;
 import Duelyst.Model.Battle.Battle;
-import Duelyst.Model.CommandClasses.LoginCommand;
-import Duelyst.Model.CommandClasses.LoginCommandsKind;
-import Duelyst.Model.CommandClasses.ShopCommand;
-import Duelyst.Model.CommandClasses.ShopCommandsKind;
+import Duelyst.Model.CommandClasses.*;
 import Duelyst.Utility.ImageHolder;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
+import com.jfoenix.controls.*;
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -47,6 +44,12 @@ public class MainMenu {
     private int storyModeLevel = 0; //1 == 1 , 2 == 2 , 3 ==3;
     private int multiplayerModeGoal = 0; //1 == hero , 2 == capture_flags , 3== hold_flag
     private Account selectedAccoutForMultiPlayer = null;
+    public Pane chatRoom_pane;
+    public ImageView chatRoomArrow_img;
+    public ImageView backChatRoom;
+    public ImageView sendMessage;
+    public JFXTextField textMessage;
+    public ScrollPane chatRoom_Scroll;
 
     @FXML
     Label loginedAccount_lbl;
@@ -183,6 +186,53 @@ public class MainMenu {
         runButtonHoverSound();
         collectionsButtonGlow();
     }
+    //---------------
+
+    public void handleChatRoomArrowImageMouseEntered() {
+        chatRoomArrow_img.setOpacity(1);
+    }
+
+    public void handleChatRoomArrowImageMouseExited() {
+        chatRoomArrow_img.setOpacity(0.5);
+    }
+
+    public void handleChatRoomArrowImageClicked() {
+        System.out.println("clicked :?");
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1000), chatRoom_pane);
+        tt.setFromX(-200);
+        tt.setToX(166);
+        tt.setRate(1);
+        tt.play();
+    }
+    public void handleBackImage() {
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1000), chatRoom_pane);
+        tt.setFromX(166);
+        tt.setToX(-200);
+        tt.setRate(1);
+        tt.play();
+    }
+    public void handleSendMessageImage() {
+        ChatRoomCommand command = new ChatRoomCommand(textMessage.getText(),Account.getLoggedAccount().getUsername());
+        textMessage.clear();
+        SendMessage.getSendMessage().sendMessage(command);
+    }
+    public void addToChat(ChatRoomCommand chatRoomCommand){
+        ArrayList<ChatRoomCommand> chatRoomCommands = chatRoomCommand.getChatRoomCommands();
+        Group group = new Group();
+        int i=1;
+        for (ChatRoomCommand command:
+             chatRoomCommands) {
+//            group.getChildren().clear();
+            Label label = new Label(command.getPmOwner()+ " : " + command.getPm());
+            System.out.println(command.getPmOwner()+ " : " + command.getPm());
+            label.setMinSize(200,50);
+            label.relocate(0,(i++)*50);
+            System.out.println("------------>>>>> "+ i);
+            group.getChildren().add(label);
+        }
+        chatRoom_Scroll.setContent(group);
+    }
+    //------------
 
     public void collectionsButtonGlowDisapearWithSound() {
         collectionsButtonGlowDisapear();

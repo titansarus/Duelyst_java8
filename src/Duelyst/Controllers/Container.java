@@ -41,7 +41,7 @@ public class Container {
     public static Stage stage = new Stage();
     public static Deque<Scene> scenes = new LinkedList<>();
     public static Deque<String> nameOfMenus = new LinkedList<>();
-
+    public static Object controllerClass;
     public static MediaPlayer mainThemePlayer;
 
     public static MediaPlayer soundPlayer;

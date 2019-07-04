@@ -71,6 +71,7 @@ public class LoginController {
             Container.exceptionGenerator(new NotExistLoginUserException(), stackPane);
             return;
         }
+
         Pane root = null;
         FXMLLoader fxmlLoader = null;
         try {
@@ -81,6 +82,7 @@ public class LoginController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Container.controllerClass = fxmlLoader.getController();
         Container.runNextScene(root, MAIN_MENU);
     }
 
