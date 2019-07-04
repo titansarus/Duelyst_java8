@@ -80,10 +80,18 @@ public class BattleController {
     @FXML
     StackPane stackPane;
 
+    @FXML
+    ImageView speed2x_iv;
+    @FXML
+    ImageView speed1x_iv;
+    @FXML
+    ImageView speed05x_iv;
+
 
     private double heightOfPoly_Y;
     private double heightOfPoly_X;
     private double width;
+    private BattleSpeed battleSpeed = BattleSpeed.NORMAL;
 
     private boolean isAnimationRunning = false;
 
@@ -92,10 +100,39 @@ public class BattleController {
 
     private Polygon[][] rectangles = new Polygon[BATTLE_ROWS][BATTLE_COLUMNS];
 
+
     @FXML
     public void initialize() {
+        speed2x_iv.setImage(ImageHolder.findImageInImageHolders("../res/ui/upSpeed.png"));
+        speed05x_iv.setImage(ImageHolder.findImageInImageHolders("../res/ui/downSpeed.png"));
+        speed1x_iv.setImage(ImageHolder.findImageInImageHolders("../res/ui/normalSpeed_selected.png"));
+
 //        BackgroundImage backgroundImage = new BackgroundImage(endTurnBtn , BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT , BackgroundSize.DEFAULT);
 //        end_turn_btn.setBackground(new Background( backgroundImage));
+    }
+
+    public void handle2Speed() {
+        setBattleSpeed(BattleSpeed.DOUBLE);
+        speed2x_iv.setImage(ImageHolder.findImageInImageHolders("../res/ui/upSpeed_selected.png"));
+        speed05x_iv.setImage(ImageHolder.findImageInImageHolders("../res/ui/downSpeed.png"));
+        speed1x_iv.setImage(ImageHolder.findImageInImageHolders("../res/ui/normalSpeed.png"));
+
+    }
+
+    public void handle1Speed() {
+        setBattleSpeed(BattleSpeed.NORMAL);
+        speed1x_iv.setImage(ImageHolder.findImageInImageHolders("../res/ui/normalSpeed_selected.png"));
+        speed05x_iv.setImage(ImageHolder.findImageInImageHolders("../res/ui/downSpeed.png"));
+        speed2x_iv.setImage(ImageHolder.findImageInImageHolders("../res/ui/upSpeed.png"));
+
+    }
+
+    public void handle05Speed() {
+        setBattleSpeed(BattleSpeed.HALF);
+        speed05x_iv.setImage(ImageHolder.findImageInImageHolders("../res/ui/downSpeed_selected.png"));
+        speed2x_iv.setImage(ImageHolder.findImageInImageHolders("../res/ui/upSpeed.png"));
+        speed1x_iv.setImage(ImageHolder.findImageInImageHolders("../res/ui/normalSpeed.png"));
+
     }
 
     private Battle battle;
@@ -236,7 +273,7 @@ public class BattleController {
 
         anchorPane.getChildren().add(imageView);
 
-        FadeTransition fadeTransition = new FadeTransition(Duration.millis(40), imageView);
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(40 / getBattleSpeed().getSpeedFactor()), imageView);
         fadeTransition.setFromValue(0.3);
         fadeTransition.setToValue(1.0);
 
@@ -273,7 +310,7 @@ public class BattleController {
 
             cardOnField.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnField.getCard().getAddressOfDeathGif()));
 
-            TranslateTransition tt = new TranslateTransition(Duration.millis(2000), cardOnField.getImageView());
+            TranslateTransition tt = new TranslateTransition(Duration.millis(2000 / getBattleSpeed().getSpeedFactor()), cardOnField.getImageView());
             tt.setOnFinished(event -> {
 
                 anchorPane.getChildren().remove(cardOnField.getImageView());
@@ -328,7 +365,7 @@ public class BattleController {
         cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders(warrior.getAddressOfRunGif())));
 
         anchorPane.getChildren().add(cardOnField.getImageView());
-        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), cardOnField.getImageView());
+        TranslateTransition tt = new TranslateTransition(Duration.millis(2000 / getBattleSpeed().getSpeedFactor()), cardOnField.getImageView());
         tt.setFromX(srcx);
         tt.setFromY(srcy);
         tt.setToX(x);
@@ -532,7 +569,7 @@ public class BattleController {
         final ImageView imageView2 = new ImageView(ImageHolder.findImageInImageHolders(cardOnField.getCard().getAddressOfIdleGif()));
         anchorPane.getChildren().add(imageView2);
         imageView2.relocate(x, y);
-        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), imageView2);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(2000 / getBattleSpeed().getSpeedFactor()), imageView2);
         tt.setOnFinished(event -> {
                     anchorPane.getChildren().remove(imageView2);
                     isAnimationRunning = false;
@@ -574,7 +611,7 @@ public class BattleController {
             if (battleRecord.isFlag()) {
                 removeFlagImage(battleRecord.getFlag());
             }
-            FadeTransition fadeTransition = new FadeTransition(Duration.millis(500), cardOnField.getImageView());
+            FadeTransition fadeTransition = new FadeTransition(Duration.millis(500 / getBattleSpeed().getSpeedFactor()), cardOnField.getImageView());
             fadeTransition.setFromValue(0.1);
             fadeTransition.setToValue(1.0);
             fadeTransition.setOnFinished(event -> {
@@ -669,12 +706,12 @@ public class BattleController {
         cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfAttackGif()));
         cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfGetDamageGif()));
 
-        TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacker.getImageView());
+        TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000 / getBattleSpeed().getSpeedFactor()), cardOnFieldAttacker.getImageView());
         tt1.setOnFinished(event -> {
             cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfIdleGif()));
         });
 
-        TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), cardOnFieldAttacked.getImageView());
+        TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000 / getBattleSpeed().getSpeedFactor()), cardOnFieldAttacked.getImageView());
         tt2.setOnFinished(event -> {
             cardOnFieldAttacked.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacked.getCard().getAddressOfIdleGif()));
         });
@@ -686,7 +723,7 @@ public class BattleController {
             ImageView imageViewOfBuff = new ImageView(buffEffect);
             anchorPane.getChildren().add(imageViewOfBuff);
             imageViewOfBuff.relocate(cardOnFieldAttacked.getImageView().getLayoutX(), cardOnFieldAttacked.getImageView().getLayoutY());
-            TranslateTransition effectTransition = new TranslateTransition(Duration.millis(500), imageViewOfBuff);
+            TranslateTransition effectTransition = new TranslateTransition(Duration.millis(500 / getBattleSpeed().getSpeedFactor()), imageViewOfBuff);
             effectTransition.setOnFinished(event2 -> {
                 anchorPane.getChildren().remove(imageViewOfBuff);
             });
@@ -1111,7 +1148,7 @@ public class BattleController {
             System.out.println("Oomade Ke Bekesheeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
             cardOnField.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnField.getCard().getAddressOfDeathGif()));
 
-            TranslateTransition tt = new TranslateTransition(Duration.millis(2000), cardOnField.getImageView());
+            TranslateTransition tt = new TranslateTransition(Duration.millis(2000 / getBattleSpeed().getSpeedFactor()), cardOnField.getImageView());
             tt.setOnFinished(event -> anchorPane.getChildren().remove(cardOnField.getImageView()));
             tt.play();
 
@@ -1527,9 +1564,20 @@ public class BattleController {
     public void playSound(String address) {
         File file = new File(address);
         Media media = new Media(file.toURI().toString());
-        Container.runMediaPlayer(Container.soundPlayer, media, 1, true, 1, SOUND_PLAYER);
+        if (address.equals(VICTORY_SOUND) || address.equals(LOSE_SOUND)) {
+            Container.runMediaPlayer(Container.soundPlayer, media, 1, true, 1, SOUND_PLAYER);
+        } else {
+            Container.runMediaPlayer(Container.soundPlayer, media, 1, true, 1, SOUND_PLAYER, getBattleSpeed().getSpeedFactor());
+        }
     }
 
+    public BattleSpeed getBattleSpeed() {
+        return battleSpeed;
+    }
+
+    public void setBattleSpeed(BattleSpeed battleSpeed) {
+        this.battleSpeed = battleSpeed;
+    }
 }
 
 class CardOnField {
