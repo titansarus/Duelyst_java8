@@ -27,6 +27,7 @@ import javafx.stage.StageStyle;
 
 import java.io.*;
 import java.lang.reflect.Type;
+import java.net.BindException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -56,12 +57,12 @@ public class Main extends Application {
 
     public static void main(String[] args) throws IOException {
         System.out.println("a");
-        InputStream inputStream = new FileInputStream("ClientOrServer.txt");
-        byte[] bytes = new byte[100];
-        inputStream.read(bytes);
-        inputStream.close();
-        if (bytes[0] == 49) {
-            new FileOutputStream("ClientOrServer.txt").write(48);
+      //  InputStream inputStream = new FileInputStream("ClientOrServer.txt");
+      //  byte[] bytes = new byte[100];
+       // inputStream.read(bytes);
+       // inputStream.close();
+       try {
+           // new FileOutputStream("ClientOrServer.txt").write(48);
             Thread thread = new Thread(new Server());
             thread.start();
             DatabaseCollectioner.DatabaseGenerator();
@@ -77,7 +78,7 @@ public class Main extends Application {
             initItems();
             initSpells();
             initAccounts();//TODO Initialize Server Account ArrayList
-        } else {
+        } catch (BindException e){
 
 
             //TODO Run Client And Make Connection To The Server
