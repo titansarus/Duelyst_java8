@@ -117,6 +117,12 @@ public class ServerShop {
 
         saveTheUpdateOfNumberOfCards();
     }
+    public ArrayList<Card> removeCardfromAuctions(Card card){
+        auctionCards.remove(card);
+        return auctionCards;
+    }
+
+
 
     public ArrayList<Card> getAuctionCards() {
         return auctionCards;

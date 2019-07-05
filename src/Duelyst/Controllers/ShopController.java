@@ -1,5 +1,6 @@
 package Duelyst.Controllers;
 
+import Duelyst.Client.Client;
 import Duelyst.Client.SendMessage;
 import Duelyst.Exceptions.CardOutOfStock;
 import Duelyst.Exceptions.MyException;
@@ -50,6 +51,7 @@ public class ShopController {
     public Label currentOwnerAuction_lbl;
     public Label auctionTimeLeft_lbl;
     public Label auctionHighestBid_lbl;
+    public Pane addToAuctionNotification_pane;
     @FXML
     ScrollPane buyScrollPane;
 
@@ -398,10 +400,20 @@ public class ShopController {
     }
 
     public void handleAddToAuctionButton() {
+        addToAuctionButtonAnimation();
         Card card = Shop.getSelectedCard();
         ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.AUCTION_CARD);
         shopCommand.setAuctionCard(card);
         SendMessage.getSendMessage().sendMessage(shopCommand);
+    }
+
+    public void addToAuctionButtonAnimation(){
+        TranslateTransition tt = new TranslateTransition(Duration.millis(2000),addToAuctionNotification_pane);
+        tt.setFromX(650);
+        tt.setToX(400);
+        tt.setCycleCount(2);
+        tt.setAutoReverse(true);
+        tt.play();
     }
 
     public void handleAuctionButton() {
@@ -411,6 +423,10 @@ public class ShopController {
         tt.play();
         getAuctionCardsFromServer();
         Shop.getInstance().setShopMode(ShopMode.AUCTION);
+        makeAuctionCardList();
+
+    }
+    public void makeAuctionCardList(){
         makeCardList(Shop.getInstance().getAuctionCards(), AuctionPaneHBox_hbox);
     }
 
@@ -436,7 +452,13 @@ public class ShopController {
     }
 
     public void handleAuctionBidButton() {
-        //TODO Pishnehade Gheimate Jadid
+        Card card = Shop.getInstance().getAuctionSelectedCard();
+        if (card==null){
+            return;
+        }
+        ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.REQUEST_TO_ACTION_CARD);
+        shopCommand.setAuctionCard(card);
+        SendMessage.getSendMessage().sendMessage(shopCommand);
     }
 
     public void auctionBidButtonGlow() {

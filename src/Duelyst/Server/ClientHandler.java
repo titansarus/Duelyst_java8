@@ -4,10 +4,12 @@ import Duelyst.Client.SendMessage;
 import Duelyst.Controllers.Container;
 import Duelyst.Exceptions.*;
 import Duelyst.Model.Account;
+import Duelyst.Model.Card;
 import Duelyst.Model.CommandClasses.*;
 import Duelyst.Model.Shop;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -194,10 +196,18 @@ public class ClientHandler implements Runnable {
             case GET_AUCTION_CARDS:
                 getAuctionCards();
                 break;
+            case REQUEST_TO_ACTION_CARD:
+                handleAuctionRequest(shopCommand);
+                break;
 
         }
     }
 
+    private void handleAuctionRequest(ShopCommand shopCommand){
+        Card card = shopCommand.getAuctionCard();
+        card.setAuctionCost(card.getAuctionCost()*11/10);
+        card.setAuctionClient(this.getUserName());
+    }
     private void getAuctionCards() {
         ShopCommand command = new ShopCommand(ShopCommandsKind.GET_AUCTION_CARDS);
         command.setAuctionCards(ServerShop.getInstance().getAuctionCards());
@@ -207,6 +217,8 @@ public class ClientHandler implements Runnable {
 
     private void addCardToAuctionCards(ShopCommand shopCommand) {
         ServerShop.getInstance().addAuctionCards(shopCommand.getAuctionCard());
+        Time time = new Time(shopCommand.getAuctionCard(),10);//TODO 10 -> 180
+        time.start();
     }
 
     public void getCards() {
@@ -258,5 +270,9 @@ public class ClientHandler implements Runnable {
 
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
+    }
+
+    public static ArrayList<ClientHandler> getClientHandlers() {
+        return clientHandlers;
     }
 }

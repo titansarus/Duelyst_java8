@@ -18,12 +18,14 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -56,8 +58,6 @@ public class MainMenu {
     private Account selectedAccoutForMultiPlayer = null;
     public Pane chatRoom_pane;
     public ImageView chatRoomArrow_img;
-    public ImageView backChatRoom;
-    public ImageView sendMessage;
     public JFXTextField textMessage;
     public ScrollPane chatRoom_Scroll;
 
@@ -112,13 +112,15 @@ public class MainMenu {
     ImageView sound_iv;
 
     private boolean canPlayButtonSound = true;
-    private boolean flag = true;
     private Timeline timeline = new Timeline();
 
 
     @FXML
     public void initialize() {
         runTimeline();
+        chatRoomArrow_img.setOnMouseClicked(event1 -> handleChatRoomArrowImageClicked());
+        chatRoomArrow_img.setOnMouseEntered(event12 -> handleChatRoomArrowImageMouseEntered());
+        chatRoomArrow_img.setOnMouseExited(event13 -> handleChatRoomArrowImageMouseExited());
         Container.changeImageOfSoundImageView(sound_iv);
     }
 
@@ -127,13 +129,6 @@ public class MainMenu {
         timeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
             updateLoggedInUser();
             updateDarick();
-            //TODO Yekhorde Kasife Bayad Tamiz She
-            if (flag) {
-                chatRoomArrow_img.setOnMouseClicked(event1 -> handleChatRoomArrowImageClicked());
-                chatRoomArrow_img.setOnMouseEntered(event12 -> handleChatRoomArrowImageMouseEntered());
-                chatRoomArrow_img.setOnMouseExited(event13 -> handleChatRoomArrowImageMouseExited());
-                flag = false;
-            }
         }), new KeyFrame(Duration.seconds(1)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
@@ -275,13 +270,15 @@ public class MainMenu {
         int i = 1;
         for (ChatRoomCommand command :
                 chatRoomCommands) {
-//            group.getChildren().clear();
-            Label label = new Label(command.getPmOwner() + " : " + command.getPm());
+            Text text = new Text(command.getPmOwner() + " : " + command.getPm());
+            text.setFill(Color.WHITE);
+            text.setStyle("-fx-font-style: italic");
+            text.setEffect(new DropShadow(10,0,0,Color.GREY));
             System.out.println(command.getPmOwner() + " : " + command.getPm());
-            label.setMinSize(200, 50);
-            label.relocate(0, (i++) * 50);
+            text.setWrappingWidth(150);
+            text.relocate(0, (i++) * 50);
             System.out.println("------------>>>>> " + i);
-            group.getChildren().add(label);
+            group.getChildren().add(text);
         }
         chatRoom_Scroll.setContent(group);
     }
