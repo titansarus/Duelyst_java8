@@ -80,15 +80,16 @@ public class Container {
 
     }
 
-    public static void runMediaPlayer(MediaPlayer mediaPlayer , Media media , double volume , boolean autoplay ,int cycleCount , String typeOfPlayer)
-    {
-        if (typeOfPlayer.equals(MAIN_THEME))
-        {
+    public static void runMediaPlayer(MediaPlayer mediaPlayer, Media media, double volume, boolean autoplay, int cycleCount, String typeOfPlayer) {
+        runMediaPlayer(mediaPlayer, media, volume, autoplay, cycleCount, typeOfPlayer, 1.0);
+    }
+
+    public static void runMediaPlayer(MediaPlayer mediaPlayer, Media media, double volume, boolean autoplay, int cycleCount, String typeOfPlayer, double speed) {
+        if (typeOfPlayer.equals(MAIN_THEME)) {
             mainThemePlayer = new MediaPlayer(media);
             mediaPlayer = mainThemePlayer;
         }
-        if (typeOfPlayer.equals(SOUND_PLAYER))
-        {
+        if (typeOfPlayer.equals(SOUND_PLAYER)) {
             soundPlayer = new MediaPlayer(media);
             mediaPlayer = soundPlayer;
         }
@@ -96,6 +97,7 @@ public class Container {
         mediaPlayer.setVolume(volume);
         mediaPlayer.setAutoPlay(autoplay);
         mediaPlayer.setCycleCount(cycleCount);
+        mediaPlayer.setRate(speed);
     }
 
 
@@ -126,13 +128,14 @@ public class Container {
     }
 
     static void handleBack() {
+
         Container.scenes.removeLast();
         Container.nameOfMenus.removeLast();
         Container.stage.setScene(Container.scenes.getLast());
         Container.stage.show();
     }
 
-    private static UnaryOperator<TextFormatter.Change> filter =  change -> {
+    private static UnaryOperator<TextFormatter.Change> filter = change -> {
         String text = change.getText();
 
         if (text.matches("[0-9]*")) {
@@ -140,7 +143,8 @@ public class Container {
         }
 
         return null;
-    };;
+    };
+    ;
 
 
     public static TextFormatter<String> getOnlyNumberFormatter() {

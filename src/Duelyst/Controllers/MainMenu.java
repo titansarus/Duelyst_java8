@@ -891,6 +891,7 @@ public class MainMenu {
                     }
                 }
                 Deck aiDeck = Deck.deepClone(deck);
+                aiDeck.changeIDOfAllCardsOfDeck("AI:)");
                 ai.setMainDeck(aiDeck);
                 customGameMode(ai);
 
