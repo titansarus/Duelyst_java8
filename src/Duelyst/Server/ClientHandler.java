@@ -54,15 +54,7 @@ public class ClientHandler implements Runnable {
                             handleSignUpAccount(loginCommand);
                             break;
                         case EXIT:
-                            setLoggedIn(false);
-                            Server.saveAccount();
-                            formatter.close();
-                            try {
-                                socket.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            clientHandlers.remove(this);
+                            handleExit();
                             return;
                         case LOGOUT:
 
@@ -81,10 +73,32 @@ public class ClientHandler implements Runnable {
                 case LEADER_BOARD:
                     handleLeaderBoardCommand((LeaderBoardCommand) command);
                     break;
+
+                case ONLINE_PLAYERS:
+                    handleGetOnlinePlayers((OnlinePlayersCommand) command);
+                    break;
             }
 
 
         }
+    }
+
+    private void handleGetOnlinePlayers(OnlinePlayersCommand onlinePlayersCommand) {
+        onlinePlayersCommand.setOnlineAccounts(Server.getOnlinePlayers());
+        formatter.format("%s\n", CommandClass.makeJson(onlinePlayersCommand));
+        formatter.flush();
+    }
+
+    private void handleExit() {
+        setLoggedIn(false);
+        Server.saveAccount();
+        formatter.close();
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        clientHandlers.remove(this);
     }
 
     private void handleLeaderBoardCommand(LeaderBoardCommand leaderBoardCommand) {

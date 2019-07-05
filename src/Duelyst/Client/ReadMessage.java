@@ -57,11 +57,22 @@ public class ReadMessage extends Thread {
                     handleChatRoomCommand((ChatRoomCommand) commandClass);
                     break;
                 case LEADER_BOARD:
-                    handleLeaderBoardCommand((LeaderBoardCommand)commandClass);
+                    handleLeaderBoardCommand((LeaderBoardCommand) commandClass);
+                    break;
+                case ONLINE_PLAYERS:
+                    handleGetOnlinePlayers((OnlinePlayersCommand) commandClass);
                     break;
             }
 
         }
+    }
+
+    private void handleGetOnlinePlayers(OnlinePlayersCommand onlinePlayersCommand) {
+        System.out.println("Getting Online Players From Server");
+        Platform.runLater(() -> {
+            MainMenu mainMenu = (MainMenu) Container.controllerClass;
+            mainMenu.showOnlinePlayers(onlinePlayersCommand.getOnlineAccounts());
+        });
     }
 
     private void handleLeaderBoardCommand(LeaderBoardCommand leaderBoardCommand) {

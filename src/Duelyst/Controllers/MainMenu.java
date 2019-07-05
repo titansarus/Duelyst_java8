@@ -8,6 +8,8 @@ import Duelyst.Model.CommandClasses.*;
 import Duelyst.Utility.ImageHolder;
 import com.jfoenix.controls.*;
 import javafx.animation.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -21,6 +23,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -44,6 +47,9 @@ public class MainMenu {
     public AnchorPane battleHistoryAnchorePane_apane;
     public Label globalChat_lbl;
     public Pane leaderBoard_pane;
+    public ImageView onlinePlayersCloseButton_img;
+    public AnchorPane onlinePlayers_apane;
+    public Pane onlinePlayers_pane;
     private int singleOrMulti = 0; //1 == Single , 2 == Multi
     private int storyModeLevel = 0; //1 == 1 , 2 == 2 , 3 ==3;
     private int multiplayerModeGoal = 0; //1 == hero , 2 == capture_flags , 3== hold_flag
@@ -1112,6 +1118,55 @@ public class MainMenu {
             label.setLayoutY(100 * i);
             label.setLayoutX(80);
         }
+    }
+
+    public void handleOnlinePlayersButton() {
+
+        SendMessage.getSendMessage().sendMessage(new OnlinePlayersCommand());
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        TranslateTransition tt = new TranslateTransition(Duration.millis(10), onlinePlayers_pane);
+        tt.setFromX(800);
+        tt.setToX(0);
+        tt.play();
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), onlinePlayers_pane);
+        ft.setFromValue(0);
+        ft.setToValue(1);
+        tt.setOnFinished(event -> {
+            anchorPane.setDisable(true);
+            ft.play();
+        });
+    }
+
+    public void handleOnlinePlayerCloseButton() {
+        FadeTransition ft = new FadeTransition(Duration.millis(700), onlinePlayers_pane);
+        ft.setFromValue(1);
+        ft.setToValue(0);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(10), onlinePlayers_pane);
+        tt.setFromX(0);
+        tt.setToX(800);
+        ft.play();
+        ft.setOnFinished(event -> {
+            anchorPane.setDisable(false);
+            tt.play();
+        });
+    }
+
+    public void showOnlinePlayers(ArrayList<String> onlinePlayers) {
+
+        for (int i = 0; i < onlinePlayers.size(); i++) {
+            Label label = new Label((i + 1) + ") " + onlinePlayers.get(i));
+            label.setTextFill(Color.WHITE);
+            label.setStyle("-fx-font-style: italic;-fx-font-weight: bold;-fx-font-size: 20");
+            onlinePlayers_apane.getChildren().add(label);
+            label.setLayoutX(20);
+            label.setLayoutY(75 * i);
+        }
+
     }
 
     public boolean isCanPlayButtonSound() {

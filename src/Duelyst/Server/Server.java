@@ -117,5 +117,14 @@ public class Server implements Runnable {
         }
     }
 
+    public static ArrayList<String> getOnlinePlayers(){
+        ArrayList<String> onlinePlayers = new ArrayList<>();
+        for (int i = 0; i < allClientHandlers.size() ; i++) {
+            if(allClientHandlers.get(i).isLoggedIn()){
+                onlinePlayers.add(allClientHandlers.get(i).getUserName());
+            }
+        }
+        return onlinePlayers;
+    }
 
 }
