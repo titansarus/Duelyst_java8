@@ -9,10 +9,7 @@ import Duelyst.Exceptions.UserNotExistException;
 import Duelyst.Main;
 import Duelyst.Model.Account;
 import Duelyst.Model.Card;
-import Duelyst.Model.CommandClasses.ChatRoomCommand;
-import Duelyst.Model.CommandClasses.CommandClass;
-import Duelyst.Model.CommandClasses.LoginCommand;
-import Duelyst.Model.CommandClasses.ShopCommand;
+import Duelyst.Model.CommandClasses.*;
 import Duelyst.Model.Shop;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
@@ -57,20 +54,29 @@ public class ReadMessage extends Thread {
                     //TODO Bayad Command Haye Marboot be battle ra begirad
                     break;
                 case CHAT_ROOM:
-                    handleChatRoomCommand((ChatRoomCommand)commandClass);
+                    handleChatRoomCommand((ChatRoomCommand) commandClass);
+                    break;
+                case LEADER_BOARD:
+                    handleLeaderBoardCommand((LeaderBoardCommand)commandClass);
                     break;
             }
 
         }
     }
-    private void handleChatRoomCommand(ChatRoomCommand chatRoomCommand){
-        System.out.println("receive message : "+chatRoomCommand.getPm());
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                MainMenu mainMenu = (MainMenu) Container.controllerClass;
-                mainMenu.addToChat(chatRoomCommand);
-            }
+
+    private void handleLeaderBoardCommand(LeaderBoardCommand leaderBoardCommand) {
+        System.out.println("Getting LeaderBoard List");
+        Platform.runLater(() -> {
+            MainMenu mainMenu = (MainMenu) Container.controllerClass;
+            mainMenu.initializeLeaderBoard(leaderBoardCommand.getSortedListOfAccounts());
+        });
+    }
+
+    private void handleChatRoomCommand(ChatRoomCommand chatRoomCommand) {
+        System.out.println("receive message : " + chatRoomCommand.getPm());
+        Platform.runLater(() -> {
+            MainMenu mainMenu = (MainMenu) Container.controllerClass;
+            mainMenu.addToChat(chatRoomCommand);
         });
     }
 

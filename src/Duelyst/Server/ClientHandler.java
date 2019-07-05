@@ -78,10 +78,19 @@ public class ClientHandler implements Runnable {
                 case CHAT_ROOM:
                     handleChatRoom((ChatRoomCommand) command);
                     break;
+                case LEADER_BOARD:
+                    handleLeaderBoardCommand((LeaderBoardCommand) command);
+                    break;
             }
 
 
         }
+    }
+
+    private void handleLeaderBoardCommand(LeaderBoardCommand leaderBoardCommand) {
+        leaderBoardCommand.setSortedListOfAccounts(Server.accountsSorter(Server.getAllAccounts()));
+        formatter.format("%s\n", CommandClass.makeJson(leaderBoardCommand));
+        formatter.flush();
     }
 
     private void handleChatRoom(ChatRoomCommand chatRoomCommand) {

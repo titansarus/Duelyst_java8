@@ -8,8 +8,6 @@ import Duelyst.Model.CommandClasses.*;
 import Duelyst.Utility.ImageHolder;
 import com.jfoenix.controls.*;
 import javafx.animation.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -19,7 +17,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -32,7 +29,6 @@ import static Duelyst.View.Constants.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 import static Duelyst.View.Constants.NO_USER_LOGINED;
@@ -430,10 +426,10 @@ public class MainMenu {
 
     private void updateLoggedInUser() {
         if (Account.getLoggedAccount() == null) {
-            getLoginedAccount_lbl().setText(NO_USER_LOGINED);
+            getLoggedInAccount_lbl().setText(NO_USER_LOGINED);
             return;
         }
-        getLoginedAccount_lbl().setText(Account.getLoggedAccount().getUsername());
+        getLoggedInAccount_lbl().setText(Account.getLoggedAccount().getUsername());
     }
 
 
@@ -443,17 +439,17 @@ public class MainMenu {
     }
 
     public void handleLeaderBoardBtn() {
-//        LeaderBoardCommand leaderBoardCommand = new LeaderBoardCommand();
-//        SendMessage.getSendMessage().sendMessage(leaderBoardCommand);
-//        try {
-//            Thread.sleep(200);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+
+        LeaderBoardCommand leaderBoardCommand = new LeaderBoardCommand();
+        SendMessage.getSendMessage().sendMessage(leaderBoardCommand);
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         setCanPlayButtonSound(true);
         runButtonClickSound();
-        initializeLeaderBoard();
         TranslateTransition tt = new TranslateTransition(Duration.millis(1000), leaderBoard_pane);
         tt.setFromY(800);
         tt.setToY(0);
@@ -469,13 +465,12 @@ public class MainMenu {
         tt.setOnFinished(event -> anchorPane.setDisable(false));
     }
 
-    public void initializeLeaderBoard() {
-        updateTable();
+    public void initializeLeaderBoard(ArrayList<Account> accounts) {
+        updateTable(accounts);
         title_iv.setImage(leaderboardsImg);
     }
 
-    private void updateTable() {
-        ArrayList<Account> accounts = Account.accountsSorter(Account.getAccounts());
+    private void updateTable(ArrayList<Account> accounts) {
         ArrayList<AccountInfo> accountInfos = new ArrayList<>();
         int count = 0;
         for (int i = 0; i < accounts.size(); i++) {
@@ -674,7 +669,7 @@ public class MainMenu {
 
     }
 
-    public Label getLoginedAccount_lbl() {
+    public Label getLoggedInAccount_lbl() {
         return loginedAccount_lbl;
     }
 
