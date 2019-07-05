@@ -974,7 +974,8 @@ public class MainMenu {
         story_level_1.setOnAction(event -> {
             setStoryModeLevel(LEVEL_1);
             Ai ai = new Ai(0);
-            ai.setMainDeck(Deck.deepClone(Account.findAccountInArrayList("saman", Account.getAccounts()).getCardCollection().getMainDeck()));
+            ai.setMainDeck(Account.getLoggedAccount().getCardCollection().getMainDeck());
+//            ai.setMainDeck(Deck.deepClone(Account.findAccountInArrayList("saman", Account.getAccounts()).getCardCollection().getMainDeck()));
             createBattle(ai, GameMode.SINGLE_PLAYER, GameGoal.COLLECT_FLAG);
             jfxDialog.close();
 
@@ -983,16 +984,16 @@ public class MainMenu {
         story_level_2.setOnAction(event -> {
             setStoryModeLevel(LEVEL_2);
             Ai ai = new Ai(0);
-            ai.setMainDeck(Deck.deepClone(Account.findAccountInArrayList("saman", Account.getAccounts()).getCardCollection().getMainDeck()));
+            ai.setMainDeck(Account.getLoggedAccount().getCardCollection().getMainDeck());
+//            ai.setMainDeck(Deck.deepClone(Account.findAccountInArrayList("saman", Account.getAccounts()).getCardCollection().getMainDeck()));
             createBattle(ai, GameMode.SINGLE_PLAYER, GameGoal.KILL_HERO);
             jfxDialog.close();
         });
         story_level_3.setOnAction(event -> {
             setStoryModeLevel(LEVEL_3);
             Ai ai = new Ai(0);
-
-
-            ai.setMainDeck(Deck.deepClone(Account.findAccountInArrayList("saman", Account.getAccounts()).getCardCollection().getMainDeck()));
+            ai.setMainDeck(Account.getLoggedAccount().getCardCollection().getMainDeck());
+//            ai.setMainDeck(Deck.deepClone(Account.findAccountInArrayList("saman", Account.getAccounts()).getCardCollection().getMainDeck()));
             createBattle(ai, GameMode.SINGLE_PLAYER, GameGoal.HOLD_FLAG);
             jfxDialog.close();
         });
