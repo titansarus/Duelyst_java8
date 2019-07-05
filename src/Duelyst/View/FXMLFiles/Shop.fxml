@@ -202,6 +202,15 @@
             </Label>
          </children>
       </Pane>
+      <Pane fx:id="addToAuctionNotification_pane" maxHeight="59.0" maxWidth="224.0" minHeight="54.0" minWidth="180.0" prefHeight="59.0" prefWidth="224.0" style="-fx-background-image: url('/res/ui/notification_quest_small.png'); -fx-background-size: cover;" stylesheets="@../../../css/saveGameNotification.css" translateX="630.0" translateY="-250.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="22.0" text="Card Added To Auction Successfully" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="10.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
     </children>
 
 </StackPane>
