@@ -129,6 +129,7 @@ public class ReadMessage extends Thread {
     }
     private void setAuctionCardsAfterFinishCard(ShopCommand shopCommand) {
         Shop.getInstance().setAuctionCards(shopCommand.getAuctionCards());
+        System.out.println("time of a card is end");
         //TODO set cards in auction page
     }
 

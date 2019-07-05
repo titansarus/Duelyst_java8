@@ -8,6 +8,7 @@ import Duelyst.Model.CommandClasses.*;
 import Duelyst.Model.Shop;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -207,6 +208,8 @@ public class ClientHandler implements Runnable {
 
     private void addCardToAuctionCards(ShopCommand shopCommand) {
         ServerShop.getInstance().addAuctionCards(shopCommand.getAuctionCard());
+        Time time = new Time(shopCommand.getAuctionCard(),10);//TODO 10 -> 180
+        time.start();
     }
 
     public void getCards() {

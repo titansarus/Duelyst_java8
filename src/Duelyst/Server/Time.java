@@ -42,6 +42,7 @@ public class Time extends Thread {
         }
         if (card!=null) {
             ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.FINISH_TIME);
+//            shopCommand.setAuctionCard(card);
             shopCommand.setAuctionCards(ServerShop.getInstance().removeCardfromAuctions(card));
             for (ClientHandler c :
                     ClientHandler.getClientHandlers()) {
