@@ -1,5 +1,5 @@
 package Duelyst.Model;
 
 public enum ShopMode {
-    BUY, SELL;
+    BUY, SELL, AUCTION;
 }

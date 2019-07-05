@@ -45,10 +45,13 @@ public class CardView extends Pane {
                 if (Container.nameOfMenus.getLast().equals(SHOP)) {
                     if (Shop.getInstance().getShopMode().equals(ShopMode.BUY)) {
                         Shop.getInstance().selectCardForBuy(card.getCardName());
-                        System.out.println("BUY MODE" + card.getCardName());
-                    } else {
+                        System.out.println("BUY MODE  "  + card.getCardName());
+                    } else if (Shop.getInstance().getShopMode().equals(ShopMode.SELL)) {
                         Shop.getInstance().selectCardForSell(card.getCardId());
-                        System.out.println("SELL MODE" + card.getCardName() + " " + card.getCardId());
+                        System.out.println("SELL MODE  " + card.getCardName() + " " + card.getCardId());
+                    } else {
+                        Shop.getInstance().selectCardForBidInAuction(card.getCardName());
+                        System.out.println("Auction Mode  " + card.getCardName() + " " + card.getCardName());
                     }
                 } else if (Container.nameOfMenus.getLast().equals(COLLECTION)) {
                     Account.getLoggedAccount().getCardCollection().setSelectedCard(card);

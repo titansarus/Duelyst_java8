@@ -728,6 +728,7 @@ public class BattleController {
             e.printStackTrace();
         }
         stopTimeline();
+        Container.addController(fxmlLoader);
         Container.runNextScene(root, GRAVE_YARD);
 
     }

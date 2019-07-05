@@ -11,6 +11,7 @@ public class Card implements Cloneable {
     private String cardId;
     private int manaCost;
     private int darikCost;
+    private int auctionCost;
     private CardKind cardKind;
     private Account account;
     private String cardDescription;
@@ -31,6 +32,7 @@ public class Card implements Cloneable {
     public Card(String cardName, String cardDescription, int manaCost, int darikCost) {
         this.manaCost = manaCost;
         this.darikCost = darikCost;
+        auctionCost = (int)(0.8*darikCost);
         this.cardDescription = cardDescription;
         this.cardName = cardName;
         addCard(this);
@@ -38,6 +40,7 @@ public class Card implements Cloneable {
     public Card(String cardName, String cardDescription, int manaCost, int darikCost , String addressOfImage) {
         this.manaCost = manaCost;
         this.darikCost = darikCost;
+        auctionCost = (int)(0.8*darikCost);
         this.cardDescription = cardDescription;
         this.cardName = cardName;
         this.addressOfImage = addressOfImage;
@@ -47,6 +50,7 @@ public class Card implements Cloneable {
     public Card(String cardName, String cardDescription, int manaCost, int darikCost , String addressOfImage , String addressOfIdleGif) {
         this.manaCost = manaCost;
         this.darikCost = darikCost;
+        auctionCost = (int)(0.8*darikCost);
         this.cardDescription = cardDescription;
         this.cardName = cardName;
         this.addressOfImage = addressOfImage;
@@ -56,6 +60,7 @@ public class Card implements Cloneable {
     public Card(String cardName, String cardDescription, int manaCost, int darikCost , String addressOfImage , String addressOfIdleGif , String addressOfRunGif , String addressOfAttackGif) {
         this.manaCost = manaCost;
         this.darikCost = darikCost;
+        auctionCost = (int)(0.8*darikCost);
         this.cardDescription = cardDescription;
         this.cardName = cardName;
         this.addressOfImage = addressOfImage;
@@ -67,6 +72,7 @@ public class Card implements Cloneable {
     public Card(String cardName, String cardDescription, int manaCost, int darikCost , String addressOfImage , String addressOfIdleGif , String addressOfRunGif , String addressOfAttackGif , String addressOfGetDamageGif , String addressOfDeathGif) {
         this.manaCost = manaCost;
         this.darikCost = darikCost;
+        auctionCost = (int)(0.8*darikCost);
         this.cardDescription = cardDescription;
         this.cardName = cardName;
         this.addressOfImage = addressOfImage;

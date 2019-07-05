@@ -13,6 +13,7 @@ import Duelyst.Model.Spell.TargetCommunity;
 import Duelyst.Server.Server;
 import Duelyst.Server.ServerShop;
 import Duelyst.Utility.CreateCardFromDatabaseCard;
+import Duelyst.Utility.NetworkConfiguration;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import javafx.application.Application;
@@ -24,8 +25,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 import java.io.*;
 import java.lang.reflect.Type;
+import java.net.BindException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -40,6 +43,7 @@ public class Main extends Application {
         try {
             fxmlLoader = new FXMLLoader(getClass().getResource("./View/FXMLFiles/Login.fxml"));
             root = fxmlLoader.load();
+            Container.addController(fxmlLoader);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,12 +58,17 @@ public class Main extends Application {
 
     public static void main(String[] args) throws IOException {
         System.out.println("a");
-        InputStream inputStream = new FileInputStream("ClientOrServer.txt");
-        byte[] bytes = new byte[100];
-        inputStream.read(bytes);
-        inputStream.close();
-        if (bytes[0] == 49) {
-            new FileOutputStream("ClientOrServer.txt").write(48);
+
+        NetworkConfiguration.loadFromIni();
+
+        System.out.println(NetworkConfiguration.getHost());
+        System.out.println(NetworkConfiguration.getPort());
+        //  InputStream inputStream = new FileInputStream("ClientOrServer.txt");
+      //  byte[] bytes = new byte[100];
+       // inputStream.read(bytes);
+       // inputStream.close();
+       try {
+           // new FileOutputStream("ClientOrServer.txt").write(48);
             Thread thread = new Thread(new Server());
             thread.start();
             DatabaseCollectioner.DatabaseGenerator();
@@ -75,7 +84,7 @@ public class Main extends Application {
             initItems();
             initSpells();
             initAccounts();//TODO Initialize Server Account ArrayList
-        } else {
+        } catch (BindException e){
 
 
             //TODO Run Client And Make Connection To The Server

@@ -15,6 +15,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -137,6 +139,67 @@
                   <HBox fx:id="AuctionPaneHBox_hbox" prefHeight="676.0" prefWidth="1021.0" style="-fx-background-color: transparent;" />
                </content>
             </ScrollPane>
+            <ImageView fx:id="AuctionBidButton_img" fitHeight="48.0" fitWidth="188.0" layoutX="300.0" layoutY="680.0" onMouseEntered="#auctionBidButtonGlow" onMouseExited="#auctionBidButtonGlowDisappear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_primary_middle@2x.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="358.0" layoutY="689.0" onMouseEntered="#auctionBidButtonGlow" text="Bid!" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="249.0" fitWidth="431.0" layoutX="619.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/tooltip_right.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="639.0" layoutY="164.0" text="Current Owner:">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#c60000" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <Label fx:id="currentOwnerAuction_lbl" alignment="CENTER" contentDisplay="CENTER" layoutX="664.0" layoutY="193.0" prefHeight="30.0" prefWidth="267.0" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="639.0" layoutY="236.0" text="Highest Bid:">
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="RED" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="auctionHighestBid_lbl" alignment="CENTER" contentDisplay="CENTER" layoutX="682.0" layoutY="264.0" prefHeight="21.0" prefWidth="79.0" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="896.0" layoutY="269.0" text="Time Left:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="auctionTimeLeft_lbl" layoutX="899.0" layoutY="294.0" prefHeight="21.0" prefWidth="64.0" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="16.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
     </children>

@@ -60,3 +60,7 @@
 #auctionScrollPane .viewport {
     -fx-background-color: transparent;
 }
+
+#onlinePlayersScrollPane .viewport {
+    -fx-background-color: transparent;
+}

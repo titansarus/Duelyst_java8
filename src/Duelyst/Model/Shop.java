@@ -19,13 +19,15 @@ public class Shop {
     private ArrayList<Card> cards = new ArrayList<>();
     private ArrayList<String> numberOfCards = new ArrayList<>();//TODO send to shop of server
     private ArrayList<Card> auctionCards = new ArrayList<>();
+    private Card auctionSelectedCard;
     private static Shop instance;
     private ShopMode shopMode = ShopMode.BUY;
     private ArrayList<Card> finishedCard;
 
     private Card selectedCard = null;
 
-    private Shop() {}
+    private Shop() {
+    }
 
     public static Shop getInstance() {
         if (instance == null)
@@ -41,6 +43,10 @@ public class Shop {
         selectedCard = Card.findCardInArrayList(id, Account.getLoggedAccount().getCardCollection().getCards());
     }
 
+    public void selectCardForBidInAuction(String name) {
+        auctionSelectedCard = Card.findCardInArrayListByName(name, auctionCards);
+    }
+
     public void sell() {
         if (selectedCard == null) {
             throw new NoCardSelectedInShopException();
@@ -51,7 +57,7 @@ public class Shop {
         shopCommand.setSellCard(selectedCard);
         SendMessage.getSendMessage().sendMessage(shopCommand);
         CardCollection cardCollection = Account.getLoggedAccount().getCardCollection();
-        Account.getLoggedAccount().increaseDarick((selectedCard.getDarikCost()*4)/5);
+        Account.getLoggedAccount().increaseDarick((selectedCard.getDarikCost() * 4) / 5);
         cardCollection.removeCard(selectedCard);
         setSelectedCard(null);
 
@@ -106,7 +112,6 @@ public class Shop {
     }
 
 
-
     public ArrayList<Card> getAuctionCards() {
         return auctionCards;
     }
@@ -114,6 +119,7 @@ public class Shop {
     public void addAuctionCards(Card auctionCard) {
         auctionCards.add(auctionCard);
     }
+
     public void removeAuctionCards(Card auctionCard) {
         auctionCards.remove(auctionCard);
     }
@@ -128,5 +134,13 @@ public class Shop {
 
     public void setAuctionCards(ArrayList<Card> auctionCards) {
         this.auctionCards = auctionCards;
+    }
+
+    public Card getAuctionSelectedCard() {
+        return auctionSelectedCard;
+    }
+
+    public void setAuctionSelectedCard(Card auctionSelectedCard) {
+        this.auctionSelectedCard = auctionSelectedCard;
     }
 }

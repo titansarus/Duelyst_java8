@@ -1,6 +1,7 @@
 package Duelyst.Server;
 
 import Duelyst.Model.Account;
+import Duelyst.Utility.NetworkConfiguration;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 
@@ -14,9 +15,7 @@ import java.util.Comparator;
 
 public class Server implements Runnable {
 
-    private static int SERVER_PORT = 8000;
-    private static String IP_ADDRESS = "127.0.0.1";
-    private ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
+    private ServerSocket serverSocket = new ServerSocket(NetworkConfiguration.getPort());
     private static final ArrayList<Account> allAccounts = new ArrayList<>();
     private static final ArrayList<ClientHandler> allClientHandlers = new ArrayList<>();
 
@@ -117,5 +116,14 @@ public class Server implements Runnable {
         }
     }
 
+    public static ArrayList<String> getOnlinePlayers() {
+        ArrayList<String> onlinePlayers = new ArrayList<>();
+        for (int i = 0; i < allClientHandlers.size(); i++) {
+            if (allClientHandlers.get(i).isLoggedIn()) {
+                onlinePlayers.add(allClientHandlers.get(i).getUserName());
+            }
+        }
+        return onlinePlayers;
+    }
 
 }

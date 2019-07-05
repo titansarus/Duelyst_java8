@@ -19,6 +19,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -45,6 +46,10 @@ public class ShopController {
     public Pane Auction_pane;
     public HBox AuctionPaneHBox_hbox;
     public ImageView addToAuctionButton_img;
+    public ImageView AuctionBidButton_img;
+    public Label currentOwnerAuction_lbl;
+    public Label auctionTimeLeft_lbl;
+    public Label auctionHighestBid_lbl;
     @FXML
     ScrollPane buyScrollPane;
 
@@ -140,7 +145,6 @@ public class ShopController {
 
             } else {
                 cardView.getCardController().changeToNotSelected();
-
             }
         }
     }
@@ -230,20 +234,22 @@ public class ShopController {
     }
 
     private void updateButton() {
-        if (sell_tab.isSelected()) {
-            ImageView i = new ImageView(sellImg);
-            Shop.getInstance().setShopMode(ShopMode.SELL);
+        if (!Shop.getInstance().getShopMode().equals(ShopMode.AUCTION)) {
+            if (sell_tab.isSelected()) {
+                ImageView i = new ImageView(sellImg);
+                Shop.getInstance().setShopMode(ShopMode.SELL);
 
-            getAction_btn().setGraphic(i);
-        } else {
-            ImageView i = new ImageView(buyImg);
-            Shop.getInstance().setShopMode(ShopMode.BUY);
-            getAction_btn().setGraphic(i);
-        }
+                getAction_btn().setGraphic(i);
+            } else {
+                ImageView i = new ImageView(buyImg);
+                Shop.getInstance().setShopMode(ShopMode.BUY);
+                getAction_btn().setGraphic(i);
+            }
 
-        if (isStanceOfTGB() != sell_tab.isSelected()) {
-            setStanceOfTGB(sell_tab.isSelected());
-            Shop.setSelectedCard(null);
+            if (isStanceOfTGB() != sell_tab.isSelected()) {
+                setStanceOfTGB(sell_tab.isSelected());
+                Shop.setSelectedCard(null);
+            }
         }
     }
 
@@ -344,7 +350,6 @@ public class ShopController {
     public void handleSearchInputChanged() {
         System.out.println("Search");
         makeCardList();
-
     }
 
     public void handleCardInformationButton() {
@@ -405,6 +410,7 @@ public class ShopController {
         tt.setToY(0);
         tt.play();
         getAuctionCardsFromServer();
+        Shop.getInstance().setShopMode(ShopMode.AUCTION);
         makeCardList(Shop.getInstance().getAuctionCards(), AuctionPaneHBox_hbox);
     }
 
@@ -413,7 +419,7 @@ public class ShopController {
         SendMessage.getSendMessage().sendMessage(shopCommand);
         try {
             Thread.sleep(100);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -423,6 +429,22 @@ public class ShopController {
         tt.setFromY(0);
         tt.setToY(800);
         tt.play();
+        if (buy_tab.isSelected())
+            Shop.getInstance().setShopMode(ShopMode.BUY);
+        else
+            Shop.getInstance().setShopMode(ShopMode.SELL);
+    }
+
+    public void handleAuctionBidButton() {
+        //TODO Pishnehade Gheimate Jadid
+    }
+
+    public void auctionBidButtonGlow() {
+        AuctionBidButton_img.setImage(new Image("res/ui/button_primary_middle_glow@2x.png"));
+    }
+
+    public void auctionBidButtonGlowDisappear() {
+        AuctionBidButton_img.setImage(new Image("res/ui/button_primary_middle@2x.png"));
     }
 
     public void handleTabSelectionChanged() {

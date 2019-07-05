@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.ImageCursor;
 import javafx.scene.Node;
@@ -41,6 +42,9 @@ public class Container {
     public static Stage stage = new Stage();
     public static Deque<Scene> scenes = new LinkedList<>();
     public static Deque<String> nameOfMenus = new LinkedList<>();
+    public static Deque<Object> controllers = new LinkedList<>();
+
+
     public static Object controllerClass;
     public static MediaPlayer mainThemePlayer;
 
@@ -131,6 +135,13 @@ public class Container {
 
         Container.scenes.removeLast();
         Container.nameOfMenus.removeLast();
+
+        //CONTROLLERS
+        Container.controllers.removeLast();
+        Container.controllerClass = Container.controllers.getLast();
+        //
+
+
         Container.stage.setScene(Container.scenes.getLast());
         Container.stage.show();
     }
@@ -144,8 +155,20 @@ public class Container {
 
         return null;
     };
-    ;
 
+    public static void addController(FXMLLoader fxmlLoader) {
+        Object _controllerClass = fxmlLoader.getController();
+        controllers.addLast(_controllerClass);
+        Container.controllerClass = _controllerClass;
+    }
+
+    public static Deque<Object> getControllers() {
+        return controllers;
+    }
+
+    public static Object getControllerClass() {
+        return controllerClass;
+    }
 
     public static TextFormatter<String> getOnlyNumberFormatter() {
         return new TextFormatter<>(filter);
