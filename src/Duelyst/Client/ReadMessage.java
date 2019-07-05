@@ -64,6 +64,7 @@ public class ReadMessage extends Thread {
         }
     }
     private void handleChatRoomCommand(ChatRoomCommand chatRoomCommand){
+        System.out.println("receive message : "+chatRoomCommand.getPm());
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
