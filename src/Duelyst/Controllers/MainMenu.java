@@ -108,6 +108,8 @@ public class MainMenu {
 
     @FXML
     ImageView title_iv;
+    @FXML
+    ImageView sound_iv;
 
     private boolean canPlayButtonSound = true;
     private boolean flag = true;
@@ -117,6 +119,7 @@ public class MainMenu {
     @FXML
     public void initialize() {
         runTimeline();
+        Container.changeImageOfSoundImageView(sound_iv);
     }
 
 
@@ -1171,6 +1174,12 @@ public class MainMenu {
             label.setLayoutX(20);
             label.setLayoutY(75 * i);
         }
+
+    }
+
+    public void handleSoundMuteOrUnmute() {
+        Container.changeSoundOnOrOff();
+        Container.changeImageOfSoundImageView(sound_iv);
 
     }
 

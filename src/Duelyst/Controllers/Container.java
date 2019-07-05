@@ -50,6 +50,8 @@ public class Container {
 
     public static MediaPlayer soundPlayer;
 
+    private static boolean isSoundOn = true;
+
 
     public static void exceptionGenerator(MyException e, StackPane pane) {
         dialogBoxShower(e.getMessage(), e.getTitle(), pane);
@@ -96,9 +98,14 @@ public class Container {
         if (typeOfPlayer.equals(SOUND_PLAYER)) {
             soundPlayer = new MediaPlayer(media);
             mediaPlayer = soundPlayer;
+
         }
 
         mediaPlayer.setVolume(volume);
+
+        if (!isSoundOn()) {
+            mediaPlayer.setVolume(0);
+        }
         mediaPlayer.setAutoPlay(autoplay);
         mediaPlayer.setCycleCount(cycleCount);
         mediaPlayer.setRate(speed);
@@ -162,6 +169,23 @@ public class Container {
         Container.controllerClass = _controllerClass;
     }
 
+    public static void changeSoundOnOrOff() {
+        if (isSoundOn()) {
+            mainThemePlayer.setVolume(0);
+            if (soundPlayer != null) {
+                soundPlayer.setVolume(0);
+            }
+            isSoundOn = false;
+        } else {
+            mainThemePlayer.setVolume(0.1);
+            if (soundPlayer != null) {
+                soundPlayer.setVolume(1.0);
+                isSoundOn = true;
+            }
+        }
+
+    }
+
     public static Deque<Object> getControllers() {
         return controllers;
     }
@@ -172,5 +196,17 @@ public class Container {
 
     public static TextFormatter<String> getOnlyNumberFormatter() {
         return new TextFormatter<>(filter);
+    }
+
+    public static boolean isSoundOn() {
+        return isSoundOn;
+    }
+
+    public static void changeImageOfSoundImageView(ImageView sound) {
+        if (isSoundOn()) {
+            sound.setImage(ImageHolder.findImageInImageHolders("./res/ui/soundOn.png"));
+        } else {
+            sound.setImage(ImageHolder.findImageInImageHolders("./res/ui/soundOff.png"));
+        }
     }
 }

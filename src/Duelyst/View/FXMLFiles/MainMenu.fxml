@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.MainMenu">
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.MainMenu">
    <children>
       <AnchorPane fx:id="anchorPane" maxHeight="768.0" maxWidth="1024.0" minHeight="768.0" minWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: BLACk; -fx-background-image: url('/res/Backgrounds/main-menu-back.jpg'); -fx-background-size: cover;">
          <children>
@@ -164,6 +164,7 @@
                   </Label>
                </children>
             </Pane>
+            <ImageView fx:id="sound_iv" fitHeight="40.0" fitWidth="48.0" layoutX="811.0" layoutY="626.0" onMouseClicked="#handleSoundMuteOrUnmute" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
       <Pane fx:id="saveNotification_pane" maxHeight="54.0" maxWidth="180.0" minHeight="54.0" minWidth="180.0" prefHeight="54.0" prefWidth="180.0" stylesheets="@../../../css/saveGameNotification.css" translateX="615.0" translateY="-290.0">
