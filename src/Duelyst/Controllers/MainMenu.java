@@ -8,12 +8,15 @@ import Duelyst.Model.CommandClasses.*;
 import Duelyst.Utility.ImageHolder;
 import com.jfoenix.controls.*;
 import javafx.animation.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -40,6 +43,7 @@ public class MainMenu {
     public AnchorPane anchorPane;
     public ImageView battleHistoryButtonGlow_img;
     public AnchorPane battleHistoryAnchorePane_apane;
+    public Label globalChat_lbl;
     private int singleOrMulti = 0; //1 == Single , 2 == Multi
     private int storyModeLevel = 0; //1 == 1 , 2 == 2 , 3 ==3;
     private int multiplayerModeGoal = 0; //1 == hero , 2 == capture_flags , 3== hold_flag
@@ -93,7 +97,7 @@ public class MainMenu {
     ImageView cheat_img;
 
     private boolean canPlayButtonSound = true;
-
+    private boolean flag = true;
     private Timeline timeline = new Timeline();
 
 
@@ -106,6 +110,13 @@ public class MainMenu {
         timeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
             updateLoggedInUser();
             updateDarick();
+            //TODO Yekhorde Kasife Bayad Tamiz She
+            if (flag) {
+                chatRoomArrow_img.setOnMouseClicked(event1 -> handleChatRoomArrowImageClicked());
+                chatRoomArrow_img.setOnMouseEntered(event12 -> handleChatRoomArrowImageMouseEntered());
+                chatRoomArrow_img.setOnMouseExited(event13 -> handleChatRoomArrowImageMouseExited());
+                flag = false;
+            }
         }), new KeyFrame(Duration.seconds(1)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
@@ -189,11 +200,25 @@ public class MainMenu {
     //---------------
 
     public void handleChatRoomArrowImageMouseEntered() {
-        chatRoomArrow_img.setOpacity(1);
+        TranslateTransition tt1 = new TranslateTransition(Duration.millis(500), chatRoomArrow_img);
+        tt1.setFromX(chatRoomArrow_img.getX());
+        tt1.setToX(chatRoomArrow_img.getX() + 30);
+        TranslateTransition tt2 = new TranslateTransition(Duration.millis(500), globalChat_lbl);
+        tt2.setFromX(chatRoomArrow_img.getX());
+        tt2.setToX(chatRoomArrow_img.getX() + 30);
+        tt1.play();
+        tt2.play();
     }
 
     public void handleChatRoomArrowImageMouseExited() {
-        chatRoomArrow_img.setOpacity(0.5);
+        TranslateTransition tt1 = new TranslateTransition(Duration.millis(500), chatRoomArrow_img);
+        tt1.setFromX(chatRoomArrow_img.getX()+ 30);
+        tt1.setToX(chatRoomArrow_img.getX() );
+        TranslateTransition tt2 = new TranslateTransition(Duration.millis(500), globalChat_lbl);
+        tt2.setFromX(chatRoomArrow_img.getX() + 30);
+        tt2.setToX(chatRoomArrow_img.getX());
+        tt1.play();
+        tt2.play();
     }
 
     public void handleChatRoomArrowImageClicked() {
@@ -201,33 +226,50 @@ public class MainMenu {
         TranslateTransition tt = new TranslateTransition(Duration.millis(1000), chatRoom_pane);
         tt.setFromX(-200);
         tt.setToX(166);
-        tt.setRate(1);
         tt.play();
+        chatRoomArrow_img.setOnMouseClicked(null);
+        chatRoomArrow_img.setOnMouseEntered(null);
+        chatRoomArrow_img.setOnMouseExited(null);
+        tt.setOnFinished(event -> {
+            chatRoomArrow_img.setOnMouseClicked(event1 -> {
+                handleBackImage();
+            });
+        });
     }
+
     public void handleBackImage() {
         TranslateTransition tt = new TranslateTransition(Duration.millis(1000), chatRoom_pane);
         tt.setFromX(166);
         tt.setToX(-200);
-        tt.setRate(1);
         tt.play();
+        tt.setOnFinished(event -> {handleChatRoomArrowImageMouseExited();
+            chatRoomArrow_img.setOnMouseEntered(event22 -> handleChatRoomArrowImageMouseEntered());
+            chatRoomArrow_img.setOnMouseExited(event2 -> handleChatRoomArrowImageMouseExited());
+            chatRoomArrow_img.setOnMouseClicked(event1 -> {
+                handleChatRoomArrowImageClicked();
+
+            });
+        });
     }
+
     public void handleSendMessageImage() {
-        ChatRoomCommand command = new ChatRoomCommand(textMessage.getText(),Account.getLoggedAccount().getUsername());
+        ChatRoomCommand command = new ChatRoomCommand(textMessage.getText(), Account.getLoggedAccount().getUsername());
         textMessage.clear();
         SendMessage.getSendMessage().sendMessage(command);
     }
-    public void addToChat(ChatRoomCommand chatRoomCommand){
+
+    public void addToChat(ChatRoomCommand chatRoomCommand) {
         ArrayList<ChatRoomCommand> chatRoomCommands = chatRoomCommand.getChatRoomCommands();
         Group group = new Group();
-        int i=1;
-        for (ChatRoomCommand command:
-             chatRoomCommands) {
+        int i = 1;
+        for (ChatRoomCommand command :
+                chatRoomCommands) {
 //            group.getChildren().clear();
-            Label label = new Label(command.getPmOwner()+ " : " + command.getPm());
-            System.out.println(command.getPmOwner()+ " : " + command.getPm());
-            label.setMinSize(200,50);
-            label.relocate(0,(i++)*50);
-            System.out.println("------------>>>>> "+ i);
+            Label label = new Label(command.getPmOwner() + " : " + command.getPm());
+            System.out.println(command.getPmOwner() + " : " + command.getPm());
+            label.setMinSize(200, 50);
+            label.relocate(0, (i++) * 50);
+            System.out.println("------------>>>>> " + i);
             group.getChildren().add(label);
         }
         chatRoom_Scroll.setContent(group);

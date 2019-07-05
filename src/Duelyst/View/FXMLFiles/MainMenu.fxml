@@ -4,6 +4,7 @@
 <?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -131,11 +132,6 @@
                   <Font name="System Italic" size="16.0" />
                </font>
             </Label>
-            <ImageView fx:id="chatRoomArrow_img" fitHeight="84.0" fitWidth="77.0" layoutX="-2.0" layoutY="309.0" onMouseClicked="#handleChatRoomArrowImageClicked" onMouseEntered="#handleChatRoomArrowImageMouseEntered" onMouseExited="#handleChatRoomArrowImageMouseExited" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../res/ui/open chat room.png" />
-               </image>
-            </ImageView>
             <Pane fx:id="chatRoom_pane" layoutX="-165.0" layoutY="159.0" prefHeight="495.0" prefWidth="364.0" style="-fx-background-color: WHITE;" stylesheets="@../../../css/battlePause.css" translateX="-200.0">
                <children>
                   <ImageView fx:id="backChatRoom" fitHeight="25.0" fitWidth="49.0" layoutX="334.0" layoutY="469.0" onMouseClicked="#handleBackImage" pickOnBounds="true" preserveRatio="true">
@@ -143,7 +139,7 @@
                         <Image url="@../../../res/ui/sliding_panel_paging_button_text.png" />
                      </image>
                   </ImageView>
-                  <JFXTextField fx:id="textMessage" prefHeight="38.0" prefWidth="316.0" />
+                  <JFXTextField fx:id="textMessage" onAction="#handleSendMessageImage" prefHeight="38.0" prefWidth="316.0" />
                   <ImageView fx:id="sendMessage" fitHeight="38.0" fitWidth="48.0" layoutX="315.0" onMouseClicked="#handleSendMessageImage" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../res/ui/sendMessage.png" />
@@ -153,6 +149,19 @@
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                     </content>
                   </ScrollPane>
+                  <ImageView fx:id="chatRoomArrow_img" fitHeight="577.0" fitWidth="174.0" layoutX="270.0" layoutY="-39.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../res/ui/chatRoom.png" />
+                     </image>
+                     <effect>
+                        <DropShadow spread="0.1" />
+                     </effect>
+                  </ImageView>
+                  <Label fx:id="globalChat_lbl" layoutX="305.0" layoutY="100.0" rotate="-90.0" text="Global Chat" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold Italic" size="15.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </children>
