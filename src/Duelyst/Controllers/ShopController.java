@@ -19,6 +19,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -45,6 +46,8 @@ public class ShopController {
     public Pane Auction_pane;
     public HBox AuctionPaneHBox_hbox;
     public ImageView addToAuctionButton_img;
+    public Label currentOwnerAuction_lbl;
+    public ImageView AuctionBidButton_img;
     @FXML
     ScrollPane buyScrollPane;
 
@@ -413,7 +416,7 @@ public class ShopController {
         SendMessage.getSendMessage().sendMessage(shopCommand);
         try {
             Thread.sleep(100);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -423,6 +426,17 @@ public class ShopController {
         tt.setFromY(0);
         tt.setToY(800);
         tt.play();
+    }
+    public void handleAuctionBidButton(){
+        //TODO Pishnehade Gheimate Jadid
+    }
+
+    public void auctionBidButtonGlow() {
+        AuctionBidButton_img.setImage(new Image("res/ui/button_primary_middle_glow@2x.png"));
+    }
+
+    public void auctionBidButtonGlowDisappear() {
+        AuctionBidButton_img.setImage(new Image("res/ui/button_primary_middle@2x.png"));
     }
 
     public void handleTabSelectionChanged() {
