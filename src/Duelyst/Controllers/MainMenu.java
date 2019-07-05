@@ -230,11 +230,7 @@ public class MainMenu {
         chatRoomArrow_img.setOnMouseClicked(null);
         chatRoomArrow_img.setOnMouseEntered(null);
         chatRoomArrow_img.setOnMouseExited(null);
-        tt.setOnFinished(event -> {
-            chatRoomArrow_img.setOnMouseClicked(event1 -> {
-                handleBackImage();
-            });
-        });
+        tt.setOnFinished(event -> chatRoomArrow_img.setOnMouseClicked(event1 -> handleBackImage()));
     }
 
     public void handleBackImage() {
@@ -245,10 +241,7 @@ public class MainMenu {
         tt.setOnFinished(event -> {handleChatRoomArrowImageMouseExited();
             chatRoomArrow_img.setOnMouseEntered(event22 -> handleChatRoomArrowImageMouseEntered());
             chatRoomArrow_img.setOnMouseExited(event2 -> handleChatRoomArrowImageMouseExited());
-            chatRoomArrow_img.setOnMouseClicked(event1 -> {
-                handleChatRoomArrowImageClicked();
-
-            });
+            chatRoomArrow_img.setOnMouseClicked(event1 -> handleChatRoomArrowImageClicked());
         });
     }
 
