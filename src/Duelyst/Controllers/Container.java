@@ -162,6 +162,13 @@ public class Container {
         Container.controllerClass = _controllerClass;
     }
 
+    public static Deque<Object> getControllers() {
+        return controllers;
+    }
+
+    public static Object getControllerClass() {
+        return controllerClass;
+    }
 
     public static TextFormatter<String> getOnlyNumberFormatter() {
         return new TextFormatter<>(filter);
