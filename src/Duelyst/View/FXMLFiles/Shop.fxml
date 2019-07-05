@@ -149,12 +149,12 @@
                   <Font name="System Bold Italic" size="20.0" />
                </font>
             </Label>
-            <ImageView fitHeight="124.0" fitWidth="238.0" layoutX="812.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="249.0" fitWidth="431.0" layoutX="619.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../res/ui/tooltip_right.png" />
                </image>
             </ImageView>
-            <Label layoutX="855.0" layoutY="155.0" text="Current Owner:">
+            <Label layoutX="639.0" layoutY="164.0" text="Current Owner:">
                <font>
                   <Font name="System Bold Italic" size="15.0" />
                </font>
@@ -167,9 +167,37 @@
                   </LinearGradient>
                </textFill>
             </Label>
-            <Label fx:id="currentOwnerAuction_lbl" alignment="CENTER" contentDisplay="CENTER" layoutX="910.0" layoutY="195.0" textFill="WHITE">
+            <Label fx:id="currentOwnerAuction_lbl" alignment="CENTER" contentDisplay="CENTER" layoutX="664.0" layoutY="193.0" prefHeight="30.0" prefWidth="267.0" textFill="WHITE">
                <font>
-                  <Font size="20.0" />
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="639.0" layoutY="236.0" text="Highest Bid:">
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="RED" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="auctionHighestBid_lbl" alignment="CENTER" contentDisplay="CENTER" layoutX="682.0" layoutY="264.0" prefHeight="21.0" prefWidth="79.0" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="896.0" layoutY="269.0" text="Time Left:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="auctionTimeLeft_lbl" layoutX="899.0" layoutY="294.0" prefHeight="21.0" prefWidth="64.0" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="16.0" />
                </font>
             </Label>
          </children>

@@ -1135,7 +1135,7 @@ public class MainMenu {
         tt.play();
         FadeTransition ft = new FadeTransition(Duration.millis(1000), onlinePlayers_pane);
         ft.setFromValue(0);
-        ft.setToValue(1);
+        ft.setToValue(0.8);
         tt.setOnFinished(event -> {
             anchorPane.setDisable(true);
             ft.play();
@@ -1144,7 +1144,7 @@ public class MainMenu {
 
     public void handleOnlinePlayerCloseButton() {
         FadeTransition ft = new FadeTransition(Duration.millis(700), onlinePlayers_pane);
-        ft.setFromValue(1);
+        ft.setFromValue(0.8);
         ft.setToValue(0);
         TranslateTransition tt = new TranslateTransition(Duration.millis(10), onlinePlayers_pane);
         tt.setFromX(0);
