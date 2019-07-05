@@ -113,20 +113,35 @@ public class ReadMessage extends Thread {
             case BUY:
                 handleBuyCard(shopCommand);
                 break;
-            case SELL:
-                break;
             case GET_AUCTION_CARDS:
                 setAuctionCards(shopCommand);
                 break;
             case FINISH_TIME:
                 setAuctionCardsAfterFinishCard(shopCommand);
                 break;
+            case ADD_CARD:
+                addAuctionCard(shopCommand);
+                break;
+            case REMOVE_CARD:
+                removeActionCard(shopCommand);
+                break;
         }
+    }
+
+    private void addAuctionCard(ShopCommand shopCommand) {
+        Account.getLoggedAccount().setDarick(Account.getLoggedAccount().getDarick() - shopCommand.getAuctionCard().getAuctionCost());
+        Account.getLoggedAccount().getCardCollection().getCards().add(shopCommand.getAuctionCard());
+    }
+
+    private void removeActionCard(ShopCommand shopCommand) {
+        Account.getLoggedAccount().setDarick(Account.getLoggedAccount().getDarick() + shopCommand.getAuctionCard().getAuctionCost());
+        Account.getLoggedAccount().getCardCollection().getCards().remove(shopCommand.getAuctionCard());
     }
 
     private void setAuctionCards(ShopCommand shopCommand) {
         Shop.getInstance().setAuctionCards(shopCommand.getAuctionCards());
     }
+
     private void setAuctionCardsAfterFinishCard(ShopCommand shopCommand) {
         Shop.getInstance().setAuctionCards(shopCommand.getAuctionCards());
         System.out.println("time of a card is end");

@@ -3,6 +3,7 @@ package Duelyst.Server;
 import Duelyst.Client.Client;
 import Duelyst.Client.SendMessage;
 import Duelyst.Model.Battle.Battle;
+import Duelyst.Model.Battle.KindOfFlag;
 import Duelyst.Model.Card;
 import Duelyst.Model.CommandClasses.CommandClass;
 import Duelyst.Model.CommandClasses.ShopCommand;
@@ -42,13 +43,34 @@ public class Time extends Thread {
         }
         if (card!=null) {
             ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.FINISH_TIME);
-//            shopCommand.setAuctionCard(card);
             shopCommand.setAuctionCards(ServerShop.getInstance().removeCardfromAuctions(card));
+
+            ServerShop.getInstance().getAuctionCards().remove(card);//ok
+
+            ShopCommand shopCommand1 =  new ShopCommand(ShopCommandsKind.REMOVE_CARD);
+            shopCommand1.setAuctionCard(card);
+
+            ShopCommand shopCommand2 = new ShopCommand(ShopCommandsKind.ADD_CARD);
+            shopCommand2.setAuctionCard(card);
+
             for (ClientHandler c :
                     ClientHandler.getClientHandlers()) {
                 c.getFormatter().format("%s\n", CommandClass.makeJson(shopCommand));
                 c.getFormatter().flush();
+                if (c.getUserName().equals(card.getAccount().getUsername())){
+                    c.getFormatter().format("%s\n",CommandClass.makeJson(shopCommand1));
+                    c.getFormatter().flush();
+                }
+                if (c.getUserName().equals(card.getAuctionClient())){
+                    c.getFormatter().format("%s\n",CommandClass.makeJson(shopCommand2));
+                    c.getFormatter().flush();
+
+                }
+
             }
+
+
+
         }
         //TODO for battle ...
     }

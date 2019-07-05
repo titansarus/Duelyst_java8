@@ -1,5 +1,6 @@
 package Duelyst.Controllers;
 
+import Duelyst.Client.Client;
 import Duelyst.Client.SendMessage;
 import Duelyst.Exceptions.CardOutOfStock;
 import Duelyst.Exceptions.MyException;
@@ -436,7 +437,13 @@ public class ShopController {
     }
 
     public void handleAuctionBidButton() {
-        //TODO Pishnehade Gheimate Jadid
+        Card card = Shop.getInstance().getAuctionSelectedCard();
+        if (card==null){
+            return;
+        }
+        ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.REQUEST_TO_ACTION_CARD);
+        shopCommand.setAuctionCard(card);
+        SendMessage.getSendMessage().sendMessage(shopCommand);
     }
 
     public void auctionBidButtonGlow() {

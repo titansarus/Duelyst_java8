@@ -4,6 +4,7 @@ import Duelyst.Client.SendMessage;
 import Duelyst.Controllers.Container;
 import Duelyst.Exceptions.*;
 import Duelyst.Model.Account;
+import Duelyst.Model.Card;
 import Duelyst.Model.CommandClasses.*;
 import Duelyst.Model.Shop;
 import com.gilecode.yagson.YaGson;
@@ -195,10 +196,18 @@ public class ClientHandler implements Runnable {
             case GET_AUCTION_CARDS:
                 getAuctionCards();
                 break;
+            case REQUEST_TO_ACTION_CARD:
+                handleAuctionRequest(shopCommand);
+                break;
 
         }
     }
 
+    private void handleAuctionRequest(ShopCommand shopCommand){
+        Card card = shopCommand.getAuctionCard();
+        card.setAuctionCost(card.getAuctionCost()*11/10);
+        card.setAuctionClient(this.getUserName());
+    }
     private void getAuctionCards() {
         ShopCommand command = new ShopCommand(ShopCommandsKind.GET_AUCTION_CARDS);
         command.setAuctionCards(ServerShop.getInstance().getAuctionCards());

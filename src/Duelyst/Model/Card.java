@@ -1,6 +1,8 @@
 package Duelyst.Model;
 
 
+import Duelyst.Client.Client;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,6 +14,7 @@ public class Card implements Cloneable {
     private int manaCost;
     private int darikCost;
     private int auctionCost;
+    private String auctionClient=null;
     private CardKind cardKind;
     private Account account;
     private String cardDescription;
@@ -285,6 +288,23 @@ public class Card implements Cloneable {
     public String getAddressOfDeathGif() {
         return addressOfDeathGif;
     }
+
+    public int getAuctionCost() {
+        return auctionCost;
+    }
+
+    public void setAuctionCost(int auctionCost) {
+        this.auctionCost = auctionCost;
+    }
+
+    public String getAuctionClient() {
+        return auctionClient;
+    }
+
+    public void setAuctionClient(String auctionClient) {
+        this.auctionClient = auctionClient;
+    }
+
 
     //TODO THIS MAY NEED TO BE CHANGED. THE LOGIC IS THE SAME BUT MAYBE WE NEED TO CLONE ANOTHER ABuff ArrayList.
 }
