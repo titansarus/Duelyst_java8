@@ -1,0 +1,10 @@
+#chatRoom_Scroll .viewport{
+    -fx-background-color: #273545;
+}
+
+#textMessage {
+    -fx-background-color: #273545;
+}
+#textMessage {
+    -fx-text-fill: white;
+}

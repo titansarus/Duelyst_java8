@@ -132,21 +132,12 @@
                   <Font name="System Italic" size="16.0" />
                </font>
             </Label>
-            <Pane fx:id="chatRoom_pane" layoutX="-165.0" layoutY="159.0" prefHeight="495.0" prefWidth="364.0" style="-fx-background-color: WHITE;" stylesheets="@../../../css/battlePause.css" translateX="-200.0">
+            <Pane fx:id="chatRoom_pane" layoutX="-165.0" layoutY="159.0" prefHeight="506.0" prefWidth="364.0" stylesheets="@../../../css/ChatRoom.css" translateX="-200.0" translateY="-80.0">
                <children>
-                  <ImageView fx:id="backChatRoom" fitHeight="25.0" fitWidth="49.0" layoutX="334.0" layoutY="469.0" onMouseClicked="#handleBackImage" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../res/ui/sliding_panel_paging_button_text.png" />
-                     </image>
-                  </ImageView>
-                  <JFXTextField fx:id="textMessage" onAction="#handleSendMessageImage" prefHeight="38.0" prefWidth="316.0" />
-                  <ImageView fx:id="sendMessage" fitHeight="38.0" fitWidth="48.0" layoutX="315.0" onMouseClicked="#handleSendMessageImage" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../res/ui/sendMessage.png" />
-                     </image></ImageView>
-                  <ScrollPane fx:id="chatRoom_Scroll" layoutY="33.0" prefHeight="430.0" prefWidth="364.0">
+                  <JFXTextField fx:id="textMessage" layoutY="-6.0" maxHeight="45.0" minHeight="40.0" onAction="#handleSendMessageImage" prefHeight="40.0" prefWidth="364.0" promptText="Enter Message Here" />
+                  <ScrollPane fx:id="chatRoom_Scroll" layoutY="36.0" prefHeight="472.0" prefWidth="364.0" style="-fx-background-color: transparent;" stylesheets="@../../../css/scroll-bar.css">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="401.0" prefWidth="324.0" style="-fx-background-color: transparent;" />
                     </content>
                   </ScrollPane>
                   <ImageView fx:id="chatRoomArrow_img" fitHeight="577.0" fitWidth="174.0" layoutX="270.0" layoutY="-39.0" pickOnBounds="true" preserveRatio="true">
