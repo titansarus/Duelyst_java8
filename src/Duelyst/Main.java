@@ -13,6 +13,7 @@ import Duelyst.Model.Spell.TargetCommunity;
 import Duelyst.Server.Server;
 import Duelyst.Server.ServerShop;
 import Duelyst.Utility.CreateCardFromDatabaseCard;
+import Duelyst.Utility.NetworkConfiguration;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import javafx.application.Application;
@@ -57,7 +58,12 @@ public class Main extends Application {
 
     public static void main(String[] args) throws IOException {
         System.out.println("a");
-      //  InputStream inputStream = new FileInputStream("ClientOrServer.txt");
+
+        NetworkConfiguration.loadFromIni();
+
+        System.out.println(NetworkConfiguration.getHost());
+        System.out.println(NetworkConfiguration.getPort());
+        //  InputStream inputStream = new FileInputStream("ClientOrServer.txt");
       //  byte[] bytes = new byte[100];
        // inputStream.read(bytes);
        // inputStream.close();

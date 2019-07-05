@@ -1,6 +1,8 @@
 package Duelyst.Client;
 
 
+import Duelyst.Utility.NetworkConfiguration;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Objects;
@@ -10,14 +12,12 @@ public class Client {
 
     private static Client currentClient;
     private static Scanner netIn;
-    private static int SERVER_PORT = 8000;
-    private static final String IP_ADDRESS = "127.0.0.1";
     private ReadMessage reader;
     private Socket socket;
 
     public Client() {
         try {
-            socket = new Socket(IP_ADDRESS, SERVER_PORT);
+            socket = new Socket(NetworkConfiguration.getHost(), NetworkConfiguration.getPort());
         } catch (IOException e) {
             e.printStackTrace();
         }
