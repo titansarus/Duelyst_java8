@@ -552,6 +552,7 @@ public class MainMenu {
             e.printStackTrace();
         }
         stopTimeline();
+        Container.addController(fxmlLoader);
         Container.runNextScene(root, CARD_CREATOR);
     }
 
@@ -584,6 +585,7 @@ public class MainMenu {
         bc.runTimelines();
         bc.insertPlayerHeroes();
         stopTimeline();
+        Container.addController(fxmlLoader);
         Container.runNextScene(root, BATTLE);
     }
 
@@ -609,6 +611,7 @@ public class MainMenu {
         ai.setBattleController(bc);
         bc.insertPlayerHeroes();
         stopTimeline();
+        Container.addController(fxmlLoader);
         Container.runNextScene(root, BATTLE);
 
     }
@@ -643,6 +646,7 @@ public class MainMenu {
             e.printStackTrace();
         }
         stopTimeline();
+        Container.addController(fxmlLoader);
         Container.runNextScene(root, SHOP);
 
     }
@@ -671,6 +675,7 @@ public class MainMenu {
             e.printStackTrace();
         }
         stopTimeline();
+        Container.addController(fxmlLoader);
         Container.runNextScene(root, COLLECTION);
 
     }

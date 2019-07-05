@@ -82,7 +82,7 @@ public class LoginController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Container.controllerClass = fxmlLoader.getController();
+        Container.addController(fxmlLoader);
         Container.runNextScene(root, MAIN_MENU);
     }
 

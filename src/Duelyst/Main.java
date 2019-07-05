@@ -24,6 +24,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class Main extends Application {
         try {
             fxmlLoader = new FXMLLoader(getClass().getResource("./View/FXMLFiles/Login.fxml"));
             root = fxmlLoader.load();
+            Container.addController(fxmlLoader);
         } catch (IOException e) {
             e.printStackTrace();
         }
