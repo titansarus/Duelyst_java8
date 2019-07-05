@@ -54,12 +54,15 @@ public class BattleRecord {
     private Item insertCardItem;
 
     //FOR INSERT FLAG
-    int insertFlagRow , insertFlagColumn;
-    Flag insertFlagItself;
+    private int insertFlagRow , insertFlagColumn;
+    private Flag insertFlagItself;
 
     //FOR INSERT ITEM
-    int insertItemRow, insertItemColumn;
-    Item insertItem;
+    private int insertItemRow, insertItemColumn;
+    private Item insertItem;
+
+    //FOR MANA CHANGE
+    private int player1Mana  , player2Mana , manaMax , numberOfTurn;
 
 
     public BattleRecord(BattleRecordEnum typeOfRecord) {
@@ -425,6 +428,38 @@ public class BattleRecord {
 
     public void setInsertCardItem(Item insertCardItem) {
         this.insertCardItem = insertCardItem;
+    }
+
+    public int getPlayer1Mana() {
+        return player1Mana;
+    }
+
+    public void setPlayer1Mana(int player1Mana) {
+        this.player1Mana = player1Mana;
+    }
+
+    public int getPlayer2Mana() {
+        return player2Mana;
+    }
+
+    public void setPlayer2Mana(int player2Mana) {
+        this.player2Mana = player2Mana;
+    }
+
+    public int getManaMax() {
+        return manaMax;
+    }
+
+    public void setManaMax(int manaMax) {
+        this.manaMax = manaMax;
+    }
+
+    public int getNumberOfTurn() {
+        return numberOfTurn;
+    }
+
+    public void setNumberOfTurn(int numberOfTurn) {
+        this.numberOfTurn = numberOfTurn;
     }
 }
 

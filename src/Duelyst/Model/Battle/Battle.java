@@ -187,6 +187,7 @@ public class Battle implements Cloneable {
         setPlayingPlayer();
         getPlayer1().setManaFromTurn(getTurn());
         getPlayer2().setManaFromTurn(getTurn());
+        makeBattleRecordOfMana();
         setSelectedCell(null);
         setSelectedCard(null);
         getPlayingPlayer().getNextHand();
@@ -436,6 +437,7 @@ public class Battle implements Cloneable {
                     getPlayingPlayer().getHand().remove(warrior);
 
                     getPlayingPlayer().changeMana(-warrior.getManaCost());
+                    makeBattleRecordOfMana();
                     playingPlayer.getInGameCards().add(selectedCard);
 
                     if (getPlayingPlayer().getDeck().getItem() instanceof AssassinationDagger) {//AssassinationDagger Item Apply
@@ -713,6 +715,23 @@ public class Battle implements Cloneable {
             }
         }
         return deathCards;
+    }
+
+    private void makeBattleRecordOfMana() {
+        BattleRecord battleRecord = new BattleRecord(BattleRecordEnum.MANA_CHANGE);
+
+        Integer mana1 = player1.getMana();
+        Integer mana2 = player2.getMana();
+
+        battleRecord.setPlayer1Mana(mana1);
+        battleRecord.setPlayer2Mana(mana2);
+        battleRecord.setManaMax(calculateMaxAmountOfMana());
+        battleRecord.setNumberOfTurn(getTurn());
+
+
+        getBattleRecords().add(battleRecord);
+
+
     }
 
 

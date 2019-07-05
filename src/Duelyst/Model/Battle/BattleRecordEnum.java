@@ -10,6 +10,7 @@ public enum BattleRecordEnum { //NOT USED IN PHASE 2
     END_GAME,
     INSERT,
     INSERT_FLAG ,
-    INSERT_ITEM;
+    INSERT_ITEM,
+    MANA_CHANGE;
 
 }

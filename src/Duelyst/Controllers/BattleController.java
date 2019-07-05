@@ -5,7 +5,6 @@ import Duelyst.Model.Account;
 import Duelyst.Model.Battle.*;
 import Duelyst.Model.Card;
 import Duelyst.Model.Items.*;
-import Duelyst.Model.Spell.Spell;
 import Duelyst.Model.Warrior;
 import Duelyst.Utility.ImageHolder;
 import Duelyst.View.ViewClasses.CardForBattle;
@@ -21,7 +20,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
@@ -30,7 +28,6 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 
 import static Duelyst.View.Constants.*;
 
@@ -214,6 +211,10 @@ public class BattleController {
                     insertItemFromRecordAnimation(battleRecord);
                 }
                 break;
+                case MANA_CHANGE: {
+                    updateManaFromBattleRecord(battleRecord);
+                    isAnimationRunning = false;
+                }
             }
         }
 
@@ -800,31 +801,70 @@ public class BattleController {
         return result;
     }
 
-    public void updateManaOfPlayer(HBox hbox, Player player) {
-        hbox.getChildren().clear();
+    public void updateManaFromBattleRecord(BattleRecord battleRecord) {
+        int turn = battleRecord.getNumberOfTurn();
+        if (turn % 2 == 1) {
+            updateActiveMana(p1Mana_hb, battleRecord.getManaMax(), battleRecord.getPlayer1Mana(), true);
+            updateActiveMana(p2Mana_hb, battleRecord.getManaMax(), battleRecord.getPlayer2Mana(), false);
+        } else {
+            updateActiveMana(p2Mana_hb, battleRecord.getManaMax(), battleRecord.getPlayer2Mana(), true);
+            updateActiveMana(p1Mana_hb, battleRecord.getManaMax(), battleRecord.getPlayer1Mana(), false);
+        }
+
+    }
+
+    public void updateActiveMana(HBox hBox, int maximumMana, int mana, boolean isPlayingUser) {
+        hBox.getChildren().clear();
         int countOfActiveMana = 0;
-        if (player.equals(battle.getPlayingPlayer())) {
-            for (int i = 0; i < getBattle().calculateMaxAmountOfMana(); i++) {
+        if (isPlayingUser) {
+            for (int i = 0; i < maximumMana; i++) {
                 ImageView imageView = null;
-                if (countOfActiveMana < player.getMana()) {
+                if (countOfActiveMana < mana) {
                     imageView = new ImageView(manaIconSml);
                     countOfActiveMana++;
                 } else {
                     imageView = new ImageView(manaInActiveSml);
                 }
-                hbox.getChildren().add(imageView);
+                hBox.getChildren().add(imageView);
             }
         } else {
             ImageView imageView = new ImageView(manaInActiveSml);
-            hbox.getChildren().add(imageView);
+            hBox.getChildren().add(imageView);
         }
         Label label = new Label();
-        String text = player.getMana() + "/" + battle.calculateMaxAmountOfMana();
+        String text = mana + " / " + maximumMana;
         label.setText(text);
         label.setFont(Font.font("System", FontWeight.BOLD, 20));
         label.setStyle("-fx-text-fill: RED");
-        hbox.getChildren().add(label);
+        hBox.getChildren().add(label);
     }
+
+//    public void updateManaOfPlayer(HBox hbox, Player player) {
+//        System.out.println(getBattle().getTurn() + " " + getBattle().getPlayingPlayer().getAccount().getUsername());
+//        hbox.getChildren().clear();
+//        int countOfActiveMana = 0;
+//        if (player.equals(battle.getPlayingPlayer())) {
+//            for (int i = 0; i < getBattle().calculateMaxAmountOfMana(); i++) {
+//                ImageView imageView = null;
+//                if (countOfActiveMana < player.getMana()) {
+//                    imageView = new ImageView(manaIconSml);
+//                    countOfActiveMana++;
+//                } else {
+//                    imageView = new ImageView(manaInActiveSml);
+//                }
+//                hbox.getChildren().add(imageView);
+//            }
+//        } else {
+//            ImageView imageView = new ImageView(manaInActiveSml);
+//            hbox.getChildren().add(imageView);
+//        }
+//        Label label = new Label();
+//        String text = player.getMana() + "/" + battle.calculateMaxAmountOfMana();
+//        label.setText(text);
+//        label.setFont(Font.font("System", FontWeight.BOLD, 20));
+//        label.setStyle("-fx-text-fill: RED");
+//        hbox.getChildren().add(label);
+//    }
 
 
     public void makeAccountNames() {
@@ -834,8 +874,8 @@ public class BattleController {
     }
 
     public void updateMana() {
-        updateManaOfPlayer(p1Mana_hb, battle.getPlayer1());
-        updateManaOfPlayer(p2Mana_hb, battle.getPlayer2());
+//        updateManaOfPlayer(p2Mana_hb, battle.getPlayer2());
+//        updateManaOfPlayer(p1Mana_hb, battle.getPlayer1());
 
     }
 
