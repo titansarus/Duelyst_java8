@@ -139,12 +139,12 @@
                   <HBox fx:id="AuctionPaneHBox_hbox" prefHeight="676.0" prefWidth="1021.0" style="-fx-background-color: transparent;" />
                </content>
             </ScrollPane>
-            <ImageView fx:id="AuctionBidButton_img" fitHeight="48.0" fitWidth="188.0" layoutX="300.0" layoutY="680.0" onMouseEntered="#auctionBidButtonGlow" onMouseExited="#auctionBidButtonGlowDisappear" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="AuctionBidButton_img" fitHeight="48.0" fitWidth="188.0" layoutX="300.0" layoutY="680.0" onMouseClicked="#handleAuctionBidButton" onMouseEntered="#auctionBidButtonGlow" onMouseExited="#auctionBidButtonGlowDisappear" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../res/ui/button_primary_middle@2x.png" />
                </image>
             </ImageView>
-            <Label layoutX="358.0" layoutY="689.0" onMouseEntered="#auctionBidButtonGlow" text="Bid!" textFill="WHITE">
+            <Label layoutX="358.0" layoutY="689.0" onMouseClicked="#handleAuctionBidButton" onMouseEntered="#auctionBidButtonGlow" text="Bid!" textFill="WHITE">
                <font>
                   <Font name="System Bold Italic" size="20.0" />
                </font>
