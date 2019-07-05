@@ -15,6 +15,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -44,6 +47,7 @@ public class MainMenu {
     public ImageView battleHistoryButtonGlow_img;
     public AnchorPane battleHistoryAnchorePane_apane;
     public Label globalChat_lbl;
+    public Pane leaderBoard_pane;
     private int singleOrMulti = 0; //1 == Single , 2 == Multi
     private int storyModeLevel = 0; //1 == 1 , 2 == 2 , 3 ==3;
     private int multiplayerModeGoal = 0; //1 == hero , 2 == capture_flags , 3== hold_flag
@@ -96,6 +100,13 @@ public class MainMenu {
     @FXML
     ImageView cheat_img;
 
+    @FXML
+    TableView<AccountInfo> leaderboard_tbv;
+
+
+    @FXML
+    ImageView title_iv;
+
     private boolean canPlayButtonSound = true;
     private boolean flag = true;
     private Timeline timeline = new Timeline();
@@ -105,6 +116,7 @@ public class MainMenu {
     public void initialize() {
         runTimeline();
     }
+
 
     private void runTimeline() {
         timeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
@@ -212,8 +224,8 @@ public class MainMenu {
 
     public void handleChatRoomArrowImageMouseExited() {
         TranslateTransition tt1 = new TranslateTransition(Duration.millis(500), chatRoomArrow_img);
-        tt1.setFromX(chatRoomArrow_img.getX()+ 30);
-        tt1.setToX(chatRoomArrow_img.getX() );
+        tt1.setFromX(chatRoomArrow_img.getX() + 30);
+        tt1.setToX(chatRoomArrow_img.getX());
         TranslateTransition tt2 = new TranslateTransition(Duration.millis(500), globalChat_lbl);
         tt2.setFromX(chatRoomArrow_img.getX() + 30);
         tt2.setToX(chatRoomArrow_img.getX());
@@ -238,7 +250,8 @@ public class MainMenu {
         tt.setFromX(166);
         tt.setToX(-200);
         tt.play();
-        tt.setOnFinished(event -> {handleChatRoomArrowImageMouseExited();
+        tt.setOnFinished(event -> {
+            handleChatRoomArrowImageMouseExited();
             chatRoomArrow_img.setOnMouseEntered(event22 -> handleChatRoomArrowImageMouseEntered());
             chatRoomArrow_img.setOnMouseExited(event2 -> handleChatRoomArrowImageMouseExited());
             chatRoomArrow_img.setOnMouseClicked(event1 -> handleChatRoomArrowImageClicked());
@@ -429,21 +442,74 @@ public class MainMenu {
         ;
     }
 
-    public void handleLeaderboardBtn() {
-        setCanPlayButtonSound(true);
-        runButtonClickSound();
-        Pane root = null;
-        FXMLLoader fxmlLoader = null;
+    public void handleLeaderBoardBtn() {
+        LeaderBoardCommand leaderBoardCommand = new LeaderBoardCommand();
+        SendMessage.getSendMessage().sendMessage(leaderBoardCommand);
         try {
-            fxmlLoader = new FXMLLoader(getClass().getResource("../View/FXMLFiles/Leaderboards.fxml"));
-            root = fxmlLoader.load();
-            int i = 0;
-            System.out.println(i);
-        } catch (IOException e) {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        stopTimeline();
-        Container.runNextScene(root, LEADERBOARD);
+
+        setCanPlayButtonSound(true);
+        runButtonClickSound();
+        initializeLeaderBoard();
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1000), leaderBoard_pane);
+        tt.setFromY(800);
+        tt.setToY(0);
+        tt.play();
+        tt.setOnFinished(event -> anchorPane.setDisable(true));
+    }
+
+    public void handleLeaderBoardBackButton() {
+        TranslateTransition tt = new TranslateTransition(Duration.millis(700), leaderBoard_pane);
+        tt.setFromY(0);
+        tt.setToY(800);
+        tt.play();
+        tt.setOnFinished(event -> anchorPane.setDisable(false));
+    }
+
+    public void initializeLeaderBoard() {
+        updateTable();
+        title_iv.setImage(leaderboardsImg);
+    }
+
+    private void updateTable() {
+        ArrayList<Account> accounts = Account.accountsSorter(Account.getAccounts());
+        ArrayList<AccountInfo> accountInfos = new ArrayList<>();
+        int count = 0;
+        for (int i = 0; i < accounts.size(); i++) {
+            if (accounts.get(i) != null) {
+                Account account = accounts.get(i);
+                accountInfos.add(new AccountInfo(++count, account.getUsername(), account.getCountOfWins()));
+            }
+        }
+
+        TableColumn<AccountInfo, String> column1 = new TableColumn<>("Rank");
+        column1.setCellValueFactory(new PropertyValueFactory<>("rank"));
+
+        TableColumn<AccountInfo, String> column2 = new TableColumn<>("Username");
+        column2.setCellValueFactory(new PropertyValueFactory<>("username"));
+
+        TableColumn<AccountInfo, Integer> column3 = new TableColumn<>("Wins");
+        column3.setCellValueFactory(new PropertyValueFactory<>("wins"));
+
+        column1.setPrefWidth(100);
+        column2.setPrefWidth(250);
+        column3.setPrefWidth(100);
+
+
+        TableView tableView = leaderboard_tbv;
+
+        tableView.getColumns().add(column1);
+        tableView.getColumns().add(column2);
+        tableView.getColumns().add(column3);
+
+
+        for (int i = 0; i < accountInfos.size(); i++) {
+            AccountInfo account = accountInfos.get(i);
+            tableView.getItems().add(account);
+        }
     }
 
 
