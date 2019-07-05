@@ -53,6 +53,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) throws IOException {
+        System.out.println("a");
         InputStream inputStream = new FileInputStream("ClientOrServer.txt");
         byte[] bytes = new byte[100];
         inputStream.read(bytes);
