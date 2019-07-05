@@ -196,8 +196,7 @@ public class Battle implements Cloneable {
         if (getPlayingPlayer().getAccount() instanceof Ai) {
             System.out.println("AI");
             ((Ai) getPlayingPlayer().getAccount()).playGame();
-
-            ((Ai) getPlayingPlayer().getAccount()).getBattleController().handleEndTurnBtn();
+            nextTurn();
         }
         makeBattleRecordOfEndTurn();
     }
