@@ -133,6 +133,11 @@
                   <Font name="System Italic" size="16.0" />
                </font>
             </Label>
+            <ImageView fx:id="onlinePlayers_img" fitHeight="71.0" fitWidth="62.0" layoutX="14.0" layoutY="586.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/friends.png" />
+               </image>
+            </ImageView>
             <Pane fx:id="chatRoom_pane" layoutX="-165.0" layoutY="159.0" prefHeight="506.0" prefWidth="364.0" stylesheets="@../../../css/ChatRoom.css" translateX="-200.0" translateY="-80.0">
                <children>
                   <JFXTextField fx:id="textMessage" layoutY="-6.0" maxHeight="45.0" minHeight="40.0" onAction="#handleSendMessageImage" prefHeight="40.0" prefWidth="364.0" promptText="Enter Message Here" />

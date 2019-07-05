@@ -443,13 +443,13 @@ public class MainMenu {
     }
 
     public void handleLeaderBoardBtn() {
-        LeaderBoardCommand leaderBoardCommand = new LeaderBoardCommand();
-        SendMessage.getSendMessage().sendMessage(leaderBoardCommand);
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        LeaderBoardCommand leaderBoardCommand = new LeaderBoardCommand();
+//        SendMessage.getSendMessage().sendMessage(leaderBoardCommand);
+//        try {
+//            Thread.sleep(200);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         setCanPlayButtonSound(true);
         runButtonClickSound();
