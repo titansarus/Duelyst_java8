@@ -236,4 +236,8 @@ public class ClientHandler implements Runnable {
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
     }
+
+    public static ArrayList<ClientHandler> getClientHandlers() {
+        return clientHandlers;
+    }
 }

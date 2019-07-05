@@ -101,11 +101,18 @@ public class ReadMessage extends Thread {
             case GET_AUCTION_CARDS:
                 setAuctionCards(shopCommand);
                 break;
+            case FINISH_TIME:
+                setAuctionCardsAfterFinishCard(shopCommand);
+                break;
         }
     }
 
     private void setAuctionCards(ShopCommand shopCommand) {
         Shop.getInstance().setAuctionCards(shopCommand.getAuctionCards());
+    }
+    private void setAuctionCardsAfterFinishCard(ShopCommand shopCommand) {
+        Shop.getInstance().setAuctionCards(shopCommand.getAuctionCards());
+        //TODO set cards in auction page
     }
 
     private void handleGetCards(ShopCommand shopCommand) {

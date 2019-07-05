@@ -1,50 +1,57 @@
 package Duelyst.Server;
 
+import Duelyst.Client.Client;
+import Duelyst.Client.SendMessage;
 import Duelyst.Model.Battle.Battle;
 import Duelyst.Model.Card;
+import Duelyst.Model.CommandClasses.CommandClass;
+import Duelyst.Model.CommandClasses.ShopCommand;
+import Duelyst.Model.CommandClasses.ShopCommandsKind;
 
 import java.time.Instant;
 
-public class Time {
+public class Time extends Thread {
     private Card card;
-    private Battle battle;
-    private final int TIME_OF_TURN = 120 ;
+    private Client[] clients = new Client[2];
+    private final int TIME_OF_TURN = 120;
+    private int time;
 
-    public void timer(int sec) throws InterruptedException {
-        sendMessageOfterPassingTime(sec);
+    public Time(Card card, int timeAccordingToSec) {
+        this.card = card;
+        this.time = timeAccordingToSec;
     }
 
-    public void timer(int min, int sec) throws InterruptedException {
-        int time = min * 60 + sec;
-        sendMessageOfterPassingTime(time);
+    public Time(Client client1, Client client2) {
+        clients[0] = client1;
+        clients[1] = client2;
     }
 
-    private void sendMessageOfterPassingTime(int time) throws InterruptedException {
+    @Override
+    public void run() {
         Instant start = Instant.now();
         while (true) {
-            Thread.sleep(1000);
+            try {
+                Thread.sleep(1000);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
             Instant end = Instant.now();
             if (end.getEpochSecond() - start.getEpochSecond() > time) {
                 break;
             }
         }
-        //TODO send message for all clients to remove this card and sell card to best offer
-    }
-
-    public void endTurn() throws InterruptedException {
-        Instant start = Instant.now();
-        while (true) {
-            Thread.sleep(1000);
-            Instant end = Instant.now();
-            if (end.getEpochSecond() - start.getEpochSecond() > TIME_OF_TURN-20){
-                //TODO SEND a ٌ Warning to current client
-            }
-            if (end.getEpochSecond() - start.getEpochSecond() > TIME_OF_TURN) {
-                break;
+        if (card!=null) {
+            ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.FINISH_TIME);
+            shopCommand.setAuctionCards(ServerShop.getInstance().removeCardfromAuctions(card));
+            for (ClientHandler c :
+                    ClientHandler.getClientHandlers()) {
+                c.getFormatter().format("%s\n", CommandClass.makeJson(shopCommand));
+                c.getFormatter().flush();
             }
         }
-        //TODO end turn in this battle
+        //TODO for battle ...
     }
+
 
 
     public Card getCard() {
@@ -53,13 +60,5 @@ public class Time {
 
     public void setCard(Card card) {
         this.card = card;
-    }
-
-    public Battle getBattle() {
-        return battle;
-    }
-
-    public void setBattle(Battle battle) {
-        this.battle = battle;
     }
 }
