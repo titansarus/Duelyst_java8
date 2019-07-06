@@ -994,7 +994,7 @@ public class BattleController {
             if (Container.scenes.size() > 0) {
                 isAnimationRunning = false;
                 stopTimeline();
-                makeJsonOfBattleRecord(getBattle().getBattleRecords());
+                getBattle().makeJsonOfBattleRecord();
                 Container.handleBack();
             }
         });
@@ -1009,25 +1009,6 @@ public class BattleController {
 
         ft.play();
         ft2.play();
-    }
-
-    public void makeJsonOfBattleRecord(ArrayList<BattleRecord> battleRecords) {
-        YaGson yaGson = new YaGson();
-        for (int i = 0; i < battleRecords.size(); i++) {
-            System.out.println(battleRecords.get(i).getTypeOfRecord());
-        }
-
-
-        try {
-            OutputStream o = new FileOutputStream("myGson.json");
-            Formatter formatter = new Formatter(o);
-
-            String s = yaGson.toJson(battleRecords);
-            formatter.format(s);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
     }
 
 
@@ -1076,7 +1057,7 @@ public class BattleController {
     public void handleQuitImg() {
         if (Container.scenes.size() > 0) {
             stopTimeline();
-            makeJsonOfBattleRecord(getBattle().getBattleRecords());
+            getBattle().makeJsonOfBattleRecord();
             Container.handleBack();
         }
     }

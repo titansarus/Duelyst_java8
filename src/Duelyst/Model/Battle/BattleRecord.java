@@ -2,8 +2,14 @@ package Duelyst.Model.Battle;
 
 import Duelyst.Model.*;
 import Duelyst.Model.Items.Item;
+import com.gilecode.yagson.YaGson;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Formatter;
 
 public class BattleRecord {
     private static ArrayList<ArrayList<BattleRecord>> battleRecords = new ArrayList<>();
@@ -12,7 +18,7 @@ public class BattleRecord {
 
     //FOR INITIALIZE
     private String firstPlayerUsername, secondPlayerUsername;
-    private Account firstPlayerAccount , secondPlayerAccount;
+    private Account firstPlayerAccount, secondPlayerAccount;
     private GameGoal gameGoal;
     private GameMode gameMode;
     private Deck firstPlayerDeck;
@@ -56,7 +62,7 @@ public class BattleRecord {
     private Item insertCardItem;
 
     //FOR INSERT FLAG
-    private int insertFlagRow , insertFlagColumn;
+    private int insertFlagRow, insertFlagColumn;
     private Flag insertFlagItself;
 
     //FOR INSERT ITEM
@@ -64,13 +70,36 @@ public class BattleRecord {
     private Item insertItem;
 
     //FOR MANA CHANGE
-    private int player1Mana  , player2Mana , manaMax , numberOfTurn;
+    private int player1Mana, player2Mana, manaMax, numberOfTurn;
 
 
     public BattleRecord(BattleRecordEnum typeOfRecord) {
         this.typeOfRecord = typeOfRecord;
     }
 
+    public static void makeJsonOfBattleRecord(ArrayList<BattleRecord> battleRecords) {
+        Iteration:
+        for (int i = 0; i < 1000; i++) {
+            String address = "saved/BattleRecords/" + i + ".json";
+            boolean fileExist = new File(address).isFile();
+            if (fileExist) {
+                continue;
+            } else {
+                try {
+                    YaGson yaGson = new YaGson();
+                    OutputStream o = new FileOutputStream(address);
+                    Formatter formatter = new Formatter(o);
+
+                    String s = yaGson.toJson(battleRecords);
+                    formatter.format(s);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } finally {
+                    break Iteration;
+                }
+            }
+        }
+    }
 
     public static ArrayList<ArrayList<BattleRecord>> getBattleRecords() {
         return battleRecords;

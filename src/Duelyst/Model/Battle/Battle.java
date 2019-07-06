@@ -56,6 +56,11 @@ public class Battle implements Cloneable {
         return cloner.deepClone(battle);
     }
 
+    public void makeJsonOfBattleRecord()
+    {
+        BattleRecord.makeJsonOfBattleRecord(battleRecords);
+    }
+
     public static ArrayList<Battle> getUnfinishedBattles() {
         return unfinishedBattles;
     }
