@@ -109,7 +109,7 @@ public class Time extends Thread {
         for (Time t :
                 times) {
             if (t.getCard().getCardId().equals(card.getCardId())) {
-                return t.getSec();
+                return t.time - t.getSec();
             }
         }
         return -1;

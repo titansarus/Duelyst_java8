@@ -128,7 +128,19 @@ public class ReadMessage extends Thread {
             case REMOVE_CARD:
                 removeActionCard(shopCommand);
                 break;
+            case GET_AUCTION_CARD_TIME:
+                handleGetAuctionCardTimeLeft(shopCommand);
         }
+    }
+
+    private void handleGetAuctionCardTimeLeft(ShopCommand shopCommand) {
+        Platform.runLater(() -> {
+            if (Container.getControllerClass() instanceof ShopController) {
+                ShopController shopController = (ShopController) Container.getControllerClass();
+                shopController.auctionTimeLeft_lbl.setText(shopCommand.getAuctionCardTime() + " S");
+            }
+        });
+
     }
 
     private void addAuctionCard(ShopCommand shopCommand) {

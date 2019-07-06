@@ -202,9 +202,15 @@ public class ClientHandler implements Runnable {
                 handleAuctionRequest(shopCommand);
                 break;
             case GET_AUCTION_CARD_TIME:
-
+                handleAuctionCardTime(shopCommand);
                 break;
         }
+    }
+
+    private void handleAuctionCardTime(ShopCommand shopCommand) {
+        shopCommand.setAuctionCardTime(Time.getExtantTimeOfCard(shopCommand.getAuctionCard()));
+        formatter.format("%s\n", CommandClass.makeJson(shopCommand));
+        formatter.flush();
     }
 
     private void handleAuctionRequest(ShopCommand shopCommand) {

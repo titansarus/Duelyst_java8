@@ -200,6 +200,11 @@
                   <Font name="System Bold Italic" size="16.0" />
                </font>
             </Label>
+            <JFXButton fx:id="auctionRefresh_btn" layoutX="814.0" layoutY="26.0" onAction="#updateAuctionCardInformation" text="Refresh" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </JFXButton>
          </children>
       </Pane>
       <Pane fx:id="addToAuctionNotification_pane" maxHeight="59.0" maxWidth="224.0" minHeight="54.0" minWidth="180.0" prefHeight="59.0" prefWidth="224.0" style="-fx-background-image: url('/res/ui/notification_quest_small.png'); -fx-background-size: cover;" stylesheets="@../../../css/saveGameNotification.css" translateX="630.0" translateY="-250.0">

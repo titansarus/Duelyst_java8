@@ -1,6 +1,5 @@
 package Duelyst.Controllers;
 
-import Duelyst.Client.Client;
 import Duelyst.Client.SendMessage;
 import Duelyst.Exceptions.CardOutOfStock;
 import Duelyst.Exceptions.MyException;
@@ -151,10 +150,10 @@ public class ShopController {
         }
     }
 
-    public void upateAcutionCardInformation() {
+    public void updateAuctionCardInformation() {
         SendMessage.getSendMessage().sendMessage(new ShopCommand(ShopCommandsKind.GET_AUCTION_CARDS));
         try {
-            Thread.sleep(200);
+            Thread.sleep(50);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -162,14 +161,14 @@ public class ShopController {
         shopCommand.setAuctionCard(Shop.getInstance().getAuctionSelectedCard());
         SendMessage.getSendMessage().sendMessage(shopCommand);
         try {
-            Thread.sleep(200);
+            Thread.sleep(50);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         if (Shop.getInstance().getAuctionSelectedCard() != null) {
             currentOwnerAuction_lbl.setText(Shop.getInstance().getAuctionSelectedCard().getAuctionClient());
             auctionHighestBid_lbl.setText(Shop.getInstance().getAuctionSelectedCard().getAuctionCost() + "");
-//            auctionTimeLeft_lbl.setText();//TODO Kamel She
         }
     }
 
