@@ -143,6 +143,7 @@ public class MultiPlayerController {
 
 
     private void searchingPaneAnimation() {
+        anchorPane.setDisable(true);
         FadeTransition ft1 = new FadeTransition(Duration.millis(500), topPlate_img);
         ft1.setFromValue(0);
         ft1.setToValue(1);
@@ -166,7 +167,6 @@ public class MultiPlayerController {
         FadeTransition ft4 = new FadeTransition(Duration.millis(500), searching_pane);
         ft4.setFromValue(0);
         ft4.setToValue(1);
-        ft4.setOnFinished(event -> anchorPane.setDisable(true));
         tt1.setOnFinished(event -> ft4.play());
 
         ft1.setOnFinished(event -> centerCircleAnimation(event1 -> {

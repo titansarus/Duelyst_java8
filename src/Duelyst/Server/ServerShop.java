@@ -2,6 +2,7 @@ package Duelyst.Server;
 
 
 import Duelyst.Model.*;
+import Duelyst.Model.CommandClasses.CustomCardCommand;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 
@@ -14,6 +15,7 @@ public class ServerShop {
     private ArrayList<Card> cards = new ArrayList<>();
     private ArrayList<String> numberOfCards = new ArrayList<>();
     private ArrayList<Card> auctionCards = new ArrayList<>();
+    private ArrayList<CustomCardCommand> customCards = new ArrayList<>();
     private static ServerShop instance;
     private ArrayList<Card> finishedCard;
 
@@ -117,11 +119,11 @@ public class ServerShop {
 
         saveTheUpdateOfNumberOfCards();
     }
-    public ArrayList<Card> removeCardFromAuctions(Card card){
+
+    public ArrayList<Card> removeCardFromAuctions(Card card) {
         auctionCards.remove(card);
         return auctionCards;
     }
-
 
 
     public ArrayList<Card> getAuctionCards() {
@@ -149,4 +151,7 @@ public class ServerShop {
     }
 
 
+    public ArrayList<CustomCardCommand> getCustomCards() {
+        return customCards;
+    }
 }

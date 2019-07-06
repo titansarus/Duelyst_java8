@@ -190,7 +190,7 @@ public class ShopController {
 
         if (buy_tab.isSelected()) {
             buyScrollPane.setHvalue(buyScrollPane.getHvalue() + 0.02);//TODO andazeye GhadamHa bayad daghighTar Tanzim Shan
-        } else {
+        } else if(sell_tab.isSelected()) {
             sellScrollPane.setHvalue(sellScrollPane.getHvalue() + 0.02);
         }
     }
