@@ -86,7 +86,7 @@ public class Battle implements Cloneable {
         this.gameMode = gameMode;
         setBattleController(battleController);
         battleController.setBattle(this);
-        battleController.makeGrids();
+//        battleController.makeGrids();
         runningBattle = this;
 
 
@@ -128,6 +128,8 @@ public class Battle implements Cloneable {
         BattleRecord battleRecord = new BattleRecord(BattleRecordEnum.INITIALIZE);
         battleRecord.setFirstPlayerUsername(account1.getUsername());
         battleRecord.setSecondPlayerUsername(account2.getUsername());
+        battleRecord.setFirstPlayerAccount(account1);
+        battleRecord.setSecondPlayerAccount(account2);
 
         getBattleRecords().add(battleRecord);
     }
@@ -156,6 +158,23 @@ public class Battle implements Cloneable {
     private void insertPlayerHeroesInMap() {
         getGrid()[2][0].setWarrior(player1.getDeck().getHero());
         getGrid()[2][8].setWarrior(player2.getDeck().getHero());
+    }
+
+    public void insertPlayerHeroes() {
+       setPlayingPlayer(getPlayer1());
+        getPlayingPlayer().setHero(getPlayer1().getDeck().getHero());
+        insertHero(getPlayer1().getDeck().getHero(), getGrid()[2][0]);
+        getPlayer1().getInGameCards().add(getPlayer1().getDeck().getHero());
+
+
+        setPlayingPlayer(getPlayer2());
+        getPlayingPlayer().setHero(getPlayer2().getDeck().getHero());
+        insertHero(getPlayer2().getDeck().getHero(), getGrid()[2][8]);
+
+        getPlayer2().getInGameCards().add(getPlayer2().getDeck().getHero());
+
+
+        setPlayingPlayer(getPlayer1());
     }
 
     public void nextTurn() {

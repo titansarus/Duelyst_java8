@@ -182,7 +182,7 @@ public class BattleController {
                 }
                 break;
                 case INITIALIZE: {
-                    System.out.println("initialize");
+                    initializeFromBattleRecord(battleRecord);
                     isAnimationRunning = false;
                 }
                 break;
@@ -218,6 +218,11 @@ public class BattleController {
             }
         }
 
+    }
+
+    private void initializeFromBattleRecord(BattleRecord battleRecord) {
+        this.makeGrids();
+        makeAccountNames(battleRecord);
     }
 
     private void insertItemFromRecordAnimation(BattleRecord battleRecord) {
@@ -871,6 +876,12 @@ public class BattleController {
     public void makeAccountNames() {
         p1Acc_lbl.setText(this.getBattle().getPlayer1().getAccount().getUsername());
         p2Acc_lbl.setText(this.getBattle().getPlayer2().getAccount().getUsername());
+
+    }
+
+    public void makeAccountNames(BattleRecord battleRecord) {
+        p1Acc_lbl.setText(battleRecord.getFirstPlayerUsername());
+        p2Acc_lbl.setText(battleRecord.getSecondPlayerUsername());
 
     }
 

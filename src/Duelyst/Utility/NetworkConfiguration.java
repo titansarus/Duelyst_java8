@@ -6,8 +6,8 @@ import java.io.File;
 import java.io.FileReader;
 
 public class NetworkConfiguration {
-    public static int port = 8000;
-    public static String host = "localhost";
+    private static int port = 8000;
+    private static String host = "localhost";
 
 
     public static void loadFromIni()
@@ -34,7 +34,7 @@ public class NetworkConfiguration {
         return port;
     }
 
-    public static void setPort(String port) {
+    private static void setPort(String port) {
             NetworkConfiguration.port = Integer.parseInt(port);
 
     }
@@ -43,13 +43,9 @@ public class NetworkConfiguration {
         return host;
     }
 
-    public static void setHost(String host) {
+    private static void setHost(String host) {
         if (host.matches("^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|localhost$")) {
             NetworkConfiguration.host = host;
-        }
-        else
-        {
-
         }
     }
 }

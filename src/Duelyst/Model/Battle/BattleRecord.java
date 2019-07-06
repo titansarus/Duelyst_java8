@@ -12,6 +12,7 @@ public class BattleRecord {
 
     //FOR INITIALIZE
     private String firstPlayerUsername, secondPlayerUsername;
+    private Account firstPlayerAccount , secondPlayerAccount;
     private GameGoal gameGoal;
     private GameMode gameMode;
     private Deck firstPlayerDeck;
@@ -460,6 +461,22 @@ public class BattleRecord {
 
     public void setNumberOfTurn(int numberOfTurn) {
         this.numberOfTurn = numberOfTurn;
+    }
+
+    public Account getFirstPlayerAccount() {
+        return firstPlayerAccount;
+    }
+
+    public void setFirstPlayerAccount(Account firstPlayerAccount) {
+        this.firstPlayerAccount = firstPlayerAccount;
+    }
+
+    public Account getSecondPlayerAccount() {
+        return secondPlayerAccount;
+    }
+
+    public void setSecondPlayerAccount(Account secondPlayerAccount) {
+        this.secondPlayerAccount = secondPlayerAccount;
     }
 }
 

@@ -513,9 +513,10 @@ public class MainMenu {
 
         Battle battle = new Battle(Account.getLoggedAccount(), account, gameMode, gameGoal, bc);
         bc.setHandHbox();
-        bc.makeAccountNames();
+       // bc.makeAccountNames();
+
         bc.runTimelines();
-        bc.insertPlayerHeroes();
+        battle.insertPlayerHeroes();
         stopTimeline();
         Container.addController(fxmlLoader);
         Container.runNextScene(root, BATTLE);
@@ -538,10 +539,11 @@ public class MainMenu {
 
         Battle battle = new Battle(Account.getLoggedAccount(), ai, gameMode, gameGoal, bc);
         bc.setHandHbox();
-        bc.makeAccountNames();
+//        bc.makeAccountNames();
         bc.runTimelines();
         ai.setBattleController(bc);
-        bc.insertPlayerHeroes();
+        battle.insertPlayerHeroes();
+      //  bc.insertPlayerHeroes();
         stopTimeline();
         Container.addController(fxmlLoader);
         Container.runNextScene(root, BATTLE);
