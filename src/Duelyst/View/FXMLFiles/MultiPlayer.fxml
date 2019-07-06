@@ -1,16 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.MultiPlayerController">
+<StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.MultiPlayerController">
    <children>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
+      <AnchorPane fx:id="anchorPane" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-image: url('/res/Backgrounds/multiPlayerBackground.jpg'); -fx-background-size: cover;">
+         <children>
+            <ImageView fitHeight="101.0" fitWidth="93.0" onMouseClicked="#handleBackButton" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_back_corner@2x.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="KillHero_img" fitHeight="97.0" fitWidth="130.0" layoutX="668.0" layoutY="674.0" onMouseClicked="#handleKillHeroButton" onMouseEntered="#killHeroButtonGlow" onMouseExited="#killHeroButtonGlowDisappear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_icon_left.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="CollectFlag_img" fitHeight="90.0" fitWidth="130.0" layoutX="781.0" layoutY="674.0" onMouseClicked="#handleCollectFlagButton" onMouseEntered="#collectFlagButtonGlow" onMouseExited="#collectFlagButtonGlowDisappear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_icon_middle.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="HoldFlag_img" fitHeight="90.0" fitWidth="130.0" layoutX="894.0" layoutY="674.0" onMouseClicked="#handleHoldFlagButton" onMouseEntered="#holdFlagButtonGlow" onMouseExited="#holdFlagButtonGlowDisappear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_icon_right.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="702.0" layoutY="709.0" onMouseClicked="#handleKillHeroButton" onMouseEntered="#killHeroButtonGlow" text="Kill Hero" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="805.0" layoutY="709.0" onMouseClicked="#handleCollectFlagButton" onMouseEntered="#collectFlagButtonGlow" text="Collect Flag" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="925.0" layoutY="709.0" onMouseClicked="#handleHoldFlagButton" onMouseEntered="#holdFlagButtonGlow" text="Hold Flag" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Pane fx:id="searching_pane" maxHeight="350.0" maxWidth="250.0" minHeight="350.0" minWidth="250.0" opacity="0.0" prefHeight="350.0" prefWidth="250.0" style="-fx-background-color: rgba(39, 53, 69,0.65);">
+         <children>
+            <ImageView fx:id="cancelBattle_img" fitHeight="47.0" fitWidth="123.0" layoutX="64.0" layoutY="277.0" onMouseClicked="#handleCancelBattleButton" onMouseEntered="#battleCancelButtonGlow" onMouseExited="#battleCancelButtonGlowDisappear" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_cancel@2x.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="94.0" layoutY="283.0" onMouseClicked="#handleCancelBattleButton" onMouseEntered="#battleCancelButtonGlow" text="Cancel">
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="WHITE" />
+                        <Stop color="#5388dd" offset="0.8442028985507246" />
+                        <Stop color="#5388dd" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="64.0" layoutY="71.0" prefHeight="41.0" prefWidth="123.0" text="Searching..." textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <ImageView fx:id="topPlate_img" fitHeight="90.0" fitWidth="297.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" translateY="-15.0">
          <image>
-            <Image url="@../../../res/ui/online_Clients.jpg" />
+            <Image url="@../../../res/ui/panel_trim_plate_reverse@2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="bottomPlate_img" fitHeight="62.0" fitWidth="304.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" translateY="15.0">
+         <image>
+            <Image url="@../../../res/ui/panel_trim_plate@2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="centerCircle_img" fitHeight="62.0" fitWidth="63.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../res/ui/plate.png" />
          </image>
       </ImageView>
    </children>
-</AnchorPane>
+</StackPane>

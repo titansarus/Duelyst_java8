@@ -213,21 +213,21 @@ public class MainMenu {
 
     public void handleChatRoomArrowImageMouseEntered() {
         TranslateTransition tt1 = new TranslateTransition(Duration.millis(500), chatRoomArrow_img);
-        tt1.setFromX(chatRoomArrow_img.getX());
-        tt1.setToX(chatRoomArrow_img.getX() + 30);
+        tt1.setFromX(chatRoomArrow_img.getTranslateX());
+        tt1.setToX(chatRoomArrow_img.getTranslateX() + 30);
         TranslateTransition tt2 = new TranslateTransition(Duration.millis(500), globalChat_lbl);
-        tt2.setFromX(chatRoomArrow_img.getX());
-        tt2.setToX(chatRoomArrow_img.getX() + 30);
+        tt2.setFromX(chatRoomArrow_img.getTranslateX());
+        tt2.setToX(chatRoomArrow_img.getTranslateX() + 30);
         tt1.play();
         tt2.play();
     }
 
     public void handleChatRoomArrowImageMouseExited() {
         TranslateTransition tt1 = new TranslateTransition(Duration.millis(500), chatRoomArrow_img);
-        tt1.setFromX(chatRoomArrow_img.getX() + 30);
+        tt1.setFromX(chatRoomArrow_img.getTranslateX());
         tt1.setToX(chatRoomArrow_img.getX());
         TranslateTransition tt2 = new TranslateTransition(Duration.millis(500), globalChat_lbl);
-        tt2.setFromX(chatRoomArrow_img.getX() + 30);
+        tt2.setFromX(chatRoomArrow_img.getTranslateX());
         tt2.setToX(chatRoomArrow_img.getX());
         tt1.play();
         tt2.play();
