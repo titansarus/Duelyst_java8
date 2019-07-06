@@ -3,13 +3,12 @@ package Duelyst.Model.Battle;
 import Duelyst.Model.*;
 import Duelyst.Model.Items.Item;
 import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Formatter;
+import java.util.Scanner;
 
 public class BattleRecord {
     private static ArrayList<ArrayList<BattleRecord>> battleRecords = new ArrayList<>();
@@ -86,12 +85,13 @@ public class BattleRecord {
                 continue;
             } else {
                 try {
-                    YaGson yaGson = new YaGson();
+                    YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
                     OutputStream o = new FileOutputStream(address);
-                    Formatter formatter = new Formatter(o);
+                    PrintWriter printWriter = new PrintWriter(o);
 
                     String s = yaGson.toJson(battleRecords);
-                    formatter.format(s);
+                    printWriter.write(s);
+                    printWriter.close();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } finally {
@@ -99,6 +99,34 @@ public class BattleRecord {
                 }
             }
         }
+    }
+
+    public static ArrayList<ArrayList<BattleRecord>> loadAllBattleRecords() {
+        ArrayList<ArrayList<BattleRecord>> battleRecords = new ArrayList<>();
+        for (int i = 0; i < 1000; i++) {
+            String address = "saved/BattleRecords/" + i + ".json";
+            boolean fileExist = new File(address).isFile();
+            if (fileExist) {
+                try {
+                    YaGson yaGson = new YaGson();
+                    InputStream in = new FileInputStream(address);
+                    Scanner scanner = new Scanner(in);
+
+                    String s = scanner.useDelimiter("\\Z").next();
+
+                    System.out.println(i);
+                    ArrayList<BattleRecord> battleRecordArrayList = yaGson.fromJson(s, ArrayList.class);
+                    System.out.println(i + "loaded");
+                    battleRecords.add(battleRecordArrayList);
+                    System.out.println(s);
+                    scanner.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+        return battleRecords;
     }
 
     public static ArrayList<ArrayList<BattleRecord>> getBattleRecords() {

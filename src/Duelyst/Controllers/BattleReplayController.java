@@ -369,9 +369,7 @@ public class BattleReplayController {
 
     private void runSlowTimeline() {
         slowTimeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
-            hand.get(0).getView();
             updateMana();
-            emptyCardsOfHand();
         }), new KeyFrame(Duration.seconds(1)));
         slowTimeline.setCycleCount(Animation.INDEFINITE);
         slowTimeline.play();
@@ -385,14 +383,6 @@ public class BattleReplayController {
         fastTimeLine.play();
     }
 
-    private void emptyCardsOfHand() {
-        for (int i = 0; i < getHand().size(); i++) {
-            if (getHand().get(i) != null && getHand().get(i).getCard() == null) {
-                getHand().get(i).getCardController().setImageOfCard(null);
-                getHand().get(i).getCardController().setImageOfCardSelection(battleCardNotSelectedImage);
-            }
-        }
-    }
 
     public void makeGrids() {
         double upLeftX, upLeftY, upRightX, upRightY, downLeftX, downLeftY, downRightX, downRightY;

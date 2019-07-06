@@ -5,6 +5,7 @@ import Duelyst.Exceptions.NotValidDeckException;
 import Duelyst.Model.*;
 import Duelyst.Model.Battle.Battle;
 import Duelyst.Model.Battle.BattleRecord;
+import Duelyst.Model.Battle.BattleRecordEnum;
 import Duelyst.Model.CommandClasses.*;
 import Duelyst.Utility.ImageHolder;
 import com.jfoenix.controls.*;
@@ -62,6 +63,7 @@ public class MainMenu {
     public JFXTextField textMessage;
     public ScrollPane chatRoom_Scroll;
 
+    private ArrayList<ArrayList<BattleRecord>> allBattleRecords;
     @FXML
     Label loginedAccount_lbl;
 
@@ -1007,32 +1009,40 @@ public class MainMenu {
         anchorPane.setOpacity(0.5);
         anchorPane.setDisable(true);
         ft.play();
+
+        allBattleRecords = BattleRecord.loadAllBattleRecords();
         showBattleRecord();
     }
 
 
-
     public void showBattleRecord() {
-        for (int i = 0; i < BattleRecord.getBattleRecords().size(); i++) {
+        for (int i = 0; i < allBattleRecords.size(); i++) {
             Label label = new Label();
-            label.setText(i + " battle Record");
-            battleRecord_anchorPane.getChildren().add(label);
-            battleRecord_pane.getChildren().add(label);
-            label.setOnMouseClicked(event -> {
+            if (allBattleRecords.get(i) != null) {
+                BattleRecord battleRecord = allBattleRecords.get(i).get(0);
+                if (battleRecord.getTypeOfRecord().equals(BattleRecordEnum.INITIALIZE)) {
+                    label.setText(i + " " + battleRecord.getFirstPlayerUsername() + " " + battleRecord.getSecondPlayerUsername());
+                }
+                label.setText(i + " battle Record");
+                label.setStyle("-fx-font-size: 10;-fx-font-weight: bold");
+                label.setLayoutY(100 * i);
+                label.setLayoutX(80);
+                battleRecord_anchorPane.getChildren().add(label);
+                label.setOnMouseClicked(event -> {
 
-                String s = label.getText().toString();
-                String[] s1 = s.split(" ");
-                int i1 = Integer.parseInt(s1[0]);
-                ArrayList<BattleRecord> battleRecords = BattleRecord.getBattleRecords().get(i1);
-                gotoBattleReplay(battleRecords);
+                    String s = label.getText().toString();
+                    String[] s1 = s.split(" ");
+                    final int i1 = Integer.parseInt(s1[0]);
+                    ArrayList<BattleRecord> battleRecords = allBattleRecords.get(i1);
+                    gotoBattleReplay(battleRecords);
 
 
-            });
+                });
+            }
         }
     }
 
-    public void gotoBattleReplay(ArrayList<BattleRecord> battleRecord)
-    {
+    public void gotoBattleReplay(ArrayList<BattleRecord> battleRecord) {
         Pane root = null;
         FXMLLoader fxmlLoader = null;
         try {
