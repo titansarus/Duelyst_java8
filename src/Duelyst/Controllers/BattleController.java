@@ -26,11 +26,9 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Formatter;
 
 import static Duelyst.View.Constants.*;
 
@@ -86,9 +84,6 @@ public class BattleController {
     ImageView speed1x_iv;
     @FXML
     ImageView speed05x_iv;
-
-
-
 
 
     private double heightOfPoly_Y;
@@ -993,6 +988,7 @@ public class BattleController {
             if (Container.scenes.size() > 0) {
                 isAnimationRunning = false;
                 stopTimeline();
+                makeJsonOfBattleRecord(getBattle().getBattleRecords());
                 Container.handleBack();
             }
         });
@@ -1007,6 +1003,26 @@ public class BattleController {
 
         ft.play();
         ft2.play();
+    }
+
+    public void makeJsonOfBattleRecord(ArrayList<BattleRecord> battleRecords) {
+        YaGson yaGson = new YaGson();
+        for (int i =0;i<battleRecords.size();i++)
+        {
+            System.out.println(battleRecords.get(i).getTypeOfRecord());
+        }
+
+
+        try {
+            OutputStream o = new FileOutputStream("myGson.json");
+            Formatter formatter = new Formatter(o);
+
+            String s = yaGson.toJson(battleRecords);
+            formatter.format(s);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -1055,6 +1071,7 @@ public class BattleController {
     public void handleQuitImg() {
         if (Container.scenes.size() > 0) {
             stopTimeline();
+            makeJsonOfBattleRecord(getBattle().getBattleRecords());
             Container.handleBack();
         }
     }

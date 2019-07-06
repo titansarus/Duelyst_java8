@@ -554,7 +554,6 @@ public class MainMenu {
         bc.setHandHbox();
 //        bc.makeAccountNames();
         bc.runTimelines();
-        ai.setBattleController(bc);
         battle.insertPlayerHeroes();
         //  bc.insertPlayerHeroes();
         stopTimeline();

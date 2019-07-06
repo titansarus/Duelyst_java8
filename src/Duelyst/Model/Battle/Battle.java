@@ -23,7 +23,6 @@ public class Battle implements Cloneable {
     private static ArrayList<Battle> unfinishedBattles = new ArrayList<>();
 
     private static Battle runningBattle;
-    private BattleController battleController;
     private Player player1;
     private Player player2;
     private Player playingPlayer;
@@ -54,7 +53,6 @@ public class Battle implements Cloneable {
 
     public static Battle deepClone(Battle battle) {
         Cloner cloner = new Cloner();
-        cloner.dontClone(BattleController.class);
         return cloner.deepClone(battle);
     }
 
@@ -84,9 +82,7 @@ public class Battle implements Cloneable {
     public Battle(Account account1, Account account2, GameMode gameMode, GameGoal gameGoal, BattleController battleController) {
         this.gameGoal = gameGoal;
         this.gameMode = gameMode;
-        setBattleController(battleController);
         battleController.setBattle(this);
-//        battleController.makeGrids();
         runningBattle = this;
 
 
@@ -1041,14 +1037,6 @@ public class Battle implements Cloneable {
         this.validCells = validCells;
     }
 
-    public BattleController getBattleController() {
-        return battleController;
-    }
-
-    public void setBattleController(BattleController battleController) {
-
-        this.battleController = battleController;
-    }
 
     public void endGame() {
 

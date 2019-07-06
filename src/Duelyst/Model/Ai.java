@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Ai extends Account {
-    private BattleController battleController;
     private Battle battle = null;
 
     public Ai(int numberOfAi) {
@@ -89,7 +88,6 @@ public class Ai extends Account {
                     Warrior attacker = (Warrior) card;
                     Warrior attackedWarrior = cell.getWarrior();
                     battle.handleAttackCounterDeath(attacker, attackedWarrior);
-                    // getBattleController().handleAttackFromAi(attacker, attackedWarrior);
                 } catch (Exception e) {
                     System.out.println("Ai can not attack");
                 }
@@ -99,11 +97,4 @@ public class Ai extends Account {
         }
     }
 
-    public BattleController getBattleController() {
-        return battleController;
-    }
-
-    public void setBattleController(BattleController battleController) {
-        this.battleController = battleController;
-    }
 }
