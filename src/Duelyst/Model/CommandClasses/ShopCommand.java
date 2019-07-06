@@ -9,6 +9,7 @@ public class ShopCommand extends CommandClass {
     private ArrayList<Card> cards;
     private Card newCard;
     private Card auctionCard;
+    private long auctionCardTime;
     private Card buyCard;
     private Card sellCard;
     private ArrayList<Card> finishedCard;
@@ -81,5 +82,13 @@ public class ShopCommand extends CommandClass {
 
     public void setAuctionCards(ArrayList<Card> auctionCards) {
         this.auctionCards = auctionCards;
+    }
+
+    public long getAuctionCardTime() {
+        return auctionCardTime;
+    }
+
+    public void setAuctionCardTime(long auctionCardTime) {
+        this.auctionCardTime = auctionCardTime;
     }
 }

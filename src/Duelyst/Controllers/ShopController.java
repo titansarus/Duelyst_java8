@@ -151,14 +151,22 @@ public class ShopController {
         }
     }
 
-    public void upateAcutionCardInformation(){
+    public void upateAcutionCardInformation() {
         SendMessage.getSendMessage().sendMessage(new ShopCommand(ShopCommandsKind.GET_AUCTION_CARDS));
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if(Shop.getInstance().getAuctionSelectedCard() != null){
+        ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.GET_AUCTION_CARD_TIME);
+        shopCommand.setAuctionCard(Shop.getInstance().getAuctionSelectedCard());
+        SendMessage.getSendMessage().sendMessage(shopCommand);
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (Shop.getInstance().getAuctionSelectedCard() != null) {
             currentOwnerAuction_lbl.setText(Shop.getInstance().getAuctionSelectedCard().getAuctionClient());
             auctionHighestBid_lbl.setText(Shop.getInstance().getAuctionSelectedCard().getAuctionCost() + "");
 //            auctionTimeLeft_lbl.setText();//TODO Kamel She
@@ -421,8 +429,8 @@ public class ShopController {
         SendMessage.getSendMessage().sendMessage(shopCommand);
     }
 
-    public void addToAuctionButtonAnimation(){
-        TranslateTransition tt = new TranslateTransition(Duration.millis(2000),addToAuctionNotification_pane);
+    public void addToAuctionButtonAnimation() {
+        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), addToAuctionNotification_pane);
         tt.setFromX(650);
         tt.setToX(400);
         tt.setCycleCount(2);
@@ -440,7 +448,8 @@ public class ShopController {
         makeAuctionCardList();
 
     }
-    public void makeAuctionCardList(){
+
+    public void makeAuctionCardList() {
         makeCardList(Shop.getInstance().getAuctionCards(), AuctionPaneHBox_hbox);
     }
 
@@ -467,7 +476,7 @@ public class ShopController {
 
     public void handleAuctionBidButton() {
         Card card = Shop.getInstance().getAuctionSelectedCard();
-        if (card==null){
+        if (card == null) {
             return;
         }
         ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.REQUEST_TO_ACTION_CARD);
