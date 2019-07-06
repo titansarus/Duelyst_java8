@@ -234,7 +234,13 @@ public class MainMenu {
     }
 
     public void handleChatRoomArrowImageClicked() {
-        System.out.println("clicked :?");
+        SendMessage.getSendMessage().sendMessage(new ChatRoomCommand(null, null));
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("ChatRoom");
         TranslateTransition tt = new TranslateTransition(Duration.millis(1000), chatRoom_pane);
         tt.setFromX(-200);
         tt.setToX(166);
@@ -272,6 +278,8 @@ public class MainMenu {
                 chatRoomCommands) {
             Text text = new Text(command.getPmOwner() + " : " + command.getPm());
             text.setFill(Color.WHITE);
+            if(command.getPmOwner().equals(Account.getLoggedAccount().getUsername()))
+                text.setFill(Color.GOLD);
             text.setStyle("-fx-font-style: italic");
             text.setEffect(new DropShadow(10,0,0,Color.GREY));
             System.out.println(command.getPmOwner() + " : " + command.getPm());
@@ -514,9 +522,17 @@ public class MainMenu {
     }
 
 
-    public void handleBackBtn() {
+    public void handleLogOutBtn() {
         setCanPlayButtonSound(true);
         runButtonClickSound();
+
+        SendMessage.getSendMessage().sendMessage(new LoginCommand(LoginCommandsKind.LOGOUT));
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         if (Container.scenes.size() > 0) {
             stopTimeline(); //TODO In ba'ad az hazf slowTimeline hazf shavad
             //TODO TEST

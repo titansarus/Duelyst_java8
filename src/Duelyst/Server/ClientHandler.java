@@ -59,7 +59,7 @@ public class ClientHandler implements Runnable {
                             handleExit();
                             return;
                         case LOGOUT:
-
+                            loggedIn = false;
                             break;
                     }
                     break;
@@ -115,8 +115,10 @@ public class ClientHandler implements Runnable {
         chatRoomCommand.setChatRoomCommands(pms);
         for (ClientHandler c :
                 clientHandlers) {
-            c.getFormatter().format("%s\n", CommandClass.makeJson(chatRoomCommand));
-            c.getFormatter().flush();
+            if (c.isLoggedIn()) {
+                c.getFormatter().format("%s\n", CommandClass.makeJson(chatRoomCommand));
+                c.getFormatter().flush();
+            }
         }
     }
 

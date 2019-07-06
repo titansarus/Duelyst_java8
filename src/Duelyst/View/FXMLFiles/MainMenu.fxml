@@ -73,12 +73,12 @@
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <ImageView fx:id="logout_img" fitHeight="73.0" fitWidth="213.0" layoutX="772.0" layoutY="664.0" onMouseClicked="#handleBackBtn" onMouseEntered="#logoutButtonGlowWithSound" onMouseExited="#logoutButtonGlowDisapearWithSound" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="logout_img" fitHeight="73.0" fitWidth="213.0" layoutX="772.0" layoutY="664.0" onMouseClicked="#handleLogOutBtn" onMouseEntered="#logoutButtonGlowWithSound" onMouseExited="#logoutButtonGlowDisapearWithSound" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../res/ui/button_secondary@2x.png" />
                </image>
             </ImageView>
-            <Label layoutX="827.0" layoutY="675.0" onMouseClicked="#handleBackBtn" onMouseEntered="#logoutButtonGlow" onMouseExited="#logoutButtonGlowDisapear" text="Logout" textFill="WHITE">
+            <Label layoutX="827.0" layoutY="675.0" onMouseClicked="#handleLogOutBtn" onMouseEntered="#logoutButtonGlow" onMouseExited="#logoutButtonGlowDisapear" text="Logout" textFill="WHITE">
                <font>
                   <Font size="33.0" />
                </font>
