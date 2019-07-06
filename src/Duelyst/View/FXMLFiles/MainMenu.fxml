@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXTextField?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,7 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.MainMenu">
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.MainMenu">
    <children>
       <AnchorPane fx:id="anchorPane" maxHeight="768.0" maxWidth="1024.0" minHeight="768.0" minWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: BLACk; -fx-background-image: url('/res/Backgrounds/main-menu-back.jpg'); -fx-background-size: cover;">
          <children>
@@ -138,32 +136,6 @@
                   <Image url="@../../../res/ui/friends.png" />
                </image>
             </ImageView>
-            <Pane fx:id="chatRoom_pane" layoutX="-165.0" layoutY="159.0" prefHeight="506.0" prefWidth="364.0" stylesheets="@../../../css/ChatRoom.css" translateX="-200.0" translateY="-80.0">
-               <children>
-                  <JFXTextField fx:id="textMessage" layoutY="-6.0" maxHeight="45.0" minHeight="40.0" onAction="#handleSendMessageImage" prefHeight="40.0" prefWidth="364.0" promptText="Enter Message Here" />
-                  <ScrollPane fx:id="chatRoom_Scroll" layoutY="36.0" prefHeight="472.0" prefWidth="364.0" style="-fx-background-color: transparent;" stylesheets="@../../../css/scroll-bar.css">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="401.0" prefWidth="324.0" style="-fx-background-color: transparent;" />
-                    </content>
-                     <effect>
-                        <DropShadow spread="0.1" />
-                     </effect>
-                  </ScrollPane>
-                  <ImageView fx:id="chatRoomArrow_img" fitHeight="577.0" fitWidth="174.0" layoutX="270.0" layoutY="-39.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../res/ui/chatRoom.png" />
-                     </image>
-                     <effect>
-                        <DropShadow spread="0.1" />
-                     </effect>
-                  </ImageView>
-                  <Label fx:id="globalChat_lbl" layoutX="305.0" layoutY="100.0" rotate="-90.0" text="Global Chat" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold Italic" size="15.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
             <ImageView fx:id="sound_iv" fitHeight="40.0" fitWidth="48.0" layoutX="811.0" layoutY="626.0" onMouseClicked="#handleSoundMuteOrUnmute" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>

@@ -1,10 +1,17 @@
 package Duelyst.Controllers;
 
+import Duelyst.Client.SendMessage;
+import Duelyst.Model.Account;
+import Duelyst.Model.CommandClasses.ChatRoomCommand;
+import com.jfoenix.controls.JFXTextField;
 import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -12,8 +19,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 public class MultiPlayerController {
@@ -28,11 +37,19 @@ public class MultiPlayerController {
     public ImageView centerCircle_img;
     public Pane searching_pane;
     public AnchorPane anchorPane;
+    public ImageView chatRoomArrow_img;
+    public JFXTextField textMessage;
+    public Label globalChat_lbl;
+    public Pane chatRoom_pane;
+    public ScrollPane chatRoom_Scroll;
     Timeline slowTimeline;
 
 
     @FXML
     public void initialize() {
+        chatRoomArrow_img.setOnMouseClicked(event1 -> handleChatRoomArrowImageClicked());
+        chatRoomArrow_img.setOnMouseEntered(event12 -> handleChatRoomArrowImageMouseEntered());
+        chatRoomArrow_img.setOnMouseExited(event13 -> handleChatRoomArrowImageMouseExited());
         runSlowTimeline();
     }
 
@@ -42,6 +59,86 @@ public class MultiPlayerController {
         }), new KeyFrame(Duration.millis(500)));
         slowTimeline.setCycleCount(Animation.INDEFINITE);
         slowTimeline.play();
+    }
+
+    public void handleChatRoomArrowImageMouseEntered() {
+        TranslateTransition tt1 = new TranslateTransition(Duration.millis(500), chatRoomArrow_img);
+        tt1.setFromX(chatRoomArrow_img.getTranslateX());
+        tt1.setToX(chatRoomArrow_img.getTranslateX() + 30);
+        TranslateTransition tt2 = new TranslateTransition(Duration.millis(500), globalChat_lbl);
+        tt2.setFromX(chatRoomArrow_img.getTranslateX());
+        tt2.setToX(chatRoomArrow_img.getTranslateX() + 30);
+        tt1.play();
+        tt2.play();
+    }
+
+    public void handleChatRoomArrowImageMouseExited() {
+        TranslateTransition tt1 = new TranslateTransition(Duration.millis(500), chatRoomArrow_img);
+        tt1.setFromX(chatRoomArrow_img.getTranslateX());
+        tt1.setToX(chatRoomArrow_img.getX());
+        TranslateTransition tt2 = new TranslateTransition(Duration.millis(500), globalChat_lbl);
+        tt2.setFromX(chatRoomArrow_img.getTranslateX());
+        tt2.setToX(chatRoomArrow_img.getX());
+        tt1.play();
+        tt2.play();
+    }
+
+    public void handleChatRoomArrowImageClicked() {
+        SendMessage.getSendMessage().sendMessage(new ChatRoomCommand(null, null));
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("ChatRoom");
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1000), chatRoom_pane);
+        tt.setFromX(-695);
+        tt.setToX(-329);
+        tt.play();
+        chatRoomArrow_img.setOnMouseClicked(null);
+        chatRoomArrow_img.setOnMouseEntered(null);
+        chatRoomArrow_img.setOnMouseExited(null);
+        tt.setOnFinished(event -> chatRoomArrow_img.setOnMouseClicked(event1 -> handleBackImage()));
+    }
+
+    public void handleBackImage() {
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1000), chatRoom_pane);
+        tt.setFromX(-329);
+        tt.setToX(-695);
+        tt.play();
+        tt.setOnFinished(event -> {
+            handleChatRoomArrowImageMouseExited();
+            chatRoomArrow_img.setOnMouseEntered(event22 -> handleChatRoomArrowImageMouseEntered());
+            chatRoomArrow_img.setOnMouseExited(event2 -> handleChatRoomArrowImageMouseExited());
+            chatRoomArrow_img.setOnMouseClicked(event1 -> handleChatRoomArrowImageClicked());
+        });
+    }
+
+    public void handleSendMessageImage() {
+        ChatRoomCommand command = new ChatRoomCommand(textMessage.getText(), Account.getLoggedAccount().getUsername());
+        textMessage.clear();
+        SendMessage.getSendMessage().sendMessage(command);
+    }
+
+    public void addToChat(ChatRoomCommand chatRoomCommand) {
+        ArrayList<ChatRoomCommand> chatRoomCommands = chatRoomCommand.getChatRoomCommands();
+        Group group = new Group();
+        int i = 1;
+        for (ChatRoomCommand command :
+                chatRoomCommands) {
+            Text text = new Text(command.getPmOwner() + " : " + command.getPm());
+            text.setFill(Color.WHITE);
+            if(command.getPmOwner().equals(Account.getLoggedAccount().getUsername()))
+                text.setFill(Color.GOLD);
+            text.setStyle("-fx-font-style: italic");
+            text.setEffect(new DropShadow(10,0,0,Color.GREY));
+            System.out.println(command.getPmOwner() + " : " + command.getPm());
+            text.setWrappingWidth(150);
+            text.relocate(0, (i++) * 50);
+            System.out.println("------------>>>>> " + i);
+            group.getChildren().add(text);
+        }
+        chatRoom_Scroll.setContent(group);
     }
 
 

@@ -1,9 +1,6 @@
 package Duelyst.Client;
 
-import Duelyst.Controllers.Container;
-import Duelyst.Controllers.LoginController;
-import Duelyst.Controllers.MainMenu;
-import Duelyst.Controllers.ShopController;
+import Duelyst.Controllers.*;
 import Duelyst.Exceptions.CardOutOfStock;
 import Duelyst.Exceptions.UserNotExistException;
 import Duelyst.Main;
@@ -87,9 +84,9 @@ public class ReadMessage extends Thread {
     private void handleChatRoomCommand(ChatRoomCommand chatRoomCommand) {
         System.out.println("receive message : " + chatRoomCommand.getPm());
         Platform.runLater(() -> {
-            if (Container.controllerClass instanceof MainMenu) {
-                MainMenu mainMenu = (MainMenu) Container.controllerClass;
-                mainMenu.addToChat(chatRoomCommand);
+            if (Container.controllerClass instanceof MultiPlayerController) {
+                MultiPlayerController multiPlayerController = (MultiPlayerController) Container.controllerClass;
+                multiPlayerController.addToChat(chatRoomCommand);
             }
         });
     }
