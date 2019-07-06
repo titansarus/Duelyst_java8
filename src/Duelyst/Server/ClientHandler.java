@@ -201,7 +201,9 @@ public class ClientHandler implements Runnable {
             case REQUEST_TO_ACTION_CARD:
                 handleAuctionRequest(shopCommand);
                 break;
+            case GET_AUCTION_CARD_TIME:
 
+                break;
         }
     }
 
