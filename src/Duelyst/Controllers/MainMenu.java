@@ -514,9 +514,17 @@ public class MainMenu {
     }
 
 
-    public void handleBackBtn() {
+    public void handleLogOutBtn() {
         setCanPlayButtonSound(true);
         runButtonClickSound();
+
+        SendMessage.getSendMessage().sendMessage(new LoginCommand(LoginCommandsKind.LOGOUT));
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         if (Container.scenes.size() > 0) {
             stopTimeline(); //TODO In ba'ad az hazf slowTimeline hazf shavad
             //TODO TEST

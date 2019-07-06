@@ -1,9 +1,6 @@
 package Duelyst.Server;
 
 import Duelyst.Client.Client;
-import Duelyst.Client.SendMessage;
-import Duelyst.Model.Battle.Battle;
-import Duelyst.Model.Battle.KindOfFlag;
 import Duelyst.Model.Card;
 import Duelyst.Model.CommandClasses.CommandClass;
 import Duelyst.Model.CommandClasses.ShopCommand;
@@ -43,7 +40,7 @@ public class Time extends Thread {
         }
         if (card!=null) {
             ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.FINISH_TIME);
-            shopCommand.setAuctionCards(ServerShop.getInstance().removeCardfromAuctions(card));
+            shopCommand.setAuctionCards(ServerShop.getInstance().removeCardFromAuctions(card));
 
             ServerShop.getInstance().getAuctionCards().remove(card);//ok
 

@@ -123,6 +123,7 @@ public class Server implements Runnable {
                 onlinePlayers.add(allClientHandlers.get(i).getUserName());
             }
         }
+
         return onlinePlayers;
     }
 

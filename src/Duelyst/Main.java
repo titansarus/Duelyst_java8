@@ -6,7 +6,6 @@ import Duelyst.Database.DatabaseCard;
 import Duelyst.Database.DatabaseCollectioner;
 import Duelyst.Model.Account;
 import Duelyst.Model.Buffs.*;
-import Duelyst.Model.Card;
 import Duelyst.Model.Items.*;
 import Duelyst.Model.Spell.Spell;
 import Duelyst.Model.Spell.TargetCommunity;

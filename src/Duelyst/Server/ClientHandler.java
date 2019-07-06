@@ -59,7 +59,7 @@ public class ClientHandler implements Runnable {
                             handleExit();
                             return;
                         case LOGOUT:
-
+                            loggedIn = false;
                             break;
                     }
                     break;
@@ -115,8 +115,10 @@ public class ClientHandler implements Runnable {
         chatRoomCommand.setChatRoomCommands(pms);
         for (ClientHandler c :
                 clientHandlers) {
-            c.getFormatter().format("%s\n", CommandClass.makeJson(chatRoomCommand));
-            c.getFormatter().flush();
+            if (c.isLoggedIn()) {
+                c.getFormatter().format("%s\n", CommandClass.makeJson(chatRoomCommand));
+                c.getFormatter().flush();
+            }
         }
     }
 
@@ -203,11 +205,12 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    private void handleAuctionRequest(ShopCommand shopCommand){
+    private void handleAuctionRequest(ShopCommand shopCommand) {
         Card card = shopCommand.getAuctionCard();
-        card.setAuctionCost(card.getAuctionCost()*11/10);
+        card.setAuctionCost(card.getAuctionCost() * 11 / 10);
         card.setAuctionClient(this.getUserName());
     }
+
     private void getAuctionCards() {
         ShopCommand command = new ShopCommand(ShopCommandsKind.GET_AUCTION_CARDS);
         command.setAuctionCards(ServerShop.getInstance().getAuctionCards());
@@ -217,7 +220,7 @@ public class ClientHandler implements Runnable {
 
     private void addCardToAuctionCards(ShopCommand shopCommand) {
         ServerShop.getInstance().addAuctionCards(shopCommand.getAuctionCard());
-        Time time = new Time(shopCommand.getAuctionCard(),10);//TODO 10 -> 180
+        Time time = new Time(shopCommand.getAuctionCard(), 10);//TODO 10 -> 180
         time.start();
     }
 
