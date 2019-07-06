@@ -70,6 +70,7 @@ public class ReadMessage extends Thread {
     private void handleGetOnlinePlayers(OnlinePlayersCommand onlinePlayersCommand) {
         System.out.println("Getting Online Players From Server");
         Platform.runLater(() -> {
+
             MainMenu mainMenu = (MainMenu) Container.controllerClass;
             mainMenu.showOnlinePlayers(onlinePlayersCommand.getOnlineAccounts());
         });
@@ -86,8 +87,10 @@ public class ReadMessage extends Thread {
     private void handleChatRoomCommand(ChatRoomCommand chatRoomCommand) {
         System.out.println("receive message : " + chatRoomCommand.getPm());
         Platform.runLater(() -> {
-            MainMenu mainMenu = (MainMenu) Container.controllerClass;
-            mainMenu.addToChat(chatRoomCommand);
+            if (Container.controllerClass instanceof MainMenu) {
+                MainMenu mainMenu = (MainMenu) Container.controllerClass;
+                mainMenu.addToChat(chatRoomCommand);
+            }
         });
     }
 
@@ -129,7 +132,7 @@ public class ReadMessage extends Thread {
     }
 
     private void addAuctionCard(ShopCommand shopCommand) {
-        System.out.println("add card");
+        System.out.println("add card                --------                       adddddd cardddddddddddd");
         Account.getLoggedAccount().setDarick(Account.getLoggedAccount().getDarick() - shopCommand.getAuctionCard().getAuctionCost());
         Account.getLoggedAccount().getCardCollection().getCards().add(shopCommand.getAuctionCard());
     }

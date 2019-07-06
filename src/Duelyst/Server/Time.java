@@ -1,23 +1,26 @@
 package Duelyst.Server;
 
 import Duelyst.Client.Client;
-import Duelyst.Client.SendMessage;
-import Duelyst.Model.Battle.Battle;
-import Duelyst.Model.Battle.KindOfFlag;
+import Duelyst.Model.Account;
 import Duelyst.Model.Card;
 import Duelyst.Model.CommandClasses.CommandClass;
 import Duelyst.Model.CommandClasses.ShopCommand;
 import Duelyst.Model.CommandClasses.ShopCommandsKind;
 
 import java.time.Instant;
+import java.util.ArrayList;
 
 public class Time extends Thread {
+    private ArrayList<Time> times = new ArrayList<>();
+    private Instant now;
+    private Instant start;
     private Card card;
     private Client[] clients = new Client[2];
     private final int TIME_OF_TURN = 120;
     private int time;
 
     public Time(Card card, int timeAccordingToSec) {
+        times.add(this);
         this.card = card;
         this.time = timeAccordingToSec;
     }
@@ -30,24 +33,26 @@ public class Time extends Thread {
     @Override
     public void run() {
         Instant start = Instant.now();
+        this.start = start;
         while (true) {
             try {
                 Thread.sleep(1000);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             Instant end = Instant.now();
+            this.now = end;
             if (end.getEpochSecond() - start.getEpochSecond() > time) {
                 break;
             }
         }
-        if (card!=null) {
+        if (card != null) {
             ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.FINISH_TIME);
             shopCommand.setAuctionCards(ServerShop.getInstance().removeCardfromAuctions(card));
 
             ServerShop.getInstance().getAuctionCards().remove(card);//ok
 
-            ShopCommand shopCommand1 =  new ShopCommand(ShopCommandsKind.REMOVE_CARD);
+            ShopCommand shopCommand1 = new ShopCommand(ShopCommandsKind.REMOVE_CARD);
             shopCommand1.setAuctionCard(card);
 
             ShopCommand shopCommand2 = new ShopCommand(ShopCommandsKind.ADD_CARD);
@@ -58,25 +63,48 @@ public class Time extends Thread {
                 c.getFormatter().format("%s\n", CommandClass.makeJson(shopCommand));
                 c.getFormatter().flush();
 
-                if (c.getUserName().equals(card.getAccount().getUsername())){
-                    c.getFormatter().format("%s\n",CommandClass.makeJson(shopCommand1));
-                    c.getFormatter().flush();
-                }
-                if (card.getAuctionClient()!=null && c.getUserName().equals(card.getAuctionClient())){
-                    c.getFormatter().format("%s\n",CommandClass.makeJson(shopCommand2));
-                    c.getFormatter().flush();
 
-                }
+                setAccounts(shopCommand1, shopCommand2, c);
 
             }
-
 
 
         }
         //TODO for battle ...
     }
 
+    private void setAccounts(ShopCommand shopCommand1, ShopCommand shopCommand2, ClientHandler c) {
+        if (c.getUserName().equals(card.getAccount().getUsername())) {
 
+            Account account = Server.getAccount(c.getUserName());
+            account.setDarick(account.getDarick() + shopCommand1.getAuctionCard().getAuctionCost());
+
+            Card card = null;
+            for (Card card1 :
+                    account.getCardCollection().getCards()) {
+                if (card1.getCardName().equals(shopCommand1.getAuctionCard().getCardName())) {
+                    card = card1;
+                }
+            }
+            account.getCardCollection().getCards().remove(card);
+            c.getFormatter().format("%s\n", CommandClass.makeJson(shopCommand1));
+            c.getFormatter().flush();
+        }
+        System.out.println(card.getAuctionClient() + "--------------------- kharidar");
+        if (card.getAuctionClient() != null && c.getUserName().equals(card.getAuctionClient())) {
+            System.out.println("yoyo2  -------------------------");
+            Account account = Server.getAccount(c.getUserName());
+            account.setDarick(account.getDarick() - shopCommand1.getAuctionCard().getAuctionCost());
+            account.getCardCollection().getCards().add(shopCommand1.getAuctionCard());
+            c.getFormatter().format("%s\n", CommandClass.makeJson(shopCommand2));
+            c.getFormatter().flush();
+
+        }
+    }
+
+    public long getSec(){
+        return now.getEpochSecond() - start.getEpochSecond();
+    }
 
     public Card getCard() {
         return card;

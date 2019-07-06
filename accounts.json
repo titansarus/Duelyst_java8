@@ -2908,8 +2908,8 @@
           {
             "@type": "Duelyst.Model.Minion",
             "@val": {
-              "healthPoint": 24,
-              "actionPower": 6,
+              "healthPoint": 12,
+              "actionPower": 4,
               "attackRange": 0,
               "attackKind": "MELEE",
               "validCounterAttack": true,
@@ -2918,21 +2918,21 @@
               "isValidToAttack": true,
               "IsValidToMove": true,
               "isStun": false,
-              "cardId": "rez_Pahlevane_Fars_1",
-              "manaCost": 9,
-              "darikCost": 600,
-              "auctionCost": 480,
+              "cardId": "rez_SepahSalare_Fars_1",
+              "manaCost": 7,
+              "darikCost": 800,
+              "auctionCost": 640,
               "account": "@root.8",
-              "cardDescription": "Be Tedad Dafehaii ke Dar NobatHaye Ghabl Be Yeki Niroo Hamle Karde, 5 Vahed Bishtar Zarbe Vared Mikonad",
-              "cardName": "Pahlevane_Fars",
+              "cardDescription": "Combo Attack!",
+              "cardName": "SepahSalare_Fars",
               "isAbleToMove": true,
               "isInGame": false,
-              "addressOfImage": "./res/Characters/UnitsCreated/Fars/PahlevaneFars/Pahlevane_Fars.png",
-              "addressOfIdleGif": "./res/Characters/UnitsCreated/Fars/PahlevaneFars/Pahlevane_Fars_idle.gif",
-              "addressOfRunGif": "./res/Characters/UnitsCreated/Fars/PahlevaneFars/Pahlevane_Fars_run.gif",
-              "addressOfAttackGif": "./res/Characters/UnitsCreated/Fars/PahlevaneFars/Pahlevane_Fars_attack.gif",
-              "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Fars/PahlevaneFars/Pahlevane_Fars_breathing.gif",
-              "addressOfDeathGif": "./res/Characters/UnitsCreated/Fars/PahlevaneFars/Pahlevane_Fars_death.gif"
+              "addressOfImage": "./res/Characters/UnitsCreated/Fars/SepahSalareFars/SepahSalare_Fars.png",
+              "addressOfIdleGif": "./res/Characters/UnitsCreated/Fars/SepahSalareFars/SepahSalare_Fars_idle.gif",
+              "addressOfRunGif": "./res/Characters/UnitsCreated/Fars/SepahSalareFars/SepahSalare_Fars_run.gif",
+              "addressOfAttackGif": "./res/Characters/UnitsCreated/Fars/SepahSalareFars/SepahSalare_Fars_attack.gif",
+              "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Fars/SepahSalareFars/SepahSalare_Fars_breathing.gif",
+              "addressOfDeathGif": "./res/Characters/UnitsCreated/Fars/SepahSalareFars/SepahSalare_Fars_death.gif"
             }
           }
         ],
@@ -3602,7 +3602,7 @@
       "username": "rez",
       "password": "rez",
       "countOfWins": 2,
-      "darick": 75150
+      "darick": 74670
     }
   }
 ]

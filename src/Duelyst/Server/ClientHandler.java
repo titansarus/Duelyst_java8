@@ -203,11 +203,22 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    private void handleAuctionRequest(ShopCommand shopCommand){
-        Card card = shopCommand.getAuctionCard();
-        card.setAuctionCost(card.getAuctionCost()*11/10);
-        card.setAuctionClient(this.getUserName());
+    private void handleAuctionRequest(ShopCommand shopCommand) {
+        System.out.println("yoyo1 -----------------------------------");
+        Card card = null;
+        for (Card c :
+                ServerShop.getInstance().getAuctionCards()) {
+            if (c.getCardId().equals(shopCommand.getAuctionCard().getCardId())) {
+                card = c;
+                System.out.println("card founded");
+            }
+        }
+        if (card != null) {
+            card.setAuctionCost(card.getAuctionCost() * 11 / 10);
+            card.setAuctionClient(this.getUserName());
+        }
     }
+
     private void getAuctionCards() {
         ShopCommand command = new ShopCommand(ShopCommandsKind.GET_AUCTION_CARDS);
         command.setAuctionCards(ServerShop.getInstance().getAuctionCards());
@@ -217,7 +228,7 @@ public class ClientHandler implements Runnable {
 
     private void addCardToAuctionCards(ShopCommand shopCommand) {
         ServerShop.getInstance().addAuctionCards(shopCommand.getAuctionCard());
-        Time time = new Time(shopCommand.getAuctionCard(),10);//TODO 10 -> 180
+        Time time = new Time(shopCommand.getAuctionCard(), 30);//TODO 30 -> 180
         time.start();
     }
 
