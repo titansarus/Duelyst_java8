@@ -108,6 +108,8 @@ public class MainMenu {
 
     @FXML
     ImageView title_iv;
+    @FXML
+    ImageView sound_iv;
 
     private boolean canPlayButtonSound = true;
     private Timeline timeline = new Timeline();
@@ -119,6 +121,7 @@ public class MainMenu {
         chatRoomArrow_img.setOnMouseClicked(event1 -> handleChatRoomArrowImageClicked());
         chatRoomArrow_img.setOnMouseEntered(event12 -> handleChatRoomArrowImageMouseEntered());
         chatRoomArrow_img.setOnMouseExited(event13 -> handleChatRoomArrowImageMouseExited());
+        Container.changeImageOfSoundImageView(sound_iv);
     }
 
 
@@ -1168,6 +1171,12 @@ public class MainMenu {
             label.setLayoutX(20);
             label.setLayoutY(75 * i);
         }
+
+    }
+
+    public void handleSoundMuteOrUnmute() {
+        Container.changeSoundOnOrOff();
+        Container.changeImageOfSoundImageView(sound_iv);
 
     }
 
