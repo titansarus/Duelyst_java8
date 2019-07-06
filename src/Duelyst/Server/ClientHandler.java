@@ -79,6 +79,10 @@ public class ClientHandler implements Runnable {
                 case ONLINE_PLAYERS:
                     handleGetOnlinePlayers((OnlinePlayersCommand) command);
                     break;
+                case CUSTOM_CARD:
+                    CustomCardCommand customCardCommand = (CustomCardCommand)command;
+                    ServerShop.getInstance().getCustomCards().add(customCardCommand);
+                    break;
             }
 
 

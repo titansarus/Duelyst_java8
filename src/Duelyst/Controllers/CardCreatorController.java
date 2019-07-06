@@ -1,10 +1,12 @@
 package Duelyst.Controllers;
 
+import Duelyst.Client.SendMessage;
 import Duelyst.Exceptions.CreateCardFieldNotCompleteException;
 import Duelyst.Exceptions.MyException;
 import Duelyst.Model.*;
 import Duelyst.Model.Buffs.HolyBuff;
 import Duelyst.Model.Buffs.WeaknessBuff;
+import Duelyst.Model.CommandClasses.CustomCardCommand;
 import Duelyst.Utility.ImageHolder;
 import Duelyst.View.Constants;
 import com.jfoenix.controls.*;
@@ -336,8 +338,14 @@ public class CardCreatorController {
                     cooldown);
             System.out.println(attackKind);
 
-            Account.getLoggedAccount().getCardCollection().getCustomCards().add(hero);
-            Account.getLoggedAccount().getCardCollection().addCard(hero);
+            SendMessage.getSendMessage().sendMessage(new CustomCardCommand(hero,
+                    new File(new File("src/" + hero.getAddressOfImage().substring(2)).toURI().toString()),
+                    new File(new File("src/" + hero.getAddressOfIdleGif().substring(2)).toURI().toString()),
+                    new File(new File("src/" + hero.getAddressOfRunGif().substring(2)).toURI().toString()),
+                    new File(new File("src/" + hero.getAddressOfAttackGif().substring(2)).toURI().toString()),
+                    new File(new File("src/" + hero.getAddressOfGetDamageGif().substring(2)).toURI().toString()),
+                    new File(new File("src/" + hero.getAddressOfDeathGif().substring(2)).toURI().toString())));
+
             Shop.getInstance().getCards().add(hero);
 
         } catch (Exception e) {
@@ -373,8 +381,15 @@ public class CardCreatorController {
                     imagesAddress.get(5)
             );
             System.out.println(attackKind);
-            Account.getLoggedAccount().getCardCollection().getCustomCards().add(minion);
-            Account.getLoggedAccount().getCardCollection().addCard(minion);
+
+            SendMessage.getSendMessage().sendMessage(new CustomCardCommand(minion,
+                    new File(new File("src/" + minion.getAddressOfImage().substring(2)).toURI().toString()),
+                    new File(new File("src/" + minion.getAddressOfIdleGif().substring(2)).toURI().toString()),
+                    new File(new File("src/" + minion.getAddressOfRunGif().substring(2)).toURI().toString()),
+                    new File(new File("src/" + minion.getAddressOfAttackGif().substring(2)).toURI().toString()),
+                    new File(new File("src/" + minion.getAddressOfGetDamageGif().substring(2)).toURI().toString()),
+                    new File(new File("src/" + minion.getAddressOfDeathGif().substring(2)).toURI().toString())));
+
             Shop.getInstance().getCards().add(minion);
         } catch (Exception e) {
             Container.exceptionGenerator(new CreateCardFieldNotCompleteException(), stackPane);
