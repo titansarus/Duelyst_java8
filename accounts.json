@@ -2904,6 +2904,36 @@
               "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars_breathing.gif",
               "addressOfDeathGif": "./res/Characters/UnitsCreated/Fars/KamandareFars/Kamandare_Fars_death.gif"
             }
+          },
+          {
+            "@type": "Duelyst.Model.Minion",
+            "@val": {
+              "healthPoint": 24,
+              "actionPower": 6,
+              "attackRange": 0,
+              "attackKind": "MELEE",
+              "validCounterAttack": true,
+              "isDeath": false,
+              "shield": 0,
+              "isValidToAttack": true,
+              "IsValidToMove": true,
+              "isStun": false,
+              "cardId": "rez_Pahlevane_Fars_1",
+              "manaCost": 9,
+              "darikCost": 600,
+              "auctionCost": 480,
+              "account": "@root.8",
+              "cardDescription": "Be Tedad Dafehaii ke Dar NobatHaye Ghabl Be Yeki Niroo Hamle Karde, 5 Vahed Bishtar Zarbe Vared Mikonad",
+              "cardName": "Pahlevane_Fars",
+              "isAbleToMove": true,
+              "isInGame": false,
+              "addressOfImage": "./res/Characters/UnitsCreated/Fars/PahlevaneFars/Pahlevane_Fars.png",
+              "addressOfIdleGif": "./res/Characters/UnitsCreated/Fars/PahlevaneFars/Pahlevane_Fars_idle.gif",
+              "addressOfRunGif": "./res/Characters/UnitsCreated/Fars/PahlevaneFars/Pahlevane_Fars_run.gif",
+              "addressOfAttackGif": "./res/Characters/UnitsCreated/Fars/PahlevaneFars/Pahlevane_Fars_attack.gif",
+              "addressOfGetDamageGif": "./res/Characters/UnitsCreated/Fars/PahlevaneFars/Pahlevane_Fars_breathing.gif",
+              "addressOfDeathGif": "./res/Characters/UnitsCreated/Fars/PahlevaneFars/Pahlevane_Fars_death.gif"
+            }
           }
         ],
         "account": "@root.8",
@@ -3572,7 +3602,7 @@
       "username": "rez",
       "password": "rez",
       "countOfWins": 2,
-      "darick": 75750
+      "darick": 75150
     }
   }
 ]

@@ -54,11 +54,12 @@ public class Time extends Thread {
                     ClientHandler.getClientHandlers()) {
                 c.getFormatter().format("%s\n", CommandClass.makeJson(shopCommand));
                 c.getFormatter().flush();
+
                 if (c.getUserName().equals(card.getAccount().getUsername())){
                     c.getFormatter().format("%s\n",CommandClass.makeJson(shopCommand1));
                     c.getFormatter().flush();
                 }
-                if (c.getUserName().equals(card.getAuctionClient())){
+                if (card.getAuctionClient()!=null && c.getUserName().equals(card.getAuctionClient())){
                     c.getFormatter().format("%s\n",CommandClass.makeJson(shopCommand2));
                     c.getFormatter().flush();
 

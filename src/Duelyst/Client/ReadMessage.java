@@ -129,13 +129,23 @@ public class ReadMessage extends Thread {
     }
 
     private void addAuctionCard(ShopCommand shopCommand) {
+        System.out.println("add card");
         Account.getLoggedAccount().setDarick(Account.getLoggedAccount().getDarick() - shopCommand.getAuctionCard().getAuctionCost());
         Account.getLoggedAccount().getCardCollection().getCards().add(shopCommand.getAuctionCard());
     }
 
     private void removeActionCard(ShopCommand shopCommand) {
+        System.out.println("remove card");
         Account.getLoggedAccount().setDarick(Account.getLoggedAccount().getDarick() + shopCommand.getAuctionCard().getAuctionCost());
-        Account.getLoggedAccount().getCardCollection().getCards().remove(shopCommand.getAuctionCard());
+        Card card = null;
+        for (Card c :
+                Account.getLoggedAccount().getCardCollection().getCards()) {
+            if (c.getCardName().equals(shopCommand.getAuctionCard().getCardName())) {
+                card = c;
+                System.out.println("found card for remove");
+            }
+        }
+        Account.getLoggedAccount().getCardCollection().getCards().remove(card);
     }
 
     private void setAuctionCards(ShopCommand shopCommand) {
