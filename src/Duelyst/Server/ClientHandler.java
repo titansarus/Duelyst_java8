@@ -91,6 +91,7 @@ public class ClientHandler implements Runnable {
         formatter.flush();
     }
 
+
     private void handleExit() {
         setLoggedIn(false);
         Server.saveAccount();
