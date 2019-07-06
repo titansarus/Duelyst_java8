@@ -121,6 +121,9 @@ public class MainMenu {
     @FXML
     AnchorPane battleRecord_anchorPane;
 
+    @FXML
+    ImageView battleRecord_closeButton;
+
     private boolean canPlayButtonSound = true;
     private Timeline timeline = new Timeline();
 
@@ -1007,6 +1010,8 @@ public class MainMenu {
         ft.play();
         showBattleRecord();
     }
+
+
 
     public void showBattleRecord() {
         for (int i = 0; i < BattleRecord.getBattleRecords().size(); i++) {

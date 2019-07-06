@@ -168,6 +168,24 @@
             <URL value="@../../../css/scroll-bar.css" />
          </stylesheets>
       </Pane>
+      <Pane fx:id="battleRecord_pane" maxHeight="524.0" maxWidth="300.0" minHeight="300.0" minWidth="150.0" opacity="0.0" prefHeight="507.0" prefWidth="287.0" translateY="-650.0">
+         <children>
+            <ScrollPane fx:id="battleRecord_scrollPane" hbarPolicy="NEVER" prefHeight="524.0" prefWidth="300.0">
+               <content>
+                  <AnchorPane fx:id="battleRecord_anchorPane" minHeight="0.0" minWidth="0.0" prefHeight="447.0" prefWidth="301.0" />
+               </content>
+            </ScrollPane>
+            <ImageView fx:id="battleRecord_closeButton" fitHeight="77.0" fitWidth="48.0" layoutX="252.0" onMouseClicked="#handleBattleRecordCloseButton" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_close@2x.png" />
+               </image>
+            </ImageView>
+         </children>
+         <stylesheets>
+            <URL value="@../../../css/battleHistory.css" />
+            <URL value="@../../../css/scroll-bar.css" />
+         </stylesheets>
+      </Pane>
       <Pane fx:id="leaderBoard_pane" maxHeight="500.0" maxWidth="596.0" minHeight="451.0" minWidth="300.0" prefHeight="481.0" prefWidth="596.0" style="-fx-background-image: url('/res/Backgrounds/leaderboards-back.jpg');" translateY="640.0">
          <children>
             <TableView fx:id="leaderboard_tbv" layoutY="114.0" prefHeight="386.0" prefWidth="596.0" style="-fx-background-color: transparent;" stylesheets="@../../../css/table-view.css" />
@@ -191,20 +209,6 @@
                   <Image url="@../../../res/ui/button_close@2x.png" />
                </image>
             </ImageView>
-         </children>
-      </Pane>
-      <Pane fx:id="battleRecord_pane" layoutX="-300.0" minHeight="0.0" minWidth="0.0" prefHeight="447.0" prefWidth="301.0">
-         <children>
-            <ImageView fx:id="leaderBoardBackButton_img1" fitHeight="54.0" fitWidth="55.0" onMouseClicked="#handleBattleRecordCloseButton" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../res/ui/button_close@2x.png" />
-               </image>
-            </ImageView>
-            <ScrollPane fx:id="battleRecord_scrollPane" layoutX="-294.0" layoutY="-1.0" prefHeight="641.0" prefWidth="244.0">
-              <content>
-                <AnchorPane fx:id="battleRecord_anchorPane" minHeight="0.0" minWidth="0.0" prefHeight="587.0" prefWidth="244.0" />
-              </content>
-            </ScrollPane>
          </children>
       </Pane>
    </children>
