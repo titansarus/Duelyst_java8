@@ -110,8 +110,9 @@ public class ClientHandler implements Runnable {
     }
 
     private void handleChatRoom(ChatRoomCommand chatRoomCommand) {
-        System.out.println("receive message : " + chatRoomCommand.getPm());
-        pms.add(chatRoomCommand);
+        if (chatRoomCommand.getPm() != null) {
+            pms.add(chatRoomCommand);
+        }
         chatRoomCommand.setChatRoomCommands(pms);
         for (ClientHandler c :
                 clientHandlers) {
