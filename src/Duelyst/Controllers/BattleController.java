@@ -29,6 +29,8 @@ import javafx.util.Duration;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Formatter;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import static Duelyst.View.Constants.*;
 
@@ -97,6 +99,8 @@ public class BattleController {
     private ArrayList<CardOnField> cardsOnField = new ArrayList<>();
 
     private Polygon[][] rectangles = new Polygon[BATTLE_ROWS][BATTLE_COLUMNS];
+
+    private LinkedHashMap<Flag, ImageView> flagAndImageView = new LinkedHashMap<>();
 
 
     @FXML
@@ -271,7 +275,7 @@ public class BattleController {
 
         imageView.relocate(x, y);
 
-        flag.setImageView(imageView);
+        flagAndImageView.put(flag, imageView);
 
         anchorPane.getChildren().add(imageView);
 
@@ -447,13 +451,15 @@ public class BattleController {
         double x = calculateMidXFromPoint(points);
         double y = calculateMidYFromPoint(points);
         imageView.relocate(x, y);
-        flag.setImageView(imageView);
+        flagAndImageView.put(flag, imageView);
+
+//        flag.setImageView(imageView);
         anchorPane.getChildren().add(imageView);
 
     }
 
     public void removeFlagImage(Flag flag) {
-        anchorPane.getChildren().remove(flag.getImageView());
+        anchorPane.getChildren().remove(flagAndImageView.get(flag));
     }
 
 
@@ -1007,8 +1013,7 @@ public class BattleController {
 
     public void makeJsonOfBattleRecord(ArrayList<BattleRecord> battleRecords) {
         YaGson yaGson = new YaGson();
-        for (int i =0;i<battleRecords.size();i++)
-        {
+        for (int i = 0; i < battleRecords.size(); i++) {
             System.out.println(battleRecords.get(i).getTypeOfRecord());
         }
 

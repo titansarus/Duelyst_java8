@@ -28,6 +28,7 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import static Duelyst.View.Constants.*;
 
@@ -49,6 +50,8 @@ public class BattleReplayController {
     public ImageView saveGame_img;
     public ImageView quit_img;
     public Pane saveBattleNotification_pane;
+
+    private LinkedHashMap<Flag, ImageView> flagAndImageView = new LinkedHashMap<>();
 
 
     @FXML
@@ -268,7 +271,8 @@ public class BattleReplayController {
 
         imageView.relocate(x, y);
 
-        flag.setImageView(imageView);
+
+        flagAndImageView.put(flag, imageView);
 
         anchorPane.getChildren().add(imageView);
 
@@ -436,13 +440,14 @@ public class BattleReplayController {
         double x = calculateMidXFromPoint(points);
         double y = calculateMidYFromPoint(points);
         imageView.relocate(x, y);
-        flag.setImageView(imageView);
+
+        flagAndImageView.put(flag, imageView);
         anchorPane.getChildren().add(imageView);
 
     }
 
     public void removeFlagImage(Flag flag) {
-        anchorPane.getChildren().remove(flag.getImageView());
+        anchorPane.getChildren().remove(flagAndImageView.get(flag));
     }
 
 
@@ -972,8 +977,6 @@ class ReplayCardOnField {
     public static ArrayList<ReplayCardOnField> getAllReplayCardOnFields() {
         return allReplayCardOnFields;
     }
-
-
 
 
 }

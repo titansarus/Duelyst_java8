@@ -11,7 +11,7 @@ public class Flag {
     private int x;
     private int y;
     private static String image = "res/Items/Flag/CollectFlag.png";
-    private ImageView imageView;
+    //private ImageView imageView;
 
     Flag(KindOfFlag kindOfFlag, int x, int y) {
         this.kindOfFlag = kindOfFlag;
@@ -63,11 +63,11 @@ public class Flag {
         this.y = y;
     }
 
-    public ImageView getImageView() {
-        return imageView;
-    }
-
-    public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
-    }
+//    public ImageView getImageView() {
+//        return imageView;
+//    }
+//
+//    public void setImageView(ImageView imageView) {
+//        this.imageView = imageView;
+//    }
 }
