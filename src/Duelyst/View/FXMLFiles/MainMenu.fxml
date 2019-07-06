@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -11,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.MainMenu">
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.MainMenu">
    <children>
       <AnchorPane fx:id="anchorPane" maxHeight="768.0" maxWidth="1024.0" minHeight="768.0" minWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: BLACk; -fx-background-image: url('/res/Backgrounds/main-menu-back.jpg'); -fx-background-size: cover;">
          <children>
@@ -137,6 +138,7 @@
                </image>
             </ImageView>
             <ImageView fx:id="sound_iv" fitHeight="40.0" fitWidth="48.0" layoutX="811.0" layoutY="626.0" onMouseClicked="#handleSoundMuteOrUnmute" pickOnBounds="true" preserveRatio="true" />
+            <JFXButton layoutX="214.0" layoutY="260.0" onAction="#handleBattleRecordButton" prefHeight="25.0" prefWidth="77.0" text="Test BattleRecord" textFill="#ff3535" />
          </children>
       </AnchorPane>
       <Pane fx:id="saveNotification_pane" maxHeight="54.0" maxWidth="180.0" minHeight="54.0" minWidth="180.0" prefHeight="54.0" prefWidth="180.0" stylesheets="@../../../css/saveGameNotification.css" translateX="615.0" translateY="-290.0">
@@ -189,6 +191,20 @@
                   <Image url="@../../../res/ui/button_close@2x.png" />
                </image>
             </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="battleRecord_pane" layoutX="-300.0" minHeight="0.0" minWidth="0.0" prefHeight="447.0" prefWidth="301.0">
+         <children>
+            <ImageView fx:id="leaderBoardBackButton_img1" fitHeight="54.0" fitWidth="55.0" onMouseClicked="#handleBattleRecordCloseButton" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../res/ui/button_close@2x.png" />
+               </image>
+            </ImageView>
+            <ScrollPane fx:id="battleRecord_scrollPane" layoutX="-294.0" layoutY="-1.0" prefHeight="641.0" prefWidth="244.0">
+              <content>
+                <AnchorPane fx:id="battleRecord_anchorPane" minHeight="0.0" minWidth="0.0" prefHeight="587.0" prefWidth="244.0" />
+              </content>
+            </ScrollPane>
          </children>
       </Pane>
    </children>
