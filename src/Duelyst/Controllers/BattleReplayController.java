@@ -8,7 +8,6 @@ import Duelyst.Model.Items.*;
 import Duelyst.Model.Warrior;
 import Duelyst.Utility.ImageHolder;
 import Duelyst.View.ViewClasses.CardForBattle;
-import com.gilecode.yagson.YaGson;
 import javafx.animation.*;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -27,14 +26,12 @@ import javafx.util.Duration;
 
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
 import static Duelyst.View.Constants.*;
 
-public class BattleController {
+public class BattleReplayController {
 
 
     public ImageView endTurn_img;
@@ -53,8 +50,7 @@ public class BattleController {
     public ImageView quit_img;
     public Pane saveBattleNotification_pane;
 
-    @FXML
-    HBox hand_hBox;
+
     @FXML
     Label p1Acc_lbl;
     @FXML
@@ -88,9 +84,6 @@ public class BattleController {
     ImageView speed05x_iv;
 
 
-
-
-
     private double heightOfPoly_Y;
     private double heightOfPoly_X;
     private double width;
@@ -99,10 +92,12 @@ public class BattleController {
     private boolean isAnimationRunning = false;
 
     private ArrayList<CardForBattle> hand = new ArrayList<>();
-    private ArrayList<CardOnField> cardsOnField = new ArrayList<>();
+    private ArrayList<ReplayCardOnField> cardsOnField = new ArrayList<>();
 
     private Polygon[][] rectangles = new Polygon[BATTLE_ROWS][BATTLE_COLUMNS];
 
+    int lastBattleRecordPlayed = 0;
+    public ArrayList<BattleRecord> battleRecords;
 
     @FXML
     public void initialize() {
@@ -138,7 +133,6 @@ public class BattleController {
 
     }
 
-    private Battle battle;
     private Timeline slowTimeline = new Timeline();
     private Timeline fastTimeLine = new Timeline();
     private Timeline animationTimeLine = new Timeline();
@@ -164,16 +158,15 @@ public class BattleController {
 
     private void checkBattleRecord() {
         isAnimationRunning = true;
-        int lastBattle = getBattle().getLastBattleRecordPlayed();
 
-        if (getBattle().getLastBattleRecordPlayed() >= getBattle().getBattleRecords().size() || getBattle().getLastBattleRecordPlayed() == -1) {
+        if (lastBattleRecordPlayed >= battleRecords.size() || lastBattleRecordPlayed == -1) {
             isAnimationRunning = false;
             return;
         } else {
-            ArrayList<BattleRecord> battleRecords = getBattle().getBattleRecords();
-            int i = getBattle().getLastBattleRecordPlayed();
+            ArrayList<BattleRecord> battleRecords = this.battleRecords;
+            int i = lastBattleRecordPlayed;
             BattleRecord battleRecord = battleRecords.get(i);
-            getBattle().incrementBattleRecord();
+            lastBattleRecordPlayed++;
 
             switch (battleRecord.getTypeOfRecord()) {
                 case MOVE: {
@@ -242,7 +235,7 @@ public class BattleController {
             Polygon polygon = rectangles[row][column];
 
 
-            CardOnField cardOnField = new CardOnField();
+            ReplayCardOnField cardOnField = new ReplayCardOnField();
             cardsOnField.add(cardOnField);
             cardOnField.setCard(insertItem);
             sendIdleImageViewToCenterOfCell(cardOnField, polygon);
@@ -258,7 +251,6 @@ public class BattleController {
 
 
     private void endTurnAnimation(BattleRecord battleRecord) {
-        updateHand();
         isAnimationRunning = false;
     }
 
@@ -293,7 +285,7 @@ public class BattleController {
 
     private void deathAnimationFromRecord(BattleRecord battleRecord) {
         Warrior deathWarrior = battleRecord.getDeathWarrior();
-        CardOnField cardOnField = CardOnField.getCardOnField(deathWarrior);
+        ReplayCardOnField cardOnField = ReplayCardOnField.getReplayCardOnField(deathWarrior);
         if (cardOnField != null) {
 
             cardOnField.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnField.getCard().getAddressOfDeathGif()));
@@ -315,10 +307,7 @@ public class BattleController {
         String moveCardId = battleRecord.getMoveCardId();
 
         Warrior warrior = null;
-        warrior = (Warrior) Card.findCardInArrayList(moveCardId, getBattle().getPlayer1().getInGameCards());
-        if (warrior == null) {
-            warrior = (Warrior) Card.findCardInArrayList(moveCardId, getBattle().getPlayer2().getInGameCards());
-        }
+        warrior = ((Warrior) battleRecord.getMoveCard());
         if (warrior == null) {
             return;
         }
@@ -326,7 +315,7 @@ public class BattleController {
         coordinate[0] = battleRecord.getMoveRow();
         coordinate[1] = battleRecord.getMoveColumn();
 
-        CardOnField cardOnField = CardOnField.findCardOnFieldFromArrayList(cardsOnField, warrior);
+        ReplayCardOnField cardOnField = ReplayCardOnField.findReplayCardOnFieldFromArrayList(cardsOnField, warrior);
         moveSound();
         Integer srcRow = battleRecord.getFromRow();
         Integer srcCol = battleRecord.getFromColumn();
@@ -364,10 +353,9 @@ public class BattleController {
                 removeFlagImage(battleRecord.getFlag());
             }
             if (battleRecord.isMoveCollectibleItem()) {
-                deleteItemImage(getBattle().getGrid()[coordinate[0]][coordinate[1]].getCollectibleItem());
+                deleteItemImage(battleRecord.getMoveItem());
             }
 //            getBattle().getGrid()[coordinate[0]][coordinate[1]].setWarrior(((Warrior) cardOnField.getCard()));
-            getBattle().setSelectedCell(null);
             isAnimationRunning = false;
 
         });
@@ -431,14 +419,10 @@ public class BattleController {
                 rectangles[i][j].setStyle("-fx-fill: BLACK;-fx-opacity: 0.5");
 
                 anchorPane.getChildren().addAll(rectangles[i][j]);
-                rectangles[i][j].setOnMouseClicked(event -> rectangleOnMouseClicked(event));
 
                 int finalJ = j;
                 int finalI = i;
-                rectangles[i][j].setOnMouseEntered(event -> rectangleOnMouseEnter(event, finalI, finalJ));
 
-
-                rectangles[i][j].setOnMouseExited(event -> rectangleOnMouseExited(event, finalI, finalJ));
             }
         }
     }
@@ -472,75 +456,7 @@ public class BattleController {
     }
 
 
-    public void rectangleOnMouseClicked(MouseEvent event) {
-        if (!isAnimationRunning) {
-            Polygon p = (Polygon) event.getSource();
-            int[] coordinate = findPolygonCoordinate(p);
-
-            if (getBattle().getSelectedCell() != null && getBattle().getSelectedCell().getWarrior() != null && getBattle().getPlayingPlayer().getInGameCards().contains(getBattle().getSelectedCell().getWarrior())) {
-                if (getBattle().getSelectedCell() != getBattle().getGrid()[coordinate[0]][coordinate[1]] && getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior() == null) {
-
-                    battle.findValidCell(KindOfActionForValidCells.MOVE);
-                    ArrayList<Cell> cells = battle.getValidCells();
-                    System.out.println(cells.size());
-                    for (int i = 0; i < cells.size(); i++) {
-                        System.out.println(cells.get(i).getRow() + " <======> " + cells.get(i).getColumn());
-                    }
-
-                    if (Cell.calculateManhattanDistance(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]]) <= 2) {
-                        if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getSelectedCell().getWarrior()) && getBattle().getSelectedCell().getWarrior().isValidToMove()) {
-
-                            getBattle().move(coordinate[0], coordinate[1], getBattle().getSelectedCell().getWarrior());
-                        }
-                    }
-                    return;
-                } else if (getBattle().getSelectedCell() != getBattle().getGrid()[coordinate[0]][coordinate[1]] && getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior() != null) {
-                    //TODO ADD CHECK OF RANGE AND MELEE OR HYBRID
-
-                    if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior())) {
-                        System.out.println("YOUR CARD!!!");
-                        getBattle().setSelectedCell(null);
-                        getBattle().setSelectedCard(null);
-                        return;
-                    } else if (getBattle().getSelectedCell().getWarrior().isValidToAttack()) {
-                        if (!isValidAttack(getBattle().getGrid()[coordinate[0]][coordinate[1]], getBattle().getSelectedCell())) {
-                            System.out.println("natoonne bazene!!!");
-                            return;
-                        }
-                        System.out.println("Attack");
-                        Warrior attacker = getBattle().getSelectedCell().getWarrior();
-                        Warrior attacked = getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior();
-                        getBattle().handleAttackCounterDeath(attacker, attacked);
-
-
-                        getBattle().setSelectedCell(null);
-                        getBattle().setSelectedCard(null);
-
-                    }
-
-                    return;
-                }
-            }
-
-
-            getBattle().setSelectedCell(getBattle().getGrid()[coordinate[0]][coordinate[1]]);
-
-            if (getBattle().getSelectedCard() != null) {//TODO SOME MORE CHECKS NEEDED
-
-                try {
-                    getBattle().insertSelectedCardWithCard(getBattle().getSelectedCell().getRow(), getBattle().getSelectedCell().getColumn(), getBattle().getSelectedCard());
-                } catch (MyException e) {
-                    Container.exceptionGenerator(e, stackPane);
-                }
-
-                return;
-            }
-        } else {
-            System.out.println("ANIMATION IS RUNNING");
-        }
-    }
-
-    public void showSpellOnFiled(CardOnField cardOnField, Polygon polygon) {
+    public void showSpellOnFiled(ReplayCardOnField cardOnField, Polygon polygon) {
         ObservableList<Double> points = polygon.getPoints();
         double x = calculateMidXFromPoint(points);
         double y = calculateMidYFromPoint(points);
@@ -563,7 +479,6 @@ public class BattleController {
         int row = battleRecord.getInsertRow();
         int column = battleRecord.getInsertColumn();
 
-        Cell cell = getBattle().getGrid()[row][column];
         Card card = battleRecord.getInsertCard();
         boolean isSpell = battleRecord.isSpellInsert();
 
@@ -575,16 +490,15 @@ public class BattleController {
         }
 
 
-        int[] battleCoordinate = getBattle().findCellCoordinate(cell);
+        int[] battleCoordinate = {row, column};
 
         if (!isSpell) {
             Polygon polygon = rectangles[battleCoordinate[0]][battleCoordinate[1]];
             double x = calculateMidXFromPoint(polygon.getPoints());
             double y = calculateMidYFromPoint(polygon.getPoints());
-            CardOnField cardOnField = new CardOnField();
+            ReplayCardOnField cardOnField = new ReplayCardOnField();
             cardOnField.setCard(card);
             cardsOnField.add(cardOnField);
-            getBattle().setSelectedCard(null);
             sendIdleImageViewToCenterOfCell(cardOnField, polygon);
             if (battleRecord.isFlag()) {
                 removeFlagImage(battleRecord.getFlag());
@@ -598,13 +512,12 @@ public class BattleController {
             fadeTransition.play();
 
         } else {
-            CardOnField cardOnField = new CardOnField();
+            ReplayCardOnField cardOnField = new ReplayCardOnField();
             cardOnField.setCard(card);
-            getBattle().setSelectedCard(null);
+
             Polygon polygon = rectangles[battleCoordinate[0]][battleCoordinate[1]];
             showSpellOnFiled(cardOnField, polygon);
         }
-        updateHand();
 
     }
 
@@ -651,8 +564,8 @@ public class BattleController {
         Warrior attacker = battleRecord.getAttacker();
         Warrior attacked = battleRecord.getAttacked();
 
-        CardOnField cardOnFieldAttacker = CardOnField.findCardOnFieldFromArrayList(cardsOnField, attacker);
-        CardOnField cardOnFieldAttacked = CardOnField.findCardOnFieldFromArrayList(cardsOnField, attacked);
+        ReplayCardOnField cardOnFieldAttacker = ReplayCardOnField.findReplayCardOnFieldFromArrayList(cardsOnField, attacker);
+        ReplayCardOnField cardOnFieldAttacked = ReplayCardOnField.findReplayCardOnFieldFromArrayList(cardsOnField, attacked);
 
         attackSound();
         cardOnFieldAttacker.getImageView().setImage(ImageHolder.findImageInImageHolders(cardOnFieldAttacker.getCard().getAddressOfAttackGif()));
@@ -691,25 +604,7 @@ public class BattleController {
     }
 
 
-    public void insertPlayerHeroes() {
-        getBattle().setPlayingPlayer(getBattle().getPlayer1());
-        getBattle().getPlayingPlayer().setHero(getBattle().getPlayer1().getDeck().getHero());
-        getBattle().insertHero(getBattle().getPlayer1().getDeck().getHero(), getBattle().getGrid()[2][0]);
-        getBattle().getPlayer1().getInGameCards().add(getBattle().getPlayer1().getDeck().getHero());
-
-
-        getBattle().setPlayingPlayer(getBattle().getPlayer2());
-        getBattle().getPlayingPlayer().setHero(getBattle().getPlayer2().getDeck().getHero());
-        getBattle().insertHero(getBattle().getPlayer2().getDeck().getHero(), getBattle().getGrid()[2][8]);
-
-        getBattle().getPlayer2().getInGameCards().add(getBattle().getPlayer2().getDeck().getHero());
-
-
-        getBattle().setPlayingPlayer(getBattle().getPlayer1());
-    }
-
-
-    public void sendIdleImageViewToCenterOfCell(CardOnField cardOnField, Polygon polygon) {
+    public void sendIdleImageViewToCenterOfCell(ReplayCardOnField cardOnField, Polygon polygon) {
         ObservableList<Double> points = polygon.getPoints();
         cardOnField.setImageView(new ImageView(ImageHolder.findImageInImageHolders(cardOnField.getCard().getAddressOfIdleGif())));
         double x = calculateMidXFromPoint(points);
@@ -720,7 +615,7 @@ public class BattleController {
 
     public void removeImageViewFromCell(Card card) {
 
-        CardOnField cardOnField = CardOnField.getCardOnField(card);
+        ReplayCardOnField cardOnField = ReplayCardOnField.getReplayCardOnField(card);
         if (cardOnField != null) {
             anchorPane.getChildren().remove(cardOnField.getImageView());
         }
@@ -750,53 +645,6 @@ public class BattleController {
         animationTimeLine.stop();
     }
 
-
-    public void rectangleOnMouseEnter(MouseEvent event, int i, int j) {
-        Polygon p = (Polygon) event.getSource();
-        if (getBattle().getGrid()[i][j].getWarrior() != null) {
-            attackPower_lbl.setText("" + getBattle().getGrid()[i][j].getWarrior().getActionPower());
-            healthPoint_lbl.setText("" + getBattle().getGrid()[i][j].getWarrior().getHealthPoint());
-        }
-        p.setStyle("-fx-fill: YELLOW");
-    }
-
-
-    public void rectangleOnMouseExited(MouseEvent event, int i, int j) {
-        Polygon p = (Polygon) event.getSource();
-        if (getBattle().getGrid()[i][j].getWarrior() != null) {
-            attackPower_lbl.setText("");
-            healthPoint_lbl.setText("");
-        }
-        p.setStyle("-fx-fill: BLACK; -fx-opacity: 0.5");
-    }
-
-    public void setHandHbox() {
-        getHand().clear();
-        getHand().clear();
-        makeHandView();
-    }
-
-    public void handCardOnMouseClicked(MouseEvent e) {
-        CardForBattle cardForBattle = (CardForBattle) e.getSource();
-        if (cardForBattle.getCard() != null) {
-            if (getBattle().getSelectedCard() != null) {
-                CardForBattle cardForBattleWithCard = CardForBattleController.findCardForBattleWithCard(getHand(), getBattle().getSelectedCard());
-                double rotationgAngle = cardForBattleWithCard.getCardController().getCardSelection_iv().getRotate();
-                cardForBattleWithCard.getCardController().setImageOfCardSelection(battleCardNotSelectedImage);
-                cardForBattleWithCard.getCardController().getCardSelection_iv().setRotate(rotationgAngle);
-            }
-            if (cardForBattle.getCard() == getBattle().getSelectedCard()) {
-                getBattle().setSelectedCard(null);
-            } else {
-
-                getBattle().setSelectedCard(cardForBattle.getCard());
-                double rotationgAngle = cardForBattle.getCardController().getCardSelection_iv().getRotate();
-                cardForBattle.getCardController().setImageOfCardSelection(battleCardSelectedImage);
-                cardForBattle.getCardController().getCardSelection_iv().setRotate(rotationgAngle);
-            }
-            getBattle().setSelectedCell(null);
-        }
-    }
 
     public int[] findPolygonCoordinate(Polygon polygon) {
         int[] result = new int[]{-1, -1};
@@ -879,12 +727,6 @@ public class BattleController {
 //    }
 
 
-    public void makeAccountNames() {
-        p1Acc_lbl.setText(this.getBattle().getPlayer1().getAccount().getUsername());
-        p2Acc_lbl.setText(this.getBattle().getPlayer2().getAccount().getUsername());
-
-    }
-
     public void makeAccountNames(BattleRecord battleRecord) {
         p1Acc_lbl.setText(battleRecord.getFirstPlayerUsername());
         p2Acc_lbl.setText(battleRecord.getSecondPlayerUsername());
@@ -906,12 +748,6 @@ public class BattleController {
         }
     }
 
-    public void handleEndTurnBtn() {
-        if (!isAnimationRunning) {
-            battle.nextTurn();
-        }
-//
-    }
 
     public void endTurnButtonGlow() {
         endTurn_img.setImage(new Image("res/ui/button_end_turn_mine_glow.png"));//TODO Az Image Holder Estefade Nakardam
@@ -922,52 +758,13 @@ public class BattleController {
     }
 
 
-    public void updateHand() {
-        //TODO IT IS THE SAME AS setHandHbox but maybe some of them need more checks. so currently they are two different method.;
-        getHand_hBox().getChildren().clear();
-        getHand().clear();
-        makeHandView();
-    }
-
-    public void makeHandView() {
-        for (int i = 0; i < getBattle().getPlayingPlayer().getHand().size(); i++) {
-            if (getBattle().getPlayingPlayer().getHand().get(i) != null) {
-                CardForBattle cardForBattle = new CardForBattle(getBattle().getPlayingPlayer().getHand().get(i));
-                cardForBattle.getCardController().setBattle(getBattle());
-                getHand().add(cardForBattle);
-                getHand().get(i).setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        handCardOnMouseClicked(event);
-                    }
-                });
-                getHand_hBox().getChildren().add(getHand().get(i));
-            }
-        }
-    }
-
-    public HBox getHand_hBox() {
-        return hand_hBox;
-    }
-
-    public void setHand_hBox(HBox hand_hBox) {
-        this.hand_hBox = hand_hBox;
-    }
-
-    public Battle getBattle() {
-        return battle;
-    }
-
-    public void setBattle(Battle battle) {
-        this.battle = battle;
-    }
-
     public ArrayList<CardForBattle> getHand() {
         return hand;
     }
 
 
     private void gameResultAnimationFromRecord(BattleRecord battleRecord) {
+
         if (!battleRecord.isDraw()) {
             if (!battleRecord.getWinnerUsername().equals(Account.getLoggedAccount().getUsername())) {
                 gameResult_img.setImage(new Image("res/ui/notification_enemy_turn@2x.png"));
@@ -1085,7 +882,7 @@ public class BattleController {
 
 
     public void deleteItemImage(Item item) {
-        CardOnField cardOnField = CardOnField.getCardOnField(item);
+        ReplayCardOnField cardOnField = ReplayCardOnField.getReplayCardOnField(item);
         anchorPane.getChildren().remove(cardOnField.getImageView());
     }
 
@@ -1125,14 +922,14 @@ public class BattleController {
     }
 }
 
-class CardOnField {
+class ReplayCardOnField {
 
-    private static ArrayList<CardOnField> allCardOnFields = new ArrayList<>();
+    private static ArrayList<ReplayCardOnField> allReplayCardOnFields = new ArrayList<>();
     private ImageView imageView;
     private Card card;
 
-    CardOnField() {
-        allCardOnFields.add(this);
+    ReplayCardOnField() {
+        allReplayCardOnFields.add(this);
     }
 
 
@@ -1152,9 +949,9 @@ class CardOnField {
         this.card = card;
     }
 
-    static CardOnField findCardOnFieldFromArrayList(ArrayList<CardOnField> arrayList, Card card) {
+    static ReplayCardOnField findReplayCardOnFieldFromArrayList(ArrayList<ReplayCardOnField> arrayList, Card card) {
         if (card != null && arrayList != null && arrayList.size() > 0) {
-            for (CardOnField cardOnField : arrayList) {
+            for (ReplayCardOnField cardOnField : arrayList) {
                 if (cardOnField.getCard().equals(card)) {
                     return cardOnField;
                 }
@@ -1163,18 +960,20 @@ class CardOnField {
         return null;
     }
 
-    static CardOnField getCardOnField(Card card) {
-        for (CardOnField allCardOnField : allCardOnFields) {
-            if (allCardOnField.getCard().equals(card))
-                return allCardOnField;
+    static ReplayCardOnField getReplayCardOnField(Card card) {
+        for (ReplayCardOnField allReplayCardOnField : allReplayCardOnFields) {
+            if (allReplayCardOnField.getCard().equals(card))
+                return allReplayCardOnField;
         }
         return null;
     }
 
 
-    public static ArrayList<CardOnField> getAllCardOnFields() {
-        return allCardOnFields;
+    public static ArrayList<ReplayCardOnField> getAllReplayCardOnFields() {
+        return allReplayCardOnFields;
     }
+
+
 
 
 }

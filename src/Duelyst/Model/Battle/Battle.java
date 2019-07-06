@@ -369,6 +369,7 @@ public class Battle implements Cloneable {
                                        Flag flag, Item item) {
         BattleRecord battleRecord = new BattleRecord(BattleRecordEnum.MOVE);
 
+        battleRecord.setMoveCard(warrior);
         battleRecord.setMoveCardId(warrior.getCardId());
         battleRecord.setMoveRow(row);
         battleRecord.setMoveColumn(column);

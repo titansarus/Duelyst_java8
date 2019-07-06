@@ -4,6 +4,7 @@ import Duelyst.Client.SendMessage;
 import Duelyst.Exceptions.NotValidDeckException;
 import Duelyst.Model.*;
 import Duelyst.Model.Battle.Battle;
+import Duelyst.Model.Battle.BattleRecord;
 import Duelyst.Model.CommandClasses.*;
 import Duelyst.Utility.ImageHolder;
 import com.jfoenix.controls.*;
@@ -110,6 +111,15 @@ public class MainMenu {
     ImageView title_iv;
     @FXML
     ImageView sound_iv;
+
+    @FXML
+    Pane battleRecord_pane;
+
+    @FXML
+    ScrollPane battleRecord_scrollPane;
+
+    @FXML
+    AnchorPane battleRecord_anchorPane;
 
     private boolean canPlayButtonSound = true;
     private Timeline timeline = new Timeline();
@@ -513,7 +523,7 @@ public class MainMenu {
 
         Battle battle = new Battle(Account.getLoggedAccount(), account, gameMode, gameGoal, bc);
         bc.setHandHbox();
-       // bc.makeAccountNames();
+        // bc.makeAccountNames();
 
         bc.runTimelines();
         battle.insertPlayerHeroes();
@@ -543,7 +553,7 @@ public class MainMenu {
         bc.runTimelines();
         ai.setBattleController(bc);
         battle.insertPlayerHeroes();
-      //  bc.insertPlayerHeroes();
+        //  bc.insertPlayerHeroes();
         stopTimeline();
         Container.addController(fxmlLoader);
         Container.runNextScene(root, BATTLE);
@@ -983,6 +993,60 @@ public class MainMenu {
         showBattleHistory();
     }
 
+    public void handleBattleRecordButton() {
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1), battleRecord_pane);
+        tt.setFromY(-650);
+        tt.setToY(0);
+        tt.play();
+
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), battleRecord_pane);
+        ft.setFromValue(0);
+        ft.setToValue(1);
+        anchorPane.setOpacity(0.5);
+        anchorPane.setDisable(true);
+        ft.play();
+        showBattleRecord();
+    }
+
+    public void showBattleRecord() {
+        for (int i = 0; i < BattleRecord.getBattleRecords().size(); i++) {
+            Label label = new Label();
+            label.setText(i + " battle Record");
+            battleRecord_anchorPane.getChildren().add(label);
+            battleRecord_pane.getChildren().add(label);
+            label.setOnMouseClicked(event -> {
+
+                String s = label.getText().toString();
+                String[] s1 = s.split(" ");
+                int i1 = Integer.parseInt(s1[0]);
+                ArrayList<BattleRecord> battleRecords = BattleRecord.getBattleRecords().get(i1);
+                gotoBattleReplay(battleRecords);
+
+
+            });
+        }
+    }
+
+    public void gotoBattleReplay(ArrayList<BattleRecord> battleRecord)
+    {
+        Pane root = null;
+        FXMLLoader fxmlLoader = null;
+        try {
+            fxmlLoader = new FXMLLoader(getClass().getResource("../View/FXMLFiles/BattleReplay.fxml"));
+            root = fxmlLoader.load();
+            int i = 0;
+            System.out.println(i);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        BattleReplayController bc = fxmlLoader.getController();
+        bc.battleRecords = battleRecord;
+        bc.runTimelines();
+
+        Container.addController(fxmlLoader);
+        Container.runNextScene(root, BATTLE);
+    }
+
     public void handleBattleHistoryCloseButton() {
         FadeTransition ft = new FadeTransition(Duration.millis(1000), battleHistory_pane);
         ft.setFromValue(1);
@@ -992,6 +1056,22 @@ public class MainMenu {
             anchorPane.setDisable(false);
             battleHistory_pane.setOpacity(0);
             TranslateTransition tt = new TranslateTransition(Duration.millis(1), battleHistory_pane);
+            tt.setFromY(0);
+            tt.setToY(-650);
+            tt.play();
+        });
+        ft.play();
+    }
+
+    public void handleBattleRecordCloseButton() {
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), battleRecord_pane);
+        ft.setFromValue(1);
+        ft.setToValue(0);
+        ft.setOnFinished(event -> {
+            anchorPane.setOpacity(1);
+            anchorPane.setDisable(false);
+            battleRecord_pane.setOpacity(0);
+            TranslateTransition tt = new TranslateTransition(Duration.millis(1), battleRecord_pane);
             tt.setFromY(0);
             tt.setToY(-650);
             tt.play();

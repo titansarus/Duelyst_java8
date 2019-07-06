@@ -29,6 +29,7 @@ public class BattleRecord {
 
     //FOR MOVE
     private String moveCardId;
+    private Card moveCard;
     private int fromRow, fromColumn;
     private int moveRow, moveColumn;
     private boolean isMoveHoldFlag = false;
@@ -477,6 +478,14 @@ public class BattleRecord {
 
     public void setSecondPlayerAccount(Account secondPlayerAccount) {
         this.secondPlayerAccount = secondPlayerAccount;
+    }
+
+    public Card getMoveCard() {
+        return moveCard;
+    }
+
+    public void setMoveCard(Card moveCard) {
+        this.moveCard = moveCard;
     }
 }
 
