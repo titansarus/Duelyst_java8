@@ -208,13 +208,11 @@ public class ClientHandler implements Runnable {
     }
 
     private void handleAuctionRequest(ShopCommand shopCommand) {
-        System.out.println("yoyo1 -----------------------------------");
         Card card = null;
         for (Card c :
                 ServerShop.getInstance().getAuctionCards()) {
             if (c.getCardId().equals(shopCommand.getAuctionCard().getCardId())) {
                 card = c;
-                System.out.println("card founded");
             }
         }
         if (card != null) {
