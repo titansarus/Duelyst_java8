@@ -732,111 +732,63 @@ public class MainMenu {
         this.multiplayerModeGoal = multiplayerModeGoal;
     }
 
-
     private void multiGoalSelection() {
-
-        JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
-        jfxDialogLayout.setHeading(new Text(CHOOSE_GAME_MODE));
-        jfxDialogLayout.setBody(new Text(CHOOSE_GAME_MODE));
-        JFXButton cancel = new JFXButton();
-        JFXButton killHero = new JFXButton();
-        JFXButton captureFlag = new JFXButton();
-        JFXButton holdFlag = new JFXButton();
-
-        cancel.setText(CANCEL);
-        killHero.setText(KILL_HERO);
-        captureFlag.setText(CAPTURE_FLAG);
-        holdFlag.setText(HOLD_FLAG);
-        captureFlag.setStyle(MODE_SELECTION_BUTTON_CSS);
-        cancel.setStyle(DEFAULT_BUTTON_CSS);
-        jfxDialogLayout.setActions(cancel, killHero, captureFlag, holdFlag);
-        killHero.setStyle(MODE_SELECTION_BUTTON_CSS);
-        holdFlag.setStyle(MODE_SELECTION_BUTTON_CSS);
-
-        JFXDialog jfxDialog = new JFXDialog(stackPane, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
-
-        killHero.setOnAction(event -> {
-            setMultiplayerModeGoal(KILL_HERO_INT);
-            System.out.println(getMultiplayerModeGoal());
-            Account account = chooseYourOpponent();
-//            if (selectedAccoutForMultiPlayer != null) {
-            System.out.println(account.getUsername() + "<<--------------------------------------------");
-            createBattle(Account.getLoggedAccount(), GameMode.MULTI_PLAYER, GameGoal.KILL_HERO);
-//            }
-            jfxDialog.close();
-
-        });
-
-        captureFlag.setOnAction(event -> {
-            setMultiplayerModeGoal(CAPTURE_FLAG_INT);
-            System.out.println(getMultiplayerModeGoal());
-            Account account = chooseYourOpponent();
-//            if (selectedAccoutForMultiPlayer != null) {
-            createBattle(Account.getLoggedAccount(), GameMode.MULTI_PLAYER, GameGoal.COLLECT_FLAG);
-//            }
-            jfxDialog.close();
-
-
-        });
-        holdFlag.setOnAction(event -> {
-            setMultiplayerModeGoal(HOLD_FLAG_INT);
-            System.out.println(getMultiplayerModeGoal());
-            Account account = chooseYourOpponent();
-//            if (selectedAccoutForMultiPlayer != null) {
-            createBattle(Account.getLoggedAccount(), GameMode.MULTI_PLAYER, GameGoal.HOLD_FLAG);
-//            }
-            jfxDialog.close();
-        });
-
-        cancel.setOnAction(event -> jfxDialog.close());
-
-        jfxDialog.show();
+        Pane root = null;
+        FXMLLoader fxmlLoader = null;
+        try {
+            fxmlLoader = new FXMLLoader(getClass().getResource("../View/FXMLFiles/MultiPlayer.fxml"));
+            root = fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Container.addController(fxmlLoader);
+        Container.runNextScene(root, MAIN_MENU);
     }
 
-    private Account chooseYourOpponent() {
-        final Account[] selectedAccount = {null};
-        JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
-        jfxDialogLayout.setHeading(new Text(CHOOSE_OPPONENT_TITLE));
-        jfxDialogLayout.setBody(new Text(CHOOSE_OPPNENT_BODY));
-        JFXButton cancel = new JFXButton();
-        cancel.setText(CANCEL);
-        cancel.setStyle(DEFAULT_BUTTON_CSS);
-
-
-        ArrayList<JFXButton> jfxButtons = new ArrayList<>();
-        jfxButtons.add(cancel);
-        for (Account account :
-                Account.getAccounts()) {
-            if (account.getUsername().equals(Account.getLoggedAccount().getUsername()))
-                continue;
-            if (account.getCardCollection() != null && account.getCardCollection().getMainDeck() != null && Deck.validateDeck(account.getCardCollection().getMainDeck())) {
-                JFXButton jfxButton = new JFXButton(account.getUsername());
-                jfxButton.setStyle(DEFAULT_BUTTON_CSS);
-                jfxButtons.add(jfxButton);
-            }
-        }
-
-        jfxDialogLayout.setActions(jfxButtons);
-        for (JFXButton j :
-                jfxButtons) {
-            j.setOnAction(event -> {
-                for (Account a :
-                        Account.getAccounts()) {
-                    if (a.getUsername().equals(j.getText())) {
-                        selectedAccount[0] = a;
-                        selectedAccoutForMultiPlayer = a;
-                        System.out.println(selectedAccount[0].getUsername());
-                    }
-                }
-            });
-        }
-
-        JFXDialog jfxDialog = new JFXDialog(stackPane, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
-        cancel.setOnAction(event -> jfxDialog.close());
-
-        jfxDialog.show();
-        return selectedAccount[0];
-    }
+//    private Account chooseYourOpponent() {
+//        final Account[] selectedAccount = {null};
+//        JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
+//        jfxDialogLayout.setHeading(new Text(CHOOSE_OPPONENT_TITLE));
+//        jfxDialogLayout.setBody(new Text(CHOOSE_OPPNENT_BODY));
+//        JFXButton cancel = new JFXButton();
+//        cancel.setText(CANCEL);
+//        cancel.setStyle(DEFAULT_BUTTON_CSS);
+//
+//
+//        ArrayList<JFXButton> jfxButtons = new ArrayList<>();
+//        jfxButtons.add(cancel);
+//        for (Account account :
+//                Account.getAccounts()) {
+//            if (account.getUsername().equals(Account.getLoggedAccount().getUsername()))
+//                continue;
+//            if (account.getCardCollection() != null && account.getCardCollection().getMainDeck() != null && Deck.validateDeck(account.getCardCollection().getMainDeck())) {
+//                JFXButton jfxButton = new JFXButton(account.getUsername());
+//                jfxButton.setStyle(DEFAULT_BUTTON_CSS);
+//                jfxButtons.add(jfxButton);
+//            }
+//        }
+//
+//        jfxDialogLayout.setActions(jfxButtons);
+//        for (JFXButton j :
+//                jfxButtons) {
+//            j.setOnAction(event -> {
+//                for (Account a :
+//                        Account.getAccounts()) {
+//                    if (a.getUsername().equals(j.getText())) {
+//                        selectedAccount[0] = a;
+//                        selectedAccoutForMultiPlayer = a;
+//                        System.out.println(selectedAccount[0].getUsername());
+//                    }
+//                }
+//            });
+//        }
+//
+//        JFXDialog jfxDialog = new JFXDialog(stackPane, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
+//        cancel.setOnAction(event -> jfxDialog.close());
+//
+//        jfxDialog.show();
+//        return selectedAccount[0];
+//    }
 
     private void singleModeSelection() {
         JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
