@@ -7,6 +7,7 @@ import javafx.scene.layout.BorderPane;
 
 public class BattleCommand extends CommandClass {
 
+    private Account myAccount;
     private BattleCommandsKind battleCommandsKind;
     private int srcRow, srcCol;
     private int desRow, desCol;
@@ -35,8 +36,9 @@ public class BattleCommand extends CommandClass {
         this.firstPlayer = firstPlayer;
     }
 
-    public void endTurn() {
+    public void endTurn(Account myAccount) {
         battleCommandsKind = BattleCommandsKind.END_TURN;
+        this.myAccount = myAccount;
     }
 
     public void start(GameGoal gameGoal, Account account) {
@@ -45,25 +47,28 @@ public class BattleCommand extends CommandClass {
         this.applicatorAccount = account;
     }
 
-    public void move(int srcRow, int srcCol, int desRow, int desCol) {
+    public void move(int srcRow, int srcCol, int desRow, int desCol, Account myAccount) {
         battleCommandsKind = BattleCommandsKind.MOVE;
         setSrcRow(srcRow);
         setSrcCol(srcCol);
         setDesRow(desRow);
         setDesCol(desCol);
+        this.myAccount = myAccount;
     }
 
-    public void attack(String attackerCardId, String defenderCardId) {
+    public void attack(String attackerCardId, String defenderCardId, Account myAccount) {
         battleCommandsKind = BattleCommandsKind.ATTACK;
         setAttackerCardId(attackerCardId);
         setDefenderCardId(defenderCardId);
+        this.myAccount = myAccount;
     }
 
-    public void insert(String insertSelectedCardId, int insertRow, int insertCol) {
+    public void insert(String insertSelectedCardId, int insertRow, int insertCol, Account myAccount) {
         battleCommandsKind = BattleCommandsKind.INSERT;
         setInsertSelectedCardId(insertSelectedCardId);
         setInsertRow(insertRow);
         setInsertCol(insertCol);
+        this.myAccount = myAccount;
     }
 
     public int getSrcRow() {
@@ -188,5 +193,13 @@ public class BattleCommand extends CommandClass {
 
     public void setFirstPlayer(boolean firstPlayer) {
         this.firstPlayer = firstPlayer;
+    }
+
+    public Account getMyAccount() {
+        return myAccount;
+    }
+
+    public void setMyAccount(Account myAccount) {
+        this.myAccount = myAccount;
     }
 }

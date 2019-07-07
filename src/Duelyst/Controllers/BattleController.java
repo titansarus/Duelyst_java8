@@ -1,9 +1,12 @@
 package Duelyst.Controllers;
 
+import Duelyst.Client.SendMessage;
 import Duelyst.Exceptions.MyException;
 import Duelyst.Model.Account;
 import Duelyst.Model.Battle.*;
 import Duelyst.Model.Card;
+import Duelyst.Model.CommandClasses.BattleCommand;
+import Duelyst.Model.GameMode;
 import Duelyst.Model.Items.*;
 import Duelyst.Model.Warrior;
 import Duelyst.Utility.ImageHolder;
@@ -947,10 +950,15 @@ public class BattleController {
     }
 
     public void handleEndTurnBtn() {
+
         if (!isAnimationRunning) {
             battle.nextTurn();
+            if (battle.getGameMode().equals(GameMode.MULTI_PLAYER)) {
+                BattleCommand battleCommand = new BattleCommand();
+                battleCommand.endTurn(Account.getLoggedAccount());
+                SendMessage.getSendMessage().sendMessage(battleCommand);
+            }
         }
-//
     }
 
     public void endTurnButtonGlow() {
