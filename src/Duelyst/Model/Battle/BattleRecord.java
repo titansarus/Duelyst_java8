@@ -80,6 +80,7 @@ public class BattleRecord {
         Iteration:
         for (int i = 0; i < 1000; i++) {
             String address = "saved/BattleRecords/" + i + ".json";
+            new File("saved/BattleRecords").mkdirs();
             boolean fileExist = new File(address).isFile();
             if (fileExist) {
                 continue;
