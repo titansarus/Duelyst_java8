@@ -155,11 +155,24 @@ public class BattleController {
         runSlowTimeline();
         runVeryFastTimeLine();
         runAnimationTimeline();
-    }
-    private void runHandDestroyerTimeline()
-    {
-        handDestroyerTimeline = new Timeline();
+        runHandDestroyerTimeline();
 
+    }
+
+    private void runHandDestroyerTimeline() {
+        if (getBattle().getGameMode().equals(GameMode.MULTI_PLAYER)) {
+            System.out.println("HAND DESTROYER_BEFORE");
+            handDestroyerTimeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
+                if (!getBattle().getPlayingPlayer().getAccount().getUsername().equals(Account.getLoggedAccount().getUsername())) {
+                    System.out.println("HAND DESTROYER_AFTER");
+                    hand_hBox.getChildren().clear();
+                }
+
+
+            }), new KeyFrame(Duration.millis(345)));
+            handDestroyerTimeline.setCycleCount(Animation.INDEFINITE);
+            handDestroyerTimeline.play();
+        }
     }
 
 
@@ -539,7 +552,7 @@ public class BattleController {
                     if (Cell.calculateManhattanDistance(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]]) <= 2) {
                         if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getSelectedCell().getWarrior()) && getBattle().getSelectedCell().getWarrior().isValidToMove()) {
 
-                            getBattle().move(coordinate[0], coordinate[1], getBattle().getSelectedCell().getWarrior(),false);
+                            getBattle().move(coordinate[0], coordinate[1], getBattle().getSelectedCell().getWarrior(), false);
                         }
                     }
                     return;
