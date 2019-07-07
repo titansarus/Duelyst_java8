@@ -571,11 +571,11 @@ public class Battle implements Cloneable {
 
     public int attack(Warrior attacker, Warrior attackedCard, boolean isFromCounterAttack) {
 
-        Cell cell = getCellOfWarrior(attackedCard);
-        findValidCell(KindOfActionForValidCells.ATTACK);
-        if (!validCells.contains(cell)) {
-            return  -10000;
-        }
+//        Cell cell = getCellOfWarrior(attackedCard);
+//        findValidCell(KindOfActionForValidCells.ATTACK);
+//        if (!validCells.contains(cell)) {
+//            //TODO not attack
+//        }
 
         attackedCard.decreaseHealthPoint(attacker.getActionPower() - attackedCard.getShield());//TODO CHECK FOR BUFF
         this.attackedCard = attackedCard;
@@ -611,12 +611,13 @@ public class Battle implements Cloneable {
 
         setSelectedCell(null);
         if (!isFromCounterAttack) {
+            Cell cell = getCellOfWarrior(attackedCard);
             setSelectedCell(cell);
-            Cell cell1 = getCellOfWarrior(attacker);
+            cell = getCellOfWarrior(attacker);
             findValidCell(KindOfActionForValidCells.ATTACK);
-            if (!validCells.contains(cell1)) {
+            if (!validCells.contains(cell)) {
                 setSelectedCell(null);
-                //TODO not counter attack
+                return INVALID_COUNTER_WITH_BUFF;
             }
         }
         //TODO CHECK FOR COUNTER ATTACK AND BUFF AND A LOT OF THINGS
@@ -957,15 +958,15 @@ public class Battle implements Cloneable {
             case ALL_OF_FRIEND:
                 getAllCells(cells);
         }
-//        System.out.println("find valid cell for spell");
-//        for (:
-//             ) {reza
+        System.out.println("find valid cell for spell");
+        for (Cell c :
+                cells) {
+            System.out.println(c.getRow() + "  :  " + c.getColumn() + " <<<-----------------------");
+        }
 
-//    }
+        setValidCells(cells);
 
-    setValidCells(cells);
-
-}
+    }
 
     private void getAllCells(ArrayList<Cell> cells) {
         for (Cell[] cells1 :
