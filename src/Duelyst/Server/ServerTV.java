@@ -6,24 +6,26 @@ import Duelyst.Model.Battle.BattleRecord;
 import java.util.ArrayList;
 
 public class ServerTV {
-    private static ArrayList<ServerTV> serverTVS = new ArrayList<>();
+    private static ArrayList<ServerTV> finishedGames = new ArrayList<>();
+    private static ArrayList<ServerTV> currentGames = new ArrayList<>();
     private ArrayList<BattleRecord> battleRecords = new ArrayList<>();
-
     private Account account1;
     private Account account2;
 
     public ServerTV(Account account1, Account account2) {
         this.account1 = account1;
         this.account2 = account2;
+        currentGames.add(this);
     }
 
-    public static ArrayList<ServerTV> getServerTVS() {
-        return serverTVS;
+    public static ArrayList<ServerTV> getFinishedGames() {
+        return finishedGames;
     }
 
-    public static void setServerTVS(ArrayList<ServerTV> serverTVS) {
-        ServerTV.serverTVS = serverTVS;
+    public static void setFinishedGames(ArrayList<ServerTV> finishedGames) {
+        ServerTV.finishedGames = finishedGames;
     }
+
 
     public ArrayList<BattleRecord> getBattleRecords() {
         return battleRecords;
@@ -47,5 +49,13 @@ public class ServerTV {
 
     public void setAccount2(Account account2) {
         this.account2 = account2;
+    }
+
+    public static ArrayList<ServerTV> getCurrentGames() {
+        return currentGames;
+    }
+
+    public static void setCurrentGames(ArrayList<ServerTV> currentGames) {
+        ServerTV.currentGames = currentGames;
     }
 }
