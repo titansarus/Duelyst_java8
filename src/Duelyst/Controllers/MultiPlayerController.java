@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -44,6 +45,8 @@ public class MultiPlayerController {
     public Label globalChat_lbl;
     public Pane chatRoom_pane;
     public ScrollPane chatRoom_Scroll;
+    public ImageView tv_img;
+    public Pane runningBattles_pane;
     Timeline slowTimeline;
 
 
@@ -171,6 +174,7 @@ public class MultiPlayerController {
         ft4.setToValue(1);
         tt1.setOnFinished(event -> ft4.play());
 
+
         ft1.setOnFinished(event -> centerCircleAnimation(event1 -> {
             tt1.play();
             tt2.play();
@@ -275,6 +279,36 @@ public class MultiPlayerController {
         searchingPaneAnimation();
 
     }
+
+    public void tvImageGlow(){
+        InnerShadow innerShadow = new InnerShadow(10,Color.GOLD);
+        innerShadow.setWidth(40);
+        innerShadow.setHeight(40);
+        tv_img.setEffect(innerShadow);
+    }
+
+    public void tvImageGlowDisappear(){
+        tv_img.setEffect(null);
+    }
+
+    public void handleTvImage(){
+
+
+        anchorPane.setDisable(true);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1000),runningBattles_pane);
+        tt.setFromY(-600);
+        tt.setToY(0);
+        tt.play();
+    }
+
+    public void handleTvCancelButton(){
+        TranslateTransition tt = new TranslateTransition(Duration.millis(700),runningBattles_pane);
+        tt.setFromY(runningBattles_pane.getTranslateY());
+        tt.setToY(-600);
+        tt.setOnFinished(event -> anchorPane.setDisable(false));
+        tt.play();
+    }
+
 
     public void killHeroButtonGlow() {
         KillHero_img.setImage(new Image("res/ui/button_icon_left_glow.png"));

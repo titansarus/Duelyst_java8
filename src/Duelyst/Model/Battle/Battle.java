@@ -51,11 +51,6 @@ public class Battle implements Cloneable {
     public static final int VALID_COUNTER_WITH_BUFF = 1, VALID_COUNTER_WITHOUT_BUFF = 2, INVALID_COUNTER_WITH_BUFF = 3, INVALID_COUNTER_WITHOUT_BUFF = 4;
 
 
-    public static Battle deepClone(Battle battle) {
-        Cloner cloner = new Cloner();
-        return cloner.deepClone(battle);
-    }
-
     public void makeJsonOfBattleRecord()
     {
         BattleRecord.makeJsonOfBattleRecord(battleRecords);
