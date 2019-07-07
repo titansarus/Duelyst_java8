@@ -4202,7 +4202,8 @@
           }
         ],
         "mainDeck": "@root.8.cardCollection.decks.0",
-        "customCards": []
+        "customCards": [],
+        "selectedCard": "@root.8.cardCollection.cards.0"
       },
       "username": "rez",
       "password": "rez",

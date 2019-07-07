@@ -273,16 +273,32 @@ public class Card implements Cloneable {
         return addressOfIdleGif;
     }
 
+    public void setAddressOfRunGif(String addressOfRunGif) {
+        this.addressOfRunGif = addressOfRunGif;
+    }
+
     public String getAddressOfRunGif() {
         return addressOfRunGif;
+    }
+
+    public void setAddressOfAttackGif(String addressOfAttackGif) {
+        this.addressOfAttackGif = addressOfAttackGif;
     }
 
     public String getAddressOfAttackGif() {
         return addressOfAttackGif;
     }
 
+    public void setAddressOfGetDamageGif(String addressOfGetDamageGif) {
+        this.addressOfGetDamageGif = addressOfGetDamageGif;
+    }
+
     public String getAddressOfGetDamageGif() {
         return addressOfGetDamageGif;
+    }
+
+    public void setAddressOfDeathGif(String addressOfDeathGif) {
+        this.addressOfDeathGif = addressOfDeathGif;
     }
 
     public String getAddressOfDeathGif() {

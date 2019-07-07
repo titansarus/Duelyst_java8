@@ -15,9 +15,9 @@ public class ServerShop {
     private ArrayList<Card> cards = new ArrayList<>();
     private ArrayList<String> numberOfCards = new ArrayList<>();
     private ArrayList<Card> auctionCards = new ArrayList<>();
-    private ArrayList<CustomCardCommand> customCards = new ArrayList<>();
     private static ServerShop instance;
     private ArrayList<Card> finishedCard;
+    private ArrayList<CustomCardCommand> customCardCommands = new ArrayList<>();
 
     private Card selectedCard = null;
 
@@ -150,8 +150,7 @@ public class ServerShop {
         auctionCards.remove(auctionCard);
     }
 
-
-    public ArrayList<CustomCardCommand> getCustomCards() {
-        return customCards;
+    public ArrayList<CustomCardCommand> getCustomCardCommands() {
+        return customCardCommands;
     }
 }

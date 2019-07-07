@@ -89,6 +89,12 @@ public class CardCreatorController {
 
     private String imageAddress = NO_ADDRESS, idleGifAddress = NO_ADDRESS, attackGifAddress = NO_ADDRESS, deathGifAddress = NO_ADDRESS, hitGifAddress = NO_ADDRESS, runGifAddress = NO_ADDRESS;
 
+    private File imageFile;
+    private File idleFile;
+    private File runFile;
+    private File attackFile;
+    private File hitFile;
+    private File deathFile;
 
     @FXML
     public void initialize() {
@@ -204,6 +210,7 @@ public class CardCreatorController {
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image files", "*.png"));
 
         File file = fileChooser.showOpenDialog(null);
+        imageFile = file;
 
         if (file != null) {
             System.out.println(file.getAbsolutePath());
@@ -221,6 +228,7 @@ public class CardCreatorController {
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Gif files", "*.gif"));
 
         File file = fileChooser.showOpenDialog(null);
+        idleFile = file;
 
         if (file != null) {
             System.out.println(file.getAbsolutePath());
@@ -238,6 +246,7 @@ public class CardCreatorController {
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Gif files", "*.gif"));
 
         File file = fileChooser.showOpenDialog(null);
+        runFile = file;
 
         if (file != null) {
             System.out.println(file.getAbsolutePath());
@@ -255,6 +264,7 @@ public class CardCreatorController {
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Gif files", "*.gif"));
 
         File file = fileChooser.showOpenDialog(null);
+        attackFile = file;
 
         if (file != null) {
             System.out.println(file.getAbsolutePath());
@@ -272,6 +282,7 @@ public class CardCreatorController {
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Gif files", "*.gif"));
 
         File file = fileChooser.showOpenDialog(null);
+        deathFile = file;
 
         if (file != null) {
             System.out.println(file.getAbsolutePath());
@@ -289,6 +300,7 @@ public class CardCreatorController {
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Gif files", "*.gif"));
 
         File file = fileChooser.showOpenDialog(null);
+        hitFile = file;
 
         if (file != null) {
             System.out.println(file.getAbsolutePath());
@@ -339,12 +351,12 @@ public class CardCreatorController {
             System.out.println(attackKind);
 
             SendMessage.getSendMessage().sendMessage(new CustomCardCommand(hero,
-                    new File(new File("src/" + hero.getAddressOfImage().substring(2)).toURI().toString()),
-                    new File(new File("src/" + hero.getAddressOfIdleGif().substring(2)).toURI().toString()),
-                    new File(new File("src/" + hero.getAddressOfRunGif().substring(2)).toURI().toString()),
-                    new File(new File("src/" + hero.getAddressOfAttackGif().substring(2)).toURI().toString()),
-                    new File(new File("src/" + hero.getAddressOfGetDamageGif().substring(2)).toURI().toString()),
-                    new File(new File("src/" + hero.getAddressOfDeathGif().substring(2)).toURI().toString())));
+                    imageFile,
+                    idleFile,
+                    runFile,
+                    attackFile,
+                    hitFile,
+                    deathFile));
 
             Shop.getInstance().getCards().add(hero);
 
@@ -381,14 +393,15 @@ public class CardCreatorController {
                     imagesAddress.get(5)
             );
             System.out.println(attackKind);
-
+            File file = new File(new File("src/" + minion.getAddressOfImage().substring(2)).toURI().toString());
+            System.out.println(file.getName());
             SendMessage.getSendMessage().sendMessage(new CustomCardCommand(minion,
-                    new File(new File("src/" + minion.getAddressOfImage().substring(2)).toURI().toString()),
-                    new File(new File("src/" + minion.getAddressOfIdleGif().substring(2)).toURI().toString()),
-                    new File(new File("src/" + minion.getAddressOfRunGif().substring(2)).toURI().toString()),
-                    new File(new File("src/" + minion.getAddressOfAttackGif().substring(2)).toURI().toString()),
-                    new File(new File("src/" + minion.getAddressOfGetDamageGif().substring(2)).toURI().toString()),
-                    new File(new File("src/" + minion.getAddressOfDeathGif().substring(2)).toURI().toString())));
+                    imageFile,
+                    idleFile,
+                    runFile,
+                    attackFile,
+                    hitFile,
+                    deathFile));
 
             Shop.getInstance().getCards().add(minion);
         } catch (Exception e) {
@@ -399,11 +412,11 @@ public class CardCreatorController {
     public ArrayList<String> createImagesInFolderAndGiveAddress(String nameOfCard) {
         ArrayList<String> result = new ArrayList<>();
 
-        String address = "./src/res/Accounts/" + Account.getLoggedAccount().getUsername() + "/Cards";
+        String address = "./src/res/Characters/UnitsCreated/CustomCard";
 
         new File(address).mkdirs();
-        createImageInGivenAddress(address + "/" + nameOfCard + "_image.png", getImageAddress());
 
+        createImageInGivenAddress(address + "/" + nameOfCard + "_image.png", getImageAddress());
         createImageInGivenAddress(address + "/" + nameOfCard + "_idle.gif", getIdleGifAddress());
         createImageInGivenAddress(address + "/" + nameOfCard + "_run.gif", getRunGifAddress());
         createImageInGivenAddress(address + "/" + nameOfCard + "_attack.gif", getAttackGifAddress());
@@ -411,36 +424,36 @@ public class CardCreatorController {
         createImageInGivenAddress(address + "/" + nameOfCard + "_hit.gif", getHitGifAddress());
 
         if (!getImageAddress().equals(NO_ADDRESS)) {
-            result.add("./res/Accounts/" + Account.getLoggedAccount().getUsername() + "/Cards" + "/" + nameOfCard + "_image.png");
+            result.add("./res/Characters/UnitsCreated/CustomCard" + "/" + nameOfCard + "_image.png");
         } else {
             result.add("./res/Characters/generals/general_f1.png");
         }
 
         if (!getIdleGifAddress().equals(NO_ADDRESS)) {
-            result.add("./res/Accounts/" + Account.getLoggedAccount().getUsername() + "/Cards" + "/" + nameOfCard + "_idle.gif");
+            result.add("./res/Characters/UnitsCreated/CustomCard" + "/" + nameOfCard + "_idle.gif");
         } else {
             result.add("./res/gifs/f1_altgeneral/idle_t.gif");
         }
 
         if (!getRunGifAddress().equals(NO_ADDRESS)) {
-            result.add("./res/Accounts/" + Account.getLoggedAccount().getUsername() + "/Cards" + "/" + nameOfCard + "_run.gif");
+            result.add("./res/Characters/UnitsCreated/CustomCard" + "/" + nameOfCard + "_run.gif");
         } else {
             result.add("./res/gifs/f1_altgeneral/run_t.gif");
         }
 
         if (!getAttackGifAddress().equals(NO_ADDRESS)) {
-            result.add("./res/Accounts/" + Account.getLoggedAccount().getUsername() + "/Cards" + "/" + nameOfCard + "_attack.gif");
+            result.add("./res/Characters/UnitsCreated/CustomCard" + "/" + nameOfCard + "_attack.gif");
         } else {
             result.add("./res/gifs/f1_altgeneral/attack_t.gif");
         }
         if (!getHitGifAddress().equals(NO_ADDRESS)) {
-            result.add("./res/Accounts/" + Account.getLoggedAccount().getUsername() + "/Cards" + "/" + nameOfCard + "_hit.gif");
+            result.add("./src/res/Characters/UnitsCreated/CustomCard" + "/" + nameOfCard + "_hit.gif");
         } else {
-            result.add("./res/gifs/f1_altgeneral/hit_t.gif");
+            result.add("./gifs/f1_altgeneral/hit_t.gif");
         }
 
         if (!getDeathGifAddress().equals(NO_ADDRESS)) {
-            result.add("./res/Accounts/" + Account.getLoggedAccount().getUsername() + "/Cards" + "/" + nameOfCard + "_death.gif");
+            result.add("./res/Characters/UnitsCreated/CustomCard" + "/" + nameOfCard + "_death.gif");
         } else {
             result.add("./res/gifs/f1_altgeneral/death_t.gif");
         }

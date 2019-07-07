@@ -357,6 +357,7 @@ public class BattleController {
         tt.setFromY(srcy);
         tt.setToX(x);
         tt.setToY(y);
+        System.out.println(cardOnField.getCard().getAddressOfIdleGif()+  "===============");
         tt.setOnFinished(event1 -> {
             cardOnField.getImageView().setImage(new Image(cardOnField.getCard().getAddressOfIdleGif()));
             if (battleRecord.isMoveCollectibleFlag() || battleRecord.isMoveHoldFlag()) {
