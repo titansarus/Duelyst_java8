@@ -107,7 +107,45 @@ public class ClientHandler implements Runnable {
                 break;
         }
     }
-    private void startBattle(BattleCommand battleCommand){
+
+    private void startBattle(BattleCommand battleCommand) {
+        switch (battleCommand.getGameGoal()) {
+            case HOLD_FLAG:
+                startOrSetHoldFlag(battleCommand);
+                break;
+            case COLLECT_FLAG:
+                startOrSetCollectFlag(battleCommand);
+                break;
+            case KILL_HERO:
+                startOrSetKillHero(battleCommand);
+                break;
+        }
+    }
+
+    private void startOrSetKillHero(BattleCommand battleCommand) {
+        if (killHeroApplicator == null) {
+            killHeroApplicator = battleCommand.getApplicatorAccount();
+        }
+        Account account = killHeroApplicator;
+        killHeroApplicator = null;
+        
+    }
+
+    private void startOrSetCollectFlag(BattleCommand battleCommand) {
+        if (collectFlagApplicator == null) {
+            collectFlagApplicator = battleCommand.getApplicatorAccount();
+        }
+        Account account = collectFlagApplicator;
+        collectFlagApplicator = null;
+
+    }
+
+    private void startOrSetHoldFlag(BattleCommand battleCommand) {
+        if (holdFlagApplicator == null) {
+            holdFlagApplicator = battleCommand.getApplicatorAccount();
+        }
+        Account account = holdFlagApplicator;
+        holdFlagApplicator = null;
 
     }
 

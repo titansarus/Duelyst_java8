@@ -179,7 +179,7 @@ public class MultiPlayerController {
             @Override
             public void handle(ActionEvent event) {
                 BattleCommand battleCommand = new BattleCommand();
-                battleCommand.start(gameGoal);
+                battleCommand.start(gameGoal, Account.getLoggedAccount());
                 SendMessage.getSendMessage().sendMessage(battleCommand);
             }
         });
