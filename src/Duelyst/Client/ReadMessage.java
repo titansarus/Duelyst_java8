@@ -87,9 +87,10 @@ public class ReadMessage extends Thread {
                 break;
         }
     }
-    private void handleStartBattle(BattleCommand battleCommand){
+
+    private void handleStartBattle(BattleCommand battleCommand) {
         MultiPlayerController multiPlayerController = (MultiPlayerController) Container.controllerClass;
-        multiPlayerController.gotoBattle(battleCommand.getOpponent(),battleCommand.getGameGoal(),battleCommand.isFirstPlayer());
+        multiPlayerController.gotoBattle(battleCommand.getOpponent(), battleCommand.getGameGoal(), battleCommand.isFirstPlayer());
     }
 
     private void handleTVCommand(tvCommand tvCommand) {
@@ -100,23 +101,35 @@ public class ReadMessage extends Thread {
     private void handleCustomCardSprites(CustomCardCommand customCardCommand) {
         System.out.println("Custom Card Created!");
 
-        String address = "./src/res/Characters/UnitsCreated/CustomCard/";
+        String address = "./src/res/Characters/UnitsCreated/CustomCard";
         new File(address).mkdirs();
 
-        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_image", customCardCommand.getImage(), "png");
-        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_idle", customCardCommand.getIdleGif(), "gif");
-        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_run", customCardCommand.getRunGif(), "gif");
-        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_attack", customCardCommand.getAttackGif(), "gif");
-        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_death", customCardCommand.getDeathGif(), "gif");
-        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_hit", customCardCommand.getHitGif(), "gif");
+        if (customCardCommand.getImage() != null) {
+            saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_image", customCardCommand.getImage(), "png");
+            customCardCommand.getCard().setAddressOfImage("./res/Characters/UnitsCreated/CustomCard/" + customCardCommand.getCard().getCardName() + "_image.png");
+        }
+        if (customCardCommand.getIdleGif() != null) {
+            saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_idle", customCardCommand.getIdleGif(), "gif");
+            customCardCommand.getCard().setAddressOfIdleGif("./res/Characters/UnitsCreated/CustomCard/" + customCardCommand.getCard().getCardName() + "_idle.gif");
+        }
+        if (customCardCommand.getRunGif() != null) {
+            saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_run", customCardCommand.getRunGif(), "gif");
+            customCardCommand.getCard().setAddressOfRunGif("./res/Characters/UnitsCreated/CustomCard/" + customCardCommand.getCard().getCardName() + "_run.gif");
+        }
+        if (customCardCommand.getAttackGif() != null) {
+            saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_attack", customCardCommand.getAttackGif(), "gif");
+            customCardCommand.getCard().setAddressOfAttackGif("./res/Characters/UnitsCreated/CustomCard/" + customCardCommand.getCard().getCardName() + "_attack.gif");
+        }
+        if (customCardCommand.getDeathGif() != null) {
+            saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_death", customCardCommand.getDeathGif(), "gif");
+            customCardCommand.getCard().setAddressOfDeathGif("./res/Characters/UnitsCreated/CustomCard/" + customCardCommand.getCard().getCardName() + "_death.gif");
+        }
+        if (customCardCommand.getHitGif() != null) {
+            saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_hit", customCardCommand.getHitGif(), "gif");
+            customCardCommand.getCard().setAddressOfGetDamageGif("./res/Characters/UnitsCreated/CustomCard/" + customCardCommand.getCard().getCardName() + "_hit.gif");
+        }
 
 
-        customCardCommand.getCard().setAddressOfImage("./res/Characters/UnitsCreated/CustomCard/" + customCardCommand.getCard().getCardName() + "_image.png");
-        customCardCommand.getCard().setAddressOfIdleGif("./res/Characters/UnitsCreated/CustomCard/" + customCardCommand.getCard().getCardName() + "_idle.gif");
-        customCardCommand.getCard().setAddressOfRunGif("./res/Characters/UnitsCreated/CustomCard/" + customCardCommand.getCard().getCardName() + "_run.gif");
-        customCardCommand.getCard().setAddressOfAttackGif("./res/Characters/UnitsCreated/CustomCard/" + customCardCommand.getCard().getCardName() + "_attack.gif");
-        customCardCommand.getCard().setAddressOfDeathGif("./res/Characters/UnitsCreated/CustomCard/" + customCardCommand.getCard().getCardName() + "_death.gif");
-        customCardCommand.getCard().setAddressOfGetDamageGif("./res/Characters/UnitsCreated/CustomCard/" + customCardCommand.getCard().getCardName() + "_hit.gif");
     }
 
 
@@ -134,7 +147,6 @@ public class ReadMessage extends Thread {
     private void handleGetOnlinePlayers(OnlinePlayersCommand onlinePlayersCommand) {
         System.out.println("Getting Online Players From Server");
         Platform.runLater(() -> {
-
             MainMenu mainMenu = (MainMenu) Container.controllerClass;
             mainMenu.showOnlinePlayers(onlinePlayersCommand.getOnlineAccounts());
         });

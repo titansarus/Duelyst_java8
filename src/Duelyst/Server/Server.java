@@ -82,7 +82,7 @@ public class Server implements Runnable {
 
     public static ArrayList<Account> accountsSorter(ArrayList<Account> accounts) {
         ArrayList<Account> accountsCopy = new ArrayList<>(accounts);
-        accountsCopy.sort(((Comparator<Account>) (o1, o2) -> o2.getCountOfWins() - o1.getCountOfWins()).thenComparing((o1, o2) -> o1.getUsername().compareTo(o2.getUsername())));
+        accountsCopy.sort(((Comparator<Account>) (o1, o2) -> o2.getCountOfWins() - o1.getCountOfWins()).thenComparing(Account::getUsername));
         return accountsCopy;
     }
 
