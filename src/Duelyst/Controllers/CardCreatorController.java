@@ -396,12 +396,12 @@ public class CardCreatorController {
             File file = new File(new File("src/" + minion.getAddressOfImage().substring(2)).toURI().toString());
             System.out.println(file.getName());
             SendMessage.getSendMessage().sendMessage(new CustomCardCommand(minion,
-                    new File(new File("src/" + minion.getAddressOfImage().substring(2)).toURI().toString()),
-                    new File(new File("src/" + minion.getAddressOfIdleGif().substring(2)).toURI().toString()),
-                    new File(new File("src/" + minion.getAddressOfRunGif().substring(2)).toURI().toString()),
-                    new File(new File("src/" + minion.getAddressOfAttackGif().substring(2)).toURI().toString()),
-                    new File(new File("src/" + minion.getAddressOfGetDamageGif().substring(2)).toURI().toString()),
-                    new File(new File("src/" + minion.getAddressOfDeathGif().substring(2)).toURI().toString())));
+                    imageFile,
+                    idleFile,
+                    runFile,
+                    attackFile,
+                    hitFile,
+                    deathFile));
 
             Shop.getInstance().getCards().add(minion);
         } catch (Exception e) {
