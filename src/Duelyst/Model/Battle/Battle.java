@@ -22,8 +22,6 @@ import static Duelyst.View.Constants.*;
 
 public class Battle implements Cloneable {
 
-    private static ArrayList<Battle> unfinishedBattles = new ArrayList<>();
-
     private static Battle runningBattle;
     private Player player1;
     private Player player2;
@@ -55,10 +53,6 @@ public class Battle implements Cloneable {
 
     public void makeJsonOfBattleRecord() {
         BattleRecord.makeJsonOfBattleRecord(battleRecords);
-    }
-
-    public static ArrayList<Battle> getUnfinishedBattles() {
-        return unfinishedBattles;
     }
 
     public void initializeCells() {
@@ -314,10 +308,10 @@ public class Battle implements Cloneable {
     }
 
     public void multiPlayerMove(int destX, int destY, int srcX, int srcY) {
-        move(destX, destY, getGrid()[srcX][srcY].getWarrior(),true);
+        move(destX, destY, getGrid()[srcX][srcY].getWarrior(), true);
     }
 
-    public void move(int destX, int destY, Warrior warrior,boolean isFromServer) {
+    public void move(int destX, int destY, Warrior warrior, boolean isFromServer) {
 
         if (gameMode.equals(GameMode.MULTI_PLAYER) && !isFromServer) {
             BattleCommand battleCommand = new BattleCommand();
@@ -412,24 +406,22 @@ public class Battle implements Cloneable {
 
     public void multiPlayerInsert(int i, int j, String selectedCardID) {
         Card card = null;
-        Player player;
-        if (player1.getAccount().getUsername().equals(Account.getLoggedAccount().getUsername())) {
-            player = player2;
-        } else {
-            player = player1;
-        }
+        ArrayList<Card> cards = new ArrayList<>();
+        cards.addAll(playingPlayer.getDeck().getCards());
+        cards.addAll(playingPlayer.getHand());
         for (Card c :
-                player.getInGameCards()) {
+                cards) {
             if (c.getCardId().equals(selectedCardID)) {
                 card = c;
             }
         }
-        insertSelectedCardWithCard(i, j, card);
+        System.out.println(card.getCardName());//TODO baraye check kardn hand
+        insertSelectedCardWithCard(i, j, card, true);
     }
 
-    public void insertSelectedCardWithCard(int i, int j, Card selectedCard) {
+    public void insertSelectedCardWithCard(int i, int j, Card selectedCard, boolean isFromServer) {
 
-        if (gameMode.equals(GameMode.MULTI_PLAYER)) {
+        if (gameMode.equals(GameMode.MULTI_PLAYER) && !isFromServer) {
             BattleCommand battleCommand = new BattleCommand();
             battleCommand.insert(selectedCard.getCardId(), i, j, Account.getLoggedAccount());
             SendMessage.getSendMessage().sendMessage(battleCommand);
@@ -442,10 +434,9 @@ public class Battle implements Cloneable {
 
         findValidCell(KindOfActionForValidCells.INSERT);
         Cell cell = getGrid()[i][j];
-        if (!getValidCells().contains(cell)) {
+        if (!getValidCells().contains(cell) && !isFromServer) {
             throw new NotValidCellForSpellException();
         }
-
         if (selectedCard instanceof Warrior) {
             if (getGrid()[i][j].isEmpty()) {
                 if (getPlayingPlayer().getMana() >= selectedCard.getManaCost()) {
@@ -501,7 +492,6 @@ public class Battle implements Cloneable {
                         buff.setWarrior(warrior);
                         getPassiveBuffs().add(buff);
                     }
-
                     makeBattleRecordOfInsert(card, i, j, doesHaveFlag, flag, false, item);
                 } else {
                     throw new NotEnoughManaException();

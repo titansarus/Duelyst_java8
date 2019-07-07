@@ -56,18 +56,20 @@ public class ServerTV {
     }
 
     public static ClientHandler getOpponent(Account account) {
-        Account opponent=null;
-        for (ServerTV serverTV:
-             runningGames){
-            if (account.getUsername().equals(serverTV.getAccount1().getUsername())) {
-                opponent = serverTV.getAccount2();
-            } else {
-                opponent = serverTV.getAccount1();
+        Account opponent = null;
+        for (ServerTV serverTV :
+                runningGames) {
+            if (account.getUsername().equals(serverTV.getAccount1().getUsername()) || account.getUsername().equals(serverTV.getAccount2().getUsername())) {
+                if (account.getUsername().equals(serverTV.getAccount1().getUsername())) {
+                    opponent = serverTV.getAccount2();
+                } else {
+                    opponent = serverTV.getAccount1();
+                }
             }
         }
         for (ClientHandler c :
                 ClientHandler.getClientHandlers()) {
-            if (opponent!= null && c.getUserName().equals(opponent.getUsername())) {
+            if (opponent != null && c.getUserName().equals(opponent.getUsername())) {
                 return c;
             }
         }

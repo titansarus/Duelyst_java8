@@ -3,6 +3,7 @@ package Duelyst.Model.Items;
 import Duelyst.Model.Account;
 import Duelyst.Model.Battle.Player;
 import Duelyst.Model.Card;
+import Duelyst.Model.CardKind;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ public abstract class Item extends Card {
         super(itemName, description, 0, darikCost);
         this.isUsable = isUsable;
         this.applyFirst = applyFirst;
+        setCardKind(CardKind.ITEM);
         setAddressOfIdleGif(collectibleItemGif);
     }
 
@@ -26,6 +28,7 @@ public abstract class Item extends Card {
         super(itemName, description, 0, darikCost, imageAddress);
         this.isUsable = isUsable;
         this.applyFirst = applyFirst;
+        setCardKind(CardKind.ITEM);
         setAddressOfIdleGif(collectibleItemGif);
     }
 
