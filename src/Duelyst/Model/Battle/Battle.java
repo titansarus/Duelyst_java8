@@ -51,8 +51,7 @@ public class Battle implements Cloneable {
     public static final int VALID_COUNTER_WITH_BUFF = 1, VALID_COUNTER_WITHOUT_BUFF = 2, INVALID_COUNTER_WITH_BUFF = 3, INVALID_COUNTER_WITHOUT_BUFF = 4;
 
 
-    public void makeJsonOfBattleRecord()
-    {
+    public void makeJsonOfBattleRecord() {
         BattleRecord.makeJsonOfBattleRecord(battleRecords);
     }
 
@@ -88,7 +87,7 @@ public class Battle implements Cloneable {
 
         battleRecords = new ArrayList<>();
         BattleRecord.getBattleRecords().add(battleRecords);
-        makeInitializeBattleRecord(account1, account2);
+
 
 
         if (account2 instanceof Ai) {
@@ -106,6 +105,7 @@ public class Battle implements Cloneable {
 
         initializeCells();
         insertPlayerHeroesInMap();
+        makeInitializeBattleRecord(account1, account2);
 
         if (gameGoal == GameGoal.COLLECT_FLAG) {
             collectableFlags = new ArrayList<>();
@@ -126,6 +126,8 @@ public class Battle implements Cloneable {
         battleRecord.setSecondPlayerUsername(account2.getUsername());
         battleRecord.setFirstPlayerAccount(account1);
         battleRecord.setSecondPlayerAccount(account2);
+        battleRecord.setFirstPlayerHand(getPlayer1().getHand());
+        battleRecord.setSecondPlayerHand(getPlayer2().getHand());
 
         getBattleRecords().add(battleRecord);
     }
@@ -157,7 +159,7 @@ public class Battle implements Cloneable {
     }
 
     public void insertPlayerHeroes() {
-       setPlayingPlayer(getPlayer1());
+        setPlayingPlayer(getPlayer1());
         getPlayingPlayer().setHero(getPlayer1().getDeck().getHero());
         insertHero(getPlayer1().getDeck().getHero(), getGrid()[2][0]);
         getPlayer1().getInGameCards().add(getPlayer1().getDeck().getHero());
@@ -225,6 +227,10 @@ public class Battle implements Cloneable {
 
     private void makeBattleRecordOfEndTurn() {
         BattleRecord battleRecord = new BattleRecord(BattleRecordEnum.END_TURN);
+        battleRecord.setFirstPlayerUserNameEndTurn(getPlayer1().getAccount().getUsername());
+        battleRecord.setSecondPlayerUserNameEndTurn(getPlayer2().getAccount().getUsername());
+        battleRecord.setFirstPlayerHandEndTurn(getPlayer1().getHand());
+        battleRecord.setSecondPlayerHandEndTurn(getPlayer2().getHand());
 
         getBattleRecords().add(battleRecord);
     }
@@ -523,6 +529,10 @@ public class Battle implements Cloneable {
         battleRecord.setFlag(flag);
         battleRecord.setSpellInsert(isSpell);
         battleRecord.setInsertCardItem(item);
+        battleRecord.setFirstPlayerInsertHand(getPlayer1().getHand());
+        battleRecord.setSecondPlayerInsertHand(getPlayer2().getHand());
+        battleRecord.setInsertFirstUserName(getPlayer1().getAccount().getUsername());
+        battleRecord.setInsertSecondUserName(getPlayer2().getAccount().getUsername());
 
 
         getBattleRecords().add(battleRecord);

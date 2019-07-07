@@ -233,6 +233,7 @@ public class BattleController {
     private void initializeFromBattleRecord(BattleRecord battleRecord) {
         this.makeGrids();
         makeAccountNames(battleRecord);
+        updateHandFromBattleRecord(battleRecord);
     }
 
     private void insertItemFromRecordAnimation(BattleRecord battleRecord) {
@@ -262,7 +263,7 @@ public class BattleController {
 
 
     private void endTurnAnimation(BattleRecord battleRecord) {
-        updateHand();
+        updateHandFromBattleRecord(battleRecord);
         isAnimationRunning = false;
     }
 
@@ -382,7 +383,6 @@ public class BattleController {
 
     private void runSlowTimeline() {
         slowTimeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
-            hand.get(0).getView();
             updateMana();
             emptyCardsOfHand();
         }), new KeyFrame(Duration.seconds(1)));
@@ -644,7 +644,7 @@ public class BattleController {
             Polygon polygon = rectangles[battleCoordinate[0]][battleCoordinate[1]];
             showSpellOnFiled(cardOnField, polygon);
         }
-        updateHand();
+        updateHandFromBattleRecord(battleRecord);
 
     }
 
@@ -961,6 +961,11 @@ public class BattleController {
         endTurn_img.setImage(new Image("res/ui/button_end_turn_mine.png"));//TODO Az Image Holder Estefade Nakardam
     }
 
+    public void updateHandFromBattleRecord(BattleRecord battleRecord) {
+        getHand_hBox().getChildren().clear();
+        getHand().clear();
+        makeHandViewFromArrayList(makeHandFromBattleRecord(battleRecord));
+    }
 
     public void updateHand() {
         //TODO IT IS THE SAME AS setHandHbox but maybe some of them need more checks. so currently they are two different method.;
@@ -968,6 +973,49 @@ public class BattleController {
         getHand().clear();
         makeHandView();
     }
+
+    public ArrayList<Card> makeHandFromBattleRecord(BattleRecord battleRecord) {
+        ArrayList<Card> hand = new ArrayList<>();
+
+        if (battleRecord.getTypeOfRecord().equals(BattleRecordEnum.INITIALIZE)) {
+            if (Account.getLoggedAccount().getUsername().equals(battleRecord.getFirstPlayerUsername())) {
+                hand = battleRecord.getFirstPlayerHand();
+            } else {
+                hand = battleRecord.getSecondPlayerHand();
+            }
+        } else if (battleRecord.getTypeOfRecord().equals(BattleRecordEnum.END_TURN)) {
+            if (Account.getLoggedAccount().getUsername().equals(battleRecord.getFirstPlayerUserNameEndTurn())) {
+                hand = battleRecord.getFirstPlayerHandEndTurn();
+            } else {
+                hand = battleRecord.getSecondPlayerHandEndTurn();
+            }
+        } else if (battleRecord.getTypeOfRecord().equals(BattleRecordEnum.INSERT)) {
+            if (Account.getLoggedAccount().getUsername().equals(battleRecord.getInsertFirstUserName())) {
+                hand = battleRecord.getFirstPlayerInsertHand();
+            } else {
+                hand = battleRecord.getSecondPlayerInsertHand();
+            }
+        }
+        return hand;
+    }
+
+    public void makeHandViewFromArrayList(ArrayList<Card> hand) {
+        for (int i = 0; i < hand.size(); i++) {
+            if (hand.get(i) != null) {
+                CardForBattle cardForBattle = new CardForBattle(hand.get(i));
+                cardForBattle.getCardController().setBattle(getBattle());
+                getHand().add(cardForBattle);
+                getHand().get(i).setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        handCardOnMouseClicked(event);
+                    }
+                });
+                getHand_hBox().getChildren().add(getHand().get(i));
+            }
+        }
+    }
+
 
     public void makeHandView() {
         for (int i = 0; i < getBattle().getPlayingPlayer().getHand().size(); i++) {

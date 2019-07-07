@@ -59,6 +59,8 @@ public class BattleRecord {
     private Flag flagForInsertCard;
     private boolean isFlag = false;
     private Item insertCardItem;
+    private String insertFirstUserName , insertSecondUserName;
+    private ArrayList<Card> firstPlayerInsertHand , secondPlayerInsertHand;
 
     //FOR INSERT FLAG
     private int insertFlagRow, insertFlagColumn;
@@ -70,6 +72,10 @@ public class BattleRecord {
 
     //FOR MANA CHANGE
     private int player1Mana, player2Mana, manaMax, numberOfTurn;
+
+    //FOR END TURN
+    private String firstPlayerUserNameEndTurn , secondPlayerUserNameEndTurn;
+    private ArrayList<Card> firstPlayerHandEndTurn , secondPlayerHandEndTurn;
 
 
     public BattleRecord(BattleRecordEnum typeOfRecord) {
@@ -544,6 +550,70 @@ public class BattleRecord {
 
     public void setMoveCard(Card moveCard) {
         this.moveCard = moveCard;
+    }
+
+    public String getInsertFirstUserName() {
+        return insertFirstUserName;
+    }
+
+    public void setInsertFirstUserName(String insertFirstUserName) {
+        this.insertFirstUserName = insertFirstUserName;
+    }
+
+    public String getInsertSecondUserName() {
+        return insertSecondUserName;
+    }
+
+    public void setInsertSecondUserName(String insertSecondUserName) {
+        this.insertSecondUserName = insertSecondUserName;
+    }
+
+    public ArrayList<Card> getFirstPlayerInsertHand() {
+        return firstPlayerInsertHand;
+    }
+
+    public void setFirstPlayerInsertHand(ArrayList<Card> firstPlayerInsertHand) {
+        this.firstPlayerInsertHand = firstPlayerInsertHand;
+    }
+
+    public ArrayList<Card> getSecondPlayerInsertHand() {
+        return secondPlayerInsertHand;
+    }
+
+    public void setSecondPlayerInsertHand(ArrayList<Card> secondPlayerInsertHand) {
+        this.secondPlayerInsertHand = secondPlayerInsertHand;
+    }
+
+    public String getFirstPlayerUserNameEndTurn() {
+        return firstPlayerUserNameEndTurn;
+    }
+
+    public void setFirstPlayerUserNameEndTurn(String firstPlayerUserNameEndTurn) {
+        this.firstPlayerUserNameEndTurn = firstPlayerUserNameEndTurn;
+    }
+
+    public String getSecondPlayerUserNameEndTurn() {
+        return secondPlayerUserNameEndTurn;
+    }
+
+    public void setSecondPlayerUserNameEndTurn(String secondPlayerUserNameEndTurn) {
+        this.secondPlayerUserNameEndTurn = secondPlayerUserNameEndTurn;
+    }
+
+    public ArrayList<Card> getFirstPlayerHandEndTurn() {
+        return firstPlayerHandEndTurn;
+    }
+
+    public void setFirstPlayerHandEndTurn(ArrayList<Card> firstPlayerHandEndTurn) {
+        this.firstPlayerHandEndTurn = firstPlayerHandEndTurn;
+    }
+
+    public ArrayList<Card> getSecondPlayerHandEndTurn() {
+        return secondPlayerHandEndTurn;
+    }
+
+    public void setSecondPlayerHandEndTurn(ArrayList<Card> secondPlayerHandEndTurn) {
+        this.secondPlayerHandEndTurn = secondPlayerHandEndTurn;
     }
 }
 
