@@ -126,6 +126,7 @@ public class ClientHandler implements Runnable {
     }
 
     private void handleRunningBattle(BattleCommand battleCommand) {
+        System.out.println("Dastor omaaaad !");
         ClientHandler clientHandler = ServerTV.getOpponent(battleCommand.getMyAccount());
         if (clientHandler == null) {
             System.out.println("this game not found");

@@ -161,10 +161,10 @@ public class BattleController {
 
     private void runHandDestroyerTimeline() {
         if (getBattle().getGameMode().equals(GameMode.MULTI_PLAYER)) {
-            System.out.println("HAND DESTROYER_BEFORE");
+//            System.out.println("HAND DESTROYER_BEFORE");
             handDestroyerTimeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
                 if (!getBattle().getPlayingPlayer().getAccount().getUsername().equals(Account.getLoggedAccount().getUsername())) {
-                    System.out.println("HAND DESTROYER_AFTER");
+//                    System.out.println("HAND DESTROYER_AFTER");
                     hand_hBox.getChildren().clear();
                 }
 
@@ -590,7 +590,7 @@ public class BattleController {
             if (getBattle().getSelectedCard() != null) {//TODO SOME MORE CHECKS NEEDED
 
                 try {
-                    getBattle().insertSelectedCardWithCard(getBattle().getSelectedCell().getRow(), getBattle().getSelectedCell().getColumn(), getBattle().getSelectedCard());
+                    getBattle().insertSelectedCardWithCard(getBattle().getSelectedCell().getRow(), getBattle().getSelectedCell().getColumn(), getBattle().getSelectedCard(),false);
                 } catch (MyException e) {
                     Container.exceptionGenerator(e, stackPane);
                 }

@@ -94,6 +94,7 @@ public class ReadMessage extends Thread {
     }
 
     private void move(BattleCommand battleCommand) {
+        System.out.println("*************************************** MOVE");
         Battle.getRunningBattle().multiPlayerMove(battleCommand.getDesRow(),battleCommand.getDesCol(),battleCommand.getSrcRow(),battleCommand.getSrcCol());
     }
 
@@ -102,10 +103,12 @@ public class ReadMessage extends Thread {
     }
 
     private void insert(BattleCommand battleCommand) {
+        System.out.println("*************************************** INSERT");
         Battle.getRunningBattle().multiPlayerInsert(battleCommand.getInsertRow(),battleCommand.getInsertCol(),battleCommand.getInsertSelectedCardId());
     }
 
     private void endTurn() {
+        System.out.println("*************************************** END TURN");
         Battle.getRunningBattle().nextTurn();
     }
 
