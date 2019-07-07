@@ -574,7 +574,7 @@ public class Battle implements Cloneable {
         Cell cell = getCellOfWarrior(attackedCard);
         findValidCell(KindOfActionForValidCells.ATTACK);
         if (!validCells.contains(cell)) {
-            //TODO not attack
+            return  -10000;
         }
 
         attackedCard.decreaseHealthPoint(attacker.getActionPower() - attackedCard.getShield());//TODO CHECK FOR BUFF
