@@ -1,5 +1,6 @@
 package Duelyst.Model.Battle;
 
+import Duelyst.Client.SendMessage;
 import Duelyst.Controllers.BattleController;
 import Duelyst.Exceptions.CellFilledBeforeException;
 import Duelyst.Exceptions.NotEnoughManaException;
@@ -8,6 +9,7 @@ import Duelyst.Model.*;
 import Duelyst.Model.Buffs.ApplyBuff;
 import Duelyst.Model.Buffs.Buff;
 import Duelyst.Model.Buffs.HolyBuff;
+import Duelyst.Model.CommandClasses.BattleCommand;
 import Duelyst.Model.Items.*;
 import Duelyst.Model.Spell.Spell;
 import com.rits.cloning.Cloner;
@@ -313,6 +315,13 @@ public class Battle implements Cloneable {
 
 
     public void move(int destX, int destY, Warrior warrior) {
+
+        if (gameMode.equals(GameMode.MULTI_PLAYER)) {
+            BattleCommand battleCommand = new BattleCommand();
+            battleCommand.move(getCellOfWarrior(warrior).getRow(),getCellOfWarrior(warrior).getColumn(),destX,destY,Account.getLoggedAccount());
+            SendMessage.getSendMessage().sendMessage(battleCommand);
+        }
+
         boolean isHoldFlag = false, isCollectibleFlag = false, isCollectibleItem = false;
         Flag flag = null;
         int fromRow = -1, fromColumn = -1;
@@ -400,6 +409,12 @@ public class Battle implements Cloneable {
 
 
     public void insertSelectedCardWithCard(int i, int j, Card selectedCard) {
+
+        if (gameMode.equals(GameMode.MULTI_PLAYER)) {
+            BattleCommand battleCommand = new BattleCommand();
+            battleCommand.insert(selectedCard.getCardId(),i,j,Account.getLoggedAccount());
+            SendMessage.getSendMessage().sendMessage(battleCommand);
+        }
 
         boolean doesHaveFlag = false;
         Flag flag = null;
@@ -571,12 +586,11 @@ public class Battle implements Cloneable {
 
     public int attack(Warrior attacker, Warrior attackedCard, boolean isFromCounterAttack) {
 
-//        Cell cell = getCellOfWarrior(attackedCard);
-//        findValidCell(KindOfActionForValidCells.ATTACK);
-//        if (!validCells.contains(cell)) {
-//            //TODO not attack
-//        }
-
+        if (gameMode.equals(GameMode.MULTI_PLAYER) && !isFromCounterAttack) {
+            BattleCommand battleCommand = new BattleCommand();
+            battleCommand.attack(attacker.getCardId(), attackedCard.getCardId(),Account.getLoggedAccount());
+            SendMessage.getSendMessage().sendMessage(battleCommand);
+        }
         attackedCard.decreaseHealthPoint(attacker.getActionPower() - attackedCard.getShield());//TODO CHECK FOR BUFF
         this.attackedCard = attackedCard;
 

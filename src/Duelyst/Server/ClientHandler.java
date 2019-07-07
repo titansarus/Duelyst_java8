@@ -110,13 +110,11 @@ public class ClientHandler implements Runnable {
 
     private void handleBattle(BattleCommand battleCommand) {
         switch (battleCommand.getBattleCommandsKind()) {
-            case ATTACK:
-                break;
             case MOVE:
-                break;
             case END_TURN:
-                break;
             case INSERT:
+            case ATTACK:
+                handleRunningBattle(battleCommand);
                 break;
             case START_BATTLE:
                 startBattle(battleCommand);
@@ -126,6 +124,17 @@ public class ClientHandler implements Runnable {
                 break;
         }
     }
+
+    private void handleRunningBattle(BattleCommand battleCommand) {
+        ClientHandler clientHandler = ServerTV.getOpponent(battleCommand.getMyAccount());
+        if (clientHandler == null) {
+            System.out.println("this game not found");
+            return;
+        }
+        clientHandler.getFormatter().format("%s\n", CommandClass.makeJson(battleCommand));
+        clientHandler.getFormatter().flush();
+    }
+
 
     private void cancelRequest(BattleCommand battleCommand) {
         System.out.println("cancel request receive from " + battleCommand.getCanceler().getUsername());
@@ -162,7 +171,7 @@ public class ClientHandler implements Runnable {
         System.out.println(account.getUsername());
         killHeroApplicator = null;
         System.out.println(account.getUsername());
-        sendToTwoClient(account, battleCommand.getApplicatorAccount(),battleCommand.getGameGoal());
+        sendToTwoClient(account, battleCommand.getApplicatorAccount(), battleCommand.getGameGoal());
     }
 
 
@@ -173,7 +182,7 @@ public class ClientHandler implements Runnable {
         }
         Account account = collectFlagApplicator;
         collectFlagApplicator = null;
-        sendToTwoClient(account, battleCommand.getApplicatorAccount(),battleCommand.getGameGoal());
+        sendToTwoClient(account, battleCommand.getApplicatorAccount(), battleCommand.getGameGoal());
 
     }
 
@@ -184,15 +193,16 @@ public class ClientHandler implements Runnable {
         }
         Account account = holdFlagApplicator;
         holdFlagApplicator = null;
-        sendToTwoClient(account, battleCommand.getApplicatorAccount(),battleCommand.getGameGoal());
+        sendToTwoClient(account, battleCommand.getApplicatorAccount(), battleCommand.getGameGoal());
     }
 
     private void sendToTwoClient(Account account1, Account account2, GameGoal gameGoal) {
-        sendAcceptRequest(account1, account2, true,gameGoal);
-        sendAcceptRequest(account2, account1, false,gameGoal);
+        sendAcceptRequest(account1, account2, true, gameGoal);
+        sendAcceptRequest(account2, account1, false, gameGoal);
+        new ServerTV(account1,account2);
     }
 
-    private void sendAcceptRequest(Account sendFor, Account opponent, boolean firstPlayer,GameGoal gameGoal) {
+    private void sendAcceptRequest(Account sendFor, Account opponent, boolean firstPlayer, GameGoal gameGoal) {
         BattleCommand battleCommand = new BattleCommand();
         battleCommand.setGameGoal(gameGoal);
         battleCommand.acceptRequest(opponent, firstPlayer);

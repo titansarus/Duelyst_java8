@@ -55,6 +55,25 @@ public class ServerTV {
         return runningGames;
     }
 
+    public static ClientHandler getOpponent(Account account) {
+        Account opponent=null;
+        for (ServerTV serverTV:
+             runningGames){
+            if (account.getUsername().equals(serverTV.getAccount1().getUsername())) {
+                opponent = serverTV.getAccount2();
+            } else {
+                opponent = serverTV.getAccount1();
+            }
+        }
+        for (ClientHandler c :
+                ClientHandler.getClientHandlers()) {
+            if (opponent!= null && c.getUserName().equals(opponent.getUsername())) {
+                return c;
+            }
+        }
+        return null;
+    }
+
     public static void setRunningGames(ArrayList<ServerTV> runningGames) {
         ServerTV.runningGames = runningGames;
     }

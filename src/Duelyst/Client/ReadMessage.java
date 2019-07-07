@@ -5,6 +5,7 @@ import Duelyst.Exceptions.CardOutOfStock;
 import Duelyst.Exceptions.UserNotExistException;
 import Duelyst.Main;
 import Duelyst.Model.Account;
+import Duelyst.Model.Battle.Battle;
 import Duelyst.Model.Card;
 import Duelyst.Model.CommandClasses.*;
 import Duelyst.Model.Shop;
@@ -75,17 +76,38 @@ public class ReadMessage extends Thread {
     private void handleBattle(BattleCommand battleCommand) {
         switch (battleCommand.getBattleCommandsKind()) {
             case INSERT:
+                insert(battleCommand);
                 break;
             case END_TURN:
+                endTurn(battleCommand);
                 break;
             case MOVE:
+                move(battleCommand);
                 break;
             case ATTACK:
+                attack(battleCommand);
                 break;
             case ACCEPT_REQUEST:
                 handleStartBattle(battleCommand);
                 break;
         }
+    }
+
+    private void move(BattleCommand battleCommand) {
+//        Battle.getRunningBattle().mo
+    }
+
+    private void attack(BattleCommand battleCommand) {
+        System.out.println("attack");
+    }
+
+    private void insert(BattleCommand battleCommand) {
+        System.out.println("insert");
+    }
+
+    private void endTurn(BattleCommand battleCommand) {
+        System.out.println("end turn");
+        Battle.getRunningBattle();
     }
 
     private void handleStartBattle(BattleCommand battleCommand) {
