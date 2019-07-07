@@ -3,12 +3,9 @@ package Duelyst.Controllers;
 import Duelyst.Client.SendMessage;
 import Duelyst.Exceptions.CardOutOfStock;
 import Duelyst.Exceptions.MyException;
-import Duelyst.Model.Account;
-import Duelyst.Model.Card;
+import Duelyst.Model.*;
 import Duelyst.Model.CommandClasses.ShopCommand;
 import Duelyst.Model.CommandClasses.ShopCommandsKind;
-import Duelyst.Model.Shop;
-import Duelyst.Model.ShopMode;
 import Duelyst.View.ViewClasses.CardView;
 import com.jfoenix.controls.*;
 import javafx.animation.*;
@@ -51,6 +48,11 @@ public class ShopController {
     public Label auctionTimeLeft_lbl;
     public Label auctionHighestBid_lbl;
     public Pane addToAuctionNotification_pane;
+    public ImageView shopOthers_img;
+    public ImageView shopMinions_img;
+    public ImageView shopHeroes_img;
+    public Label cardAttackKind_lbl;
+    public Label cardRange_lbl;
     @FXML
     ScrollPane buyScrollPane;
 
@@ -90,10 +92,12 @@ public class ShopController {
     private boolean stanceOfTGB = false;
 
 
-    ArrayList<CardView> cardViews = new ArrayList<>();
+    private ArrayList<CardView> cardViews = new ArrayList<>();
 
-    Timeline slowTimeline;
-    Timeline fastTimeline;
+    private Timeline slowTimeline;
+    private Timeline fastTimeline;
+
+    private CardKind shopShowCardKind = CardKind.MINION;
 
     private static MyException myException;
 
@@ -109,7 +113,6 @@ public class ShopController {
     public void initialize() {
         runFastTimeLine();
         runSlowTimeline();
-        makeCardList();
     }
 
 
@@ -190,7 +193,7 @@ public class ShopController {
 
         if (buy_tab.isSelected()) {
             buyScrollPane.setHvalue(buyScrollPane.getHvalue() + 0.02);//TODO andazeye GhadamHa bayad daghighTar Tanzim Shan
-        } else if(sell_tab.isSelected()) {
+        } else if (sell_tab.isSelected()) {
             sellScrollPane.setHvalue(sellScrollPane.getHvalue() + 0.02);
         }
     }
@@ -219,39 +222,66 @@ public class ShopController {
 
     }
 
-    private void makeCardList() {
+//    private void makeCardList() {
+//        if (buy_tab.isSelected()) {
+//            makeCardListOfBuy();
+//        } else if (sell_tab.isSelected())
+//            makeCardListOfSell();
+//    }
+
+    public void handleShopMinionsButton() {
+        shopShowCardKind = CardKind.MINION;
         if (buy_tab.isSelected()) {
-            makeCardListOfBuy();
-        } else if (sell_tab.isSelected())
-            makeCardListOfSell();
+            makeCardList(Shop.getInstance().getCards(), buy_aPane, CardKind.MINION);
+        } else
+            makeCardList(Account.getLoggedAccount().getCardCollection().getCards(), sell_aPane, CardKind.MINION);
     }
 
-    private void makeCardListOfBuy() {
-        makeCardList(Shop.getInstance().getCards(), buy_aPane);
+    public void handleShopHeroesButton() {
+        shopShowCardKind = CardKind.HERO;
+        if (buy_tab.isSelected())
+            makeCardList(Shop.getInstance().getCards(), buy_aPane, CardKind.HERO);
+        else
+            makeCardList(Account.getLoggedAccount().getCardCollection().getCards(), sell_aPane, CardKind.HERO);
     }
 
-    private void makeCardListOfSell() {
-        makeCardList(Account.getLoggedAccount().getCardCollection().getCards(), sell_aPane);
+    public void handleShopOthersButton() {
+        shopShowCardKind = CardKind.SPELL;
+        if (buy_tab.isSelected())
+            makeCardList(Shop.getInstance().getCards(), buy_aPane, CardKind.SPELL);
+        else
+            makeCardList(Account.getLoggedAccount().getCardCollection().getCards(), sell_aPane, CardKind.SPELL);
     }
 
-    private void makeCardList(ArrayList<Card> cards, HBox Hbox) {
+//
+//    private void makeCardListOfBuy() {
+//        makeCardList(Shop.getInstance().getCards(), buy_aPane);
+//    }
+
+//    private void makeCardListOfSell() {
+//        makeCardList(Account.getLoggedAccount().getCardCollection().getCards(), sell_aPane);
+//    }
+
+    private void makeCardList(ArrayList<Card> cards, HBox Hbox, CardKind cardKind) {
 
         Hbox.getChildren().clear();
         Hbox.setPrefWidth(629);
         cardViews.clear();
         for (int i = 0; i < cards.size(); i++) {
             if (search_txtf != null && (search_txtf.getText().length() == 0 || cards.get(i).getCardName().contains(search_txtf.getText()))) {
-                AnchorPane anchorPane = new AnchorPane();
-                anchorPane.setPrefWidth(275);
-                CardView cardView = new CardView(cards.get(i));
-                cardView.setCache(true);
-                getCardViews().add(cardView);
-                anchorPane.getChildren().add(cardView);
+                if (cardKind == null || (cardKind.equals(CardKind.SPELL) && (cards.get(i).getCardKind().equals(CardKind.SPELL) || cards.get(i).getCardKind().equals(CardKind.ITEM))) || cardKind.equals(cards.get(i).getCardKind())) {
+                    AnchorPane anchorPane = new AnchorPane();
+                    anchorPane.setPrefWidth(275);
+                    CardView cardView = new CardView(cards.get(i));
+                    cardView.setCache(true);
+                    getCardViews().add(cardView);
+                    anchorPane.getChildren().add(cardView);
 
-                Hbox.getChildren().add(anchorPane);
-                anchorPane.setLayoutX(280 * i);
-                anchorPane.setTranslateY(75);
-                Hbox.setPrefWidth(Hbox.getPrefWidth() + 275);
+                    Hbox.getChildren().add(anchorPane);
+                    anchorPane.setLayoutX(280 * i);
+                    anchorPane.setTranslateY(75);
+                    Hbox.setPrefWidth(Hbox.getPrefWidth() + 275);
+                }
             }
         }
     }
@@ -372,15 +402,36 @@ public class ShopController {
 
     public void handleSearchInputChanged() {
         System.out.println("Search");
-        makeCardList();
+//        if (buy_tab.isSelected())
+//            makeCardList(Shop.getInstance().getCards(), buy_aPane, null);
+//        else
+//            makeCardList(Shop.getInstance().getCards(), sell_aPane, null);
+        switch (shopShowCardKind) {
+            case HERO:
+                handleShopHeroesButton();
+                break;
+            case MINION:
+                handleShopMinionsButton();
+                break;
+            case SPELL:
+                handleShopOthersButton();
+                break;
+        }
     }
 
     public void handleCardInformationButton() {
 
         anchorPane.setOpacity(0.7);
 
+        if (Shop.getSelectedCard() instanceof Warrior) {
+            cardAttackKind_lbl.setText(((Warrior) Shop.getSelectedCard()).getAttackKind().toString());
+        }
+        if (Shop.getSelectedCard() instanceof Warrior) {
+            if (((Warrior) Shop.getSelectedCard()).getAttackRange() > 0)
+                cardRange_lbl.setText("Range: " + ((Warrior) Shop.getSelectedCard()).getAttackRange() + "");
+        }
         cardName_lbl.setText(Shop.getSelectedCard().getCardName());
-//        cardKind_lbl.setText(Shop.getSelectedCard().getCardKind().toString());//TODO Card Kind Ha Set Nemishan !
+        cardKind_lbl.setText(Shop.getSelectedCard().getCardKind().toString());
         cardDescription_text.setText(Shop.getSelectedCard().getCardDescription());
 
         FadeTransition ft = new FadeTransition(Duration.millis(1000), cardInformation_pane);
@@ -449,7 +500,7 @@ public class ShopController {
     }
 
     public void makeAuctionCardList() {
-        makeCardList(Shop.getInstance().getAuctionCards(), AuctionPaneHBox_hbox);
+        makeCardList(Shop.getInstance().getAuctionCards(), AuctionPaneHBox_hbox, null);
     }
 
     private void getAuctionCardsFromServer() {
@@ -491,8 +542,28 @@ public class ShopController {
         AuctionBidButton_img.setImage(new Image("res/ui/button_primary_middle@2x.png"));
     }
 
-    public void handleTabSelectionChanged() {
-        makeCardList();
+    public void shopMinionsButtonGlow() {
+        shopMinions_img.setImage(new Image("res/ui/button_primary_middle_glow@2x.png"));
+    }
+
+    public void shopMinionsButtonGlowDisappear() {
+        shopMinions_img.setImage(new Image("res/ui/button_primary_middle@2x.png"));
+    }
+
+    public void shopHeroesButtonGlow() {
+        shopHeroes_img.setImage(new Image("res/ui/button_primary_middle_glow@2x.png"));
+    }
+
+    public void shopHeroesButtonGlowDisappear() {
+        shopHeroes_img.setImage(new Image("res/ui/button_primary_middle@2x.png"));
+    }
+
+    public void shopOthersButtonGlow() {
+        shopOthers_img.setImage(new Image("res/ui/button_primary_middle_glow@2x.png"));
+    }
+
+    public void shopOthersButtonGlowDisappear() {
+        shopOthers_img.setImage(new Image("res/ui/button_primary_middle@2x.png"));
     }
 
     public Timeline getFastTimeline() {

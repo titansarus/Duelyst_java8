@@ -22,8 +22,6 @@ import static Duelyst.View.Constants.*;
 
 public class Battle implements Cloneable {
 
-    private static ArrayList<Battle> unfinishedBattles = new ArrayList<>();
-
     private static Battle runningBattle;
     private Player player1;
     private Player player2;
@@ -55,10 +53,6 @@ public class Battle implements Cloneable {
 
     public void makeJsonOfBattleRecord() {
         BattleRecord.makeJsonOfBattleRecord(battleRecords);
-    }
-
-    public static ArrayList<Battle> getUnfinishedBattles() {
-        return unfinishedBattles;
     }
 
     public void initializeCells() {

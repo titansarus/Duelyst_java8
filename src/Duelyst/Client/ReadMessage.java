@@ -275,7 +275,7 @@ public class ReadMessage extends Thread {
 
     private void handleGetCards(ShopCommand shopCommand) {
         ArrayList<Card> cards = shopCommand.getCards();
-        Shop.getInstance().getCards().addAll(cards);
+        Shop.getInstance().setCards(cards);
     }
 
     private void handleBuyCard(ShopCommand shopCommand) {
