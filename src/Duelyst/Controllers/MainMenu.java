@@ -10,25 +10,23 @@ import Duelyst.Model.CommandClasses.*;
 import Duelyst.Utility.ImageHolder;
 import com.jfoenix.controls.*;
 import javafx.animation.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 import static Duelyst.View.Constants.*;
@@ -92,6 +90,9 @@ public class MainMenu {
     @FXML
     ImageView leaderbords_img;
 
+    @FXML
+    ImageView battleReplay_img;
+
 
     @FXML
     StackPane stackPane;
@@ -121,7 +122,7 @@ public class MainMenu {
     ScrollPane battleRecord_scrollPane;
 
     @FXML
-    AnchorPane battleRecord_anchorPane;
+    VBox battleRecord_vbox;
 
     @FXML
     ImageView battleRecord_closeButton;
@@ -174,6 +175,27 @@ public class MainMenu {
             Container.runMediaPlayer(Container.soundPlayer, media, 1, true, 1, SOUND_PLAYER);
             setCanPlayButtonSound(false);
         }
+    }
+
+    public void battleReplayButtonGlowWithSound() {
+        runButtonHoverSound();
+        battleReplayButtonGlow();
+    }
+
+    public void battleReplayButtonGlowDisapperWithSound() {
+        battleReplayButtonGlowDisapper();
+        setCanPlayButtonSound(true);
+    }
+
+    public void battleReplayButtonGlow() {
+
+        setCanPlayButtonSound(false);
+        battleReplay_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary_glow@2x.png"));
+    }
+
+    public void battleReplayButtonGlowDisapper() {
+        setCanPlayButtonSound(false);
+        battleReplay_img.setImage(ImageHolder.findImageInImageHolders("res/ui/button_secondary@2x.png"));
     }
 
     public void playButtonGlowWithSound() {
@@ -1027,12 +1049,16 @@ public class MainMenu {
                 BattleRecord battleRecord = allBattleRecords.get(i).get(0);
                 if (battleRecord.getTypeOfRecord().equals(BattleRecordEnum.INITIALIZE)) {
                     label.setText(i + " " + battleRecord.getFirstPlayerUsername() + " " + battleRecord.getSecondPlayerUsername());
+                } else {
+                    label.setText(i + " battle Record");
                 }
-                label.setText(i + " battle Record");
-                label.setStyle("-fx-font-size: 10;-fx-font-weight: bold");
-                label.setLayoutY(100 * i);
-                label.setLayoutX(80);
-                battleRecord_anchorPane.getChildren().add(label);
+                label.setStyle("-fx-font-size: 20;-fx-font-weight: bold;");
+                label.setAlignment(Pos.CENTER);
+                label.setTextAlignment(TextAlignment.CENTER);
+                label.setPrefHeight(50);
+//                label.setLayoutY(100 * i);
+//                label.setLayoutX(80);
+                battleRecord_vbox.getChildren().add(label);
                 label.setOnMouseClicked(event -> {
 
                     String s = label.getText().toString();
