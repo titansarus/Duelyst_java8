@@ -89,7 +89,6 @@ public class Battle implements Cloneable {
         BattleRecord.getBattleRecords().add(battleRecords);
 
 
-
         if (account2 instanceof Ai) {
             ((Ai) account2).setBattle(this);
         }
@@ -572,6 +571,12 @@ public class Battle implements Cloneable {
 
     public int attack(Warrior attacker, Warrior attackedCard, boolean isFromCounterAttack) {
 
+        Cell cell = getCellOfWarrior(attackedCard);
+        findValidCell(KindOfActionForValidCells.ATTACK);
+        if (!validCells.contains(cell)) {
+            //TODO not attack
+        }
+
         attackedCard.decreaseHealthPoint(attacker.getActionPower() - attackedCard.getShield());//TODO CHECK FOR BUFF
         this.attackedCard = attackedCard;
 
@@ -598,12 +603,21 @@ public class Battle implements Cloneable {
 //            deleteDeathCardsFromMap(); // Check For Death Cards
 //
 //        }
+
+
         if (!endGame) {
             endGame();
         }
 
         setSelectedCell(null);
-
+        if (!isFromCounterAttack) {
+            setSelectedCell(cell);
+            Cell cell1 = getCellOfWarrior(attacker);
+            findValidCell(KindOfActionForValidCells.ATTACK);
+            if (!validCells.contains(cell1)) {
+                //TODO not counter attack
+            }
+        }
         //TODO CHECK FOR COUNTER ATTACK AND BUFF AND A LOT OF THINGS
         if (!isFromCounterAttack && !attackedCard.isValidCounterAttack()) {
             makeBattleRecordOfAttack(attacker, attackedCard, true, false);
@@ -942,8 +956,15 @@ public class Battle implements Cloneable {
             case ALL_OF_FRIEND:
                 getAllCells(cells);
         }
-        setValidCells(cells);
+//        System.out.println("find valid cell for spell");
+//        for (:
+//             ) {reza
+
     }
+
+    setValidCells(cells);
+
+}
 
     private void getAllCells(ArrayList<Cell> cells) {
         for (Cell[] cells1 :
