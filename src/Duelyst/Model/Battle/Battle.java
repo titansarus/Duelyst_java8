@@ -593,9 +593,34 @@ public class Battle implements Cloneable {
         return result;
     }
 
-    public int attack(Warrior attacker, Warrior attackedCard, boolean isFromCounterAttack) {
+    public void multiPlayerAttack(String attackerID, String attackedID) {
+        Player player;
+        if (player1.getAccount().getUsername().equals(playingPlayer.getAccount().getUsername())) {
+            player = player2;
+        } else {
+            player = player1;
+        }
+        Card attacker = null;
+        Card attacked = null;
+        for (Card c :
+                player.getInGameCards()) {
+            if (c.getCardId().equals(attackedID)) {
+                attacked = c;
+            }
+        }
+        for (Card c :
+                playingPlayer.getInGameCards()) {
+            if (c.getCardId().equals(attackerID)) {
+                attacker = c;
+            }
+        }
+        System.out.println("attacker : " + attacker.getCardName() + "attacked : " + attacked.getCardName());
+        handleAttackCounterDeath((Warrior) attacker, (Warrior) attacked, true);
+    }
 
-        if (gameMode.equals(GameMode.MULTI_PLAYER) && !isFromCounterAttack) {
+    public int attack(Warrior attacker, Warrior attackedCard, boolean isFromCounterAttack, boolean isFromServer) {
+
+        if (gameMode.equals(GameMode.MULTI_PLAYER) && !isFromCounterAttack && !isFromServer) {
             BattleCommand battleCommand = new BattleCommand();
             battleCommand.attack(attacker.getCardId(), attackedCard.getCardId(), Account.getLoggedAccount());
             SendMessage.getSendMessage().sendMessage(battleCommand);
@@ -658,10 +683,10 @@ public class Battle implements Cloneable {
 
     }
 
-    public void handleAttackCounterDeath(Warrior attacker, Warrior attacked) {
-        int result = attack(attacker, attacked, false);
+    public void handleAttackCounterDeath(Warrior attacker, Warrior attacked,boolean isFromServer) {
+        int result = attack(attacker, attacked, false,isFromServer);
         if (result == Battle.VALID_COUNTER_WITH_BUFF || result == Battle.VALID_COUNTER_WITHOUT_BUFF) {
-            attack(attacked, attacker, true);
+            attack(attacked, attacker, true,isFromServer);
         }
         deleteDeathCardsFromMap();
         endGame();

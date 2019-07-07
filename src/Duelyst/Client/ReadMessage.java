@@ -100,6 +100,7 @@ public class ReadMessage extends Thread {
 
     private void attack(BattleCommand battleCommand) {
         System.out.println("attack");
+        Battle.getRunningBattle().multiPlayerAttack(battleCommand.getAttackerCardId(),battleCommand.getDefenderCardId());
     }
 
     private void insert(BattleCommand battleCommand) {

@@ -572,7 +572,7 @@ public class BattleController {
                         System.out.println("Attack");
                         Warrior attacker = getBattle().getSelectedCell().getWarrior();
                         Warrior attacked = getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior();
-                        getBattle().handleAttackCounterDeath(attacker, attacked);
+                        getBattle().handleAttackCounterDeath(attacker, attacked,false);
 
 
                         getBattle().setSelectedCell(null);
