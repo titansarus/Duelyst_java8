@@ -34,7 +34,7 @@ public class CustomCardCommand extends CommandClass{
         try {
             BufferedImage bufferedImage = ImageIO.read(file);
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage,"jpg",byteArrayOutputStream);
+            ImageIO.write(bufferedImage,"png",byteArrayOutputStream);
             return byteArrayOutputStream.toByteArray();
         } catch (IOException e) {
             e.printStackTrace();

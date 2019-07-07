@@ -80,12 +80,27 @@ public class ClientHandler implements Runnable {
                     handleGetOnlinePlayers((OnlinePlayersCommand) command);
                     break;
                 case CUSTOM_CARD:
-                    CustomCardCommand customCardCommand = (CustomCardCommand)command;
-                    ServerShop.getInstance().getCustomCards().add(customCardCommand);
+                    handleCustomCardCommand((CustomCardCommand) command);
                     break;
             }
 
 
+        }
+    }
+
+    private void handleCustomCardCommand(CustomCardCommand customCardCommand) {
+        ServerShop.getInstance().addCard(customCardCommand.getCard());
+        ServerShop.getInstance().getCustomCardCommands().add(customCardCommand);
+        ServerShop.getInstance().getNumberOfCards().add(customCardCommand.getCard().getCardName() + " 1");
+        sendCustomCardToAllClients(customCardCommand);
+    }
+
+    private void sendCustomCardToAllClients(CustomCardCommand customCardCommand) {
+        for (int i = 0; i < Server.getAllClientHandlers().size(); i++) {
+            if (Server.getAllClientHandlers().get(i).isLoggedIn()) {
+                Server.getAllClientHandlers().get(i).getFormatter().format("%s\n", CommandClass.makeJson(customCardCommand));
+                Server.getAllClientHandlers().get(i).getFormatter().flush();
+            }
         }
     }
 
@@ -250,6 +265,10 @@ public class ClientHandler implements Runnable {
         command.setCards(ServerShop.getInstance().getCards());
         formatter.format("%s\n", CommandClass.makeJson(command));
         formatter.flush();
+        for (int i = 0; i < ServerShop.getInstance().getCustomCardCommands().size(); i++) {
+            formatter.format("%s\n", CommandClass.makeJson(ServerShop.getInstance().getCustomCardCommands().get(i)));
+            formatter.flush();
+        }
     }
 
     private void buy(ShopCommand shopCommand) {

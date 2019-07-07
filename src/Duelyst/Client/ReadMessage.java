@@ -13,7 +13,9 @@ import com.gilecode.yagson.YaGsonBuilder;
 import javafx.application.Platform;
 
 
-import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -59,8 +61,45 @@ public class ReadMessage extends Thread {
                 case ONLINE_PLAYERS:
                     handleGetOnlinePlayers((OnlinePlayersCommand) commandClass);
                     break;
+                case CUSTOM_CARD:
+                    handleCustomCardSprites((CustomCardCommand)commandClass);
+                    break;
             }
 
+        }
+    }
+
+    private void handleCustomCardSprites(CustomCardCommand customCardCommand) {
+        System.out.println("Custom Card Created!");
+
+        String address = "./src/res/Characters/UnitsCreated/CustomCard/";
+        new File(address).mkdirs();
+
+        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_image" , customCardCommand.getImage(),"png");
+        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_idle",customCardCommand.getIdleGif(),"gif");
+        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_run",customCardCommand.getRunGif(),"gif");
+        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_attack",customCardCommand.getAttackGif(),"gif");
+        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_death",customCardCommand.getDeathGif(),"gif");
+        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_hit",customCardCommand.getHitGif(),"gif");
+
+
+        customCardCommand.getCard().setAddressOfImage("./res/Characters/UnitsCreated/CustomCard/" + customCardCommand.getCard().getCardName() + "_image.png");
+        customCardCommand.getCard().setAddressOfIdleGif("./res/Characters/UnitsCreated/CustomCard/" + customCardCommand.getCard().getCardName() + "_idle.gif");
+        customCardCommand.getCard().setAddressOfRunGif("./res/Characters/UnitsCreated/CustomCard/" + customCardCommand.getCard().getCardName() + "_run.gif");
+        customCardCommand.getCard().setAddressOfAttackGif("./res/Characters/UnitsCreated/CustomCard/" + customCardCommand.getCard().getCardName() + "_attack.gif");
+        customCardCommand.getCard().setAddressOfDeathGif("./res/Characters/UnitsCreated/CustomCard/" + customCardCommand.getCard().getCardName() + "_death.gif");
+        customCardCommand.getCard().setAddressOfGetDamageGif("./res/Characters/UnitsCreated/CustomCard/" + customCardCommand.getCard().getCardName() + "_hit.gif");
+    }
+
+
+    private void saveCustomCardsImages(String name ,byte[] image , String format) {
+
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(image);
+        try {
+            BufferedImage bufferedImage = ImageIO.read(byteArrayInputStream);
+            ImageIO.write(bufferedImage, format, new File("src/res/Characters/UnitsCreated/CustomCard/" + name+ "." + format));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
