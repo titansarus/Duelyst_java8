@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class ServerTV {
     private static ArrayList<ServerTV> finishedGames = new ArrayList<>();
-    private static ArrayList<ServerTV> currentGames = new ArrayList<>();
+    private static ArrayList<ServerTV> runningGames = new ArrayList<>();
     private ArrayList<BattleRecord> battleRecords = new ArrayList<>();
     private Account account1;
     private Account account2;
@@ -15,7 +15,7 @@ public class ServerTV {
     public ServerTV(Account account1, Account account2) {
         this.account1 = account1;
         this.account2 = account2;
-        currentGames.add(this);
+        runningGames.add(this);
     }
 
     public static ArrayList<ServerTV> getFinishedGames() {
@@ -51,11 +51,11 @@ public class ServerTV {
         this.account2 = account2;
     }
 
-    public static ArrayList<ServerTV> getCurrentGames() {
-        return currentGames;
+    public static ArrayList<ServerTV> getRunningGames() {
+        return runningGames;
     }
 
-    public static void setCurrentGames(ArrayList<ServerTV> currentGames) {
-        ServerTV.currentGames = currentGames;
+    public static void setRunningGames(ArrayList<ServerTV> runningGames) {
+        ServerTV.runningGames = runningGames;
     }
 }

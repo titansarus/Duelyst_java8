@@ -62,11 +62,19 @@ public class ReadMessage extends Thread {
                     handleGetOnlinePlayers((OnlinePlayersCommand) commandClass);
                     break;
                 case CUSTOM_CARD:
-                    handleCustomCardSprites((CustomCardCommand)commandClass);
+                    handleCustomCardSprites((CustomCardCommand) commandClass);
+                    break;
+                case TV:
+                    handleTVCommand((tvCommand) commandClass);
                     break;
             }
 
         }
+    }
+
+    private void handleTVCommand(tvCommand tvCommand) {
+        MultiPlayerController.setFinishedGames(tvCommand.getFinishedGames());
+        MultiPlayerController.setRunningGames(tvCommand.getRunningGames());
     }
 
     private void handleCustomCardSprites(CustomCardCommand customCardCommand) {
@@ -75,12 +83,12 @@ public class ReadMessage extends Thread {
         String address = "./src/res/Characters/UnitsCreated/CustomCard/";
         new File(address).mkdirs();
 
-        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_image" , customCardCommand.getImage(),"png");
-        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_idle",customCardCommand.getIdleGif(),"gif");
-        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_run",customCardCommand.getRunGif(),"gif");
-        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_attack",customCardCommand.getAttackGif(),"gif");
-        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_death",customCardCommand.getDeathGif(),"gif");
-        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_hit",customCardCommand.getHitGif(),"gif");
+        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_image", customCardCommand.getImage(), "png");
+        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_idle", customCardCommand.getIdleGif(), "gif");
+        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_run", customCardCommand.getRunGif(), "gif");
+        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_attack", customCardCommand.getAttackGif(), "gif");
+        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_death", customCardCommand.getDeathGif(), "gif");
+        saveCustomCardsImages(customCardCommand.getCard().getCardName() + "_hit", customCardCommand.getHitGif(), "gif");
 
 
         customCardCommand.getCard().setAddressOfImage("./res/Characters/UnitsCreated/CustomCard/" + customCardCommand.getCard().getCardName() + "_image.png");
@@ -92,12 +100,12 @@ public class ReadMessage extends Thread {
     }
 
 
-    private void saveCustomCardsImages(String name ,byte[] image , String format) {
+    private void saveCustomCardsImages(String name, byte[] image, String format) {
 
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(image);
         try {
             BufferedImage bufferedImage = ImageIO.read(byteArrayInputStream);
-            ImageIO.write(bufferedImage, format, new File("src/res/Characters/UnitsCreated/CustomCard/" + name+ "." + format));
+            ImageIO.write(bufferedImage, format, new File("src/res/Characters/UnitsCreated/CustomCard/" + name + "." + format));
         } catch (IOException e) {
             e.printStackTrace();
         }

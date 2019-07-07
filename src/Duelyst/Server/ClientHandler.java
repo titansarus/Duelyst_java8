@@ -86,10 +86,30 @@ public class ClientHandler implements Runnable {
                 case CUSTOM_CARD:
                     handleCustomCardCommand((CustomCardCommand) command);
                     break;
+                case TV:
+                    handleTvCommand((tvCommand) command);
+                    break;
             }
 
 
         }
+    }
+
+    private void handleTvCommand(tvCommand tvCommand) {
+        ArrayList<String> finishedGames = new ArrayList<>();
+        for (int i = 0; i < ServerTV.getFinishedGames().size(); i++) {
+            ServerTV serverTV = ServerTV.getFinishedGames().get(i);
+            finishedGames.add(serverTV.getAccount1().getUsername() + "  VS  " + serverTV.getAccount2().getUsername());
+        }
+        ArrayList<String> runningGames = new ArrayList<>();
+        for (int i = 0; i < ServerTV.getRunningGames().size(); i++) {
+            ServerTV serverTV = ServerTV.getRunningGames().get(i);
+            runningGames.add(serverTV.getAccount1().getUsername() + "  VS  " + serverTV.getAccount2().getUsername());
+        }
+        tvCommand.setFinishedGames(finishedGames);
+        tvCommand.setRunningGames(runningGames);
+        formatter.format("%s\n", CommandClass.makeJson(tvCommand));
+        formatter.flush();
     }
 
     private void handleBattle(BattleCommand battleCommand) {
@@ -128,7 +148,7 @@ public class ClientHandler implements Runnable {
         }
         Account account = killHeroApplicator;
         killHeroApplicator = null;
-        
+
     }
 
     private void startOrSetCollectFlag(BattleCommand battleCommand) {

@@ -4,6 +4,7 @@ import Duelyst.Client.SendMessage;
 import Duelyst.Model.Account;
 import Duelyst.Model.CommandClasses.BattleCommand;
 import Duelyst.Model.CommandClasses.ChatRoomCommand;
+import Duelyst.Model.CommandClasses.tvCommand;
 import Duelyst.Model.GameGoal;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.*;
@@ -11,18 +12,24 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -30,6 +37,11 @@ import java.util.Collections;
 
 public class MultiPlayerController {
 
+    public TabPane tv_tabPane;
+    public Tab running_tab;
+    public VBox runningGames_vbox;
+    public Tab finished_tab;
+    public VBox finishedGames_vbox;
     private GameGoal gameGoal;
     public ImageView KillHero_img;
     public ImageView CollectFlag_img;
@@ -48,6 +60,25 @@ public class MultiPlayerController {
     public ImageView tv_img;
     public Pane runningBattles_pane;
     Timeline slowTimeline;
+
+    private static ArrayList<String> finishedGames;
+    private static ArrayList<String> runningGames;
+
+    public static ArrayList<String> getFinishedGames() {
+        return finishedGames;
+    }
+
+    public static ArrayList<String> getRunningGames() {
+        return runningGames;
+    }
+
+    public static void setFinishedGames(ArrayList<String> finishedGames) {
+        MultiPlayerController.finishedGames = finishedGames;
+    }
+
+    public static void setRunningGames(ArrayList<String> runningGames) {
+        MultiPlayerController.runningGames = runningGames;
+    }
 
 
     @FXML
@@ -179,13 +210,10 @@ public class MultiPlayerController {
             tt1.play();
             tt2.play();
         }));
-        ft4.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                BattleCommand battleCommand = new BattleCommand();
-                battleCommand.start(gameGoal, Account.getLoggedAccount());
-                SendMessage.getSendMessage().sendMessage(battleCommand);
-            }
+        ft4.setOnFinished(event -> {
+            BattleCommand battleCommand = new BattleCommand();
+            battleCommand.start(gameGoal, Account.getLoggedAccount());
+            SendMessage.getSendMessage().sendMessage(battleCommand);
         });
     }
 
@@ -232,12 +260,7 @@ public class MultiPlayerController {
         ft2.setToValue(1);
         ft2.setFromValue(0);
 
-        tt1.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                ft2.play();
-            }
-        });
+        tt1.setOnFinished(event -> ft2.play());
 
         FadeTransition ft3 = new FadeTransition(Duration.millis(500), centerCircle_img);
         ft3.setFromValue(1);
@@ -280,29 +303,73 @@ public class MultiPlayerController {
 
     }
 
-    public void tvImageGlow(){
-        InnerShadow innerShadow = new InnerShadow(10,Color.GOLD);
+    public void tvImageGlow() {
+        InnerShadow innerShadow = new InnerShadow(10, Color.GOLD);
         innerShadow.setWidth(40);
         innerShadow.setHeight(40);
         tv_img.setEffect(innerShadow);
     }
 
-    public void tvImageGlowDisappear(){
+    public void tvImageGlowDisappear() {
         tv_img.setEffect(null);
     }
 
-    public void handleTvImage(){
+    public void handleTvImage() {
+
+        SendMessage.getSendMessage().sendMessage(new tvCommand());
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
 
         anchorPane.setDisable(true);
-        TranslateTransition tt = new TranslateTransition(Duration.millis(1000),runningBattles_pane);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1000), runningBattles_pane);
         tt.setFromY(-600);
         tt.setToY(0);
         tt.play();
     }
 
-    public void handleTvCancelButton(){
-        TranslateTransition tt = new TranslateTransition(Duration.millis(700),runningBattles_pane);
+
+    public void makeFinishedBattlesList() {
+        if (finishedGames == null)
+            finishedGames = new ArrayList<>();
+        makeBattlesList(finishedGames, finishedGames_vbox);
+    }
+
+    public void makeRunningBattlesList() {
+        if (runningGames == null)
+            runningGames = new ArrayList<>();
+        makeBattlesList(runningGames, runningGames_vbox);
+    }
+
+    private void makeBattlesList(ArrayList<String> battles, VBox vBox) {
+        vBox.getChildren().clear();
+        for (int i = 0; i < battles.size(); i++) {
+            Label label = new Label(battles.get(i));
+            label.setTextAlignment(TextAlignment.CENTER);
+            label.setTextFill(Color.WHITE);
+            label.setStyle("-fx-background-color: #273545");
+            label.setPrefHeight(50);
+            label.setPrefWidth(300);
+            label.setAlignment(Pos.CENTER);
+            label.setOnMouseEntered(event -> label.setOpacity(1));
+            label.setOnMouseExited(event -> label.setOpacity(0.6));
+            label.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    //TODO Bayad Varede Safheye Battle Shavad Va Battle Morede Nazar Ra Bebinad
+                }
+            });
+            vBox.getChildren().add(label);
+            label.setLayoutY(50 * i);
+
+        }
+    }
+
+    public void handleTvCancelButton() {
+        TranslateTransition tt = new TranslateTransition(Duration.millis(700), runningBattles_pane);
         tt.setFromY(runningBattles_pane.getTranslateY());
         tt.setToY(-600);
         tt.setOnFinished(event -> anchorPane.setDisable(false));

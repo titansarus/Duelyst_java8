@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXTextField?>
+<?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
@@ -130,6 +134,32 @@
       </Pane>
       <Pane fx:id="runningBattles_pane" maxHeight="400.0" maxWidth="300.0" minHeight="400.0" minWidth="300.0" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: rgba(39, 53, 69,0.65);" translateY="-590.0">
          <children>
+            <TabPane fx:id="tv_tabPane" layoutY="-35.0" maxHeight="650.0" maxWidth="1024.0" minHeight="400.0" minWidth="300.0" prefHeight="435.0" prefWidth="300.0" style="-fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10; -fx-background-color: transparent;" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                  <Tab fx:id="running_tab" onSelectionChanged="#makeRunningBattlesList" style="-fx-background-color: rgba(23,56,73,0.8);" text="Running">
+                     <content>
+                        <ScrollPane fx:id="sellScrollPane" hbarPolicy="NEVER" prefHeight="620.0" prefWidth="1024.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
+                           <content>
+                              <VBox fx:id="runningGames_vbox" prefHeight="360.0" prefWidth="298.0" />
+                           </content>
+                        </ScrollPane>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="finished_tab" onSelectionChanged="#makeFinishedBattlesList" style="-fx-background-color: rgba(23,56,73,0.8);" text="Finished">
+                     <content>
+                        <ScrollPane fx:id="buyScrollPane" hbarPolicy="NEVER" prefHeight="408.0" prefWidth="621.0" style="-fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10; -fx-background-color: transparent;" vbarPolicy="NEVER">
+                           <content>
+                              <VBox fx:id="finishedGames_vbox" prefHeight="359.0" prefWidth="299.0" />
+                           </content>
+                        </ScrollPane>
+                     </content>
+                  </Tab>
+               </tabs>
+               <stylesheets>
+                  <URL value="@../../../css/scroll-bar.css" />
+                  <URL value="@../../../css/tab-pane-new.css" />
+               </stylesheets>
+            </TabPane>
             <ImageView fitHeight="47.0" fitWidth="69.0" layoutX="253.0" onMouseClicked="#handleTvCancelButton" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../res/ui/button_close@2x.png" />
