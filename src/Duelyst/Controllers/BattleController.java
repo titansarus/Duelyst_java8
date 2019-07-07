@@ -1044,8 +1044,9 @@ public class BattleController {
     }
 
     public void handleSaveGameImg() {
-//        Battle battle = Battle.deepClone(Battle.getRunningBattle());
-//        Battle.getUnfinishedBattles().add(battle);
+
+        //TODO save Single Player Game
+
         TranslateTransition tt = new TranslateTransition(Duration.millis(2000), saveBattleNotification_pane);
         tt.setFromX(900);
         tt.setToX(600);
