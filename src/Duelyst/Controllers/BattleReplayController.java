@@ -9,6 +9,7 @@ import Duelyst.Model.Warrior;
 import Duelyst.Utility.ImageHolder;
 import Duelyst.View.ViewClasses.CardForBattle;
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -29,6 +30,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static Duelyst.View.Constants.*;
 
@@ -85,6 +88,8 @@ public class BattleReplayController {
     ImageView speed1x_iv;
     @FXML
     ImageView speed05x_iv;
+
+    private boolean isTimerRunning = false;
 
 
     private double heightOfPoly_Y;
@@ -164,6 +169,27 @@ public class BattleReplayController {
 
         if (lastBattleRecordPlayed >= battleRecords.size() || lastBattleRecordPlayed == -1) {
             isAnimationRunning = false;
+
+            if (!isTimerRunning) {
+                TimerTask timerTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                stopTimeline();
+                                Container.handleBack();
+                            }
+                        });
+
+                    }
+                };
+                Timer timer = new Timer();
+                timer.schedule(timerTask, 5000);
+                isTimerRunning = true;
+            }
+
+
             return;
         } else {
             ArrayList<BattleRecord> battleRecords = this.battleRecords;
