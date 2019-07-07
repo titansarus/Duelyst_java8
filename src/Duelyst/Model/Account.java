@@ -58,30 +58,6 @@ public class Account implements Cloneable {
         }
     }
 
-    public static ArrayList<Account> accountsSorter(ArrayList<Account> accounts) {
-        ArrayList<Account> accountsCopy = new ArrayList<>(accounts);
-        accountsCopy.sort(((Comparator<Account>) (o1, o2) -> o2.getCountOfWins() - o1.getCountOfWins()).thenComparing((o1, o2) -> o1.getUsername().compareTo(o2.getUsername())));
-        return accountsCopy;
-    }
-
-
-    public static boolean accountExistInArrayList(String username, ArrayList<Account> accounts) {
-        return findAccountInArrayList(username, accounts) != null;
-    }
-
-
-    public static Account findAccountInArrayList(String username, ArrayList<Account> accounts) {
-        if (username.length() > 0 && accounts != null) {
-            for (int i = 0; i < accounts.size(); i++) {
-                Account account = accounts.get(i);
-                if (account != null && account.getUsername().equals(username)) {
-                    return account;
-                }
-            }
-        }
-        return null;
-    }
-
     public static void saveAccount() {
         LoginCommand loginCommand = new LoginCommand(LoginCommandsKind.SAVE_ACCOUNTS);
         loginCommand.setAccount(Account.getLoggedAccount());

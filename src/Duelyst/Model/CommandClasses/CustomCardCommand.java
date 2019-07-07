@@ -9,7 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
-public class CustomCardCommand extends CommandClass{
+public class CustomCardCommand extends CommandClass {
 
     private Card card;
     private byte[] image;
@@ -19,7 +19,7 @@ public class CustomCardCommand extends CommandClass{
     private byte[] hitGif;
     private byte[] deathGif;
 
-    public CustomCardCommand(Card card,File image,File idleGif,File runGif,File attackGif,File hitGif,File deathGif){
+    public CustomCardCommand(Card card, File image, File idleGif, File runGif, File attackGif, File hitGif, File deathGif) {
         super(CommandKind.CUSTOM_CARD);
         this.card = card;
         this.image = makeByteArrayFromImages(image);
@@ -30,30 +30,33 @@ public class CustomCardCommand extends CommandClass{
         this.deathGif = makeByteArrayFromGif(deathGif);
     }
 
-    private  byte[] makeByteArrayFromImages(File file){
+    private byte[] makeByteArrayFromImages(File file) {
+        if(file == null)
+            return null;
         try {
             BufferedImage bufferedImage = ImageIO.read(file);
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage,"png",byteArrayOutputStream);
+            ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
             return byteArrayOutputStream.toByteArray();
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
-    private  byte[] makeByteArrayFromGif(File file){
+    private byte[] makeByteArrayFromGif(File file) {
+        if(file == null)
+            return null;
         try {
             BufferedImage bufferedImage = ImageIO.read(file);
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage,"gif",byteArrayOutputStream);
+            ImageIO.write(bufferedImage, "gif", byteArrayOutputStream);
             return byteArrayOutputStream.toByteArray();
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
         }
-        return null;
-    }
 
+    }
 
 
     public Card getCard() {
