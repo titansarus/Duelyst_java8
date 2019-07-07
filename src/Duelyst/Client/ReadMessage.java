@@ -50,7 +50,7 @@ public class ReadMessage extends Thread {
                     handleShopCommand((ShopCommand) commandClass);
                     break;
                 case BATTLE:
-                    //TODO Bayad Command Haye Marboot be battle ra begirad
+                    handleBattle((BattleCommand) commandClass);
                     break;
                 case CHAT_ROOM:
                     handleChatRoomCommand((ChatRoomCommand) commandClass);
@@ -70,6 +70,26 @@ public class ReadMessage extends Thread {
             }
 
         }
+    }
+
+    private void handleBattle(BattleCommand battleCommand) {
+        switch (battleCommand.getBattleCommandsKind()) {
+            case INSERT:
+                break;
+            case END_TURN:
+                break;
+            case MOVE:
+                break;
+            case ATTACK:
+                break;
+            case ACCEPT_REQUEST:
+                handleStartBattle(battleCommand);
+                break;
+        }
+    }
+    private void handleStartBattle(BattleCommand battleCommand){
+        MultiPlayerController multiPlayerController = (MultiPlayerController) Container.controllerClass;
+        multiPlayerController.gotoBattle(battleCommand.getOpponent(),battleCommand.getGameGoal(),battleCommand.isFirstPlayer());
     }
 
     private void handleTVCommand(tvCommand tvCommand) {

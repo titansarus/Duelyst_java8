@@ -3,6 +3,7 @@ package Duelyst.Model.CommandClasses;
 import Duelyst.Model.Account;
 import Duelyst.Model.Battle.BattleRecord;
 import Duelyst.Model.GameGoal;
+import javafx.scene.layout.BorderPane;
 
 public class BattleCommand extends CommandClass {
 
@@ -15,9 +16,23 @@ public class BattleCommand extends CommandClass {
     private BattleRecord battleRecord;
     private GameGoal gameGoal;
     private Account applicatorAccount;
+    private Account opponent;
+    private Account canceler;
+    private boolean firstPlayer;
 
     public BattleCommand() {
         super(CommandKind.BATTLE);
+    }
+
+    public void cancelRequest(Account canceler) {
+        battleCommandsKind = BattleCommandsKind.CANCEL_REQUEST;
+        this.canceler = canceler;
+    }
+
+    public void acceptRequest(Account opponent, boolean firstPlayer) {
+        this.opponent = opponent;
+        battleCommandsKind = BattleCommandsKind.ACCEPT_REQUEST;
+        this.firstPlayer = firstPlayer;
     }
 
     public void endTurn() {
@@ -149,5 +164,29 @@ public class BattleCommand extends CommandClass {
 
     public void setGameGoal(GameGoal gameGoal) {
         this.gameGoal = gameGoal;
+    }
+
+    public Account getOpponent() {
+        return opponent;
+    }
+
+    public void setOpponent(Account opponent) {
+        this.opponent = opponent;
+    }
+
+    public Account getCanceler() {
+        return canceler;
+    }
+
+    public void setCanceler(Account canceler) {
+        this.canceler = canceler;
+    }
+
+    public boolean isFirstPlayer() {
+        return firstPlayer;
+    }
+
+    public void setFirstPlayer(boolean firstPlayer) {
+        this.firstPlayer = firstPlayer;
     }
 }

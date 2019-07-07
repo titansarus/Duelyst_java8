@@ -9,7 +9,11 @@ import Duelyst.Model.Warrior;
 import Duelyst.Utility.ImageHolder;
 import Duelyst.View.ViewClasses.CardForBattle;
 import com.gilecode.yagson.YaGson;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,6 +27,7 @@ import javafx.scene.media.Media;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 
@@ -357,7 +362,7 @@ public class BattleController {
         tt.setFromY(srcy);
         tt.setToX(x);
         tt.setToY(y);
-        System.out.println(cardOnField.getCard().getAddressOfIdleGif()+  "===============");
+        System.out.println(cardOnField.getCard().getAddressOfIdleGif() + "===============");
         tt.setOnFinished(event1 -> {
             cardOnField.getImageView().setImage(new Image(cardOnField.getCard().getAddressOfIdleGif()));
             if (battleRecord.isMoveCollectibleFlag() || battleRecord.isMoveHoldFlag()) {
@@ -400,6 +405,39 @@ public class BattleController {
                 getHand().get(i).getCardController().setImageOfCardSelection(battleCardNotSelectedImage);
             }
         }
+    }
+
+    private void askToSaveBattleRecordOrNot() {
+        JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
+        jfxDialogLayout.setHeading(new Text("Save Battle Record"));
+        jfxDialogLayout.setBody(new Text("Do you Want to save Battle Record"));
+        JFXButton yes = new JFXButton();
+        yes.setPrefSize(70, 20);
+        yes.setText("YES");
+        yes.setStyle(DEFAULT_BUTTON_CSS);
+
+        JFXButton no = new JFXButton();
+        no.setPrefSize(70, 20);
+        no.setText("NO");
+        no.setStyle(DEFAULT_BUTTON_CSS);
+        jfxDialogLayout.getActions().addAll(yes, no);
+        JFXDialog jfxDialog = new JFXDialog(stackPane, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
+        jfxDialog.show();
+        yes.setOnAction(event -> {
+            getBattle().makeJsonOfBattleRecord();
+            isAnimationRunning = false;
+            stopTimeline();
+            jfxDialog.close();
+            Container.handleBack();
+        });
+        no.setOnAction(event -> {
+            isAnimationRunning = false;
+            stopTimeline();
+            jfxDialog.close();
+            Container.handleBack();
+        });
+
+
     }
 
     public void makeGrids() {
@@ -993,10 +1031,7 @@ public class BattleController {
         FadeTransition ft2 = new FadeTransition(Duration.millis(5000), gameResult_lbl);
         ft.setOnFinished(event -> {
             if (Container.scenes.size() > 0) {
-                isAnimationRunning = false;
-                stopTimeline();
-                getBattle().makeJsonOfBattleRecord();
-                Container.handleBack();
+                askToSaveBattleRecordOrNot();
             }
         });
         ft.setFromValue(0);
@@ -1058,9 +1093,7 @@ public class BattleController {
 
     public void handleQuitImg() {
         if (Container.scenes.size() > 0) {
-            stopTimeline();
-            getBattle().makeJsonOfBattleRecord();
-            Container.handleBack();
+            askToSaveBattleRecordOrNot();
         }
     }
 

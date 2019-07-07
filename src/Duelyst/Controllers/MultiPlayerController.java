@@ -1,18 +1,25 @@
 package Duelyst.Controllers;
 
 import Duelyst.Client.SendMessage;
+import Duelyst.Exceptions.MyException;
+import Duelyst.Exceptions.NotValidDeckException;
 import Duelyst.Model.Account;
+import Duelyst.Model.Battle.Battle;
 import Duelyst.Model.CommandClasses.BattleCommand;
 import Duelyst.Model.CommandClasses.ChatRoomCommand;
+import Duelyst.Model.Deck;
 import Duelyst.Model.CommandClasses.tvCommand;
 import Duelyst.Model.GameGoal;
+import Duelyst.Model.GameMode;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -32,8 +39,11 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import static Duelyst.View.Constants.BATTLE;
 
 public class MultiPlayerController {
 
@@ -235,8 +245,9 @@ public class MultiPlayerController {
 
     public void handleCancelBattleButton() {
         cancelAnimation();
-
-        //TODO Cancel Searching For Battle
+        BattleCommand battleCommand = new BattleCommand();
+        battleCommand.cancelRequest(Account.getLoggedAccount());
+        SendMessage.getSendMessage().sendMessage(battleCommand);
 
     }
 
@@ -287,21 +298,64 @@ public class MultiPlayerController {
     }
 
     public void handleKillHeroButton() {
+        checkDeckAtFirst(Account.getLoggedAccount());
         gameGoal = GameGoal.KILL_HERO;
         searchingPaneAnimation();
 
     }
 
     public void handleCollectFlagButton() {
+        checkDeckAtFirst(Account.getLoggedAccount());
         gameGoal = GameGoal.COLLECT_FLAG;
         searchingPaneAnimation();
     }
 
     public void handleHoldFlagButton() {
+        checkDeckAtFirst(Account.getLoggedAccount());
         gameGoal = GameGoal.HOLD_FLAG;
         searchingPaneAnimation();
 
     }
+
+    public void gotoBattle(Account opponent, GameGoal gameGoal, boolean firstPlayer) {
+
+        Pane root = null;
+        FXMLLoader fxmlLoader = null;
+        try {
+            fxmlLoader = new FXMLLoader(getClass().getResource("../View/FXMLFiles/Battle.fxml"));
+            root = fxmlLoader.load();
+            int i = 0;
+            System.out.println(i);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        BattleController bc = fxmlLoader.getController();
+
+        Battle battle;
+        if (firstPlayer) {
+            battle = new Battle(Account.getLoggedAccount(), opponent, GameMode.MULTI_PLAYER, gameGoal, bc);
+        } else {
+            battle = new Battle(opponent, Account.getLoggedAccount(), GameMode.MULTI_PLAYER, gameGoal, bc);
+        }
+        bc.setHandHbox();
+        bc.runTimelines();
+        battle.insertPlayerHeroes();
+//        stopTimeline(); TODO chie in ?
+        Container.addController(fxmlLoader);
+        Pane finalRoot = root;
+        Platform.runLater(() -> {
+            Container.runNextScene(finalRoot, BATTLE);
+        });
+
+    }
+
+    private void checkDeckAtFirst(Account firstPlayer) throws MyException {
+        if (firstPlayer.getCardCollection().getMainDeck() == null) {
+            throw new NotValidDeckException();
+        }
+
+    }
+
 
     public void tvImageGlow() {
         InnerShadow innerShadow = new InnerShadow(10, Color.GOLD);
@@ -330,7 +384,6 @@ public class MultiPlayerController {
         tt.setToY(0);
         tt.play();
     }
-
 
     public void makeFinishedBattlesList() {
         if (finishedGames == null)

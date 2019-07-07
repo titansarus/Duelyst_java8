@@ -402,7 +402,6 @@ public class MainMenu {
 
     public void stopTimeline() {
         timeline.stop();
-        ;
     }
 
     public void handleLeaderBoardBtn() {
@@ -576,10 +575,8 @@ public class MainMenu {
 
         Battle battle = new Battle(Account.getLoggedAccount(), ai, gameMode, gameGoal, bc);
         bc.setHandHbox();
-//        bc.makeAccountNames();
         bc.runTimelines();
         battle.insertPlayerHeroes();
-        //  bc.insertPlayerHeroes();
         stopTimeline();
         Container.addController(fxmlLoader);
         Container.runNextScene(root, BATTLE);
@@ -696,7 +693,7 @@ public class MainMenu {
             e.printStackTrace();
         }
         Container.addController(fxmlLoader);
-        Container.runNextScene(root, MAIN_MENU);
+        Container.runNextScene(root, MULTI_PLAYER);
     }
 
 //    private Account chooseYourOpponent() {
@@ -992,7 +989,7 @@ public class MainMenu {
     }
 
     private void checkDeckAtFirst(Account firstPlayer, Account secondPlayer) {
-        if (firstPlayer.getCardCollection().getMainDeck() == null) {
+        if (firstPlayer.getCardCollection().getMainDeck() == null ) {
             throw new NotValidDeckException();
         }
         if (secondPlayer.getCardCollection().getMainDeck() == null) {

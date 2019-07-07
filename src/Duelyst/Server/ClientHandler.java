@@ -7,6 +7,7 @@ import Duelyst.Model.Account;
 import Duelyst.Model.Battle.Battle;
 import Duelyst.Model.Card;
 import Duelyst.Model.CommandClasses.*;
+import Duelyst.Model.GameGoal;
 import Duelyst.Model.Shop;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
@@ -125,10 +126,25 @@ public class ClientHandler implements Runnable {
             case START_BATTLE:
                 startBattle(battleCommand);
                 break;
+            case CANCEL_REQUEST:
+                cancelRequest(battleCommand);
+                break;
+        }
+    }
+
+    private void cancelRequest(BattleCommand battleCommand) {
+        System.out.println("cancel request receive from " + battleCommand.getCanceler().getUsername());
+        if (killHeroApplicator != null && killHeroApplicator.getUsername().equals(battleCommand.getCanceler().getUsername())) {
+            killHeroApplicator = null;
+        } else if (holdFlagApplicator != null && holdFlagApplicator.getUsername().equals(battleCommand.getCanceler().getUsername())) {
+            holdFlagApplicator = null;
+        } else if (collectFlagApplicator != null && collectFlagApplicator.getUsername().equals(battleCommand.getCanceler().getUsername())) {
+            collectFlagApplicator = null;
         }
     }
 
     private void startBattle(BattleCommand battleCommand) {
+        System.out.println("send request to multi player form : " + battleCommand.getApplicatorAccount().getUsername());
         switch (battleCommand.getGameGoal()) {
             case HOLD_FLAG:
                 startOrSetHoldFlag(battleCommand);
@@ -145,28 +161,53 @@ public class ClientHandler implements Runnable {
     private void startOrSetKillHero(BattleCommand battleCommand) {
         if (killHeroApplicator == null) {
             killHeroApplicator = battleCommand.getApplicatorAccount();
+            return;
         }
         Account account = killHeroApplicator;
+        System.out.println(account.getUsername());
         killHeroApplicator = null;
-
+        System.out.println(account.getUsername());
+        sendToTwoClient(account, battleCommand.getApplicatorAccount(),battleCommand.getGameGoal());
     }
+
 
     private void startOrSetCollectFlag(BattleCommand battleCommand) {
         if (collectFlagApplicator == null) {
             collectFlagApplicator = battleCommand.getApplicatorAccount();
+            return;
         }
         Account account = collectFlagApplicator;
         collectFlagApplicator = null;
+        sendToTwoClient(account, battleCommand.getApplicatorAccount(),battleCommand.getGameGoal());
 
     }
 
     private void startOrSetHoldFlag(BattleCommand battleCommand) {
         if (holdFlagApplicator == null) {
             holdFlagApplicator = battleCommand.getApplicatorAccount();
+            return;
         }
         Account account = holdFlagApplicator;
         holdFlagApplicator = null;
+        sendToTwoClient(account, battleCommand.getApplicatorAccount(),battleCommand.getGameGoal());
+    }
 
+    private void sendToTwoClient(Account account1, Account account2, GameGoal gameGoal) {
+        sendAcceptRequest(account1, account2, true,gameGoal);
+        sendAcceptRequest(account2, account1, false,gameGoal);
+    }
+
+    private void sendAcceptRequest(Account sendFor, Account opponent, boolean firstPlayer,GameGoal gameGoal) {
+        BattleCommand battleCommand = new BattleCommand();
+        battleCommand.setGameGoal(gameGoal);
+        battleCommand.acceptRequest(opponent, firstPlayer);
+        for (ClientHandler c :
+                clientHandlers) {
+            if (c.getUserName().equals(sendFor.getUsername())) {
+                c.getFormatter().format("%s\n", CommandClass.makeJson(battleCommand));
+                c.getFormatter().flush();
+            }
+        }
     }
 
     private void handleCustomCardCommand(CustomCardCommand customCardCommand) {
