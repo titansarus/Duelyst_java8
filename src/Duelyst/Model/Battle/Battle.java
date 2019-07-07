@@ -615,6 +615,7 @@ public class Battle implements Cloneable {
             Cell cell1 = getCellOfWarrior(attacker);
             findValidCell(KindOfActionForValidCells.ATTACK);
             if (!validCells.contains(cell1)) {
+                setSelectedCell(null);
                 //TODO not counter attack
             }
         }
