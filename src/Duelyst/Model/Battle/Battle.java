@@ -961,7 +961,7 @@ public class Battle implements Cloneable {
 //        for (:
 //             ) {reza
 
-    }
+//    }
 
     setValidCells(cells);
 
