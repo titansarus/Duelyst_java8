@@ -313,12 +313,15 @@ public class Battle implements Cloneable {
         return getGrid()[row][column];
     }
 
+    public void multiPlayerMove(int destX, int destY, int srcX, int srcY) {
+        move(destX, destY, getGrid()[srcX][srcY].getWarrior(),true);
+    }
 
-    public void move(int destX, int destY, Warrior warrior) {
+    public void move(int destX, int destY, Warrior warrior,boolean isFromServer) {
 
-        if (gameMode.equals(GameMode.MULTI_PLAYER)) {
+        if (gameMode.equals(GameMode.MULTI_PLAYER) && !isFromServer) {
             BattleCommand battleCommand = new BattleCommand();
-            battleCommand.move(getCellOfWarrior(warrior).getRow(),getCellOfWarrior(warrior).getColumn(),destX,destY,Account.getLoggedAccount());
+            battleCommand.move(getCellOfWarrior(warrior).getRow(), getCellOfWarrior(warrior).getColumn(), destX, destY, Account.getLoggedAccount());
             SendMessage.getSendMessage().sendMessage(battleCommand);
         }
 
@@ -407,12 +410,28 @@ public class Battle implements Cloneable {
         }
     }
 
+    public void multiPlayerInsert(int i, int j, String selectedCardID) {
+        Card card = null;
+        Player player;
+        if (player1.getAccount().getUsername().equals(Account.getLoggedAccount().getUsername())) {
+            player = player2;
+        } else {
+            player = player1;
+        }
+        for (Card c :
+                player.getInGameCards()) {
+            if (c.getCardId().equals(selectedCardID)) {
+                card = c;
+            }
+        }
+        insertSelectedCardWithCard(i, j, card);
+    }
 
     public void insertSelectedCardWithCard(int i, int j, Card selectedCard) {
 
         if (gameMode.equals(GameMode.MULTI_PLAYER)) {
             BattleCommand battleCommand = new BattleCommand();
-            battleCommand.insert(selectedCard.getCardId(),i,j,Account.getLoggedAccount());
+            battleCommand.insert(selectedCard.getCardId(), i, j, Account.getLoggedAccount());
             SendMessage.getSendMessage().sendMessage(battleCommand);
         }
 
@@ -588,7 +607,7 @@ public class Battle implements Cloneable {
 
         if (gameMode.equals(GameMode.MULTI_PLAYER) && !isFromCounterAttack) {
             BattleCommand battleCommand = new BattleCommand();
-            battleCommand.attack(attacker.getCardId(), attackedCard.getCardId(),Account.getLoggedAccount());
+            battleCommand.attack(attacker.getCardId(), attackedCard.getCardId(), Account.getLoggedAccount());
             SendMessage.getSendMessage().sendMessage(battleCommand);
         }
         attackedCard.decreaseHealthPoint(attacker.getActionPower() - attackedCard.getShield());//TODO CHECK FOR BUFF

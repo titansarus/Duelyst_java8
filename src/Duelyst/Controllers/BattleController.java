@@ -533,7 +533,7 @@ public class BattleController {
                     if (Cell.calculateManhattanDistance(getBattle().getSelectedCell(), getBattle().getGrid()[coordinate[0]][coordinate[1]]) <= 2) {
                         if (getBattle().getPlayingPlayer().checkIfCardIsInGame(getBattle().getSelectedCell().getWarrior()) && getBattle().getSelectedCell().getWarrior().isValidToMove()) {
 
-                            getBattle().move(coordinate[0], coordinate[1], getBattle().getSelectedCell().getWarrior());
+                            getBattle().move(coordinate[0], coordinate[1], getBattle().getSelectedCell().getWarrior(),false);
                         }
                     }
                     return;

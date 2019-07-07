@@ -79,7 +79,7 @@ public class ReadMessage extends Thread {
                 insert(battleCommand);
                 break;
             case END_TURN:
-                endTurn(battleCommand);
+                endTurn();
                 break;
             case MOVE:
                 move(battleCommand);
@@ -94,7 +94,7 @@ public class ReadMessage extends Thread {
     }
 
     private void move(BattleCommand battleCommand) {
-//        Battle.getRunningBattle().mo
+        Battle.getRunningBattle().multiPlayerMove(battleCommand.getDesRow(),battleCommand.getDesCol(),battleCommand.getSrcRow(),battleCommand.getSrcCol());
     }
 
     private void attack(BattleCommand battleCommand) {
@@ -102,12 +102,11 @@ public class ReadMessage extends Thread {
     }
 
     private void insert(BattleCommand battleCommand) {
-        System.out.println("insert");
+        Battle.getRunningBattle().multiPlayerInsert(battleCommand.getInsertRow(),battleCommand.getInsertCol(),battleCommand.getInsertSelectedCardId());
     }
 
-    private void endTurn(BattleCommand battleCommand) {
-        System.out.println("end turn");
-        Battle.getRunningBattle();
+    private void endTurn() {
+        Battle.getRunningBattle().nextTurn();
     }
 
     private void handleStartBattle(BattleCommand battleCommand) {
