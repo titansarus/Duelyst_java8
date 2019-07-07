@@ -1,5 +1,9 @@
 package Duelyst.Model.CommandClasses;
 
+import Duelyst.Model.Account;
+import Duelyst.Model.Battle.BattleRecord;
+import Duelyst.Model.GameGoal;
+
 public class BattleCommand extends CommandClass {
 
     private BattleCommandsKind battleCommandsKind;
@@ -8,10 +12,22 @@ public class BattleCommand extends CommandClass {
     private String attackerCardId, defenderCardId;
     private String insertSelectedCardId;
     private int insertRow, insertCol;
-
+    private BattleRecord battleRecord;
+    private GameGoal gameGoal;
+    private Account applicatorAccount;
 
     public BattleCommand() {
         super(CommandKind.BATTLE);
+    }
+
+    public void endTurn() {
+        battleCommandsKind = BattleCommandsKind.END_TURN;
+    }
+
+    public void start(GameGoal gameGoal, Account account) {
+        battleCommandsKind = BattleCommandsKind.START_BATTLE;
+        this.gameGoal = gameGoal;
+        this.applicatorAccount = account;
     }
 
     public void move(int srcRow, int srcCol, int desRow, int desCol) {
@@ -109,5 +125,29 @@ public class BattleCommand extends CommandClass {
 
     public void setInsertCol(int insertCol) {
         this.insertCol = insertCol;
+    }
+
+    public BattleRecord getBattleRecord() {
+        return battleRecord;
+    }
+
+    public void setBattleRecord(BattleRecord battleRecord) {
+        this.battleRecord = battleRecord;
+    }
+
+    public Account getApplicatorAccount() {
+        return applicatorAccount;
+    }
+
+    public void setApplicatorAccount(Account applicatorAccount) {
+        this.applicatorAccount = applicatorAccount;
+    }
+
+    public GameGoal getGameGoal() {
+        return gameGoal;
+    }
+
+    public void setGameGoal(GameGoal gameGoal) {
+        this.gameGoal = gameGoal;
     }
 }

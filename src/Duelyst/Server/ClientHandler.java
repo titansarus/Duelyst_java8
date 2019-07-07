@@ -4,6 +4,7 @@ import Duelyst.Client.SendMessage;
 import Duelyst.Controllers.Container;
 import Duelyst.Exceptions.*;
 import Duelyst.Model.Account;
+import Duelyst.Model.Battle.Battle;
 import Duelyst.Model.Card;
 import Duelyst.Model.CommandClasses.*;
 import Duelyst.Model.Shop;
@@ -26,6 +27,9 @@ public class ClientHandler implements Runnable {
     private Formatter formatter;
     private boolean loggedIn;
     private static ArrayList<ChatRoomCommand> pms = new ArrayList<>();
+    private static Account killHeroApplicator;
+    private static Account collectFlagApplicator;
+    private static Account holdFlagApplicator;
 
     ClientHandler(Socket socket) throws IOException {
         this.socket = socket;
@@ -67,7 +71,7 @@ public class ClientHandler implements Runnable {
                     handleShopCommand((ShopCommand) command);
                     break;
                 case BATTLE:
-                    //TODO Dastoorat Ra Migirad Va Baraye Cliente Harif Mifrestad
+                    handleBattle((BattleCommand) command);
                     break;
                 case CHAT_ROOM:
                     handleChatRoom((ChatRoomCommand) command);
@@ -86,6 +90,25 @@ public class ClientHandler implements Runnable {
 
 
         }
+    }
+
+    private void handleBattle(BattleCommand battleCommand) {
+        switch (battleCommand.getBattleCommandsKind()) {
+            case ATTACK:
+                break;
+            case MOVE:
+                break;
+            case END_TURN:
+                break;
+            case INSERT:
+                break;
+            case START_BATTLE:
+                startBattle(battleCommand);
+                break;
+        }
+    }
+    private void startBattle(BattleCommand battleCommand){
+
     }
 
     private void handleCustomCardCommand(CustomCardCommand customCardCommand) {

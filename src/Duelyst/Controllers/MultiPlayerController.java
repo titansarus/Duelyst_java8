@@ -2,7 +2,9 @@ package Duelyst.Controllers;
 
 import Duelyst.Client.SendMessage;
 import Duelyst.Model.Account;
+import Duelyst.Model.CommandClasses.BattleCommand;
 import Duelyst.Model.CommandClasses.ChatRoomCommand;
+import Duelyst.Model.GameGoal;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.*;
 import javafx.event.ActionEvent;
@@ -27,7 +29,7 @@ import java.util.Collections;
 
 public class MultiPlayerController {
 
-
+    private GameGoal gameGoal;
     public ImageView KillHero_img;
     public ImageView CollectFlag_img;
     public ImageView HoldFlag_img;
@@ -128,10 +130,10 @@ public class MultiPlayerController {
                 chatRoomCommands) {
             Text text = new Text(command.getPmOwner() + " : " + command.getPm());
             text.setFill(Color.WHITE);
-            if(command.getPmOwner().equals(Account.getLoggedAccount().getUsername()))
+            if (command.getPmOwner().equals(Account.getLoggedAccount().getUsername()))
                 text.setFill(Color.GOLD);
             text.setStyle("-fx-font-style: italic");
-            text.setEffect(new DropShadow(10,0,0,Color.GREY));
+            text.setEffect(new DropShadow(10, 0, 0, Color.GREY));
             System.out.println(command.getPmOwner() + " : " + command.getPm());
             text.setWrappingWidth(150);
             text.relocate(0, (i++) * 50);
@@ -173,6 +175,14 @@ public class MultiPlayerController {
             tt1.play();
             tt2.play();
         }));
+        ft4.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                BattleCommand battleCommand = new BattleCommand();
+                battleCommand.start(gameGoal);
+                SendMessage.getSendMessage().sendMessage(battleCommand);
+            }
+        });
     }
 
     private void centerCircleAnimation(EventHandler eventHandler) {
@@ -250,18 +260,20 @@ public class MultiPlayerController {
     }
 
     public void handleKillHeroButton() {
+        gameGoal = GameGoal.KILL_HERO;
         searchingPaneAnimation();
-        //TODO Kill Hero Mode
+
     }
 
     public void handleCollectFlagButton() {
+        gameGoal = GameGoal.COLLECT_FLAG;
         searchingPaneAnimation();
-        //TODO Collect Flag Mode
     }
 
     public void handleHoldFlagButton() {
+        gameGoal = GameGoal.HOLD_FLAG;
         searchingPaneAnimation();
-        //TODO Hold Flag Mode
+
     }
 
     public void killHeroButtonGlow() {
