@@ -29,26 +29,31 @@ public class Hero extends Warrior implements Cloneable {
 
     public Hero(String cardName, String cardDescription, int manaCost, int darikCost, int healthPoint, int actionPower, int attackRange, AttackKind attackKind, int shield, String addressOfImage) {
         super(cardName, cardDescription, manaCost, darikCost, healthPoint, actionPower, attackRange, attackKind, shield, addressOfImage);
+        setCardKind(CardKind.HERO);
     }
 
     public Hero(String cardName, String cardDescription, int manaCost, int darikCost, int healthPoint, int actionPower, int attackRange, AttackKind attackKind, int shield, String addressOfImage, String addressOfIdleGif) {
         super(cardName, cardDescription, manaCost, darikCost, addressOfImage, addressOfIdleGif, healthPoint, actionPower, attackRange, attackKind, shield);
+        setCardKind(CardKind.HERO);
     }
 
     public Hero(String cardName, String cardDescription, int manaCost, int darikCost, int healthPoint, int actionPower, int attackRange, AttackKind attackKind, int shield, String addressOfImage, String addressOfIdleGif,
                 String addressOfRunGif, String addressOfAttackGif) {
         super(cardName, cardDescription, manaCost, darikCost, addressOfImage, addressOfIdleGif, addressOfRunGif, addressOfAttackGif, healthPoint, actionPower, attackRange, attackKind, shield);
+        setCardKind(CardKind.HERO);
     }
 
     public Hero(String cardName, String cardDescription, int manaCost, int darikCost, int healthPoint, int actionPower, int attackRange, AttackKind attackKind, int shield, String addressOfImage, String addressOfIdleGif,
                 String addressOfRunGif, String addressOfAttackGif, String addressOfGetDamageGif, String addressOfDeathGif) {
         super(cardName, cardDescription, manaCost, darikCost, addressOfImage, addressOfIdleGif, addressOfRunGif, addressOfAttackGif, addressOfGetDamageGif, addressOfDeathGif, healthPoint, actionPower, attackRange, attackKind, shield);
+        setCardKind(CardKind.HERO);
     }
 
     public Hero(String cardName, String cardDescription, int manaCost, int darikCost, int healthPoint, int actionPower, int attackRange, AttackKind attackKind, int shield, String addressOfImage, String addressOfIdleGif,
                 String addressOfRunGif, String addressOfAttackGif, String addressOfGetDamageGif, String addressOfDeathGif, int cooldown) {
         super(cardName, cardDescription, manaCost, darikCost, addressOfImage, addressOfIdleGif, addressOfRunGif, addressOfAttackGif, addressOfGetDamageGif, addressOfDeathGif, healthPoint, actionPower, attackRange, attackKind, shield);
         this.cooldown = cooldown;
+        setCardKind(CardKind.HERO);
     }
 
     public static ArrayList<Hero> getAllHeros() {

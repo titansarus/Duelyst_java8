@@ -149,11 +149,17 @@ public class BattleController {
     private Timeline slowTimeline = new Timeline();
     private Timeline fastTimeLine = new Timeline();
     private Timeline animationTimeLine = new Timeline();
+    private Timeline handDestroyerTimeline = new Timeline();
 
     void runTimelines() {
         runSlowTimeline();
         runVeryFastTimeLine();
         runAnimationTimeline();
+    }
+    private void runHandDestroyerTimeline()
+    {
+        handDestroyerTimeline = new Timeline();
+
     }
 
 
