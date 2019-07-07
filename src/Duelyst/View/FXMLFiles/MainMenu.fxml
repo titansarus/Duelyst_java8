@@ -181,7 +181,7 @@
          <children>
             <ScrollPane fx:id="battleRecord_scrollPane" hbarPolicy="NEVER" prefHeight="524.0" prefWidth="300.0">
                <content>
-                  <VBox fx:id="battleRecord_anchorPane" prefHeight="523.0" prefWidth="300.0" />
+                  <VBox fx:id="battleRecord_vbox" prefHeight="523.0" prefWidth="300.0" />
                </content>
             </ScrollPane>
             <ImageView fx:id="battleRecord_closeButton" fitHeight="77.0" fitWidth="48.0" layoutX="252.0" onMouseClicked="#handleBattleRecordCloseButton" pickOnBounds="true" preserveRatio="true">

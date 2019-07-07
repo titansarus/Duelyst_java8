@@ -10,18 +10,14 @@ import Duelyst.Model.CommandClasses.*;
 import Duelyst.Utility.ImageHolder;
 import com.jfoenix.controls.*;
 import javafx.animation.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -29,7 +25,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
@@ -127,7 +122,7 @@ public class MainMenu {
     ScrollPane battleRecord_scrollPane;
 
     @FXML
-    VBox battleRecord_anchorPane;
+    VBox battleRecord_vbox;
 
     @FXML
     ImageView battleRecord_closeButton;
@@ -1058,7 +1053,7 @@ public class MainMenu {
                 label.setPrefHeight(50);
 //                label.setLayoutY(100 * i);
 //                label.setLayoutX(80);
-                battleRecord_anchorPane.getChildren().add(label);
+                battleRecord_vbox.getChildren().add(label);
                 label.setOnMouseClicked(event -> {
 
                     String s = label.getText().toString();
