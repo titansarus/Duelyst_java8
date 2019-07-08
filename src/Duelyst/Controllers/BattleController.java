@@ -495,15 +495,18 @@ public class BattleController {
         yes.setOnAction(event -> {
             getBattle().makeJsonOfBattleRecord();
             isAnimationRunning = false;
-            stopTimeline();
             jfxDialog.close();
-            Container.handleBack();
         });
         no.setOnAction(event -> {
             isAnimationRunning = false;
-            stopTimeline();
+
             jfxDialog.close();
+        });
+
+        jfxDialog.setOnDialogClosed(event -> {
+            stopTimeline();
             Container.handleBack();
+
         });
 
 
