@@ -169,9 +169,9 @@ public class BattleController {
         if (getBattle().getGameMode().equals(GameMode.MULTI_PLAYER)) {
             notYourTurnPaneTimeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
                 if (!getBattle().getPlayingPlayer().getAccount().getUsername().equals(Account.getLoggedAccount().getUsername())) {
-                    notYourTurn_pane.setDisable(false);
+                    handleNotYourTurnPane();
                 } else {
-                    notYourTurn_pane.setDisable(true);
+                    handleNotYourTurnPaneReverse();
                 }
             }), new KeyFrame(Duration.millis(432)));
 
@@ -594,7 +594,7 @@ public class BattleController {
                         System.out.println("Attack");
                         Warrior attacker = getBattle().getSelectedCell().getWarrior();
                         Warrior attacked = getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior();
-                        getBattle().handleAttackCounterDeath(attacker, attacked,false);
+                        getBattle().handleAttackCounterDeath(attacker, attacked, false);
 
 
                         getBattle().setSelectedCell(null);
@@ -612,7 +612,7 @@ public class BattleController {
             if (getBattle().getSelectedCard() != null) {//TODO SOME MORE CHECKS NEEDED
 
                 try {
-                    getBattle().insertSelectedCardWithCard(getBattle().getSelectedCell().getRow(), getBattle().getSelectedCell().getColumn(), getBattle().getSelectedCard(),false);
+                    getBattle().insertSelectedCardWithCard(getBattle().getSelectedCell().getRow(), getBattle().getSelectedCell().getColumn(), getBattle().getSelectedCard(), false);
                 } catch (MyException e) {
                     Container.exceptionGenerator(e, stackPane);
                 }
@@ -810,8 +810,8 @@ public class BattleController {
         }
     }
 
-    public void handleNotification(String string){
-        TranslateTransition tt = new TranslateTransition(Duration.millis(1000),timeNotification_pane);
+    public void handleNotification(String string) {
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1000), timeNotification_pane);
         notification_lbl.setText(string);
         tt.setFromX(900);
         tt.setToX(600);
@@ -821,15 +821,15 @@ public class BattleController {
 
     }
 
-    public void handleNotYourTurnPane(){
-        TranslateTransition tt = new TranslateTransition(Duration.millis(0),notYourTurn_pane);
+    public void handleNotYourTurnPane() {
+        TranslateTransition tt = new TranslateTransition(Duration.millis(0), notYourTurn_pane);
         tt.setFromY(-900);
         tt.setToY(0);
         tt.play();
     }
 
-    public void handleNotYourTurnPaneReverse(){
-        TranslateTransition tt = new TranslateTransition(Duration.millis(0),notYourTurn_pane);
+    public void handleNotYourTurnPaneReverse() {
+        TranslateTransition tt = new TranslateTransition(Duration.millis(0), notYourTurn_pane);
         tt.setFromY(0);
         tt.setToY(-900);
         tt.play();
