@@ -3,6 +3,7 @@ package Duelyst.Model.CommandClasses;
 import Duelyst.Model.Account;
 import Duelyst.Model.Battle.BattleRecord;
 import Duelyst.Model.GameGoal;
+import javafx.scene.layout.BorderPane;
 
 import java.util.ArrayList;
 
@@ -21,10 +22,7 @@ public class BattleCommand extends CommandClass {
     private Account canceler;
     private boolean firstPlayer;
     private Account loser;
-    private int[] randomXForCollectFlag;
-    private int[] randomYForCollectFlag;
     private ArrayList<BattleRecord> battleRecords = new ArrayList<>();
-
 
     public BattleCommand() {
         super(CommandKind.BATTLE);
@@ -228,21 +226,5 @@ public class BattleCommand extends CommandClass {
 
     public void setBattleRecords(ArrayList<BattleRecord> battleRecords) {
         this.battleRecords = battleRecords;
-    }
-
-    public int[] getRandomXForCollectFlag() {
-        return randomXForCollectFlag;
-    }
-
-    public void setRandomXForCollectFlag(int[] randomXForCollectFlag) {
-        this.randomXForCollectFlag = randomXForCollectFlag;
-    }
-
-    public int[] getRandomYForCollectFlag() {
-        return randomYForCollectFlag;
-    }
-
-    public void setRandomYForCollectFlag(int[] randomYForCollectFlag) {
-        this.randomYForCollectFlag = randomYForCollectFlag;
     }
 }
