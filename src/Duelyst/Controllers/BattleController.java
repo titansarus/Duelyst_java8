@@ -120,9 +120,9 @@ public class BattleController {
         speed2x_iv.setImage(ImageHolder.findImageInImageHolders("../res/ui/upSpeed.png"));
         speed05x_iv.setImage(ImageHolder.findImageInImageHolders("../res/ui/downSpeed.png"));
         speed1x_iv.setImage(ImageHolder.findImageInImageHolders("../res/ui/normalSpeed_selected.png"));
+//        if (battle.getGameMode().equals(GameMode.MULTI_PLAYER))
+//            saveGame_img.setDisable(true);
 
-//        BackgroundImage backgroundImage = new BackgroundImage(endTurnBtn , BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT , BackgroundSize.DEFAULT);
-//        end_turn_btn.setBackground(new Background( backgroundImage));
     }
 
     public void handle2Speed() {
@@ -169,9 +169,9 @@ public class BattleController {
         if (getBattle().getGameMode().equals(GameMode.MULTI_PLAYER)) {
             notYourTurnPaneTimeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
                 if (!getBattle().getPlayingPlayer().getAccount().getUsername().equals(Account.getLoggedAccount().getUsername())) {
-                    handleNotYourTurnPane();
+                    anchorPane.setDisable(true);
                 } else {
-                    handleNotYourTurnPaneReverse();
+                    anchorPane.setDisable(false);
                 }
             }), new KeyFrame(Duration.millis(432)));
 
@@ -821,19 +821,6 @@ public class BattleController {
 
     }
 
-    public void handleNotYourTurnPane() {
-        TranslateTransition tt = new TranslateTransition(Duration.millis(0), notYourTurn_pane);
-        tt.setFromY(-900);
-        tt.setToY(0);
-        tt.play();
-    }
-
-    public void handleNotYourTurnPaneReverse() {
-        TranslateTransition tt = new TranslateTransition(Duration.millis(0), notYourTurn_pane);
-        tt.setFromY(0);
-        tt.setToY(-900);
-        tt.play();
-    }
 
     public void handleGraveYardButton() {
 
