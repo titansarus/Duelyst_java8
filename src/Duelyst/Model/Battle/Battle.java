@@ -11,6 +11,7 @@ import Duelyst.Model.Buffs.ApplyBuff;
 import Duelyst.Model.Buffs.Buff;
 import Duelyst.Model.Buffs.HolyBuff;
 import Duelyst.Model.CommandClasses.BattleCommand;
+import Duelyst.Model.CommandClasses.CommandClass;
 import Duelyst.Model.Items.*;
 import Duelyst.Model.Spell.Spell;
 import Duelyst.View.Constants;
@@ -1151,7 +1152,7 @@ public class Battle implements Cloneable {
         endOfKillHeroGameMode();
         if (isEndGame()) {
 
-//            sendEndGameToServer();
+            sendEndGameToServer();
 
             int numberOfWin;
             if (draw) {
@@ -1190,10 +1191,11 @@ public class Battle implements Cloneable {
         }
 
     }
-//    private void sendEndGameToServer(){
-//        BattleCommand battleCommand = new BattleCommand();
-//        battleCommand.endGame(Account.getLoggedAccount());
-//    }
+    private void sendEndGameToServer(){
+        BattleCommand battleCommand = new BattleCommand();
+        battleCommand.end(Account.getLoggedAccount(),getBattleRecords());
+        SendMessage.getSendMessage().sendMessage(battleCommand);
+    }
 
     private void makeBattleRecordOfEndGame(boolean isDraw, Player winner, Player loser) {
         if (gameMode.equals(GameMode.MULTI_PLAYER)) {

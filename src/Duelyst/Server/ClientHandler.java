@@ -139,6 +139,17 @@ public class ClientHandler implements Runnable {
             case END_GAME:
                 endGame(battleCommand);
                 break;
+            case END:
+                end(battleCommand);
+                break;
+        }
+    }
+
+    private void end(BattleCommand battleCommand) {
+        ServerTV serverTV = ServerTV.getServerTvOfBattle(battleCommand.getMyAccount());
+        if (serverTV!=null){
+            serverTV.setBattleRecords(battleCommand.getBattleRecords());
+            serverTV.endGame();
         }
     }
 
