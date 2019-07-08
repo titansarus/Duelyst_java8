@@ -149,6 +149,7 @@ public class ClientHandler implements Runnable {
 
     private void end(BattleCommand battleCommand) {
         ServerTV serverTV = ServerTV.getServerTvOfBattle(battleCommand.getMyAccount());
+        TimeOfEndTurn.getTime(battleCommand.getMyAccount()).setTurnOff(true);
         if (serverTV!=null){
             serverTV.setBattleRecords(battleCommand.getBattleRecords());
             serverTV.endGame();
@@ -156,6 +157,7 @@ public class ClientHandler implements Runnable {
     }
 
     private void endGame(BattleCommand battleCommand) {
+        TimeOfEndTurn.getTime(battleCommand.getMyAccount()).setTurnOff(true);
         Account loser = battleCommand.getLoser();
         ServerTV serverTV = ServerTV.getServerTvOfBattle(loser);
         ClientHandler clientHandler = ServerTV.getOpponent(loser);

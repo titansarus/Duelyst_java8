@@ -18,6 +18,7 @@ public class TimeOfEndTurn extends Thread {
     private Account playingPlayer;
     private final int TIME_OF_TURN = 120;//TODO 120
     private boolean warning = true;
+    private boolean turnOff = false;
 
     public TimeOfEndTurn(Account account1, Account account2, Account playingPlayer) {
         times.add(this);
@@ -48,12 +49,14 @@ public class TimeOfEndTurn extends Thread {
                 break;
             }
         }
-        ClientHandler clientHandler = getPlayingPlayerClient();
-        BattleCommand battleCommand = new BattleCommand();
-        battleCommand.forceEndTurn();
-        clientHandler.getFormatter().format("%s\n", CommandClass.makeJson(battleCommand));
-        clientHandler.getFormatter().flush();
-        finish();
+        if (!turnOff) {
+            ClientHandler clientHandler = getPlayingPlayerClient();
+            BattleCommand battleCommand = new BattleCommand();
+            battleCommand.forceEndTurn();
+            clientHandler.getFormatter().format("%s\n", CommandClass.makeJson(battleCommand));
+            clientHandler.getFormatter().flush();
+            finish();
+        }
 
     }
 
@@ -144,5 +147,13 @@ public class TimeOfEndTurn extends Thread {
 
     public void setPlayingPlayer(Account playingPlayer) {
         this.playingPlayer = playingPlayer;
+    }
+
+    public boolean isTurnOff() {
+        return turnOff;
+    }
+
+    public void setTurnOff(boolean turnOff) {
+        this.turnOff = turnOff;
     }
 }
