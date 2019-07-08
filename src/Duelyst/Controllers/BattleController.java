@@ -161,7 +161,7 @@ public class BattleController {
         runVeryFastTimeLine();
         runAnimationTimeline();
         runHandDestroyerTimeline();
-//        runNotYourTurnPaneTimeline();
+        runNotYourTurnPaneTimeline();
 
     }
 

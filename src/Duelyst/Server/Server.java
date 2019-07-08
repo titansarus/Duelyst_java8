@@ -20,6 +20,7 @@ public class Server implements Runnable {
     private static final ArrayList<ClientHandler> allClientHandlers = new ArrayList<>();
 
     public Server() throws IOException {
+
     }
 
     @Override
