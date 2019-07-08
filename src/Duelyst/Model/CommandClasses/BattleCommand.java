@@ -35,6 +35,11 @@ public class BattleCommand extends CommandClass {
         this.canceler = canceler;
     }
 
+    public void endGame(Account myAccount) {
+        battleCommandsKind = BattleCommandsKind.END_GAME_NOT_FORCE;
+        this.myAccount = myAccount;
+    }
+
     public void quitGame(Account loser) {
         this.loser = loser;
         battleCommandsKind = BattleCommandsKind.END_GAME;
@@ -51,12 +56,13 @@ public class BattleCommand extends CommandClass {
         this.myAccount = myAccount;
         this.battleRecords = battleRecords;
     }
-    public void forceEndTurn(){
-        battleCommandsKind=BattleCommandsKind.FORCE_END_TURN;
+
+    public void forceEndTurn() {
+        battleCommandsKind = BattleCommandsKind.FORCE_END_TURN;
     }
 
-    public void endTurnWarnning(){
-        battleCommandsKind=BattleCommandsKind.END_TURN_WARNNING;
+    public void endTurnWarnning() {
+        battleCommandsKind = BattleCommandsKind.END_TURN_WARNING;
     }
 
     public void start(GameGoal gameGoal, Account account) {

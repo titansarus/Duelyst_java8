@@ -1687,6 +1687,7 @@
         "-lose- vs saman",
         "-lose- vs saman",
         "*win* vs saman",
+        "*win* vs saman",
         "*win* vs saman"
       ],
       "darickBeforeCheat": 0,
@@ -2670,7 +2671,7 @@
       },
       "username": "rez",
       "password": "rez",
-      "countOfWins": 4,
+      "countOfWins": 5,
       "darick": 74712
     }
   },
@@ -2683,7 +2684,9 @@
         "*win* vs rez",
         "*win* vs rez",
         "*win* vs rez",
-        "-lose- vs rez"
+        "-lose- vs rez",
+        "-lose- vs rez",
+        "*win* vs rez"
       ],
       "darickBeforeCheat": 0,
       "isCheatModeEnable": false,
@@ -4450,8 +4453,8 @@
       },
       "username": "saman",
       "password": "saman",
-      "countOfWins": 5,
-      "darick": 71019
+      "countOfWins": 6,
+      "darick": 73019
     }
   }
 ]

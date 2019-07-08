@@ -1153,6 +1153,8 @@ public class Battle implements Cloneable {
         endOfKillHeroGameMode();
         if (isEndGame()) {
 
+            sendEndGameToServer();
+
             int numberOfWin;
             if (draw) {
                 numberOfWin = 3;
@@ -1189,6 +1191,10 @@ public class Battle implements Cloneable {
             System.out.println("Game End");
         }
 
+    }
+    private void sendEndGameToServer(){
+        BattleCommand battleCommand = new BattleCommand();
+        battleCommand.endGame(Account.getLoggedAccount());
     }
 
     private void makeBattleRecordOfEndGame(boolean isDraw, Player winner, Player loser) {

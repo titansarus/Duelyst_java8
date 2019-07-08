@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class ServerTV {
     private static ArrayList<ServerTV> finishedGames = new ArrayList<>();
     private static ArrayList<ServerTV> runningGames = new ArrayList<>();
+    private static ArrayList<ClientHandler> viewerClients = new ArrayList<>();
     private ArrayList<BattleRecord> battleRecords = new ArrayList<>();
     private Account account1;
     private Account account2;
@@ -24,6 +25,14 @@ public class ServerTV {
 
     public static void setFinishedGames(ArrayList<ServerTV> finishedGames) {
         ServerTV.finishedGames = finishedGames;
+    }
+
+    public static ArrayList<ClientHandler> getViewerClients() {
+        return viewerClients;
+    }
+
+    public static void addViewerClient(ClientHandler viewerClient) {
+        viewerClients.add(viewerClient);
     }
 
 

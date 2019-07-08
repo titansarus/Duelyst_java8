@@ -2,8 +2,6 @@ package Duelyst.Client;
 
 import Duelyst.Controllers.*;
 import Duelyst.Exceptions.CardOutOfStock;
-import Duelyst.Exceptions.UserNotExistException;
-import Duelyst.Main;
 import Duelyst.Model.Account;
 import Duelyst.Model.Battle.Battle;
 import Duelyst.Model.Card;
@@ -106,7 +104,7 @@ public class ReadMessage extends Thread {
             case FORCE_END_TURN:
                 forceEndTurn();
                 break;
-            case END_TURN_WARNNING:
+            case END_TURN_WARNING:
                 endTurnWarnning();
                 break;
         }
@@ -141,6 +139,7 @@ public class ReadMessage extends Thread {
         Battle.getRunningBattle().showNotification("hurry up! You have 20 seconds");
     }
     private void forceEndTurn(){
+        Battle.getRunningBattle().showNotification("your is finished");
         Battle.getRunningBattle().nextTurn();
         BattleCommand battleCommand = new BattleCommand();
         battleCommand.endTurn(Account.getLoggedAccount(),Battle.getRunningBattle().getBattleRecords());

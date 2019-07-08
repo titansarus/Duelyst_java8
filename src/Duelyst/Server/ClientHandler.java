@@ -125,6 +125,15 @@ public class ClientHandler implements Runnable {
             case END_GAME:
                 endGame(battleCommand);
                 break;
+            case END_GAME_NOT_FORCE:
+                sendBattleToTV(battleCommand);
+                break;
+        }
+    }
+    private void sendBattleToTV(BattleCommand battleCommand){
+        ServerTV serverTV = ServerTV.getServerTvOfBattle(battleCommand.getMyAccount());
+        if (serverTV!=null){
+            serverTV.endGame();
         }
     }
 
@@ -152,6 +161,7 @@ public class ClientHandler implements Runnable {
     private void handleEndTurn(BattleCommand battleCommand) {
         if (battleCommand.getBattleCommandsKind().equals(BattleCommandsKind.END_TURN)) {
             ServerTV.getServerTvOfBattle(battleCommand.getMyAccount()).setBattleRecords(battleCommand.getBattleRecords());
+            sendToOnlineViewer(battleCommand);
             TimeOfEndTurn time = TimeOfEndTurn.getTime(battleCommand.getMyAccount());
             if (time!=null){
                 time.nowIsStart();
@@ -163,6 +173,13 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    private void sendToOnlineViewer(BattleCommand battleCommand){
+        ServerTV serverTV = ServerTV.getServerTvOfBattle(battleCommand.getMyAccount());
+//        for (:
+//             ) {
+//
+//        }//TODO revaled !!
+    }
 
     private void cancelRequest(BattleCommand battleCommand) {
         System.out.println("cancel request receive from " + battleCommand.getCanceler().getUsername());
