@@ -1,5 +1,7 @@
 package Duelyst.Server;
 
+import Duelyst.Controllers.Container;
+import Duelyst.Controllers.ShopServerController;
 import Duelyst.Database.DatabaseCard;
 import Duelyst.Database.DatabaseCollectioner;
 import Duelyst.Model.Account;
@@ -11,7 +13,17 @@ import Duelyst.Utility.CreateCardFromDatabaseCard;
 import Duelyst.Utility.NetworkConfiguration;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.ImageCursor;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -20,7 +32,29 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class ServerMain {
+import static Duelyst.View.Constants.*;
+
+public class ServerMain extends Application {
+    {
+        Pane root = null;
+        FXMLLoader fxmlLoader = null;
+        try {
+            fxmlLoader = new FXMLLoader(getClass().getResource("../View/FXMLFiles/ShopServer.fxml"));
+            root = fxmlLoader.load();
+            Container.addController(fxmlLoader);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        Scene scene = new Scene(root);
+        scene.setCursor(new ImageCursor(new Image("res/ui/mouse_select.png")));
+        Container.scenes.add(scene);
+        Container.nameOfMenus.add(LOGIN);
+        ((ShopServerController) fxmlLoader.getController()).runTimeLine();
+    }
+
+
     public static void main(String[] args) throws IOException {
 
         System.out.println("a");
@@ -47,7 +81,19 @@ public class ServerMain {
         initSpells();
         initAccounts();//TODO Initialize Server Account ArrayList
 
+        launch(args);
 
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+
+        primaryStage = Container.stage;
+        primaryStage.setX(100);
+        primaryStage.setY(100);
+        primaryStage.setScene(Container.scenes.getLast());
+        primaryStage.show();
     }
 
     private static void initAccounts() {
