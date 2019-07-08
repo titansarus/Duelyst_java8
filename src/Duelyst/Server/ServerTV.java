@@ -69,7 +69,7 @@ public class ServerTV {
         }
         for (ClientHandler c :
                 ClientHandler.getClientHandlers()) {
-            if (opponent != null && c.getUserName().equals(opponent.getUsername())) {
+            if (c.isLoggedIn() && opponent != null && c.getUserName().equals(opponent.getUsername())) {
                 return c;
             }
         }
