@@ -1297,10 +1297,14 @@ public class Battle implements Cloneable {
     }
 
     public void showNotification(String string) {
-        Platform.runLater(() -> {
-            BattleController battleController = (BattleController) Container.getControllerClass();
-            battleController.handleNotification(string);
-        });
+        try {
+            Platform.runLater(() -> {
+                BattleController battleController = (BattleController) Container.getControllerClass();
+                battleController.handleNotification(string);
+            });
+        }catch (Exception e){
+            System.out.println("notification!");
+        }
 
     }
 
