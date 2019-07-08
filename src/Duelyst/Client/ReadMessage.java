@@ -203,13 +203,12 @@ public class ReadMessage extends Thread {
             customCardCommand.getCard().setAddressOfGetDamageGif("./res/Characters/UnitsCreated/CustomCard/" + customCardCommand.getCard().getCardName() + "_hit.gif");
         }
 
-
     }
 
 
     private void saveCustomCardsImages(String name, byte[] image, String format) {
 
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(image);
+//        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(image);
         try {
             FileOutputStream fileOutputStream = new FileOutputStream( new File("src/res/Characters/UnitsCreated/CustomCard/" + name + "." + format));
             fileOutputStream.write(image);
