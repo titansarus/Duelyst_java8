@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Formatter;
+import java.util.Random;
 import java.util.Scanner;
 
 public class ClientHandler implements Runnable {
@@ -138,15 +139,6 @@ public class ClientHandler implements Runnable {
             case END_GAME:
                 endGame(battleCommand);
                 break;
-//            case END_GAME_NOT_FORCE:
-//                sendBattleToTV(battleCommand);
-//                break;
-        }
-    }
-    private void sendBattleToTV(BattleCommand battleCommand){
-        ServerTV serverTV = ServerTV.getServerTvOfBattle(battleCommand.getMyAccount());
-        if (serverTV!=null){
-            serverTV.endGame();
         }
     }
 
@@ -174,7 +166,6 @@ public class ClientHandler implements Runnable {
     private void handleEndTurn(BattleCommand battleCommand) {
         if (battleCommand.getBattleCommandsKind().equals(BattleCommandsKind.END_TURN)) {
             ServerTV.getServerTvOfBattle(battleCommand.getMyAccount()).setBattleRecords(battleCommand.getBattleRecords());
-            sendToOnlineViewer(battleCommand);
             TimeOfEndTurn time = TimeOfEndTurn.getTime(battleCommand.getMyAccount());
             if (time != null) {
                 time.nowIsStart();
@@ -186,13 +177,6 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    private void sendToOnlineViewer(BattleCommand battleCommand){
-        ServerTV serverTV = ServerTV.getServerTvOfBattle(battleCommand.getMyAccount());
-//        for (:
-//             ) {
-//
-//        }//TODO revaled !!
-    }
 
     private void cancelRequest(BattleCommand battleCommand) {
         System.out.println("cancel request receive from " + battleCommand.getCanceler().getUsername());
@@ -244,6 +228,30 @@ public class ClientHandler implements Runnable {
 
     }
 
+    private void getNRandomNumber(int[] randomX, int[] randomY, int first, int last, int extra) {
+
+        Random random = new Random();
+        int rx, ry;
+        for (int i = first; i < last; i++) {
+            rx = random.nextInt(5);
+            ry = random.nextInt(4) + extra;
+            while (hasPoint(randomX, randomY, rx, ry)) {
+                rx = random.nextInt(5);
+                ry = random.nextInt(4) + extra;
+            }
+            randomX[i] = rx;
+            randomY[i] = ry;
+        }
+    }
+
+    private boolean hasPoint(int[] arrayX, int[] arrayY, int rx, int ry) {
+        for (int i = 0; i < arrayX.length; i++) {
+            if (arrayX[i] == rx && arrayY[i] == ry)
+                return true;
+        }
+        return (rx == 2 && ry == 0) || (rx == 2 && ry == 8);
+    }
+
     private void startOrSetHoldFlag(BattleCommand battleCommand) {
         if (holdFlagApplicator == null) {
             holdFlagApplicator = battleCommand.getApplicatorAccount();
@@ -255,15 +263,22 @@ public class ClientHandler implements Runnable {
     }
 
     private void sendToTwoClient(Account account1, Account account2, GameGoal gameGoal) {
-        sendAcceptRequest(account1, account2, true, gameGoal);
-        sendAcceptRequest(account2, account1, false, gameGoal);
+        //TODO Get Random X And Y For CollectFlag GameMode
+        int[] randomX = new int[6];
+        int[] randomY = new int[6];
+        getNRandomNumber(randomX, randomY, 3, 6, 5);
+        getNRandomNumber(randomX, randomY, 0, 3, 0);
+        BattleCommand battleCommand = new BattleCommand();
+        battleCommand.setRandomXForCollectFlag(randomX);
+        battleCommand.setRandomYForCollectFlag(randomY);
+        sendAcceptRequest(account1, account2, true, gameGoal, battleCommand);
+        sendAcceptRequest(account2, account1, false, gameGoal, battleCommand);
         new ServerTV(account1, account2);
         TimeOfEndTurn time = new TimeOfEndTurn(account1, account2, account1);
         time.start();
     }
 
-    private void sendAcceptRequest(Account sendFor, Account opponent, boolean firstPlayer, GameGoal gameGoal) {
-        BattleCommand battleCommand = new BattleCommand();
+    private void sendAcceptRequest(Account sendFor, Account opponent, boolean firstPlayer, GameGoal gameGoal, BattleCommand battleCommand) {
         battleCommand.setGameGoal(gameGoal);
         battleCommand.acceptRequest(opponent, firstPlayer);
         for (ClientHandler c :

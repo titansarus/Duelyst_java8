@@ -16,7 +16,7 @@ public class TimeOfEndTurn extends Thread {
     private Account account1;
     private Account account2;
     private Account playingPlayer;
-    private final int TIME_OF_TURN = 40;//TODO 120
+    private final int TIME_OF_TURN = 120;//TODO 120
     private boolean warning = true;
 
     public TimeOfEndTurn(Account account1, Account account2, Account playingPlayer) {
