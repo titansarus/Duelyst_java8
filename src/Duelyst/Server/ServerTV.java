@@ -69,8 +69,12 @@ public class ServerTV {
         }
         for (ClientHandler c :
                 ClientHandler.getClientHandlers()) {
-            if (c.isLoggedIn() && opponent != null && c.getUserName().equals(opponent.getUsername())) {
-                return c;
+            try {
+                if (c.isLoggedIn() && opponent != null && c.getUserName().equals(opponent.getUsername())) {
+                    return c;
+                }
+            }catch (Exception e){
+                System.out.println("Client Handler Problem");
             }
         }
         return null;
