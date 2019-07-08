@@ -451,6 +451,7 @@ public class BattleController {
     }
 
     private void askToSaveBattleRecordOrNot() {
+
         JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
         jfxDialogLayout.setHeading(new Text("Save Battle Record"));
         jfxDialogLayout.setBody(new Text("Do you Want to save Battle Record"));
@@ -995,7 +996,7 @@ public class BattleController {
             battle.nextTurn();
             if (battle.getGameMode().equals(GameMode.MULTI_PLAYER)) {
                 BattleCommand battleCommand = new BattleCommand();
-                battleCommand.endTurn(Account.getLoggedAccount());
+                battleCommand.endTurn(Account.getLoggedAccount(),battleCommand.getBattleRecords());
                 SendMessage.getSendMessage().sendMessage(battleCommand);
             }
         }
@@ -1188,6 +1189,9 @@ public class BattleController {
     }
 
     public void handleQuitImg() {
+        BattleCommand battleCommand = new BattleCommand();
+        battleCommand.quitGame(Account.getLoggedAccount());
+        SendMessage.getSendMessage().sendMessage(battleCommand);
         if (Container.scenes.size() > 0) {
             askToSaveBattleRecordOrNot();
         }

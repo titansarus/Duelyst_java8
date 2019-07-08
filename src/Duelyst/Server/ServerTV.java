@@ -76,6 +76,22 @@ public class ServerTV {
         return null;
     }
 
+    public static ServerTV getServerTvOfBattle(Account account) {
+        ServerTV serverTV1 = null;
+        for (ServerTV serverTV :
+                runningGames) {
+            if (account.getUsername().equals(serverTV.getAccount1().getUsername()) || account.getUsername().equals(serverTV.getAccount2().getUsername())) {
+                serverTV1 = serverTV;
+            }
+        }
+        return serverTV1;
+    }
+
+    public void endGame() {
+        runningGames.remove(this);
+        finishedGames.add(this);
+    }
+
     public static void setRunningGames(ArrayList<ServerTV> runningGames) {
         ServerTV.runningGames = runningGames;
     }

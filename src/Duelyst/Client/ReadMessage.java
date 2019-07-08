@@ -90,7 +90,13 @@ public class ReadMessage extends Thread {
             case ACCEPT_REQUEST:
                 handleStartBattle(battleCommand);
                 break;
+            case END_GAME:
+                disConnectOpponent();
+                break;
         }
+    }
+    private void disConnectOpponent(){
+        Battle.getRunningBattle().opponentGiveUp();
     }
 
     private void move(BattleCommand battleCommand) {
@@ -114,7 +120,9 @@ public class ReadMessage extends Thread {
     }
 
     private void handleStartBattle(BattleCommand battleCommand) {
+
         MultiPlayerController multiPlayerController = (MultiPlayerController) Container.controllerClass;
+        multiPlayerController.handleCancelBattleButton();
         multiPlayerController.gotoBattle(battleCommand.getOpponent(), battleCommand.getGameGoal(), battleCommand.isFirstPlayer());
     }
 

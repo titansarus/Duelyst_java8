@@ -70,6 +70,10 @@ public class Account implements Cloneable {
         setDarick(Integer.MAX_VALUE);
     }
 
+    public void getGift(int darick) {
+        this.darick += darick;
+    }
+
     public void disableCheatMode() {
         setCheatModeEnable(false);
         setDarick(getDarickBeforeCheat());

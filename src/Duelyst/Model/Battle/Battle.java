@@ -12,6 +12,7 @@ import Duelyst.Model.Buffs.HolyBuff;
 import Duelyst.Model.CommandClasses.BattleCommand;
 import Duelyst.Model.Items.*;
 import Duelyst.Model.Spell.Spell;
+import Duelyst.View.Constants;
 import com.rits.cloning.Cloner;
 
 import java.util.ArrayList;
@@ -79,7 +80,6 @@ public class Battle implements Cloneable {
         this.gameMode = gameMode;
         battleController.setBattle(this);
         runningBattle = this;
-
 
         battleRecords = new ArrayList<>();
         BattleRecord.getBattleRecords().add(battleRecords);
@@ -683,10 +683,10 @@ public class Battle implements Cloneable {
 
     }
 
-    public void handleAttackCounterDeath(Warrior attacker, Warrior attacked,boolean isFromServer) {
-        int result = attack(attacker, attacked, false,isFromServer);
+    public void handleAttackCounterDeath(Warrior attacker, Warrior attacked, boolean isFromServer) {
+        int result = attack(attacker, attacked, false, isFromServer);
         if (result == Battle.VALID_COUNTER_WITH_BUFF || result == Battle.VALID_COUNTER_WITHOUT_BUFF) {
-            attack(attacked, attacker, true,isFromServer);
+            attack(attacked, attacker, true, isFromServer);
         }
         deleteDeathCardsFromMap();
         endGame();
@@ -1118,6 +1118,25 @@ public class Battle implements Cloneable {
         this.validCells = validCells;
     }
 
+    public void opponentGiveUp() {
+        if (isEndGame()) {
+        } else {
+            if (player1.getAccount().getUsername().equals(Account.getLoggedAccount().getUsername())) {
+                String h1 = "*win* vs " + player2.getAccount().getUsername();
+                player1.getAccount().getBattleHistory().add(h1);
+                player1.getAccount().setCountOfWins(player1.getAccount().getCountOfWins() + 1);
+                player1.getAccount().getGift(GIFT);
+                makeBattleRecordOfEndGame(false, player1, player2);
+            } else {
+                String h2 = "*win* vs " + player1.getAccount().getUsername();
+                player2.getAccount().getBattleHistory().add(h2);
+                player2.getAccount().setCountOfWins(player2.getAccount().getCountOfWins() + 1);
+                player2.getAccount().getGift(GIFT);
+                makeBattleRecordOfEndGame(false, player2, player1);
+            }
+
+        }
+    }
 
     public void endGame() {
 
@@ -1170,6 +1189,9 @@ public class Battle implements Cloneable {
     }
 
     private void makeBattleRecordOfEndGame(boolean isDraw, Player winner, Player loser) {
+        if (gameMode.equals(GameMode.MULTI_PLAYER)) {
+            Account.saveAccount();
+        }
         BattleRecord battleRecord = new BattleRecord(BattleRecordEnum.END_GAME);
         battleRecord.setDraw(isDraw);
         battleRecord.setWinnerUsername(winner.getAccount().getUsername());

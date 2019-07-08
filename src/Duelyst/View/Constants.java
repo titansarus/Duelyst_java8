@@ -41,6 +41,9 @@ public class Constants {
 
     //TITLE
 
+    //GIFT
+    public static final int GIFT=2000;
+
     public static final Image shopImg = new Image(Constants.class.getResourceAsStream("../../res/ui/shop.png"));
     public static final Image quitImg = new Image(Constants.class.getResourceAsStream("../../res/ui/quit.png"));
     public static final Image collectionImg = new Image(Constants.class.getResourceAsStream("../../res/ui/collection.png"));

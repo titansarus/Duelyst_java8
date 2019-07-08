@@ -122,10 +122,25 @@ public class ClientHandler implements Runnable {
             case CANCEL_REQUEST:
                 cancelRequest(battleCommand);
                 break;
+            case END_GAME:
+                endGame(battleCommand);
+                break;
         }
     }
 
+    private void endGame(BattleCommand battleCommand) {
+        Account loser = battleCommand.getLoser();
+        ServerTV serverTV = ServerTV.getServerTvOfBattle(loser);
+        ClientHandler clientHandler = ServerTV.getOpponent(loser);
+        clientHandler.getFormatter().format("%s\n", CommandClass.makeJson(battleCommand));
+        clientHandler.getFormatter().flush();
+        serverTV.endGame();
+    }
+
     private void handleRunningBattle(BattleCommand battleCommand) {
+        if (battleCommand.getBattleCommandsKind().equals(BattleCommandsKind.END_TURN)) {
+            ServerTV.getServerTvOfBattle(battleCommand.getMyAccount()).setBattleRecords(battleCommand.getBattleRecords());
+        }
         System.out.println("Dastor omaaaad !");
         ClientHandler clientHandler = ServerTV.getOpponent(battleCommand.getMyAccount());
         if (clientHandler == null) {
@@ -200,7 +215,7 @@ public class ClientHandler implements Runnable {
     private void sendToTwoClient(Account account1, Account account2, GameGoal gameGoal) {
         sendAcceptRequest(account1, account2, true, gameGoal);
         sendAcceptRequest(account2, account1, false, gameGoal);
-        new ServerTV(account1,account2);
+        new ServerTV(account1, account2);
     }
 
     private void sendAcceptRequest(Account sendFor, Account opponent, boolean firstPlayer, GameGoal gameGoal) {

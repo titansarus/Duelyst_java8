@@ -5,6 +5,8 @@ import Duelyst.Model.Battle.BattleRecord;
 import Duelyst.Model.GameGoal;
 import javafx.scene.layout.BorderPane;
 
+import java.util.ArrayList;
+
 public class BattleCommand extends CommandClass {
 
     private Account myAccount;
@@ -14,12 +16,13 @@ public class BattleCommand extends CommandClass {
     private String attackerCardId, defenderCardId;
     private String insertSelectedCardId;
     private int insertRow, insertCol;
-    private BattleRecord battleRecord;
     private GameGoal gameGoal;
     private Account applicatorAccount;
     private Account opponent;
     private Account canceler;
     private boolean firstPlayer;
+    private Account loser;
+    private ArrayList<BattleRecord> battleRecords = new ArrayList<>();
 
     public BattleCommand() {
         super(CommandKind.BATTLE);
@@ -30,15 +33,21 @@ public class BattleCommand extends CommandClass {
         this.canceler = canceler;
     }
 
+    public void quitGame(Account loser) {
+        this.loser = loser;
+        battleCommandsKind = BattleCommandsKind.END_GAME;
+    }
+
     public void acceptRequest(Account opponent, boolean firstPlayer) {
         this.opponent = opponent;
         battleCommandsKind = BattleCommandsKind.ACCEPT_REQUEST;
         this.firstPlayer = firstPlayer;
     }
 
-    public void endTurn(Account myAccount) {
+    public void endTurn(Account myAccount, ArrayList<BattleRecord> battleRecords) {
         battleCommandsKind = BattleCommandsKind.END_TURN;
         this.myAccount = myAccount;
+        this.battleRecords = battleRecords;
     }
 
     public void start(GameGoal gameGoal, Account account) {
@@ -147,13 +156,6 @@ public class BattleCommand extends CommandClass {
         this.insertCol = insertCol;
     }
 
-    public BattleRecord getBattleRecord() {
-        return battleRecord;
-    }
-
-    public void setBattleRecord(BattleRecord battleRecord) {
-        this.battleRecord = battleRecord;
-    }
 
     public Account getApplicatorAccount() {
         return applicatorAccount;
@@ -201,5 +203,21 @@ public class BattleCommand extends CommandClass {
 
     public void setMyAccount(Account myAccount) {
         this.myAccount = myAccount;
+    }
+
+    public Account getLoser() {
+        return loser;
+    }
+
+    public void setLoser(Account loser) {
+        this.loser = loser;
+    }
+
+    public ArrayList<BattleRecord> getBattleRecords() {
+        return battleRecords;
+    }
+
+    public void setBattleRecords(ArrayList<BattleRecord> battleRecords) {
+        this.battleRecords = battleRecords;
     }
 }
