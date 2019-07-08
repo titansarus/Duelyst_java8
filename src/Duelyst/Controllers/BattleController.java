@@ -171,6 +171,7 @@ public class BattleController {
                 if (!getBattle().getPlayingPlayer().getAccount().getUsername().equals(Account.getLoggedAccount().getUsername())) {
                     anchorPane.setDisable(true);
                 } else {
+
                     anchorPane.setDisable(false);
                 }
             }), new KeyFrame(Duration.millis(432)));
