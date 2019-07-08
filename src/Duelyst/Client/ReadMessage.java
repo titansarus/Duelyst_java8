@@ -2,6 +2,8 @@ package Duelyst.Client;
 
 import Duelyst.Controllers.*;
 import Duelyst.Exceptions.CardOutOfStock;
+import Duelyst.Exceptions.UserNotExistException;
+import Duelyst.Main;
 import Duelyst.Model.Account;
 import Duelyst.Model.Battle.Battle;
 import Duelyst.Model.Card;
@@ -23,6 +25,8 @@ public class ReadMessage extends Thread {
 
     private Scanner netIn;
     private CommandClass commandClass;
+    private static int[] randomX;
+    private static int[] randomY;
 
     public ReadMessage(Socket socket) {
         try {
@@ -30,6 +34,14 @@ public class ReadMessage extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static int[] getRandomX() {
+        return randomX;
+    }
+
+    public static int[] getRandomY() {
+        return randomY;
     }
 
 
@@ -64,7 +76,15 @@ public class ReadMessage extends Thread {
                     handleCustomCardSprites((CustomCardCommand) commandClass);
                     break;
                 case TV:
-                    handleTVCommand((tvCommand) commandClass);
+                    tvCommand tvCommand = (tvCommand) commandClass;
+                    if (tvCommand.getTvCommandKind().equals(tvCommandKind.GET_REPLAYS_LIST))
+                        handleTVCommand((tvCommand) commandClass);
+                    else if(tvCommand.getTvCommandKind().equals(tvCommandKind.GET_FINISHED_BATTLES_RECORDS)) {
+                        Platform.runLater(() -> {
+                            MultiPlayerController multiPlayerController = (MultiPlayerController)Container.getControllerClass();
+                            multiPlayerController.gotoBattleReplay(tvCommand.getBattleRecords());
+                        });
+                    }
                     break;
             }
 
@@ -94,44 +114,46 @@ public class ReadMessage extends Thread {
             case FORCE_END_TURN:
                 forceEndTurn();
                 break;
-            case END_TURN_WARNING:
+            case END_TURN_WARNNING:
                 endTurnWarnning();
                 break;
         }
     }
-    private void disConnectOpponent(){
+
+    private void disConnectOpponent() {
         Battle.getRunningBattle().showNotification("Your Opponent Disconnected!");
         Battle.getRunningBattle().opponentGiveUp();
     }
 
     private void move(BattleCommand battleCommand) {
         System.out.println("*************************************** MOVE");
-        Battle.getRunningBattle().multiPlayerMove(battleCommand.getDesRow(),battleCommand.getDesCol(),battleCommand.getSrcRow(),battleCommand.getSrcCol());
+        Battle.getRunningBattle().multiPlayerMove(battleCommand.getDesRow(), battleCommand.getDesCol(), battleCommand.getSrcRow(), battleCommand.getSrcCol());
     }
 
     private void attack(BattleCommand battleCommand) {
         System.out.println("attack");
-        Battle.getRunningBattle().multiPlayerAttack(battleCommand.getAttackerCardId(),battleCommand.getDefenderCardId());
+        Battle.getRunningBattle().multiPlayerAttack(battleCommand.getAttackerCardId(), battleCommand.getDefenderCardId());
     }
 
     private void insert(BattleCommand battleCommand) {
         System.out.println("*************************************** INSERT");
-        Battle.getRunningBattle().multiPlayerInsert(battleCommand.getInsertRow(),battleCommand.getInsertCol(),battleCommand.getInsertSelectedCardId());
+        Battle.getRunningBattle().multiPlayerInsert(battleCommand.getInsertRow(), battleCommand.getInsertCol(), battleCommand.getInsertSelectedCardId());
     }
 
     private void endTurn() {
         System.out.println("*************************************** END TURN");
         Battle.getRunningBattle().nextTurn();
     }
-    private void endTurnWarnning(){
+
+    private void endTurnWarnning() {
         System.out.println("You have 20 seconds");
         Battle.getRunningBattle().showNotification("hurry up! You have 20 seconds");
     }
-    private void forceEndTurn(){
-        Battle.getRunningBattle().showNotification("your is finished");
+
+    private void forceEndTurn() {
         Battle.getRunningBattle().nextTurn();
         BattleCommand battleCommand = new BattleCommand();
-        battleCommand.endTurn(Account.getLoggedAccount(),Battle.getRunningBattle().getBattleRecords());
+        battleCommand.endTurn(Account.getLoggedAccount(), Battle.getRunningBattle().getBattleRecords());
         SendMessage.getSendMessage().sendMessage(battleCommand);
     }
 
@@ -139,6 +161,8 @@ public class ReadMessage extends Thread {
 
         MultiPlayerController multiPlayerController = (MultiPlayerController) Container.controllerClass;
         multiPlayerController.handleCancelBattleButton();
+        randomX = battleCommand.getRandomXForCollectFlag();
+        randomY = battleCommand.getRandomYForCollectFlag();
         multiPlayerController.gotoBattle(battleCommand.getOpponent(), battleCommand.getGameGoal(), battleCommand.isFirstPlayer());
     }
 
