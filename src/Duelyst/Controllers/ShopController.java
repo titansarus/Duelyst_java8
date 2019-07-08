@@ -324,6 +324,7 @@ public class ShopController {
             handleServerRequestForBuy();
             if (myException instanceof CardOutOfStock) {
                 Container.exceptionGenerator(myException, stackPane);
+                myException = null;
                 return;
             }
             buy();

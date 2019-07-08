@@ -1026,7 +1026,6 @@ public class Battle implements Cloneable {
     }
 
     private void findValidCellForSpell(ArrayList<Cell> cells, Player player) {
-        System.out.println("shiiiiiiiiiiiiiiiiiiiiiit");
         for (Cell[] cells1 :
                 getGrid()) {
             for (Cell cell :
