@@ -101,10 +101,6 @@ public class ShopController {
 
     private static MyException myException;
 
-    public static MyException getMyException() {
-        return myException;
-    }
-
     public static void setMyException(MyException myException) {
         ShopController.myException = myException;
     }

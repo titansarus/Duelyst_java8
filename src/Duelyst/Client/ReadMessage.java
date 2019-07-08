@@ -25,6 +25,8 @@ public class ReadMessage extends Thread {
 
     private Scanner netIn;
     private CommandClass commandClass;
+    private static int[] randomX;
+    private static int[] randomY;
 
     public ReadMessage(Socket socket) {
         try {
@@ -32,6 +34,14 @@ public class ReadMessage extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static int[] getRandomX() {
+        return randomX;
+    }
+
+    public static int[] getRandomY() {
+        return randomY;
     }
 
 
@@ -95,24 +105,25 @@ public class ReadMessage extends Thread {
                 break;
         }
     }
-    private void disConnectOpponent(){
+
+    private void disConnectOpponent() {
         Battle.getRunningBattle().showNotification("Your Opponent Disconnected!");
         Battle.getRunningBattle().opponentGiveUp();
     }
 
     private void move(BattleCommand battleCommand) {
         System.out.println("*************************************** MOVE");
-        Battle.getRunningBattle().multiPlayerMove(battleCommand.getDesRow(),battleCommand.getDesCol(),battleCommand.getSrcRow(),battleCommand.getSrcCol());
+        Battle.getRunningBattle().multiPlayerMove(battleCommand.getDesRow(), battleCommand.getDesCol(), battleCommand.getSrcRow(), battleCommand.getSrcCol());
     }
 
     private void attack(BattleCommand battleCommand) {
         System.out.println("attack");
-        Battle.getRunningBattle().multiPlayerAttack(battleCommand.getAttackerCardId(),battleCommand.getDefenderCardId());
+        Battle.getRunningBattle().multiPlayerAttack(battleCommand.getAttackerCardId(), battleCommand.getDefenderCardId());
     }
 
     private void insert(BattleCommand battleCommand) {
         System.out.println("*************************************** INSERT");
-        Battle.getRunningBattle().multiPlayerInsert(battleCommand.getInsertRow(),battleCommand.getInsertCol(),battleCommand.getInsertSelectedCardId());
+        Battle.getRunningBattle().multiPlayerInsert(battleCommand.getInsertRow(), battleCommand.getInsertCol(), battleCommand.getInsertSelectedCardId());
     }
 
     private void endTurn() {
@@ -124,6 +135,8 @@ public class ReadMessage extends Thread {
 
         MultiPlayerController multiPlayerController = (MultiPlayerController) Container.controllerClass;
         multiPlayerController.handleCancelBattleButton();
+        randomX = battleCommand.getRandomXForCollectFlag();
+        randomY = battleCommand.getRandomYForCollectFlag();
         multiPlayerController.gotoBattle(battleCommand.getOpponent(), battleCommand.getGameGoal(), battleCommand.isFirstPlayer());
     }
 

@@ -812,7 +812,7 @@ public class BattleController {
     }
 
     public void handleNotification(String string) {
-        TranslateTransition tt = new TranslateTransition(Duration.millis(1000), timeNotification_pane);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1500), timeNotification_pane);
         notification_lbl.setText(string);
         tt.setFromX(900);
         tt.setToX(600);
