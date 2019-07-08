@@ -4,9 +4,7 @@ import Duelyst.Model.Card;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class CustomCardCommand extends CommandClass {
 
@@ -30,13 +28,13 @@ public class CustomCardCommand extends CommandClass {
     }
 
     private byte[] makeByteArrayFromImages(File file) {
-        if(file == null)
+        if (file == null)
             return null;
         try {
-            BufferedImage bufferedImage = ImageIO.read(file);
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
-            return byteArrayOutputStream.toByteArray();
+            byte[] temp = new byte[500000];
+            FileInputStream fileInputStream = new FileInputStream(file);
+            fileInputStream.read(temp);
+            return temp;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -44,13 +42,13 @@ public class CustomCardCommand extends CommandClass {
     }
 
     private byte[] makeByteArrayFromGif(File file) {
-        if(file == null)
+        if (file == null)
             return null;
         try {
-            BufferedImage bufferedImage = ImageIO.read(file);
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage, "gif", byteArrayOutputStream);
-            return byteArrayOutputStream.toByteArray();
+            byte[] temp = new byte[500000];
+            FileInputStream fileInputStream = new FileInputStream(file);
+            fileInputStream.read(temp);
+            return temp;
         } catch (IOException e) {
             return null;
         }

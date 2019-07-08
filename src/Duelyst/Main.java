@@ -64,23 +64,23 @@ public class Main extends Application {
         System.out.println(NetworkConfiguration.getPort());
 
 
-//       try {
-//            Thread thread = new Thread(new Server());
-//            thread.start();
-//            DatabaseCollectioner.DatabaseGenerator();
-//            ServerShop.getInstance().getCards().addAll(CreateCardFromDatabaseCard.createCards(DatabaseCard.getDatabaseCards()));
-//            ArrayList<String> numberOfCards = new ArrayList<>();
-//
-//            YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
-//            Reader reader = new FileReader("numberOfCards.json");
-//            String[] strings = yaGson.fromJson(reader, (Type) String[].class);
-//            numberOfCards.addAll(Arrays.asList(strings));
-//            ServerShop.getInstance().setNumberOfCards(numberOfCards);
-//
-//            initItems();
-//            initSpells();
-//            initAccounts();//TODO Initialize Server Account ArrayList
-//        } catch (BindException e){
+       try {
+            Thread thread = new Thread(new Server());
+            thread.start();
+            DatabaseCollectioner.DatabaseGenerator();
+            ServerShop.getInstance().getCards().addAll(CreateCardFromDatabaseCard.createCards(DatabaseCard.getDatabaseCards()));
+            ArrayList<String> numberOfCards = new ArrayList<>();
+
+            YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+            Reader reader = new FileReader("numberOfCards.json");
+            String[] strings = yaGson.fromJson(reader, (Type) String[].class);
+            numberOfCards.addAll(Arrays.asList(strings));
+            ServerShop.getInstance().setNumberOfCards(numberOfCards);
+
+            initItems();
+            initSpells();
+            initAccounts();//TODO Initialize Server Account ArrayList
+        } catch (BindException e){
 
 
         //TODO Run Client And Make Connection To The Server
@@ -88,7 +88,7 @@ public class Main extends Application {
         client.getReader().start();
 
         launch(args);
-//        }
+        }
     }
 
     @Override
