@@ -11,7 +11,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.BattleController">
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.BattleController">
    <children>
       <AnchorPane fx:id="anchorPane" maxHeight="900.0" maxWidth="1600.0" minHeight="900.0" minWidth="1600.0" prefHeight="900.0" prefWidth="1600.0">
          <children>
@@ -150,6 +150,15 @@
       <Pane fx:id="saveBattleNotification_pane" maxHeight="54.0" maxWidth="180.0" minHeight="54.0" minWidth="180.0" prefHeight="54.0" prefWidth="180.0" stylesheets="@../../../css/saveGameNotification.css" translateX="900.0" translateY="-300.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="32.0" layoutY="20.0" text="Battle Saved Successfully" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="10.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="timeNotification_pane" maxHeight="54.0" maxWidth="180.0" minHeight="54.0" minWidth="180.0" prefHeight="54.0" prefWidth="180.0" style="-fx-background-image: url('/res/ui/notification_quest_small.png'); -fx-background-size: cover;" translateX="900.0" translateY="-200.0">
+         <children>
+            <Label fx:id="notification_lbl" alignment="CENTER" contentDisplay="CENTER" layoutX="19.0" layoutY="20.0" prefHeight="15.0" prefWidth="143.0" textFill="WHITE">
                <font>
                   <Font name="System Bold Italic" size="10.0" />
                </font>

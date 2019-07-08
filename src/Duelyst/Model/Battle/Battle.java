@@ -2,6 +2,7 @@ package Duelyst.Model.Battle;
 
 import Duelyst.Client.SendMessage;
 import Duelyst.Controllers.BattleController;
+import Duelyst.Controllers.Container;
 import Duelyst.Exceptions.CellFilledBeforeException;
 import Duelyst.Exceptions.NotEnoughManaException;
 import Duelyst.Exceptions.NotValidCellForSpellException;
@@ -13,6 +14,7 @@ import Duelyst.Model.CommandClasses.BattleCommand;
 import Duelyst.Model.Items.*;
 import Duelyst.Model.Spell.Spell;
 import com.rits.cloning.Cloner;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -308,10 +310,10 @@ public class Battle implements Cloneable {
     }
 
     public void multiPlayerMove(int destX, int destY, int srcX, int srcY) {
-        move(destX, destY, getGrid()[srcX][srcY].getWarrior(),true);
+        move(destX, destY, getGrid()[srcX][srcY].getWarrior(), true);
     }
 
-    public void move(int destX, int destY, Warrior warrior,boolean isFromServer) {
+    public void move(int destX, int destY, Warrior warrior, boolean isFromServer) {
 
         if (gameMode.equals(GameMode.MULTI_PLAYER) && !isFromServer) {
             BattleCommand battleCommand = new BattleCommand();
@@ -1242,6 +1244,14 @@ public class Battle implements Cloneable {
                 return true;
         }
         return (rx == 2 && ry == 0) || (rx == 2 && ry == 8);
+    }
+
+    public void showNotification(String string) {
+        Platform.runLater(() -> {
+            BattleController battleController = (BattleController) Container.getControllerClass();
+            battleController.handleNotification(string);
+        });
+
     }
 
     public void setEndGame(boolean endGame) {

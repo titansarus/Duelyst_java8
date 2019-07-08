@@ -16,7 +16,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import javafx.animation.*;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -60,6 +59,8 @@ public class BattleController {
     public ImageView saveGame_img;
     public ImageView quit_img;
     public Pane saveBattleNotification_pane;
+    public Pane timeNotification_pane;
+    public Label notification_lbl;
 
     @FXML
     HBox hand_hBox;
@@ -786,6 +787,17 @@ public class BattleController {
         if (cardOnField != null) {
             anchorPane.getChildren().remove(cardOnField.getImageView());
         }
+    }
+
+    public void handleNotification(String string){
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1000),timeNotification_pane);
+        notification_lbl.setText(string);
+        tt.setFromX(900);
+        tt.setToX(600);
+        tt.setCycleCount(2);
+        tt.setAutoReverse(true);
+        tt.play();
+
     }
 
     public void handleGraveYardButton() {
