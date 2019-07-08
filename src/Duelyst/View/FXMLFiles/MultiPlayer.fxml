@@ -109,7 +109,7 @@
       <Pane fx:id="chatRoom_pane" maxHeight="506.0" maxWidth="364.0" minHeight="506.0" minWidth="364.0" prefHeight="506.0" prefWidth="364.0" stylesheets="@../../../css/ChatRoom.css" translateX="-725.0" translateY="30.0">
          <children>
             <JFXTextField fx:id="textMessage" layoutY="-6.0" maxHeight="45.0" minHeight="40.0" onAction="#handleSendMessageImage" prefHeight="40.0" prefWidth="364.0" promptText="Enter Message Here" />
-            <ScrollPane fx:id="chatRoom_Scroll" layoutY="36.0" prefHeight="472.0" prefWidth="364.0" style="-fx-background-color: transparent;" stylesheets="@../../../css/scroll-bar.css" vvalue="1.0">
+            <ScrollPane fx:id="chatRoom_Scroll" layoutY="36.0" prefHeight="472.0" prefWidth="364.0" style="-fx-background-color: transparent;" stylesheets="@../../../css/scroll-bar.css">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="401.0" prefWidth="324.0" style="-fx-background-color: transparent;" />
                </content>

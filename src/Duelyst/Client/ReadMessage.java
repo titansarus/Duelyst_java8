@@ -74,15 +74,7 @@ public class ReadMessage extends Thread {
                     handleCustomCardSprites((CustomCardCommand) commandClass);
                     break;
                 case TV:
-                    tvCommand tvCommand = (tvCommand) commandClass;
-                    if (tvCommand.getTvCommandKind().equals(tvCommandKind.GET_REPLAYS_LIST))
-                        handleTVCommand((tvCommand) commandClass);
-                    else if(tvCommand.getTvCommandKind().equals(tvCommandKind.GET_FINISHED_BATTLES_RECORDS)) {
-                        Platform.runLater(() -> {
-                            MultiPlayerController multiPlayerController = (MultiPlayerController)Container.getControllerClass();
-                            multiPlayerController.gotoBattleReplay(tvCommand.getBattleRecords());
-                        });
-                    }
+                    handleTVCommand((tvCommand) commandClass);
                     break;
             }
 
@@ -142,17 +134,15 @@ public class ReadMessage extends Thread {
         System.out.println("*************************************** END TURN");
         Battle.getRunningBattle().nextTurn();
     }
-
-    private void endTurnWarnning() {
+    private void endTurnWarnning(){
         System.out.println("You have 20 seconds");
         Battle.getRunningBattle().showNotification("hurry up! You have 20 seconds");
     }
-
-    private void forceEndTurn() {
+    private void forceEndTurn(){
         Battle.getRunningBattle().showNotification("your is finished");
         Battle.getRunningBattle().nextTurn();
         BattleCommand battleCommand = new BattleCommand();
-        battleCommand.endTurn(Account.getLoggedAccount(), Battle.getRunningBattle().getBattleRecords());
+        battleCommand.endTurn(Account.getLoggedAccount(),Battle.getRunningBattle().getBattleRecords());
         SendMessage.getSendMessage().sendMessage(battleCommand);
     }
 

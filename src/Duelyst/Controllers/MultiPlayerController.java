@@ -5,10 +5,8 @@ import Duelyst.Exceptions.MyException;
 import Duelyst.Exceptions.NotValidDeckException;
 import Duelyst.Model.Account;
 import Duelyst.Model.Battle.Battle;
-import Duelyst.Model.Battle.BattleRecord;
 import Duelyst.Model.CommandClasses.BattleCommand;
 import Duelyst.Model.CommandClasses.ChatRoomCommand;
-import Duelyst.Model.CommandClasses.tvCommandKind;
 import Duelyst.Model.Deck;
 import Duelyst.Model.CommandClasses.tvCommand;
 import Duelyst.Model.GameGoal;
@@ -138,7 +136,6 @@ public class MultiPlayerController {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
         System.out.println("ChatRoom");
         TranslateTransition tt = new TranslateTransition(Duration.millis(1000), chatRoom_pane);
         tt.setFromX(-725);
@@ -373,7 +370,7 @@ public class MultiPlayerController {
 
     public void handleTvImage() {
 
-        SendMessage.getSendMessage().sendMessage(new tvCommand(tvCommandKind.GET_REPLAYS_LIST));
+        SendMessage.getSendMessage().sendMessage(new tvCommand());
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
@@ -403,7 +400,7 @@ public class MultiPlayerController {
     private void makeBattlesList(ArrayList<String> battles, VBox vBox) {
         vBox.getChildren().clear();
         for (int i = 0; i < battles.size(); i++) {
-            Label label = new Label(battles.get(i).split("#")[0]);
+            Label label = new Label(battles.get(i));
             label.setTextAlignment(TextAlignment.CENTER);
             label.setTextFill(Color.WHITE);
             label.setStyle("-fx-background-color: #273545");
@@ -415,40 +412,13 @@ public class MultiPlayerController {
             label.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    tvCommand temp =  new tvCommand(tvCommandKind.GET_FINISHED_BATTLES_RECORDS);
-                    temp.setUserNameOfFirstPlayersOfARequestedReplayOfABattle(label.getText().split("\\s\\sVS\\s\\s")[0]);
-                    temp.setUserNameOfSecondPlayersOfARequestedReplayOfABattle(label.getText().split("\\s\\sVS\\s\\s")[1]);
-                    SendMessage.getSendMessage().sendMessage(temp);
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    //TODO Bayad Varede Safheye Battle Shavad Va Battle Morede Nazar Ra Bebinad
                 }
             });
             vBox.getChildren().add(label);
             label.setLayoutY(50 * i);
 
         }
-    }
-
-    public void gotoBattleReplay(ArrayList<BattleRecord> battleRecord) {
-        Pane root = null;
-        FXMLLoader fxmlLoader = null;
-        try {
-            fxmlLoader = new FXMLLoader(getClass().getResource("../View/FXMLFiles/BattleReplay.fxml"));
-            root = fxmlLoader.load();
-            int i = 0;
-            System.out.println(i);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        BattleReplayController bc = fxmlLoader.getController();
-        bc.battleRecords = battleRecord;
-        bc.runTimelines();
-
-        Container.addController(fxmlLoader);
-        Container.runNextScene(root, BATTLE);
     }
 
     public void handleTvCancelButton() {
