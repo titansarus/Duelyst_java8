@@ -16,6 +16,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -34,10 +35,7 @@ import javafx.util.Duration;
 
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Formatter;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 import static Duelyst.View.Constants.*;
 
@@ -155,6 +153,7 @@ public class BattleController {
     private Timeline animationTimeLine = new Timeline();
     private Timeline handDestroyerTimeline = new Timeline();
     private Timeline notYourTurnPaneTimeline = new Timeline();
+    private Timeline singlePlayerLimitTimeline = new Timeline();
 
     void runTimelines() {
         runSlowTimeline();
@@ -162,7 +161,31 @@ public class BattleController {
         runAnimationTimeline();
         runHandDestroyerTimeline();
         runNotYourTurnPaneTimeline();
+        runSinglePlayerTimeLimitTimer();
 
+    }
+
+    private void runSinglePlayerTimeLimitTimer() {
+        if (getBattle().getGameMode().equals(GameMode.SINGLE_PLAYER)) {
+            System.out.println("SINGLE PLAYER TIME LINE");
+
+            singlePlayerLimitTimeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
+                Timer timer = new Timer();
+                TimerTask timerTask = new TimerTask() {
+                    @Override
+                    public void run() {
+
+                        getBattle().nextTurn();
+                        System.out.println("TIMERTIMERTIMERTIMER");
+                    }
+                };
+                timer.schedule(timerTask, 20000);
+
+
+            }), new KeyFrame(Duration.millis(21 * 1000)));
+            singlePlayerLimitTimeline.setCycleCount(Animation.INDEFINITE);
+            singlePlayerLimitTimeline.play();
+        }
     }
 
     private void runNotYourTurnPaneTimeline() {
@@ -1009,7 +1032,7 @@ public class BattleController {
             battle.nextTurn();
             if (battle.getGameMode().equals(GameMode.MULTI_PLAYER)) {
                 BattleCommand battleCommand = new BattleCommand();
-                battleCommand.endTurn(Account.getLoggedAccount(),battleCommand.getBattleRecords());
+                battleCommand.endTurn(Account.getLoggedAccount(), battleCommand.getBattleRecords());
                 SendMessage.getSendMessage().sendMessage(battleCommand);
             }
         }
