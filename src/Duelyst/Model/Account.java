@@ -32,6 +32,8 @@ public class Account implements Cloneable {
     private int countOfWins;
     private int darick;
 
+    public static Account nullAccount = new Account("IT_IS_A_NULL_USER_NAME" , "IT_IS_A_NULL_USER_NAME");
+
     public Account(String username, String password) {
         this.username = username;
         this.password = password;
