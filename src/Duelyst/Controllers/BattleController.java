@@ -821,6 +821,20 @@ public class BattleController {
 
     }
 
+    public void handleNotYourTurnPane(){
+        TranslateTransition tt = new TranslateTransition(Duration.millis(100),notYourTurn_pane);
+        tt.setFromY(-900);
+        tt.setToY(0);
+        tt.play();
+    }
+
+    public void handleNotYourTurnPaneReverse(){
+        TranslateTransition tt = new TranslateTransition(Duration.millis(100),notYourTurn_pane);
+        tt.setFromY(0);
+        tt.setToY(-900);
+        tt.play();
+    }
+
     public void handleGraveYardButton() {
 
         Pane root = null;

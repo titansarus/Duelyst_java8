@@ -52,12 +52,12 @@
             <Label fx:id="downRight" layoutX="1096.0" layoutY="588.0" opacity="0.0" prefHeight="6.0" prefWidth="5.0" />
             <Label fx:id="upLeft" layoutX="374.0" layoutY="320.0" opacity="0.0" prefHeight="4.0" prefWidth="0.0" />
             <Label fx:id="downLeft" layoutX="254.0" layoutY="614.0" onMouseClicked="#handleEndTurnBtn" opacity="0.0" prefHeight="0.0" prefWidth="5.0" />
-            <ImageView fx:id="endTurn_img" fitHeight="150.0" fitWidth="200.0" layoutX="1372.0" layoutY="772.0" onMouseClicked="#handleEndTurnBtn" onMouseEntered="#endTurnButtonGlow" onMouseExited="#endTurnButtonGlowDisappear" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="endTurn_img" fitHeight="150.0" fitWidth="200.0" layoutX="1372.0" layoutY="730.0" onMouseClicked="#handleEndTurnBtn" onMouseEntered="#endTurnButtonGlow" onMouseExited="#endTurnButtonGlowDisappear" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../res/ui/button_end_turn_mine.png" />
                </image>
             </ImageView>
-            <Label fx:id="endTurn_lbl" layoutX="1424.0" layoutY="797.0" onMouseClicked="#handleEndTurnBtn" onMouseEntered="#endTurnButtonGlow" onMouseExited="#endTurnButtonGlowDisappear" text="END TURN" textFill="#f5f0f0">
+            <Label fx:id="endTurn_lbl" layoutX="1424.0" layoutY="755.0" onMouseClicked="#handleEndTurnBtn" onMouseEntered="#endTurnButtonGlow" onMouseExited="#endTurnButtonGlowDisappear" text="END TURN" textFill="#f5f0f0">
                <font>
                   <Font size="20.0" />
                </font>
@@ -82,7 +82,7 @@
                   <Font name="System Bold Italic" size="20.0" />
                </font>
             </Label>
-            <ImageView fitHeight="101.0" fitWidth="77.0" layoutX="30.0" layoutY="784.0" onMouseClicked="#handleGraveYardButton" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="101.0" fitWidth="77.0" layoutX="30.0" layoutY="810.0" onMouseClicked="#handleGraveYardButton" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../res/ui/graveYard.png" />
                </image>
@@ -165,6 +165,6 @@
             </Label>
          </children>
       </Pane>
-      <Pane fx:id="notYourTurn_pane" disable="true" opacity="0.0" prefHeight="200.0" prefWidth="200.0" />
+      <Pane fx:id="notYourTurn_pane" disable="true" maxHeight="720.0" minHeight="720.0" opacity="0.0" prefHeight="720.0" />
    </children>
 </StackPane>
