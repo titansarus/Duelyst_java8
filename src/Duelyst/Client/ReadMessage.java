@@ -96,6 +96,7 @@ public class ReadMessage extends Thread {
         }
     }
     private void disConnectOpponent(){
+        Battle.getRunningBattle().showNotification("Your Opponent Disconnected!");
         Battle.getRunningBattle().opponentGiveUp();
     }
 

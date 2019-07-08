@@ -224,7 +224,7 @@ public class ClientHandler implements Runnable {
         battleCommand.acceptRequest(opponent, firstPlayer);
         for (ClientHandler c :
                 clientHandlers) {
-            if (c.getUserName().equals(sendFor.getUsername())) {
+            if (c.loggedIn && c.getUserName().equals(sendFor.getUsername())) {
                 c.getFormatter().format("%s\n", CommandClass.makeJson(battleCommand));
                 c.getFormatter().flush();
             }
