@@ -121,8 +121,8 @@ public class ReadMessage extends Thread {
     }
 
     private void disConnectOpponent() {
-            Battle.getRunningBattle().showNotification("Your Opponent Disconnected!");
-            Battle.getRunningBattle().opponentGiveUp();
+        Battle.getRunningBattle().showNotification("Your Opponent Disconnected!");
+        Battle.getRunningBattle().opponentGiveUp();
 
     }
 
@@ -147,8 +147,8 @@ public class ReadMessage extends Thread {
     }
 
     private void endTurnWarnning() {
-            System.out.println("You have 20 seconds");
-            Battle.getRunningBattle().showNotification("hurry up! You have 20 seconds");
+        System.out.println("You have 20 seconds");
+        Battle.getRunningBattle().showNotification("hurry up! You have 20 seconds");
     }
 
     private void forceEndTurn() {
