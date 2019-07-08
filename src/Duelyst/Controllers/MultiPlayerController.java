@@ -404,6 +404,7 @@ public class MultiPlayerController {
         vBox.getChildren().clear();
         for (int i = 0; i < battles.size(); i++) {
             Label label = new Label(battles.get(i).split("#")[0]);
+            System.out.println(battles.get(i));
             label.setTextAlignment(TextAlignment.CENTER);
             label.setTextFill(Color.WHITE);
             label.setStyle("-fx-background-color: #273545");
@@ -412,12 +413,13 @@ public class MultiPlayerController {
             label.setAlignment(Pos.CENTER);
             label.setOnMouseEntered(event -> label.setOpacity(1));
             label.setOnMouseExited(event -> label.setOpacity(0.6));
+            int finalI = i;
             label.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
                     tvCommand temp =  new tvCommand(tvCommandKind.GET_FINISHED_BATTLES_RECORDS);
                     temp.setUserNameOfFirstPlayersOfARequestedReplayOfABattle(label.getText().split("\\s\\sVS\\s\\s")[0]);
-                    temp.setUserNameOfSecondPlayersOfARequestedReplayOfABattle(label.getText().split("\\s\\sVS\\s\\s")[1]);
+                    temp.setUserNameOfSecondPlayersOfARequestedReplayOfABattle(battles.get(finalI).split("\\s\\sVS\\s\\s")[1]);
                     SendMessage.getSendMessage().sendMessage(temp);
                     try {
                         Thread.sleep(500);

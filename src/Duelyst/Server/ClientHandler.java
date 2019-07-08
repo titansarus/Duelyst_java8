@@ -98,6 +98,8 @@ public class ClientHandler implements Runnable {
     }
 
     private void handleGetFinishedGameReplay(tvCommand tvCommand) {
+        System.out.println(tvCommand.getUserNameOfFirstPlayersOfARequestedReplayOfABattle());
+        System.out.println(tvCommand.getUserNameOfSecondPlayersOfARequestedReplayOfABattle());
         ServerTV serverTV = ServerTV.getServerTvOfAFinishedGame(tvCommand.getUserNameOfFirstPlayersOfARequestedReplayOfABattle(),
                 tvCommand.getUserNameOfSecondPlayersOfARequestedReplayOfABattle().split("#")[0], Integer.parseInt(tvCommand.getUserNameOfSecondPlayersOfARequestedReplayOfABattle().split("#")[1]));
         tvCommand.setBattleRecords(serverTV.getBattleRecords());
