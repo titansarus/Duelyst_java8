@@ -7,22 +7,24 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumnBase;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 
 public class ShopServerController {
-    public VBox table;
+    public ScrollPane table;
 
     Timeline timeline = new Timeline();
 
     public void runTimeLine() {
         timeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
-
-            table.getChildren().clear();
+            VBox vboxer = new VBox();
+            vboxer.getChildren().clear();
             for (int i = 0; i < ServerShop.getInstance().getCards().size(); i++) {
                 HBox hBox = new HBox();
                 hBox.setPrefWidth(400);
@@ -36,7 +38,9 @@ public class ShopServerController {
                 name.getChildren().add(new Label(ServerShop.getInstance().getCards().get(i).getCardName()));
                 count.getChildren().add(new Label(ServerShop.getInstance().getNumberOfCard(ServerShop.getInstance().getCards().get(i).getCardName()) + ""));
                 hBox.getChildren().addAll(name, count);
-                table.getChildren().add(hBox);
+                vboxer.getChildren().add(hBox);
+                table.setContent(vboxer);
+                table.setPannable(true);
 
             }
 
