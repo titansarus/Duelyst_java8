@@ -124,9 +124,9 @@ public class ClientHandler implements Runnable {
             case END_GAME:
                 endGame(battleCommand);
                 break;
-            case END_GAME_NOT_FORCE:
-                sendBattleToTV(battleCommand);
-                break;
+//            case END_GAME_NOT_FORCE:
+//                sendBattleToTV(battleCommand);
+//                break;
         }
     }
     private void sendBattleToTV(BattleCommand battleCommand){

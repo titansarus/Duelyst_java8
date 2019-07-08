@@ -1151,7 +1151,7 @@ public class Battle implements Cloneable {
         endOfKillHeroGameMode();
         if (isEndGame()) {
 
-            sendEndGameToServer();
+//            sendEndGameToServer();
 
             int numberOfWin;
             if (draw) {
@@ -1190,10 +1190,10 @@ public class Battle implements Cloneable {
         }
 
     }
-    private void sendEndGameToServer(){
-        BattleCommand battleCommand = new BattleCommand();
-        battleCommand.endGame(Account.getLoggedAccount());
-    }
+//    private void sendEndGameToServer(){
+//        BattleCommand battleCommand = new BattleCommand();
+//        battleCommand.endGame(Account.getLoggedAccount());
+//    }
 
     private void makeBattleRecordOfEndGame(boolean isDraw, Player winner, Player loser) {
         if (gameMode.equals(GameMode.MULTI_PLAYER)) {
