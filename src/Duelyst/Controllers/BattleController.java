@@ -96,6 +96,9 @@ public class BattleController {
     @FXML
     ImageView speed05x_iv;
 
+    @FXML
+    Pane notYourTurn_pane;
+
 
     private double heightOfPoly_Y;
     private double heightOfPoly_X;
@@ -151,21 +154,39 @@ public class BattleController {
     private Timeline fastTimeLine = new Timeline();
     private Timeline animationTimeLine = new Timeline();
     private Timeline handDestroyerTimeline = new Timeline();
+    private Timeline notYourTurnPaneTimeline = new Timeline();
 
     void runTimelines() {
         runSlowTimeline();
         runVeryFastTimeLine();
         runAnimationTimeline();
         runHandDestroyerTimeline();
+        runNotYourTurnPaneTimeline();
 
+    }
+
+    private void runNotYourTurnPaneTimeline() {
+        if (getBattle().getGameMode().equals(GameMode.MULTI_PLAYER)) {
+            notYourTurnPaneTimeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
+                if (!getBattle().getPlayingPlayer().getAccount().getUsername().equals(Account.getLoggedAccount().getUsername())) {
+                    notYourTurn_pane.setDisable(false);
+                } else {
+                    notYourTurn_pane.setDisable(true);
+                }
+            }), new KeyFrame(Duration.millis(432)));
+
+
+            notYourTurnPaneTimeline.setCycleCount(Animation.INDEFINITE);
+            notYourTurnPaneTimeline.play();
+        }
     }
 
     private void runHandDestroyerTimeline() {
         if (getBattle().getGameMode().equals(GameMode.MULTI_PLAYER)) {
-            System.out.println("HAND DESTROYER_BEFORE");
+//            System.out.println("HAND DESTROYER_BEFORE");
             handDestroyerTimeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
                 if (!getBattle().getPlayingPlayer().getAccount().getUsername().equals(Account.getLoggedAccount().getUsername())) {
-                    System.out.println("HAND DESTROYER_AFTER");
+//                    System.out.println("HAND DESTROYER_AFTER");
                     hand_hBox.getChildren().clear();
                 }
 
@@ -573,7 +594,7 @@ public class BattleController {
                         System.out.println("Attack");
                         Warrior attacker = getBattle().getSelectedCell().getWarrior();
                         Warrior attacked = getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior();
-                        getBattle().handleAttackCounterDeath(attacker, attacked);
+                        getBattle().handleAttackCounterDeath(attacker, attacked,false);
 
 
                         getBattle().setSelectedCell(null);
@@ -591,7 +612,7 @@ public class BattleController {
             if (getBattle().getSelectedCard() != null) {//TODO SOME MORE CHECKS NEEDED
 
                 try {
-                    getBattle().insertSelectedCardWithCard(getBattle().getSelectedCell().getRow(), getBattle().getSelectedCell().getColumn(), getBattle().getSelectedCard());
+                    getBattle().insertSelectedCardWithCard(getBattle().getSelectedCell().getRow(), getBattle().getSelectedCell().getColumn(), getBattle().getSelectedCard(),false);
                 } catch (MyException e) {
                     Container.exceptionGenerator(e, stackPane);
                 }
