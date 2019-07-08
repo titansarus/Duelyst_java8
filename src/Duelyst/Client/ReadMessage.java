@@ -93,6 +93,12 @@ public class ReadMessage extends Thread {
             case END_GAME:
                 disConnectOpponent();
                 break;
+            case FORCE_END_TURN:
+                forceEndTurn();
+                break;
+            case END_TURN_WARNNING:
+                endTurnWarnning();
+                break;
         }
     }
     private void disConnectOpponent(){
@@ -118,6 +124,16 @@ public class ReadMessage extends Thread {
     private void endTurn() {
         System.out.println("*************************************** END TURN");
         Battle.getRunningBattle().nextTurn();
+    }
+    private void endTurnWarnning(){
+        System.out.println("You have 20 seconds");
+        Battle.getRunningBattle().showNotification("hurry up! You have 20 seconds");
+    }
+    private void forceEndTurn(){
+        Battle.getRunningBattle().nextTurn();
+        BattleCommand battleCommand = new BattleCommand();
+        battleCommand.endTurn(Account.getLoggedAccount(),Battle.getRunningBattle().getBattleRecords());
+        SendMessage.getSendMessage().sendMessage(battleCommand);
     }
 
     private void handleStartBattle(BattleCommand battleCommand) {

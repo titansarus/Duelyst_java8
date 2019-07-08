@@ -79,6 +79,20 @@ public class ServerTV {
         }
         return null;
     }
+    public static Account getAccountOfOpponent(Account account){
+        Account opponent = null;
+        for (ServerTV serverTV :
+                runningGames) {
+            if (account.getUsername().equals(serverTV.getAccount1().getUsername()) || account.getUsername().equals(serverTV.getAccount2().getUsername())) {
+                if (account.getUsername().equals(serverTV.getAccount1().getUsername())) {
+                    opponent = serverTV.getAccount2();
+                } else {
+                    opponent = serverTV.getAccount1();
+                }
+            }
+        }
+        return opponent;
+    }
 
     public static ServerTV getServerTvOfBattle(Account account) {
         ServerTV serverTV1 = null;

@@ -75,7 +75,6 @@ public class ClientHandler implements Runnable {
                 case LEADER_BOARD:
                     handleLeaderBoardCommand((LeaderBoardCommand) command);
                     break;
-
                 case ONLINE_PLAYERS:
                     handleGetOnlinePlayers((OnlinePlayersCommand) command);
                     break;
@@ -138,9 +137,7 @@ public class ClientHandler implements Runnable {
     }
 
     private void handleRunningBattle(BattleCommand battleCommand) {
-        if (battleCommand.getBattleCommandsKind().equals(BattleCommandsKind.END_TURN)) {
-            ServerTV.getServerTvOfBattle(battleCommand.getMyAccount()).setBattleRecords(battleCommand.getBattleRecords());
-        }
+        handleEndTurn(battleCommand);
         System.out.println("Dastor omaaaad !");
         ClientHandler clientHandler = ServerTV.getOpponent(battleCommand.getMyAccount());
         if (clientHandler == null) {
@@ -149,6 +146,20 @@ public class ClientHandler implements Runnable {
         }
         clientHandler.getFormatter().format("%s\n", CommandClass.makeJson(battleCommand));
         clientHandler.getFormatter().flush();
+    }
+
+    private void handleEndTurn(BattleCommand battleCommand) {
+        if (battleCommand.getBattleCommandsKind().equals(BattleCommandsKind.END_TURN)) {
+            ServerTV.getServerTvOfBattle(battleCommand.getMyAccount()).setBattleRecords(battleCommand.getBattleRecords());
+            TimeOfEndTurn time = TimeOfEndTurn.getTime(battleCommand.getMyAccount());
+            if (time!=null){
+                time.nowIsStart();
+            }else {
+                time = new TimeOfEndTurn(battleCommand.getMyAccount(),ServerTV.getAccountOfOpponent(battleCommand.getMyAccount())
+                        ,ServerTV.getAccountOfOpponent(battleCommand.getMyAccount()));
+                time.start();
+            }
+        }
     }
 
 
@@ -216,6 +227,8 @@ public class ClientHandler implements Runnable {
         sendAcceptRequest(account1, account2, true, gameGoal);
         sendAcceptRequest(account2, account1, false, gameGoal);
         new ServerTV(account1, account2);
+        TimeOfEndTurn time = new TimeOfEndTurn(account1,account2,account1);
+        time.start();
     }
 
     private void sendAcceptRequest(Account sendFor, Account opponent, boolean firstPlayer, GameGoal gameGoal) {
