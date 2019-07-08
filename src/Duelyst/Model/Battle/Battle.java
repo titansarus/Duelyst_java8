@@ -423,11 +423,6 @@ public class Battle implements Cloneable {
 
     public void insertSelectedCardWithCard(int i, int j, Card selectedCard, boolean isFromServer) {
 
-        if (gameMode.equals(GameMode.MULTI_PLAYER) && !isFromServer) {
-            BattleCommand battleCommand = new BattleCommand();
-            battleCommand.insert(selectedCard.getCardId(), i, j, Account.getLoggedAccount());
-            SendMessage.getSendMessage().sendMessage(battleCommand);
-        }
 
         boolean doesHaveFlag = false;
         Flag flag = null;
@@ -436,12 +431,13 @@ public class Battle implements Cloneable {
 
         findValidCell(KindOfActionForValidCells.INSERT);
         Cell cell = getGrid()[i][j];
-        if (!getValidCells().contains(cell) ) {
-            if (!isFromServer) {
-                throw new NotValidCellForSpellException();
-            }else {
-                return;
-            }
+        if (!getValidCells().contains(cell) && !isFromServer) {
+            throw new NotValidCellForSpellException();
+        }
+        if (gameMode.equals(GameMode.MULTI_PLAYER) && !isFromServer) {
+            BattleCommand battleCommand = new BattleCommand();
+            battleCommand.insert(selectedCard.getCardId(), i, j, Account.getLoggedAccount());
+            SendMessage.getSendMessage().sendMessage(battleCommand);
         }
         if (selectedCard instanceof Warrior) {
             if (getGrid()[i][j].isEmpty()) {
