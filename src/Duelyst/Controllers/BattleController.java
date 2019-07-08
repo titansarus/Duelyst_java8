@@ -520,7 +520,6 @@ public class BattleController {
                 int finalI = i;
                 rectangles[i][j].setOnMouseEntered(event -> rectangleOnMouseEnter(event, finalI, finalJ));
 
-
                 rectangles[i][j].setOnMouseExited(event -> rectangleOnMouseExited(event, finalI, finalJ));
             }
         }
