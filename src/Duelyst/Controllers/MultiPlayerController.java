@@ -138,8 +138,8 @@ public class MultiPlayerController {
         }
         System.out.println("ChatRoom");
         TranslateTransition tt = new TranslateTransition(Duration.millis(1000), chatRoom_pane);
-        tt.setFromX(-695);
-        tt.setToX(-329);
+        tt.setFromX(-725);
+        tt.setToX(-350);
         tt.play();
         chatRoomArrow_img.setOnMouseClicked(null);
         chatRoomArrow_img.setOnMouseEntered(null);
@@ -149,8 +149,8 @@ public class MultiPlayerController {
 
     public void handleBackImage() {
         TranslateTransition tt = new TranslateTransition(Duration.millis(1000), chatRoom_pane);
-        tt.setFromX(-329);
-        tt.setToX(-695);
+        tt.setFromX(-350);
+        tt.setToX(-725);
         tt.play();
         tt.setOnFinished(event -> {
             handleChatRoomArrowImageMouseExited();

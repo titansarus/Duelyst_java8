@@ -16,7 +16,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import javafx.animation.*;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -60,6 +59,8 @@ public class BattleController {
     public ImageView saveGame_img;
     public ImageView quit_img;
     public Pane saveBattleNotification_pane;
+    public Pane timeNotification_pane;
+    public Label notification_lbl;
 
     @FXML
     HBox hand_hBox;
@@ -119,9 +120,9 @@ public class BattleController {
         speed2x_iv.setImage(ImageHolder.findImageInImageHolders("../res/ui/upSpeed.png"));
         speed05x_iv.setImage(ImageHolder.findImageInImageHolders("../res/ui/downSpeed.png"));
         speed1x_iv.setImage(ImageHolder.findImageInImageHolders("../res/ui/normalSpeed_selected.png"));
+//        if (battle.getGameMode().equals(GameMode.MULTI_PLAYER))
+//            saveGame_img.setDisable(true);
 
-//        BackgroundImage backgroundImage = new BackgroundImage(endTurnBtn , BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT , BackgroundSize.DEFAULT);
-//        end_turn_btn.setBackground(new Background( backgroundImage));
     }
 
     public void handle2Speed() {
@@ -168,9 +169,9 @@ public class BattleController {
         if (getBattle().getGameMode().equals(GameMode.MULTI_PLAYER)) {
             notYourTurnPaneTimeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
                 if (!getBattle().getPlayingPlayer().getAccount().getUsername().equals(Account.getLoggedAccount().getUsername())) {
-                    notYourTurn_pane.setDisable(false);
+                    anchorPane.setDisable(true);
                 } else {
-                    notYourTurn_pane.setDisable(true);
+                    anchorPane.setDisable(false);
                 }
             }), new KeyFrame(Duration.millis(432)));
 
@@ -594,7 +595,7 @@ public class BattleController {
                         System.out.println("Attack");
                         Warrior attacker = getBattle().getSelectedCell().getWarrior();
                         Warrior attacked = getBattle().getGrid()[coordinate[0]][coordinate[1]].getWarrior();
-                        getBattle().handleAttackCounterDeath(attacker, attacked,false);
+                        getBattle().handleAttackCounterDeath(attacker, attacked, false);
 
 
                         getBattle().setSelectedCell(null);
@@ -612,7 +613,7 @@ public class BattleController {
             if (getBattle().getSelectedCard() != null) {//TODO SOME MORE CHECKS NEEDED
 
                 try {
-                    getBattle().insertSelectedCardWithCard(getBattle().getSelectedCell().getRow(), getBattle().getSelectedCell().getColumn(), getBattle().getSelectedCard(),false);
+                    getBattle().insertSelectedCardWithCard(getBattle().getSelectedCell().getRow(), getBattle().getSelectedCell().getColumn(), getBattle().getSelectedCard(), false);
                 } catch (MyException e) {
                     Container.exceptionGenerator(e, stackPane);
                 }
@@ -809,6 +810,18 @@ public class BattleController {
             anchorPane.getChildren().remove(cardOnField.getImageView());
         }
     }
+
+    public void handleNotification(String string) {
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1000), timeNotification_pane);
+        notification_lbl.setText(string);
+        tt.setFromX(900);
+        tt.setToX(600);
+        tt.setCycleCount(2);
+        tt.setAutoReverse(true);
+        tt.play();
+
+    }
+
 
     public void handleGraveYardButton() {
 

@@ -2,6 +2,7 @@ package Duelyst.Model.Battle;
 
 import Duelyst.Client.SendMessage;
 import Duelyst.Controllers.BattleController;
+import Duelyst.Controllers.Container;
 import Duelyst.Exceptions.CellFilledBeforeException;
 import Duelyst.Exceptions.NotEnoughManaException;
 import Duelyst.Exceptions.NotValidCellForSpellException;
@@ -14,6 +15,7 @@ import Duelyst.Model.Items.*;
 import Duelyst.Model.Spell.Spell;
 import Duelyst.View.Constants;
 import com.rits.cloning.Cloner;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1285,6 +1287,14 @@ public class Battle implements Cloneable {
                 return true;
         }
         return (rx == 2 && ry == 0) || (rx == 2 && ry == 8);
+    }
+
+    public void showNotification(String string) {
+        Platform.runLater(() -> {
+            BattleController battleController = (BattleController) Container.getControllerClass();
+            battleController.handleNotification(string);
+        });
+
     }
 
     public void setEndGame(boolean endGame) {
