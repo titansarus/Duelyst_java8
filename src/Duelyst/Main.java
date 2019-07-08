@@ -62,36 +62,33 @@ public class Main extends Application {
 
         System.out.println(NetworkConfiguration.getHost());
         System.out.println(NetworkConfiguration.getPort());
-        //  InputStream inputStream = new FileInputStream("ClientOrServer.txt");
-      //  byte[] bytes = new byte[100];
-       // inputStream.read(bytes);
-       // inputStream.close();
-       try {
-           // new FileOutputStream("ClientOrServer.txt").write(48);
-            Thread thread = new Thread(new Server());
-            thread.start();
-            DatabaseCollectioner.DatabaseGenerator();
-            ServerShop.getInstance().getCards().addAll(CreateCardFromDatabaseCard.createCards(DatabaseCard.getDatabaseCards()));
-            ArrayList<String> numberOfCards = new ArrayList<>();
-
-            YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
-            Reader reader = new FileReader("numberOfCards.json");
-            String[] strings = yaGson.fromJson(reader, (Type) String[].class);
-            numberOfCards.addAll(Arrays.asList(strings));
-            ServerShop.getInstance().setNumberOfCards(numberOfCards);
-
-            initItems();
-            initSpells();
-            initAccounts();//TODO Initialize Server Account ArrayList
-        } catch (BindException e){
 
 
-            //TODO Run Client And Make Connection To The Server
-            Client client = new Client();
-            client.getReader().start();
+//       try {
+//            Thread thread = new Thread(new Server());
+//            thread.start();
+//            DatabaseCollectioner.DatabaseGenerator();
+//            ServerShop.getInstance().getCards().addAll(CreateCardFromDatabaseCard.createCards(DatabaseCard.getDatabaseCards()));
+//            ArrayList<String> numberOfCards = new ArrayList<>();
+//
+//            YaGson yaGson = new YaGsonBuilder().setPrettyPrinting().create();
+//            Reader reader = new FileReader("numberOfCards.json");
+//            String[] strings = yaGson.fromJson(reader, (Type) String[].class);
+//            numberOfCards.addAll(Arrays.asList(strings));
+//            ServerShop.getInstance().setNumberOfCards(numberOfCards);
+//
+//            initItems();
+//            initSpells();
+//            initAccounts();//TODO Initialize Server Account ArrayList
+//        } catch (BindException e){
 
-            launch(args);
-        }
+
+        //TODO Run Client And Make Connection To The Server
+        Client client = new Client();
+        client.getReader().start();
+
+        launch(args);
+//        }
     }
 
     @Override

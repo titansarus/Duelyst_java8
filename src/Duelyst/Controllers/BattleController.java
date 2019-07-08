@@ -812,7 +812,7 @@ public class BattleController {
     }
 
     public void handleNotification(String string) {
-        TranslateTransition tt = new TranslateTransition(Duration.millis(2500), timeNotification_pane);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1000), timeNotification_pane);
         notification_lbl.setText(string);
         tt.setFromX(900);
         tt.setToX(600);
@@ -1009,7 +1009,7 @@ public class BattleController {
             battle.nextTurn();
             if (battle.getGameMode().equals(GameMode.MULTI_PLAYER)) {
                 BattleCommand battleCommand = new BattleCommand();
-                battleCommand.endTurn(Account.getLoggedAccount(),battle.getBattleRecords());
+                battleCommand.endTurn(Account.getLoggedAccount(),battleCommand.getBattleRecords());
                 SendMessage.getSendMessage().sendMessage(battleCommand);
             }
         }

@@ -1,6 +1,5 @@
 package Duelyst.Model.Battle;
 
-import Duelyst.Client.ReadMessage;
 import Duelyst.Client.SendMessage;
 import Duelyst.Controllers.BattleController;
 import Duelyst.Controllers.Container;
@@ -12,13 +11,13 @@ import Duelyst.Model.Buffs.ApplyBuff;
 import Duelyst.Model.Buffs.Buff;
 import Duelyst.Model.Buffs.HolyBuff;
 import Duelyst.Model.CommandClasses.BattleCommand;
+import Duelyst.Model.CommandClasses.CommandClass;
 import Duelyst.Model.Items.*;
 import Duelyst.Model.Spell.Spell;
 import Duelyst.View.Constants;
 import com.rits.cloning.Cloner;
 import javafx.application.Platform;
 
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -1153,6 +1152,8 @@ public class Battle implements Cloneable {
         endOfKillHeroGameMode();
         if (isEndGame()) {
 
+            sendEndGameToServer();
+
             int numberOfWin;
             if (draw) {
                 numberOfWin = 3;
@@ -1189,6 +1190,11 @@ public class Battle implements Cloneable {
             System.out.println("Game End");
         }
 
+    }
+    private void sendEndGameToServer(){
+        BattleCommand battleCommand = new BattleCommand();
+        battleCommand.end(Account.getLoggedAccount(),getBattleRecords());
+        SendMessage.getSendMessage().sendMessage(battleCommand);
     }
 
     private void makeBattleRecordOfEndGame(boolean isDraw, Player winner, Player loser) {
@@ -1245,16 +1251,8 @@ public class Battle implements Cloneable {
     private void setFlagForCollectFlagGameModes() {
         int[] randomX = new int[6];
         int[] randomY = new int[6];
-
-        if (gameMode.equals(GameMode.SINGLE_PLAYER)) {
-            System.out.println("Fek Kard Single Playere");
-            getNRandomNumber(randomX, randomY, 0, 3, 0);
-            getNRandomNumber(randomX, randomY, 3, 6, 5);
-        } else {
-            System.out.println("oomad Get Kone az Reader");
-            randomX = ReadMessage.getRandomX();
-            randomY = ReadMessage.getRandomY();
-        }
+        getNRandomNumber(randomX, randomY, 0, 3, 0);
+        getNRandomNumber(randomX, randomY, 3, 6, 5);
         for (int i = 0; i < 6; i++) {
             Flag flag = new Flag(KindOfFlag.COLLECTABLE_FLAG, randomX[i], randomY[i]);
             getGrid()[randomX[i]][randomY[i]].setFlag(flag);
