@@ -1009,7 +1009,7 @@ public class BattleController {
             battle.nextTurn();
             if (battle.getGameMode().equals(GameMode.MULTI_PLAYER)) {
                 BattleCommand battleCommand = new BattleCommand();
-                battleCommand.endTurn(Account.getLoggedAccount(),battleCommand.getBattleRecords());
+                battleCommand.endTurn(Account.getLoggedAccount(),battle.getBattleRecords());
                 SendMessage.getSendMessage().sendMessage(battleCommand);
             }
         }

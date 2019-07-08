@@ -51,6 +51,13 @@ public class BattleCommand extends CommandClass {
         this.myAccount = myAccount;
         this.battleRecords = battleRecords;
     }
+    public void forceEndTurn(){
+        battleCommandsKind=BattleCommandsKind.FORCE_END_TURN;
+    }
+
+    public void endTurnWarnning(){
+        battleCommandsKind=BattleCommandsKind.END_TURN_WARNNING;
+    }
 
     public void start(GameGoal gameGoal, Account account) {
         battleCommandsKind = BattleCommandsKind.START_BATTLE;
