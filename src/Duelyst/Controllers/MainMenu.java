@@ -1058,7 +1058,7 @@ public class MainMenu {
                 battleRecord_vbox.getChildren().add(label);
                 label.setOnMouseClicked(event -> {
 
-                    String s = label.getText().toString();
+                    String s = label.getText();
                     String[] s1 = s.split(" ");
                     final int i1 = Integer.parseInt(s1[0]);
                     ArrayList<BattleRecord> battleRecords = allBattleRecords.get(i1);

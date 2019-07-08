@@ -83,7 +83,13 @@ public class ClientHandler implements Runnable {
                     handleCustomCardCommand((CustomCardCommand) command);
                     break;
                 case TV:
-                    handleTvCommand((tvCommand) command);
+                    tvCommand tvCommand = (tvCommand) command;
+                    if (tvCommand.getTvCommandKind().equals(tvCommandKind.GET_REPLAYS_LIST))
+                        handleTvCommand(tvCommand);
+                    else if (tvCommand.getTvCommandKind().equals(tvCommandKind.GET_FINISHED_BATTLES_RECORDS)) {
+                        handleGetFinishedGameReplay(tvCommand);
+
+                    }
                     break;
             }
 
@@ -91,11 +97,19 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    private void handleGetFinishedGameReplay(tvCommand tvCommand) {
+        ServerTV serverTV = ServerTV.getServerTvOfAFinishedGame(tvCommand.getUserNameOfFirstPlayersOfARequestedReplayOfABattle(),
+                tvCommand.getUserNameOfSecondPlayersOfARequestedReplayOfABattle().split("#")[0], Integer.parseInt(tvCommand.getUserNameOfSecondPlayersOfARequestedReplayOfABattle().split("#")[1]));
+        tvCommand.setBattleRecords(serverTV.getBattleRecords());
+        formatter.format("%s\n", CommandClass.makeJson(tvCommand));
+        formatter.flush();
+    }
+
     private void handleTvCommand(tvCommand tvCommand) {
         ArrayList<String> finishedGames = new ArrayList<>();
         for (int i = 0; i < ServerTV.getFinishedGames().size(); i++) {
             ServerTV serverTV = ServerTV.getFinishedGames().get(i);
-            finishedGames.add(serverTV.getAccount1().getUsername() + "  VS  " + serverTV.getAccount2().getUsername());
+            finishedGames.add(serverTV.getAccount1().getUsername() + "  VS  " + serverTV.getAccount2().getUsername() + "#" + serverTV.getNumber());
         }
         ArrayList<String> runningGames = new ArrayList<>();
         for (int i = 0; i < ServerTV.getRunningGames().size(); i++) {
@@ -163,11 +177,11 @@ public class ClientHandler implements Runnable {
             ServerTV.getServerTvOfBattle(battleCommand.getMyAccount()).setBattleRecords(battleCommand.getBattleRecords());
             sendToOnlineViewer(battleCommand);
             TimeOfEndTurn time = TimeOfEndTurn.getTime(battleCommand.getMyAccount());
-            if (time!=null){
+            if (time != null) {
                 time.nowIsStart();
-            }else {
-                time = new TimeOfEndTurn(battleCommand.getMyAccount(),ServerTV.getAccountOfOpponent(battleCommand.getMyAccount())
-                        ,ServerTV.getAccountOfOpponent(battleCommand.getMyAccount()));
+            } else {
+                time = new TimeOfEndTurn(battleCommand.getMyAccount(), ServerTV.getAccountOfOpponent(battleCommand.getMyAccount())
+                        , ServerTV.getAccountOfOpponent(battleCommand.getMyAccount()));
                 time.start();
             }
         }
@@ -277,7 +291,7 @@ public class ClientHandler implements Runnable {
         sendAcceptRequest(account1, account2, true, gameGoal, battleCommand);
         sendAcceptRequest(account2, account1, false, gameGoal, battleCommand);
         new ServerTV(account1, account2);
-        TimeOfEndTurn time = new TimeOfEndTurn(account1,account2,account1);
+        TimeOfEndTurn time = new TimeOfEndTurn(account1, account2, account1);
         time.start();
     }
 

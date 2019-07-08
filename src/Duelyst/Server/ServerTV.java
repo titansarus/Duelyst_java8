@@ -6,14 +6,17 @@ import Duelyst.Model.Battle.BattleRecord;
 import java.util.ArrayList;
 
 public class ServerTV {
+    private static int counter;
     private static ArrayList<ServerTV> finishedGames = new ArrayList<>();
     private static ArrayList<ServerTV> runningGames = new ArrayList<>();
     private static ArrayList<ClientHandler> viewerClients = new ArrayList<>();
     private ArrayList<BattleRecord> battleRecords = new ArrayList<>();
     private Account account1;
     private Account account2;
+    private int number;
 
     public ServerTV(Account account1, Account account2) {
+        this.number = counter++;
         this.account1 = account1;
         this.account2 = account2;
         runningGames.add(this);
@@ -82,13 +85,14 @@ public class ServerTV {
                 if (c.isLoggedIn() && opponent != null && c.getUserName().equals(opponent.getUsername())) {
                     return c;
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("Client Handler Problem");
             }
         }
         return null;
     }
-    public static Account getAccountOfOpponent(Account account){
+
+    public static Account getAccountOfOpponent(Account account) {
         Account opponent = null;
         for (ServerTV serverTV :
                 runningGames) {
@@ -101,6 +105,18 @@ public class ServerTV {
             }
         }
         return opponent;
+    }
+
+    public static ServerTV getServerTvOfAFinishedGame(String firstPlayer, String secondPlayer, int number) {
+        for (int i = 0; i < finishedGames.size(); i++) {
+            if ((finishedGames.get(i).getAccount1().getUsername().equals(firstPlayer) && finishedGames.get(i).getAccount2().getUsername().equals(secondPlayer)) ||
+                    (finishedGames.get(i).getAccount1().getUsername().equals(secondPlayer) && finishedGames.get(i).getAccount2().getUsername().equals(firstPlayer))) {
+                if (finishedGames.get(i).getNumber() == number) {
+                    return finishedGames.get(i);
+                }
+            }
+        }
+        return null;
     }
 
     public static ServerTV getServerTvOfBattle(Account account) {
@@ -121,5 +137,9 @@ public class ServerTV {
 
     public static void setRunningGames(ArrayList<ServerTV> runningGames) {
         ServerTV.runningGames = runningGames;
+    }
+
+    public int getNumber() {
+        return number;
     }
 }
