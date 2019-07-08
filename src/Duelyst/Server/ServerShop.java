@@ -79,6 +79,17 @@ public class ServerShop {
         return true;
     }
 
+    public int getNumberOfCard(String cardName) {
+        int number = -1;
+        for (String s :
+                numberOfCards) {
+            if (s.split(" ")[0].equals(cardName)) {
+                number = Integer.parseInt(s.split(" ")[1]);
+            }
+        }
+        return number;
+    }
+
     public void increaseNumberOfCard(String cardName) {//TODO send to server
         String oldNumber = "";
         String newNumber = "";
