@@ -2,13 +2,10 @@ package Duelyst.Controllers;
 
 import Duelyst.Client.SendMessage;
 import Duelyst.Exceptions.MyException;
-import Duelyst.Model.Account;
+import Duelyst.Model.*;
 import Duelyst.Model.Battle.*;
-import Duelyst.Model.Card;
 import Duelyst.Model.CommandClasses.BattleCommand;
-import Duelyst.Model.GameMode;
 import Duelyst.Model.Items.*;
-import Duelyst.Model.Warrior;
 import Duelyst.Utility.ImageHolder;
 import Duelyst.View.ViewClasses.CardForBattle;
 import com.jfoenix.controls.JFXButton;
@@ -33,6 +30,7 @@ import javafx.util.Duration;
 
 
 import java.io.*;
+import java.lang.management.GarbageCollectorMXBean;
 import java.util.*;
 
 import static Duelyst.View.Constants.*;
@@ -154,7 +152,9 @@ public class BattleController {
     private Timeline animationTimeLine = new Timeline();
     private Timeline handDestroyerTimeline = new Timeline();
     private Timeline notYourTurnPaneTimeline = new Timeline();
-    private Timeline singlePlayerLimitTimeline = new Timeline();
+
+    private Timer timer;
+    private TimerTask timerTask;
 
     AnimationTimer animationTimer;
 
@@ -208,31 +208,36 @@ public class BattleController {
 
     }
 
+    void stopSinglePlayerTimeLimit() {
+        System.out.println(timerTask.cancel());
+        System.out.println(timerTask.scheduledExecutionTime());
+        timerTask.cancel();
+        timer.purge();
+        timer.cancel();
+        timer.cancel();
+        timer.purge();
+    }
+
 
     private void runSinglePlayerTimeLimitTimer() {
         if (getBattle().getGameMode().equals(GameMode.SINGLE_PLAYER)) {
             System.out.println("SINGLE PLAYER TIME LINE");
 
-            singlePlayerLimitTimeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
-                Timer timer = new Timer();
-                TimerTask timerTask = new TimerTask() {
-                    @Override
-                    public void run() {
+            timer = new Timer();
+            timerTask = new TimerTask() {
+                @Override
+                public void run() {
 
-                        getBattle().nextTurn();
-                        System.out.println("TIMERTIMERTIMERTIMER");
-                        animationTimer.stop();
+                    getBattle().nextTurn();
+                    System.out.println("TIMERTIMERTIMERTIMER");
+                    animationTimer.stop();
 
-                        animationTimer = createAnimationTimerForSinglePlayer();
-                    }
-                };
-                timer.schedule(timerTask, Container.getTurnLimitTimeMillisecond());
-                animationTimer.start();
+                    animationTimer = createAnimationTimerForSinglePlayer();
+                }
+            };
+            timer.schedule(timerTask, Container.getTurnLimitTimeMillisecond());
+            animationTimer.start();
 
-
-            }), new KeyFrame(Duration.millis(Container.getTurnLimitTimeMillisecond() + EXTRA_TIME_BETWEEN_TIMELINE_MS)));
-            singlePlayerLimitTimeline.setCycleCount(Animation.INDEFINITE);
-            singlePlayerLimitTimeline.play();
         }
     }
 
@@ -379,6 +384,13 @@ public class BattleController {
 
 
     private void endTurnAnimation(BattleRecord battleRecord) {
+        if (getBattle().getGameMode().equals(GameMode.SINGLE_PLAYER)) {
+            stopSinglePlayerTimeLimit();
+            animationTimer.stop();
+            runSinglePlayerTimeLimitTimer();
+        }
+
+
         updateHandFromBattleRecord(battleRecord);
         isAnimationRunning = false;
     }
