@@ -999,9 +999,10 @@ public class MainMenu {
     private void createBattle(Account account, GameMode gameMode, GameGoal gameGoal) {
         try {
             checkDeckAtFirst(Account.getLoggedAccount(), account);
-        }catch (Exception e){
+        } catch (MyException e) {
             System.out.println("deck is in valid");
-            //TODO send notification
+            Container.exceptionGenerator(e, stackPane);
+            return;
         }
         if (account instanceof Ai) {
             gotoBattle((Ai) account, gameMode, gameGoal);
