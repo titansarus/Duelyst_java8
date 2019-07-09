@@ -997,13 +997,13 @@ public class MainMenu {
     }
 
     private void createBattle(Account account, GameMode gameMode, GameGoal gameGoal) {
-        try {
-            checkDeckAtFirst(Account.getLoggedAccount(), account);
-        } catch (MyException e) {
-            System.out.println("deck is in valid");
-            Container.exceptionGenerator(e, stackPane);
-            return;
-        }
+//        try {
+//            checkDeckAtFirst(Account.getLoggedAccount(), account);
+//        } catch (MyException e) {
+//            System.out.println("deck is in valid");
+//            Container.exceptionGenerator(e, stackPane);
+//            return;
+//        }
         if (account instanceof Ai) {
             gotoBattle((Ai) account, gameMode, gameGoal);
         } else {

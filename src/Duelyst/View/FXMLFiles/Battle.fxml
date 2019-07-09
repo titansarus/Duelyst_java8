@@ -11,7 +11,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.BattleController">
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Duelyst.Controllers.BattleController">
    <children>
       <AnchorPane fx:id="anchorPane" maxHeight="900.0" maxWidth="1600.0" minHeight="900.0" minWidth="1600.0" prefHeight="900.0" prefWidth="1600.0">
          <children>
@@ -100,6 +100,11 @@
             <ImageView fx:id="speed2x_iv" fitHeight="58.0" fitWidth="69.0" layoutX="1515.0" layoutY="184.0" onMouseClicked="#handle2Speed" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="speed1x_iv" fitHeight="47.0" fitWidth="50.0" layoutX="1525.0" layoutY="253.0" onMouseClicked="#handle1Speed" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="speed05x_iv" fitHeight="58.0" fitWidth="69.0" layoutX="1515.0" layoutY="311.0" onMouseClicked="#handle05Speed" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="singleTimer_lbl" layoutX="1503.0" layoutY="500.0" prefHeight="58.0" prefWidth="69.0" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
          </children>
       
       </AnchorPane>

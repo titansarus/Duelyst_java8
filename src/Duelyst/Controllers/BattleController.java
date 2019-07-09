@@ -97,6 +97,9 @@ public class BattleController {
     @FXML
     Pane notYourTurn_pane;
 
+    @FXML
+    Label singleTimer_lbl;
+
 
     private double heightOfPoly_Y;
     private double heightOfPoly_X;
@@ -155,6 +158,40 @@ public class BattleController {
     private Timeline notYourTurnPaneTimeline = new Timeline();
     private Timeline singlePlayerLimitTimeline = new Timeline();
 
+
+    AnimationTimer animationTimer = new AnimationTimer() {
+        private long timestamp;
+        private long time = 0;
+        private long fraction = 0;
+
+        @Override
+        public void start() {
+            timestamp = System.currentTimeMillis();
+            super.start();
+        }
+
+        @Override
+        public void stop() {
+            super.stop();
+            fraction = System.currentTimeMillis() - timestamp;
+        }
+
+        @Override
+        public void handle(long now) {
+            handleSingleTimer(timestamp, time);
+        }
+    };
+
+    public void handleSingleTimer(long timestamp, long time) {
+        long newTime = System.currentTimeMillis();
+        if (timestamp + 1000 <= newTime) {
+            long deltaT = (newTime - timestamp) / 1000;
+            time += deltaT;
+            timestamp += 1000 * deltaT;
+            singleTimer_lbl.setText(Long.toString(SINGLE_PLAYER_TIME_LIMIT_MS / MILISECOND_IN_SECOND - time));
+        }
+    }
+
     void runTimelines() {
         runSlowTimeline();
         runVeryFastTimeLine();
@@ -164,6 +201,7 @@ public class BattleController {
         runSinglePlayerTimeLimitTimer();
 
     }
+
 
     private void runSinglePlayerTimeLimitTimer() {
         if (getBattle().getGameMode().equals(GameMode.SINGLE_PLAYER)) {
@@ -177,9 +215,34 @@ public class BattleController {
 
                         getBattle().nextTurn();
                         System.out.println("TIMERTIMERTIMERTIMER");
+                        animationTimer.stop();
+
+                        animationTimer = new AnimationTimer() {
+                            private long timestamp;
+                            private long time = 0;
+                            private long fraction = 0;
+
+                            @Override
+                            public void start() {
+                                timestamp = System.currentTimeMillis();
+                                super.start();
+                            }
+
+                            @Override
+                            public void stop() {
+                                super.stop();
+                                fraction = System.currentTimeMillis() - timestamp;
+                            }
+
+                            @Override
+                            public void handle(long now) {
+                                handleSingleTimer(timestamp, time);
+                            }
+                        };
                     }
                 };
                 timer.schedule(timerTask, SINGLE_PLAYER_TIME_LIMIT_MS);
+                animationTimer.start();
 
 
             }), new KeyFrame(Duration.millis(SINGLE_PLAYER_TIME_LIMIT_MS + EXTRA_TIME_BETWEEN_TIMELINE_MS)));

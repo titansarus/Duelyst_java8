@@ -2500,7 +2500,7 @@
             "isValid": false
           }
         ],
-        "mainDeck": "@root.2.cardCollection.decks.1",
+        "mainDeck": "@root.2.cardCollection.decks.0",
         "customCards": [],
         "selectedCard": "@root.2.cardCollection.decks.0.cards.3"
       },
