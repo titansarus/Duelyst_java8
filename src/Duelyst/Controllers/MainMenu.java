@@ -1006,10 +1006,10 @@ public class MainMenu {
     }
 
     private void checkDeckAtFirst(Account firstPlayer, Account secondPlayer) {
-        if (firstPlayer.getCardCollection().getMainDeck() == null) {
+        if (firstPlayer.getCardCollection().getMainDeck() == null || Deck.validateDeck(firstPlayer.getCardCollection().getMainDeck())) {
             throw new NotValidDeckException();
         }
-        if (secondPlayer.getCardCollection().getMainDeck() == null) {
+        if (secondPlayer.getCardCollection().getMainDeck() == null || Deck.validateDeck(secondPlayer.getCardCollection().getMainDeck())) {
             throw new NotValidDeckException();
         }
     }

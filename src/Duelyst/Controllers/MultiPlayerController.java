@@ -353,7 +353,7 @@ public class MultiPlayerController {
     }
 
     private void checkDeckAtFirst(Account firstPlayer) throws MyException {
-        if (firstPlayer.getCardCollection().getMainDeck() == null) {
+        if (firstPlayer.getCardCollection().getMainDeck() == null || Deck.validateDeck(firstPlayer.getCardCollection().getMainDeck())) {
             throw new NotValidDeckException();
         }
 
