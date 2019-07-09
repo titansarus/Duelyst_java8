@@ -341,6 +341,7 @@ public class ClientHandler implements Runnable {
 
     private void handleLeaderBoardCommand(LeaderBoardCommand leaderBoardCommand) {
         leaderBoardCommand.setSortedListOfAccounts(Server.accountsSorter(Server.getAllAccounts()));
+        leaderBoardCommand.setOnlineAccounts(Server.getOnlinePlayers());
         formatter.format("%s\n", CommandClass.makeJson(leaderBoardCommand));
         formatter.flush();
     }

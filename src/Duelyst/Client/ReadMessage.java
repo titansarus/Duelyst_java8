@@ -212,8 +212,8 @@ public class ReadMessage extends Thread {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream( new File("src/res/Characters/UnitsCreated/CustomCard/" + name + "." + format));
             fileOutputStream.write(image);
-//            BufferedImage bufferedImage = ImageIO.read(byteArrayInputStream);
-//            ImageIO.write(bufferedImage, format, new File("src/res/Characters/UnitsCreated/CustomCard/" + name + "." + format));
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -231,7 +231,7 @@ public class ReadMessage extends Thread {
         System.out.println("Getting LeaderBoard List");
         Platform.runLater(() -> {
             MainMenu mainMenu = (MainMenu) Container.controllerClass;
-            mainMenu.initializeLeaderBoard(leaderBoardCommand.getSortedListOfAccounts());
+            mainMenu.initializeLeaderBoard(leaderBoardCommand.getSortedListOfAccounts(),leaderBoardCommand.getOnlineAccounts());
         });
     }
 

@@ -159,7 +159,12 @@
                         <Font name="System Italic" size="20.0" />
                      </font>
                   </Label>
-                  <Text fx:id="cardDescription_text" fill="#cdc7c7" layoutX="15.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="156.6708984375">
+                  <Label fx:id="cardCost_lbl" alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="141.0" prefWidth="130.0" textFill="#d3d1d1">
+                     <font>
+                        <Font name="System Bold Italic" size="20.0" />
+                     </font>
+                  </Label>
+                  <Text fx:id="cardDescription_text" fill="#cdc7c7" layoutX="14.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="200.0">
                      <font>
                         <Font name="System Italic" size="20.0" />
                      </font></Text>

@@ -31,7 +31,7 @@ public class CustomCardCommand extends CommandClass {
         if (file == null)
             return null;
         try {
-            byte[] temp = new byte[500000];
+            byte[] temp = new byte[1000000];
             FileInputStream fileInputStream = new FileInputStream(file);
             fileInputStream.read(temp);
             return temp;
@@ -45,7 +45,7 @@ public class CustomCardCommand extends CommandClass {
         if (file == null)
             return null;
         try {
-            byte[] temp = new byte[500000];
+            byte[] temp = new byte[1000000];
             FileInputStream fileInputStream = new FileInputStream(file);
             fileInputStream.read(temp);
             return temp;

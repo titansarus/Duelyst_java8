@@ -164,8 +164,8 @@ public class LoginController {
             }
             login_pb.setOpacity(0);
             loading_label.setOpacity(0);
-            getUsername_tf().setText("");
-            getPassword_tf().setText("");
+//            getUsername_tf().setText("");
+//            getPassword_tf().setText("");
             Platform.runLater(this::handleGoToMainMenu);
         });
         thread.start();

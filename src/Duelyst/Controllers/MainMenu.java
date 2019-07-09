@@ -431,12 +431,12 @@ public class MainMenu {
         tt.setOnFinished(event -> anchorPane.setDisable(false));
     }
 
-    public void initializeLeaderBoard(ArrayList<Account> accounts) {
-        updateTable(accounts);
+    public void initializeLeaderBoard(ArrayList<Account> accounts, ArrayList<String> onlineAccounts) {
+        updateTable(accounts,onlineAccounts);
         title_iv.setImage(leaderboardsImg);
     }
 
-    private void updateTable(ArrayList<Account> accounts) {
+    private void updateTable(ArrayList<Account> accounts , ArrayList<String> onlineAccounts) {
         ArrayList<AccountInfo> accountInfos = new ArrayList<>();
         int count = 0;
         for (int i = 0; i < accounts.size(); i++) {
@@ -445,6 +445,8 @@ public class MainMenu {
                 accountInfos.add(new AccountInfo(++count, account.getUsername(), account.getCountOfWins()));
             }
         }
+        leaderboard_tbv.getColumns().clear();
+        leaderboard_tbv.getItems().clear();
 
         TableColumn<AccountInfo, String> column1 = new TableColumn<>("Rank");
         column1.setCellValueFactory(new PropertyValueFactory<>("rank"));
@@ -470,6 +472,9 @@ public class MainMenu {
         for (int i = 0; i < accountInfos.size(); i++) {
             AccountInfo account = accountInfos.get(i);
             tableView.getItems().add(account);
+            if(onlineAccounts.contains(account.getUsername())) {
+                //TODO Range Satre In Account Bayad Zard Shavad
+            }
         }
     }
 

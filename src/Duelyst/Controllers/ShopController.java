@@ -53,6 +53,7 @@ public class ShopController {
     public ImageView shopHeroes_img;
     public Label cardAttackKind_lbl;
     public Label cardRange_lbl;
+    public Label cardCost_lbl;
     @FXML
     ScrollPane buyScrollPane;
 
@@ -430,7 +431,11 @@ public class ShopController {
         if (Shop.getSelectedCard() instanceof Warrior) {
             if (((Warrior) Shop.getSelectedCard()).getAttackRange() > 0)
                 cardRange_lbl.setText("Range: " + ((Warrior) Shop.getSelectedCard()).getAttackRange() + "");
+            else
+                cardRange_lbl.setText("");
         }
+
+        cardCost_lbl.setText(Shop.getSelectedCard().getDarikCost() + " Dariks");
         cardName_lbl.setText(Shop.getSelectedCard().getCardName());
         cardKind_lbl.setText(Shop.getSelectedCard().getCardKind().toString());
         cardDescription_text.setText(Shop.getSelectedCard().getCardDescription());
