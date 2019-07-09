@@ -301,20 +301,38 @@ public class MultiPlayerController {
     }
 
     public void handleKillHeroButton() {
-        checkDeckAtFirst(Account.getLoggedAccount());
+        try {
+            checkDeckAtFirst(Account.getLoggedAccount());
+        } catch (MyException e) {
+            System.out.println("deck is invalid");
+//            Container.exceptionGenerator(e, stackPane);
+            return;
+        }
         gameGoal = GameGoal.KILL_HERO;
         searchingPaneAnimation();
 
     }
 
     public void handleCollectFlagButton() {
-        checkDeckAtFirst(Account.getLoggedAccount());
+        try {
+            checkDeckAtFirst(Account.getLoggedAccount());
+        } catch (MyException e) {
+            System.out.println("deck is invalid");
+//            Container.exceptionGenerator(e, stackPane);
+            return;
+        }
         gameGoal = GameGoal.COLLECT_FLAG;
         searchingPaneAnimation();
     }
 
     public void handleHoldFlagButton() {
-        checkDeckAtFirst(Account.getLoggedAccount());
+        try {
+            checkDeckAtFirst(Account.getLoggedAccount());
+        } catch (MyException e) {
+            System.out.println("deck is invalid");
+//            Container.exceptionGenerator(e, stackPane);
+            return;
+        }
         gameGoal = GameGoal.HOLD_FLAG;
         searchingPaneAnimation();
 
@@ -352,15 +370,11 @@ public class MultiPlayerController {
 
     }
 
-    private void checkDeckAtFirst(Account firstPlayer)  {
-        try {
-            if (firstPlayer.getCardCollection().getMainDeck() == null || Deck.validateDeck(firstPlayer.getCardCollection().getMainDeck())) {
-                throw new NotValidDeckException();
-            }
-        }catch (Exception e){
-            System.out.println("invalid deck");
-            //TODO send notification
+    private void checkDeckAtFirst(Account firstPlayer) throws MyException {
+        if (firstPlayer.getCardCollection().getMainDeck() == null || !Deck.validateDeck(firstPlayer.getCardCollection().getMainDeck())) {
+            throw new NotValidDeckException();
         }
+
     }
 
 
@@ -421,7 +435,7 @@ public class MultiPlayerController {
             label.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    tvCommand temp =  new tvCommand(tvCommandKind.GET_FINISHED_BATTLES_RECORDS);
+                    tvCommand temp = new tvCommand(tvCommandKind.GET_FINISHED_BATTLES_RECORDS);
                     temp.setUserNameOfFirstPlayersOfARequestedReplayOfABattle(label.getText().split("\\s\\sVS\\s\\s")[0]);
                     temp.setUserNameOfSecondPlayersOfARequestedReplayOfABattle(battles.get(finalI).split("\\s\\sVS\\s\\s")[1]);
                     SendMessage.getSendMessage().sendMessage(temp);

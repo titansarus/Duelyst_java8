@@ -1030,13 +1030,13 @@ public class MainMenu {
     }
 
     private void createBattle(Account account, GameMode gameMode, GameGoal gameGoal) {
-//        try {
-//            checkDeckAtFirst(Account.getLoggedAccount(), account);
-//        } catch (MyException e) {
-//            System.out.println("deck is in valid");
-//            Container.exceptionGenerator(e, stackPane);
-//            return;
-//        }
+        try {
+            checkDeckAtFirst(Account.getLoggedAccount(), account);
+        } catch (MyException e) {
+            System.out.println("deck is invalid");
+            Container.exceptionGenerator(e, stackPane);
+            return;
+        }
         if (account instanceof Ai) {
             gotoBattle((Ai) account, gameMode, gameGoal);
         } else {
@@ -1045,10 +1045,10 @@ public class MainMenu {
     }
 
     private void checkDeckAtFirst(Account firstPlayer, Account secondPlayer) throws MyException {
-        if (firstPlayer.getCardCollection().getMainDeck() == null || Deck.validateDeck(firstPlayer.getCardCollection().getMainDeck())) {
+        if (firstPlayer.getCardCollection().getMainDeck() == null || !Deck.validateDeck(firstPlayer.getCardCollection().getMainDeck())) {
             throw new NotValidDeckException();
         }
-        if (secondPlayer.getCardCollection().getMainDeck() == null || Deck.validateDeck(secondPlayer.getCardCollection().getMainDeck())) {
+        if (secondPlayer.getCardCollection().getMainDeck() == null || !Deck.validateDeck(secondPlayer.getCardCollection().getMainDeck())) {
             throw new NotValidDeckException();
         }
     }
