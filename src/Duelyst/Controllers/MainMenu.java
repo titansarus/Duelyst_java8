@@ -1,6 +1,7 @@
 package Duelyst.Controllers;
 
 import Duelyst.Client.SendMessage;
+import Duelyst.Exceptions.MyException;
 import Duelyst.Exceptions.NotValidDeckException;
 import Duelyst.Model.*;
 import Duelyst.Model.Battle.Battle;
@@ -996,8 +997,12 @@ public class MainMenu {
     }
 
     private void createBattle(Account account, GameMode gameMode, GameGoal gameGoal) {
-        checkDeckAtFirst(Account.getLoggedAccount(), account);
-
+        try {
+            checkDeckAtFirst(Account.getLoggedAccount(), account);
+        }catch (Exception e){
+            System.out.println("deck is in valid");
+            //TODO send notification
+        }
         if (account instanceof Ai) {
             gotoBattle((Ai) account, gameMode, gameGoal);
         } else {
@@ -1005,7 +1010,7 @@ public class MainMenu {
         }
     }
 
-    private void checkDeckAtFirst(Account firstPlayer, Account secondPlayer) {
+    private void checkDeckAtFirst(Account firstPlayer, Account secondPlayer) throws MyException {
         if (firstPlayer.getCardCollection().getMainDeck() == null || Deck.validateDeck(firstPlayer.getCardCollection().getMainDeck())) {
             throw new NotValidDeckException();
         }
