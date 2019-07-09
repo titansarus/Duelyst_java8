@@ -52,6 +52,8 @@ public class Container {
 
     private static boolean isSoundOn = true;
 
+    private static long turnLimitTimeMillisecond = SINGLE_PLAYER_TIME_LIMIT_MS_DEFAULT;
+
 
     public static void exceptionGenerator(MyException e, StackPane pane) {
         dialogBoxShower(e.getMessage(), e.getTitle(), pane);
@@ -208,5 +210,17 @@ public class Container {
         } else {
             sound.setImage(ImageHolder.findImageInImageHolders("./res/ui/soundOff.png"));
         }
+    }
+
+    public static void setImageOfSetting(ImageView setting) {
+        setting.setImage(ImageHolder.findImageInImageHolders("./res/ui/setting.png"));
+    }
+
+    public static long getTurnLimitTimeMillisecond() {
+        return turnLimitTimeMillisecond;
+    }
+
+    public static void setTurnLimitTimeMillisecond(long turnLimitTimeMillisecond) {
+        Container.turnLimitTimeMillisecond = turnLimitTimeMillisecond;
     }
 }

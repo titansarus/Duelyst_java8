@@ -148,6 +148,7 @@
                   <Font name="System Italic" size="33.0" />
                </font>
             </Label>
+            <ImageView fx:id="setting_iv" fitHeight="40.0" fitWidth="40.0" layoutX="59.0" layoutY="613.0" onMouseClicked="#handleSettingForTime" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
       <Pane fx:id="saveNotification_pane" maxHeight="54.0" maxWidth="180.0" minHeight="54.0" minWidth="180.0" prefHeight="54.0" prefWidth="180.0" stylesheets="@../../../css/saveGameNotification.css" translateX="615.0" translateY="-290.0">

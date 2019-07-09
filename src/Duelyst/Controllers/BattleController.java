@@ -11,12 +11,10 @@ import Duelyst.Model.Items.*;
 import Duelyst.Model.Warrior;
 import Duelyst.Utility.ImageHolder;
 import Duelyst.View.ViewClasses.CardForBattle;
-import com.gilecode.yagson.YaGson;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import javafx.animation.*;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -170,7 +168,7 @@ public class BattleController {
             long deltaT = (newTime - timestamp) / 1000;
             time += deltaT;
             timestamp += 1000 * deltaT;
-            singleTimer_lbl.setText(Long.toString(SINGLE_PLAYER_TIME_LIMIT_MS / MILISECOND_IN_SECOND - time));
+            singleTimer_lbl.setText(Long.toString(Container.getTurnLimitTimeMillisecond() / MILISECOND_IN_SECOND - time));
         }
     }
 
@@ -228,11 +226,11 @@ public class BattleController {
                         animationTimer = createAnimationTimerForSinglePlayer();
                     }
                 };
-                timer.schedule(timerTask, SINGLE_PLAYER_TIME_LIMIT_MS);
+                timer.schedule(timerTask, Container.getTurnLimitTimeMillisecond());
                 animationTimer.start();
 
 
-            }), new KeyFrame(Duration.millis(SINGLE_PLAYER_TIME_LIMIT_MS + EXTRA_TIME_BETWEEN_TIMELINE_MS)));
+            }), new KeyFrame(Duration.millis(Container.getTurnLimitTimeMillisecond() + EXTRA_TIME_BETWEEN_TIMELINE_MS)));
             singlePlayerLimitTimeline.setCycleCount(Animation.INDEFINITE);
             singlePlayerLimitTimeline.play();
         }

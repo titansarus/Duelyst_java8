@@ -125,6 +125,9 @@ public class MainMenu {
     @FXML
     ImageView battleRecord_closeButton;
 
+    @FXML
+    ImageView setting_iv;
+
     private boolean canPlayButtonSound = true;
     private Timeline timeline = new Timeline();
 
@@ -133,6 +136,7 @@ public class MainMenu {
     public void initialize() {
         runTimeline();
         Container.changeImageOfSoundImageView(sound_iv);
+        Container.setImageOfSetting(setting_iv);
     }
 
 
@@ -143,6 +147,35 @@ public class MainMenu {
         }), new KeyFrame(Duration.seconds(1)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+    }
+
+    public void handleSettingForTime() {
+        JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
+        jfxDialogLayout.setHeading(new Text("Turn Time Limit"));
+        jfxDialogLayout.setBody(new Text("Set Time Limit for Turns in Single Player (Seconds)"));
+        JFXButton cancel = new JFXButton();
+        cancel.setText(CANCEL);
+        cancel.setStyle(DEFAULT_BUTTON_CSS);
+        JFXButton accept = new JFXButton();
+        accept.setText(ACCEPT);
+        accept.setStyle(DEFAULT_BUTTON_CSS);
+        JFXTextField jfxTextArea = new JFXTextField();
+        jfxTextArea.setTextFormatter(Container.getOnlyNumberFormatter());
+        jfxTextArea.setText(Long.toString(SINGLE_PLAYER_TIME_LIMIT_MS_DEFAULT / MILISECOND_IN_SECOND));
+        jfxDialogLayout.setActions(jfxTextArea, accept, cancel);
+        JFXDialog jfxDialog = new JFXDialog(stackPane, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
+        jfxDialog.show();
+        cancel.setOnAction(event -> {
+            System.out.println(Container.getTurnLimitTimeMillisecond());
+            jfxDialog.close();
+        });
+        accept.setOnAction(event -> {
+            Container.setTurnLimitTimeMillisecond(Long.valueOf(jfxTextArea.getText()) * 1000);
+            System.out.println(Container.getTurnLimitTimeMillisecond());
+            jfxDialog.close();
+        });
+
+
     }
 
 
