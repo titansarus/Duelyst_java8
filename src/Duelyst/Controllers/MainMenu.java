@@ -13,10 +13,7 @@ import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -989,7 +986,7 @@ public class MainMenu {
     }
 
     private void checkDeckAtFirst(Account firstPlayer, Account secondPlayer) {
-        if (firstPlayer.getCardCollection().getMainDeck() == null ) {
+        if (firstPlayer.getCardCollection().getMainDeck() == null) {
             throw new NotValidDeckException();
         }
         if (secondPlayer.getCardCollection().getMainDeck() == null) {
@@ -1040,6 +1037,7 @@ public class MainMenu {
 
 
     public void showBattleRecord() {
+        battleRecord_vbox.getChildren().clear();
         for (int i = 0; i < allBattleRecords.size(); i++) {
             Label label = new Label();
             if (allBattleRecords.get(i) != null) {

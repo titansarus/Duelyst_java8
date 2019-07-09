@@ -125,7 +125,7 @@ public class BattleRecord {
                     ArrayList<BattleRecord> battleRecordArrayList = yaGson.fromJson(s, ArrayList.class);
                     System.out.println(i + "loaded");
                     battleRecords.add(battleRecordArrayList);
-                    System.out.println(s);
+                  //  System.out.println(s);
                     scanner.close();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
