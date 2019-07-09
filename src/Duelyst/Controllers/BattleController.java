@@ -158,29 +158,11 @@ public class BattleController {
     private Timeline notYourTurnPaneTimeline = new Timeline();
     private Timeline singlePlayerLimitTimeline = new Timeline();
 
+    AnimationTimer animationTimer;
 
-    AnimationTimer animationTimer = new AnimationTimer() {
-        private long timestamp;
-        private long time = 0;
-        private long fraction = 0;
-
-        @Override
-        public void start() {
-            timestamp = System.currentTimeMillis();
-            super.start();
-        }
-
-        @Override
-        public void stop() {
-            super.stop();
-            fraction = System.currentTimeMillis() - timestamp;
-        }
-
-        @Override
-        public void handle(long now) {
-            handleSingleTimer(timestamp, time);
-        }
-    };
+    {
+        animationTimer = createAnimationTimerForSinglePlayer();
+    }
 
     public void handleSingleTimer(long timestamp, long time) {
         long newTime = System.currentTimeMillis();
@@ -190,6 +172,32 @@ public class BattleController {
             timestamp += 1000 * deltaT;
             singleTimer_lbl.setText(Long.toString(SINGLE_PLAYER_TIME_LIMIT_MS / MILISECOND_IN_SECOND - time));
         }
+    }
+
+    public AnimationTimer createAnimationTimerForSinglePlayer() {
+        AnimationTimer animationTimer = new AnimationTimer() {
+            private long timestamp;
+            private long time = 0;
+            private long fraction = 0;
+
+            @Override
+            public void start() {
+                timestamp = System.currentTimeMillis();
+                super.start();
+            }
+
+            @Override
+            public void stop() {
+                super.stop();
+                fraction = System.currentTimeMillis() - timestamp;
+            }
+
+            @Override
+            public void handle(long now) {
+                handleSingleTimer(timestamp, time);
+            }
+        };
+        return animationTimer;
     }
 
     void runTimelines() {
@@ -217,28 +225,7 @@ public class BattleController {
                         System.out.println("TIMERTIMERTIMERTIMER");
                         animationTimer.stop();
 
-                        animationTimer = new AnimationTimer() {
-                            private long timestamp;
-                            private long time = 0;
-                            private long fraction = 0;
-
-                            @Override
-                            public void start() {
-                                timestamp = System.currentTimeMillis();
-                                super.start();
-                            }
-
-                            @Override
-                            public void stop() {
-                                super.stop();
-                                fraction = System.currentTimeMillis() - timestamp;
-                            }
-
-                            @Override
-                            public void handle(long now) {
-                                handleSingleTimer(timestamp, time);
-                            }
-                        };
+                        animationTimer = createAnimationTimerForSinglePlayer();
                     }
                 };
                 timer.schedule(timerTask, SINGLE_PLAYER_TIME_LIMIT_MS);
