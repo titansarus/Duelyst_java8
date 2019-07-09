@@ -459,6 +459,25 @@ public class MainMenu {
         column3.setPrefWidth(100);
 
 
+        column2.setCellFactory(e -> new TableCell<AccountInfo, String>() {
+            @Override
+            public void updateItem(String item, boolean empty) {
+                // Always invoke super constructor.
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    setText(item);
+
+                    // If index is two we set the background color explicitly.
+                    if (onlineAccounts.contains( accountInfos.get(getIndex()).getUsername())) {
+                        this.setStyle("-fx-background-color: green;");
+                    }
+                }
+            }
+        });
+
         TableView tableView = leaderboard_tbv;
 
         tableView.getColumns().add(column1);
@@ -466,13 +485,6 @@ public class MainMenu {
         tableView.getColumns().add(column3);
 
 
-        for (int i = 0; i < accountInfos.size(); i++) {
-            AccountInfo account = accountInfos.get(i);
-            tableView.getItems().add(account);
-            if(onlineAccounts.contains(account.getUsername())) {
-                //TODO Range Satre In Account Bayad Zard Shavad
-            }
-        }
     }
 
 
