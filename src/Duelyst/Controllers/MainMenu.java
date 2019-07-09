@@ -429,11 +429,11 @@ public class MainMenu {
     }
 
     public void initializeLeaderBoard(ArrayList<Account> accounts, ArrayList<String> onlineAccounts) {
-        updateTable(accounts,onlineAccounts);
+        updateTable(accounts, onlineAccounts);
         title_iv.setImage(leaderboardsImg);
     }
 
-    private void updateTable(ArrayList<Account> accounts , ArrayList<String> onlineAccounts) {
+    private void updateTable(ArrayList<Account> accounts, ArrayList<String> onlineAccounts) {
         ArrayList<AccountInfo> accountInfos = new ArrayList<>();
         int count = 0;
         for (int i = 0; i < accounts.size(); i++) {
@@ -469,8 +469,8 @@ public class MainMenu {
                 } else {
                     setText(item);
 
-                    if (onlineAccounts.contains( accountInfos.get(getIndex()).getUsername())) {
-                        this.setStyle("-fx-background-color: green;");
+                    if (onlineAccounts.contains(accountInfos.get(getIndex()).getUsername())) {
+                        this.setStyle("-fx-text-fill: YELLOW; -fx-font-weight: BOLD");
                     }
                 }
             }

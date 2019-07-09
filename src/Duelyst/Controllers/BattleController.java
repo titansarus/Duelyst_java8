@@ -179,10 +179,10 @@ public class BattleController {
                         System.out.println("TIMERTIMERTIMERTIMER");
                     }
                 };
-                timer.schedule(timerTask, 20000);
+                timer.schedule(timerTask, SINGLE_PLAYER_TIME_LIMIT_MS);
 
 
-            }), new KeyFrame(Duration.millis(21 * 1000)));
+            }), new KeyFrame(Duration.millis(SINGLE_PLAYER_TIME_LIMIT_MS + EXTRA_TIME_BETWEEN_TIMELINE_MS)));
             singlePlayerLimitTimeline.setCycleCount(Animation.INDEFINITE);
             singlePlayerLimitTimeline.play();
         }

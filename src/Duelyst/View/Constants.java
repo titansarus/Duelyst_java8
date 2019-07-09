@@ -91,4 +91,5 @@ public class Constants {
     public static final int BATTLE_ROWS = 5, BATTLE_COLUMNS = 9, SIZE_OF_HAND = 5, CHEAT_MODE_ACTIVATED = 1, CHEAT_MODE_DEACTIVATED = 0;
     public static final double HEIGHT_PADDING_Y = 6.0, HEIGHT_PADDING_X = 1.0, WIDTH_PADDING = 6.0, STD_CARD_WIDTH = 100.0, STD_CARD_HEIGHT = 100.0;
 
+    public static final int SINGLE_PLAYER_TIME_LIMIT_MS = 20000 , EXTRA_TIME_BETWEEN_TIMELINE_MS = 1000;
 }
