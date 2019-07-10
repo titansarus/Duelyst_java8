@@ -303,15 +303,16 @@ public class ReadMessage extends Thread {
     private void removeActionCard(ShopCommand shopCommand) {
         System.out.println("remove card");
         Account.getLoggedAccount().setDarick(Account.getLoggedAccount().getDarick() + shopCommand.getAuctionCard().getAuctionCost());
-        Card card = null;
-        for (Card c :
-                Account.getLoggedAccount().getCardCollection().getCards()) {
-            if (c.getCardName().equals(shopCommand.getAuctionCard().getCardName())) {
-                card = c;
-                System.out.println("found card for remove");
-            }
-        }
-        Account.getLoggedAccount().getCardCollection().getCards().remove(card);
+        Account.saveAccount();
+//        Card card = null;
+//        for (Card c :
+//                Account.getLoggedAccount().getCardCollection().getCards()) {
+//            if (c.getCardName().equals(shopCommand.getAuctionCard().getCardName())) {
+//                card = c;
+//                System.out.println("found card for remove");
+//            }
+//        }
+//        Account.getLoggedAccount().getCardCollection().getCards().remove(card);
     }
 
     private void setAuctionCards(ShopCommand shopCommand) {

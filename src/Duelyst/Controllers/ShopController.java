@@ -481,9 +481,12 @@ public class ShopController {
     }
 
     public void handleAddToAuctionButton() {
+        System.out.println("step 1");
         addToAuctionButtonAnimation();
         Card card = Shop.getSelectedCard();
+        Account.getLoggedAccount().getCardCollection().getCards().remove(card);
         ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.AUCTION_CARD);
+        System.out.println(card.getCardName()+"<<-----------");
         shopCommand.setAuctionCard(card);
         SendMessage.getSendMessage().sendMessage(shopCommand);
     }
