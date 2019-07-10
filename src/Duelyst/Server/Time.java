@@ -65,7 +65,7 @@ public class Time extends Thread {
                 setAccounts(shopCommand1, shopCommand2, c);
             }
         }
-        //TODO for battle ...
+        times.remove(this);
     }
 
     private void setAccounts(ShopCommand shopCommand1, ShopCommand shopCommand2, ClientHandler c) {
@@ -106,8 +106,10 @@ public class Time extends Thread {
     }
 
     public static long getExtantTimeOfCard(Card card) {
+        System.out.println(times.size() + " Ta Cards");
         for (Time t :
                 times) {
+            System.out.println(t.getCard().getCardId()+ " --- >> "+card.getCardId());
             if (t.getCard().getCardId().equals(card.getCardId())) {
                 return t.time - t.getSec();
             }

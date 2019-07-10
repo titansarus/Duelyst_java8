@@ -287,6 +287,7 @@ public class ReadMessage extends Thread {
     private void handleGetAuctionCardTimeLeft(ShopCommand shopCommand) {
         Platform.runLater(() -> {
             if (Container.getControllerClass() instanceof ShopController) {
+                System.out.println(shopCommand.getAuctionCardTime() + " Client Time");
                 ShopController shopController = (ShopController) Container.getControllerClass();
                 shopController.auctionTimeLeft_lbl.setText(shopCommand.getAuctionCardTime() + " S");
             }
