@@ -1,5 +1,6 @@
 package Duelyst.Model.CommandClasses;
 
+import Duelyst.Model.Account;
 import Duelyst.Model.Card;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ public class ShopCommand extends CommandClass {
     private Card sellCard;
     private ArrayList<Card> finishedCard;
     private ArrayList<Card> auctionCards;
+    private Account auctionClient;
+    private int auctionPrice;
 
     public ShopCommand(ShopCommandsKind shopCommandsKind) {
         super(CommandKind.SHOP);
@@ -90,5 +93,21 @@ public class ShopCommand extends CommandClass {
 
     public void setAuctionCardTime(long auctionCardTime) {
         this.auctionCardTime = auctionCardTime;
+    }
+
+    public Account getAuctionClient() {
+        return auctionClient;
+    }
+
+    public void setAuctionClient(Account auctionClient) {
+        this.auctionClient = auctionClient;
+    }
+
+    public int getAuctionPrice() {
+        return auctionPrice;
+    }
+
+    public void setAuctionPrice(int auctionPrice) {
+        this.auctionPrice = auctionPrice;
     }
 }

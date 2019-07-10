@@ -156,12 +156,12 @@ public class ShopController {
 
     public void updateAuctionCardInformation() {
         SendMessage.getSendMessage().sendMessage(new ShopCommand(ShopCommandsKind.GET_AUCTION_CARDS));
-
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            e.printStackTrace();//reza
         }
+        makeAuctionCardList();
         ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.GET_AUCTION_CARD_TIME);
         if(Shop.getInstance().getAuctionSelectedCard() == null) {
             currentOwnerAuction_lbl.setText("");

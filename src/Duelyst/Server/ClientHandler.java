@@ -446,6 +446,8 @@ public class ClientHandler implements Runnable {
     private void handleAuctionCardTime(ShopCommand shopCommand) {
 
         shopCommand.setAuctionCardTime(Time.getExtantTimeOfCard(shopCommand.getAuctionCard()));
+        shopCommand.setAuctionClient(shopCommand.getAuctionCard().getAccount());
+        shopCommand.setAuctionPrice(shopCommand.getAuctionCard().getAuctionCost());
         System.out.println(Time.getExtantTimeOfCard(shopCommand.getAuctionCard()) + " Server Time");
         formatter.format("%s\n", CommandClass.makeJson(shopCommand));
         formatter.flush();

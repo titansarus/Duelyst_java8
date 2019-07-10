@@ -289,6 +289,8 @@ public class ReadMessage extends Thread {
             if (Container.getControllerClass() instanceof ShopController) {
                 System.out.println(shopCommand.getAuctionCardTime() + " Client Time");
                 ShopController shopController = (ShopController) Container.getControllerClass();
+                shopController.currentOwnerAuction_lbl.setText(shopCommand.getAuctionClient().getUsername());
+                shopController.auctionHighestBid_lbl.setText(shopCommand.getAuctionPrice() + "");
                 shopController.auctionTimeLeft_lbl.setText(shopCommand.getAuctionCardTime() + " S");
             }
         });
