@@ -15,7 +15,7 @@ public class ShopCommand extends CommandClass {
     private Card sellCard;
     private ArrayList<Card> finishedCard;
     private ArrayList<Card> auctionCards;
-    private Account auctionClient;
+    private String auctionClient;
     private int auctionPrice;
 
     public ShopCommand(ShopCommandsKind shopCommandsKind) {
@@ -95,13 +95,7 @@ public class ShopCommand extends CommandClass {
         this.auctionCardTime = auctionCardTime;
     }
 
-    public Account getAuctionClient() {
-        return auctionClient;
-    }
 
-    public void setAuctionClient(Account auctionClient) {
-        this.auctionClient = auctionClient;
-    }
 
     public int getAuctionPrice() {
         return auctionPrice;
@@ -109,5 +103,13 @@ public class ShopCommand extends CommandClass {
 
     public void setAuctionPrice(int auctionPrice) {
         this.auctionPrice = auctionPrice;
+    }
+
+    public String getAuctionClient() {
+        return auctionClient;
+    }
+
+    public void setAuctionClient(String auctionClient) {
+        this.auctionClient = auctionClient;
     }
 }
