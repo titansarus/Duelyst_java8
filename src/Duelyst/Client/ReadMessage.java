@@ -304,6 +304,7 @@ public class ReadMessage extends Thread {
     private void removeActionCard(ShopCommand shopCommand) {
         System.out.println("remove card");
         Account.getLoggedAccount().setDarick(Account.getLoggedAccount().getDarick() + shopCommand.getAuctionCard().getAuctionCost());
+        Shop.getInstance().setAuctionSelectedCard(null);
         Account.saveAccount();
 //        Card card = null;
 //        for (Card c :

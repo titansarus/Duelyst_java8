@@ -496,7 +496,6 @@ public class ShopController {
         System.out.println(card.getCardName()+"<<-----------");
         shopCommand.setAuctionCard(card);
         SendMessage.getSendMessage().sendMessage(shopCommand);
-        Shop.setSelectedCard(null);
     }
 
     public void addToAuctionButtonAnimation() {
