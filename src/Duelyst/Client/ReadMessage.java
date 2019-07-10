@@ -79,9 +79,9 @@ public class ReadMessage extends Thread {
                     tvCommand tvCommand = (tvCommand) commandClass;
                     if (tvCommand.getTvCommandKind().equals(tvCommandKind.GET_REPLAYS_LIST))
                         handleTVCommand((tvCommand) commandClass);
-                    else if(tvCommand.getTvCommandKind().equals(tvCommandKind.GET_FINISHED_BATTLES_RECORDS)) {
+                    else if (tvCommand.getTvCommandKind().equals(tvCommandKind.GET_FINISHED_BATTLES_RECORDS)) {
                         Platform.runLater(() -> {
-                            MultiPlayerController multiPlayerController = (MultiPlayerController)Container.getControllerClass();
+                            MultiPlayerController multiPlayerController = (MultiPlayerController) Container.getControllerClass();
                             multiPlayerController.gotoBattleReplay(tvCommand.getBattleRecords());
                         });
                     }
@@ -210,7 +210,7 @@ public class ReadMessage extends Thread {
 
 //        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(image);
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream( new File("src/res/Characters/UnitsCreated/CustomCard/" + name + "." + format));
+            FileOutputStream fileOutputStream = new FileOutputStream(new File("src/res/Characters/UnitsCreated/CustomCard/" + name + "." + format));
             fileOutputStream.write(image);
 
 
@@ -231,7 +231,7 @@ public class ReadMessage extends Thread {
         System.out.println("Getting LeaderBoard List");
         Platform.runLater(() -> {
             MainMenu mainMenu = (MainMenu) Container.controllerClass;
-            mainMenu.initializeLeaderBoard(leaderBoardCommand.getSortedListOfAccounts(),leaderBoardCommand.getOnlineAccounts());
+            mainMenu.initializeLeaderBoard(leaderBoardCommand.getSortedListOfAccounts(), leaderBoardCommand.getOnlineAccounts());
         });
     }
 
@@ -315,6 +315,9 @@ public class ReadMessage extends Thread {
     }
 
     private void setAuctionCards(ShopCommand shopCommand) {
+        for (int i = 0; i < shopCommand.getAuctionCards().size(); i++) {
+            System.out.println(shopCommand.getAuctionCards().get(i).getCardName());
+        }
         Shop.getInstance().setAuctionCards(shopCommand.getAuctionCards());
     }
 

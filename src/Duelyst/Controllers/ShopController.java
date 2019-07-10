@@ -156,12 +156,15 @@ public class ShopController {
 
     public void updateAuctionCardInformation() {
         SendMessage.getSendMessage().sendMessage(new ShopCommand(ShopCommandsKind.GET_AUCTION_CARDS));
+
         try {
             Thread.sleep(50);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.GET_AUCTION_CARD_TIME);
+        if(Shop.getInstance().getAuctionSelectedCard() == null)
+            return;
         shopCommand.setAuctionCard(Shop.getInstance().getAuctionSelectedCard());
         SendMessage.getSendMessage().sendMessage(shopCommand);
         try {

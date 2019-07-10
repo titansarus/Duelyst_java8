@@ -46,8 +46,6 @@ public class ClientHandler implements Runnable {
                     LoginCommand loginCommand = (LoginCommand) command;
                     switch (loginCommand.getLoginCommandsKind()) {
                         case SAVE_ACCOUNTS:
-                            System.out.println("Saving Account");
-                            System.out.println(loginCommand.getAccount().getUsername());
                             handleSaveAccounts(loginCommand);
                             break;
                         case LOGIN:
@@ -150,7 +148,7 @@ public class ClientHandler implements Runnable {
     private void end(BattleCommand battleCommand) {
         ServerTV serverTV = ServerTV.getServerTvOfBattle(battleCommand.getMyAccount());
         TimeOfEndTurn.getTime(battleCommand.getMyAccount()).setTurnOff(true);
-        if (serverTV!=null){
+        if (serverTV != null) {
             serverTV.setBattleRecords(battleCommand.getBattleRecords());
             serverTV.endGame();
         }
@@ -473,6 +471,7 @@ public class ClientHandler implements Runnable {
     }
 
     private void addCardToAuctionCards(ShopCommand shopCommand) {
+        System.out.println(shopCommand.getAuctionCard().getCardName());
         ServerShop.getInstance().addAuctionCards(shopCommand.getAuctionCard());
         Time time = new Time(shopCommand.getAuctionCard(), 30);//TODO 30 -> 180
         time.start();

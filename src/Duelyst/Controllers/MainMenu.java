@@ -50,14 +50,10 @@ public class MainMenu {
     public ImageView onlinePlayersCloseButton_img;
     public AnchorPane onlinePlayers_apane;
     public Pane onlinePlayers_pane;
+    public ImageView setting_iv;
     private int singleOrMulti = 0; //1 == Single , 2 == Multi
     private int storyModeLevel = 0; //1 == 1 , 2 == 2 , 3 ==3;
     private int multiplayerModeGoal = 0; //1 == hero , 2 == capture_flags , 3== hold_flag
-    private Account selectedAccoutForMultiPlayer = null;
-    public Pane chatRoom_pane;
-    public ImageView chatRoomArrow_img;
-    public JFXTextField textMessage;
-    public ScrollPane chatRoom_Scroll;
 
     private ArrayList<ArrayList<BattleRecord>> allBattleRecords;
     @FXML
@@ -124,9 +120,6 @@ public class MainMenu {
 
     @FXML
     ImageView battleRecord_closeButton;
-
-    @FXML
-    ImageView setting_iv;
 
     private boolean canPlayButtonSound = true;
     private Timeline timeline = new Timeline();
@@ -504,8 +497,8 @@ public class MainMenu {
                 } else {
                     setText(item);
 
-                    if (onlineAccounts.contains(accountInfos.get(getIndex()).getUsername())) {
-                        this.setStyle("-fx-text-fill: YELLOW; -fx-font-weight: BOLD");
+                    if (onlineAccounts.contains( accountInfos.get(getIndex()).getUsername())) {
+                        this.setStyle("-fx-background-color: green;");
                     }
                 }
             }
