@@ -140,6 +140,7 @@ public class MainMenu {
     }
 
 
+
     private void runTimeline() {
         timeline = new Timeline(new KeyFrame(Duration.ZERO, event -> {
             updateLoggedInUser();
