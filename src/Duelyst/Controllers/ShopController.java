@@ -163,8 +163,12 @@ public class ShopController {
             e.printStackTrace();
         }
         ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.GET_AUCTION_CARD_TIME);
-        if(Shop.getInstance().getAuctionSelectedCard() == null)
+        if(Shop.getInstance().getAuctionSelectedCard() == null) {
+            currentOwnerAuction_lbl.setText("");
+            auctionHighestBid_lbl.setText("");
+            auctionTimeLeft_lbl.setText("");
             return;
+        }
         shopCommand.setAuctionCard(Shop.getInstance().getAuctionSelectedCard());
         SendMessage.getSendMessage().sendMessage(shopCommand);
         try {
@@ -484,6 +488,8 @@ public class ShopController {
         System.out.println("step 1");
         addToAuctionButtonAnimation();
         Card card = Shop.getSelectedCard();
+        card.setAuctionClient(null);
+        card.setAuctionCost(8*card.getDarikCost()/10);
         Account.getLoggedAccount().getCardCollection().getCards().remove(card);
         ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.AUCTION_CARD);
         System.out.println(card.getCardName()+"<<-----------");
