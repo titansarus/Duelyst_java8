@@ -158,7 +158,7 @@ public class ShopController {
         SendMessage.getSendMessage().sendMessage(new ShopCommand(ShopCommandsKind.GET_AUCTION_CARDS));
 
         try {
-            Thread.sleep(50);
+            Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -168,7 +168,7 @@ public class ShopController {
         shopCommand.setAuctionCard(Shop.getInstance().getAuctionSelectedCard());
         SendMessage.getSendMessage().sendMessage(shopCommand);
         try {
-            Thread.sleep(50);
+            Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -485,6 +485,7 @@ public class ShopController {
         addToAuctionButtonAnimation();
         Card card = Shop.getSelectedCard();
         Account.getLoggedAccount().getCardCollection().getCards().remove(card);
+        Account.saveAccount();
         ShopCommand shopCommand = new ShopCommand(ShopCommandsKind.AUCTION_CARD);
         System.out.println(card.getCardName()+"<<-----------");
         shopCommand.setAuctionCard(card);
