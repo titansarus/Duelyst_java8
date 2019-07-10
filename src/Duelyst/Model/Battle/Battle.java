@@ -1191,10 +1191,13 @@ public class Battle implements Cloneable {
         }
 
     }
-    private void sendEndGameToServer(){
-        BattleCommand battleCommand = new BattleCommand();
-        battleCommand.end(Account.getLoggedAccount(),getBattleRecords());
-        SendMessage.getSendMessage().sendMessage(battleCommand);
+
+    private void sendEndGameToServer() {
+        if (gameMode.equals(GameMode.MULTI_PLAYER)) {
+            BattleCommand battleCommand = new BattleCommand();
+            battleCommand.end(Account.getLoggedAccount(), getBattleRecords());
+            SendMessage.getSendMessage().sendMessage(battleCommand);
+        }
     }
 
     private void makeBattleRecordOfEndGame(boolean isDraw, Player winner, Player loser) {
@@ -1302,7 +1305,7 @@ public class Battle implements Cloneable {
                 BattleController battleController = (BattleController) Container.getControllerClass();
                 battleController.handleNotification(string);
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("notification!");
         }
 
