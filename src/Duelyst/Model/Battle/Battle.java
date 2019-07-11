@@ -1155,7 +1155,7 @@ public class Battle implements Cloneable {
         endOfKillHeroGameMode();
         if (isEndGame()) {
 
-            if(gameGoal.equals(GameGoal.COLLECT_FLAG) && gameMode.equals(GameMode.MULTI_PLAYER)){
+            if((gameGoal.equals(GameGoal.COLLECT_FLAG) || gameGoal.equals(GameGoal.HOLD_FLAG)) && gameMode.equals(GameMode.MULTI_PLAYER)){
                 BattleCommand battleCommand = new BattleCommand();
                 battleCommand.endTurn(Account.getLoggedAccount(), battleCommand.getBattleRecords());
                 SendMessage.getSendMessage().sendMessage(battleCommand);

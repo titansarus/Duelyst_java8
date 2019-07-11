@@ -165,7 +165,11 @@ public class ClientHandler implements Runnable {
     }
 
     private void handleRunningBattle(BattleCommand battleCommand) {
-        handleEndTurn(battleCommand);
+        try {
+            handleEndTurn(battleCommand);
+        }catch (Exception e){
+            System.out.println(":)");
+        }
         System.out.println("Dastor omaaaad !");
         ClientHandler clientHandler = ServerTV.getOpponent(battleCommand.getMyAccount());
         if (clientHandler == null) {
@@ -176,7 +180,7 @@ public class ClientHandler implements Runnable {
         clientHandler.getFormatter().flush();
     }
 
-    private void handleEndTurn(BattleCommand battleCommand) {
+    private void handleEndTurn(BattleCommand battleCommand) throws Exception{
         if (battleCommand.getBattleCommandsKind().equals(BattleCommandsKind.END_TURN)) {
             ServerTV.getServerTvOfBattle(battleCommand.getMyAccount()).setBattleRecords(battleCommand.getBattleRecords());
             TimeOfEndTurn time = TimeOfEndTurn.getTime(battleCommand.getMyAccount());
