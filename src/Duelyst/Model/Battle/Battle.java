@@ -1144,7 +1144,6 @@ public class Battle implements Cloneable {
     public void endGame() {
 
 
-
         switch (gameGoal) {
             case HOLD_FLAG:
                 endOfHoldFlagGameMode();
@@ -1155,7 +1154,7 @@ public class Battle implements Cloneable {
         endOfKillHeroGameMode();
         if (isEndGame()) {
 
-            if((gameGoal.equals(GameGoal.COLLECT_FLAG) || gameGoal.equals(GameGoal.HOLD_FLAG)) && gameMode.equals(GameMode.MULTI_PLAYER)){
+            if ((gameGoal.equals(GameGoal.COLLECT_FLAG) || gameGoal.equals(GameGoal.HOLD_FLAG)) && gameMode.equals(GameMode.MULTI_PLAYER)) {
                 BattleCommand battleCommand = new BattleCommand();
                 battleCommand.endTurn(Account.getLoggedAccount(), battleCommand.getBattleRecords());
                 SendMessage.getSendMessage().sendMessage(battleCommand);
@@ -1316,8 +1315,10 @@ public class Battle implements Cloneable {
     public void showNotification(String string) {
         try {
             Platform.runLater(() -> {
-                BattleController battleController = (BattleController) Container.getControllerClass();
-                battleController.handleNotification(string);
+                if (Container.getControllerClass() instanceof BattleController) {
+                    BattleController battleController = (BattleController) Container.getControllerClass();
+                    battleController.handleNotification(string);
+                }
             });
         } catch (Exception e) {
             System.out.println("notification!");
