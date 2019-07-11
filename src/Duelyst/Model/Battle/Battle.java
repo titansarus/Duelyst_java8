@@ -1143,11 +1143,7 @@ public class Battle implements Cloneable {
 
     public void endGame() {
 
-        if(gameGoal.equals(GameGoal.COLLECT_FLAG) && gameMode.equals(GameMode.MULTI_PLAYER)){
-            BattleCommand battleCommand = new BattleCommand();
-            battleCommand.endTurn(Account.getLoggedAccount(), battleCommand.getBattleRecords());
-            SendMessage.getSendMessage().sendMessage(battleCommand);
-        }
+
 
         switch (gameGoal) {
             case HOLD_FLAG:
@@ -1159,6 +1155,11 @@ public class Battle implements Cloneable {
         endOfKillHeroGameMode();
         if (isEndGame()) {
 
+            if(gameGoal.equals(GameGoal.COLLECT_FLAG) && gameMode.equals(GameMode.MULTI_PLAYER)){
+                BattleCommand battleCommand = new BattleCommand();
+                battleCommand.endTurn(Account.getLoggedAccount(), battleCommand.getBattleRecords());
+                SendMessage.getSendMessage().sendMessage(battleCommand);
+            }
             sendEndGameToServer();
 
             int numberOfWin;
