@@ -1194,6 +1194,7 @@ public class Battle implements Cloneable {
     }
 
     private void sendEndGameToServer() {
+        System.out.println("send end game to server");
         if (gameMode.equals(GameMode.MULTI_PLAYER)) {
             BattleCommand battleCommand = new BattleCommand();
             battleCommand.end(Account.getLoggedAccount(), getBattleRecords());

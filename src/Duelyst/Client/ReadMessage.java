@@ -2,6 +2,7 @@ package Duelyst.Client;
 
 import Duelyst.Controllers.*;
 import Duelyst.Exceptions.CardOutOfStock;
+import Duelyst.Exceptions.MyException;
 import Duelyst.Exceptions.UserNotExistException;
 import Duelyst.Main;
 import Duelyst.Model.Account;
@@ -66,7 +67,11 @@ public class ReadMessage extends Thread {
                     handleShopCommand((ShopCommand) commandClass);
                     break;
                 case BATTLE:
-                    handleBattle((BattleCommand) commandClass);
+                    try {
+                        handleBattle((BattleCommand) commandClass);
+                    } catch (Exception e){
+                        System.out.println(":)");
+                    }
                     break;
                 case CHAT_ROOM:
                     handleChatRoomCommand((ChatRoomCommand) commandClass);
@@ -96,7 +101,7 @@ public class ReadMessage extends Thread {
         }
     }
 
-    private void handleBattle(BattleCommand battleCommand) {
+    private void handleBattle(BattleCommand battleCommand) throws MyException {
         switch (battleCommand.getBattleCommandsKind()) {
             case INSERT:
                 insert(battleCommand);
@@ -125,45 +130,45 @@ public class ReadMessage extends Thread {
         }
     }
 
-    private void disConnectOpponent() {
+    private void disConnectOpponent()throws MyException {
         Battle.getRunningBattle().showNotification("Your Opponent Disconnected!");
         Battle.getRunningBattle().opponentGiveUp();
 
     }
 
-    private void move(BattleCommand battleCommand) {
+    private void move(BattleCommand battleCommand) throws MyException{
         System.out.println("*************************************** MOVE");
         Battle.getRunningBattle().multiPlayerMove(battleCommand.getDesRow(), battleCommand.getDesCol(), battleCommand.getSrcRow(), battleCommand.getSrcCol());
     }
 
-    private void attack(BattleCommand battleCommand) {
+    private void attack(BattleCommand battleCommand) throws MyException{
         System.out.println("attack");
         Battle.getRunningBattle().multiPlayerAttack(battleCommand.getAttackerCardId(), battleCommand.getDefenderCardId());
     }
 
-    private void insert(BattleCommand battleCommand) {
+    private void insert(BattleCommand battleCommand) throws MyException{
         System.out.println("*************************************** INSERT");
         Battle.getRunningBattle().multiPlayerInsert(battleCommand.getInsertRow(), battleCommand.getInsertCol(), battleCommand.getInsertSelectedCardId());
     }
 
-    private void endTurn() {
+    private void endTurn() throws MyException{
         System.out.println("*************************************** END TURN");
         Battle.getRunningBattle().nextTurn();
     }
 
-    private void endTurnWarnning() {
+    private void endTurnWarnning() throws MyException{
         System.out.println("You have 20 seconds");
         Battle.getRunningBattle().showNotification("hurry up! You have 20 seconds");
     }
 
-    private void forceEndTurn() {
+    private void forceEndTurn() throws MyException{
         Battle.getRunningBattle().nextTurn();
         BattleCommand battleCommand = new BattleCommand();
         battleCommand.endTurn(Account.getLoggedAccount(), Battle.getRunningBattle().getBattleRecords());
         SendMessage.getSendMessage().sendMessage(battleCommand);
     }
 
-    private void handleStartBattle(BattleCommand battleCommand) {
+    private void handleStartBattle(BattleCommand battleCommand) throws MyException {
 
         MultiPlayerController multiPlayerController = (MultiPlayerController) Container.controllerClass;
         multiPlayerController.handleCancelBattleButton();

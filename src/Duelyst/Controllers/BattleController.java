@@ -1094,6 +1094,7 @@ public class BattleController {
         if (!isAnimationRunning) {
             battle.nextTurn();
             if (battle.getGameMode().equals(GameMode.MULTI_PLAYER)) {
+                System.out.println("send end turn to server");
                 BattleCommand battleCommand = new BattleCommand();
                 battleCommand.endTurn(Account.getLoggedAccount(), battleCommand.getBattleRecords());
                 SendMessage.getSendMessage().sendMessage(battleCommand);
