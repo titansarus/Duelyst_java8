@@ -1,5 +1,7 @@
 package Duelyst.Controllers;
 
+import Duelyst.Client.Client;
+import Duelyst.Client.ReadMessage;
 import Duelyst.Client.SendMessage;
 import Duelyst.Exceptions.MyException;
 import Duelyst.Exceptions.NotValidDeckException;
@@ -638,6 +640,7 @@ public class MainMenu {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+//        Client.getCurrentClient().getReader().interrupt();
         System.exit(0);
     }
 
