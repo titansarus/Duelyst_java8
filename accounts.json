@@ -1797,6 +1797,7 @@
         "*win* vs rez",
         "*win* vs rez",
         "*win* vs rez",
+        "*win* vs rez",
         "*win* vs rez"
       ],
       "darickBeforeCheat": 0,
@@ -6527,7 +6528,7 @@
       },
       "username": "alireza",
       "password": "alireza",
-      "countOfWins": 6,
+      "countOfWins": 7,
       "darick": 77153
     }
   }
