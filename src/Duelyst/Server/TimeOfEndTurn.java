@@ -93,8 +93,12 @@ public class TimeOfEndTurn extends Thread {
         TimeOfEndTurn time = null;
         for (TimeOfEndTurn t :
                 times) {
-            if (account.getUsername().equals(t.account1.getUsername()) || account.getUsername().equals(t.account2.getUsername())) {
-                time = t;
+            try {
+                if (account.getUsername().equals(t.account1.getUsername()) || account.getUsername().equals(t.account2.getUsername())) {
+                    time = t;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
         }
         return time;

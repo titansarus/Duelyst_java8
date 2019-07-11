@@ -155,7 +155,7 @@ public class ClientHandler implements Runnable {
     }
 
     private void endGame(BattleCommand battleCommand) {
-        TimeOfEndTurn.getTime(battleCommand.getMyAccount()).setTurnOff(true);
+        TimeOfEndTurn.getTime(battleCommand.getLoser()).setTurnOff(true);
         Account loser = battleCommand.getLoser();
         ServerTV serverTV = ServerTV.getServerTvOfBattle(loser);
         ClientHandler clientHandler = ServerTV.getOpponent(loser);
@@ -477,7 +477,7 @@ public class ClientHandler implements Runnable {
     private void addCardToAuctionCards(ShopCommand shopCommand) {
         System.out.println(shopCommand.getAuctionCard().getCardName());
         ServerShop.getInstance().addAuctionCards(shopCommand.getAuctionCard());
-        Time time = new Time(shopCommand.getAuctionCard(), 30);//TODO 30 -> 180
+        Time time = new Time(shopCommand.getAuctionCard(), 120);//TODO 30 -> 180
         time.start();
     }
 

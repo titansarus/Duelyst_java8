@@ -1,5 +1,6 @@
 package Duelyst.Model.Battle;
 
+import Duelyst.Client.ReadMessage;
 import Duelyst.Client.SendMessage;
 import Duelyst.Controllers.BattleController;
 import Duelyst.Controllers.Container;
@@ -1254,8 +1255,13 @@ public class Battle implements Cloneable {
     private void setFlagForCollectFlagGameModes() {
         int[] randomX = new int[6];
         int[] randomY = new int[6];
-        getNRandomNumber(randomX, randomY, 0, 3, 0);
-        getNRandomNumber(randomX, randomY, 3, 6, 5);
+        if (gameMode == GameMode.SINGLE_PLAYER) {
+            getNRandomNumber(randomX, randomY, 0, 3, 0);
+            getNRandomNumber(randomX, randomY, 3, 6, 5);
+        } else {
+            randomX = ReadMessage.getRandomX();
+            randomY = ReadMessage.getRandomY();
+        }
         for (int i = 0; i < 6; i++) {
             Flag flag = new Flag(KindOfFlag.COLLECTABLE_FLAG, randomX[i], randomY[i]);
             getGrid()[randomX[i]][randomY[i]].setFlag(flag);
