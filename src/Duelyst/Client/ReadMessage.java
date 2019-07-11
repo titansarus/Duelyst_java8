@@ -49,7 +49,12 @@ public class ReadMessage extends Thread {
     public void run() {
 
         while (true) {
-            String command = netIn.nextLine();
+            String command;
+            try {
+                command = netIn.nextLine();
+            } catch (Exception e) {
+                break;
+            }
             YaGson yaGson = new YaGsonBuilder().create();
             this.commandClass = yaGson.fromJson(command, CommandClass.class);
             System.out.println("In reader");
